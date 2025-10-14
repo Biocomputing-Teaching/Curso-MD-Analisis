@@ -3,6 +3,7 @@ showheader: true
 layout: default
 title: /Home
 ---
+
 <H1>Curso práctico de Dinámica Molecular y Análisis de Trayectorias</H1>
 
 - [Organización](#organización)
