@@ -14,6 +14,7 @@ title: /Home
 - [Herramientas utilizadas](#herramientas-utilizadas)
 - [Inscripción y contacto](#inscripción-y-contacto)
 - [Observaciones](#observaciones)
+- [Colaboradores](#colaboradores)
 
 ## Organización
 
@@ -98,3 +99,14 @@ title: /Home
 - Los participantes deben traer su propio computador portátil con acceso al clúster habilitado
 - Se facilitarán notebooks y scripts de análisis
 - El curso está orientado a estudiantes de posgrado, investigadores jóvenes y profesionales en bioquímica, biofísica o biología estructural
+
+## Colaboradores
+
+Con la colaboración de [![COZYME COST ACTION: Pan-European Network on Computational Redesign of Enzymes](figures/logo-cozyme-160x34.png)](https://cozyme.eu/)  Pan-European Network on Computational Redesign of Enzymes. 
+
+![COST-Actions](figures/COST_LOGO_white_tranparent_small-300x93.png)
+
+Con el soporte de Fondecyt Fondo Nacional de Desarrollo Científico y Tecnológico
+
+![concyt](figures/logo-conicyt-chile-en-marcha.png)
+
