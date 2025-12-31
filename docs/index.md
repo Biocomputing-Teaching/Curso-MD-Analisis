@@ -78,10 +78,10 @@ Este repositorio contiene el material del curso en formato Carpentries, publicad
 
 ## Colaboradores
 
-Con la colaboracion de [![COZYME COST ACTION: Pan-European Network on Computational Redesign of Enzymes](docs/figures/logo-cozyme-160x34.png)](https://cozyme.eu/) Pan-European Network on Computational Redesign of Enzymes.
+Con la colaboracion de [![COZYME COST ACTION: Pan-European Network on Computational Redesign of Enzymes](figures/logo-cozyme-160x34.png)](https://cozyme.eu/) Pan-European Network on Computational Redesign of Enzymes.
 
-![COST-Actions](docs/figures/COST_LOGO_white_tranparent_small-300x93.png)
+![COST-Actions](figures/COST_LOGO_white_tranparent_small-300x93.png)
 
 Con el soporte de Fondecyt Fondo Nacional de Desarrollo Cientifico y Tecnologico
 
-![concyt](docs/figures/logo-conicyt-chile-en-marcha.png)
+![concyt](figures/logo-conicyt-chile-en-marcha.png)

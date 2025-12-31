@@ -21,6 +21,8 @@ def resolve_path(md_path, link):
     if link.startswith("/"):
         rel = link.lstrip("/")
         base = DOCS_ROOT / rel
+    elif link.startswith("docs/"):
+        base = DOCS_ROOT / link[len("docs/"):]
     else:
         base = md_path.parent / link
 
