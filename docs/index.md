@@ -1,7 +1,6 @@
 ---
 showheader: true
 layout: default
-title: /Home
 ---
 
 # Curso practico de Dinamica Molecular y Analisis de Trayectorias
@@ -70,11 +69,6 @@ Este repositorio contiene el material del curso en formato Carpentries, publicad
 - Consultoria tecnica personalizada
 - Recomendaciones de buenas practicas en simulaciones y analisis
 
-## Curso en la web
-
-- Sitio del curso: https://biocomputing-teaching.github.io/Curso-MD-Analisis/
-- Pagina principal: `docs/index.md`
-- Episodios Carpentries: `docs/episodes/`
 
 ## Colaboradores
 
