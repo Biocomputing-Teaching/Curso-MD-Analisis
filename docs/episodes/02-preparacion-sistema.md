@@ -11,11 +11,11 @@ permalink: /episodes/02-preparacion-sistema/
 
 ## Notebook
 
-- [02-preparacion-sistema.ipynb](../notebooks/02-preparacion-sistema.ipynb)
+- [02-preparacion-sistema.ipynb]({{ site.baseurl }}/episodes/notebooks/02-preparacion-sistema.ipynb)
 
 ## Scripts
 
-- [02-preparacion-sistema.py](../scripts/02-preparacion-sistema.py)
+- [02-preparacion-sistema.py]({{ site.baseurl }}/episodes/scripts/02-preparacion-sistema.py)
 
 ## Objetivos
 

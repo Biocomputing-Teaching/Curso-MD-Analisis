@@ -11,11 +11,11 @@ permalink: /episodes/06-msm-pyemma/
 
 ## Notebook
 
-- [06-msm-pyemma.ipynb](../notebooks/06-msm-pyemma.ipynb)
+- [06-msm-pyemma.ipynb]({{ site.baseurl }}/episodes/notebooks/06-msm-pyemma.ipynb)
 
 ## Scripts
 
-- [06-msm-pyemma.py](../scripts/06-msm-pyemma.py)
+- [06-msm-pyemma.py]({{ site.baseurl }}/episodes/scripts/06-msm-pyemma.py)
 
 ## Objetivos
 

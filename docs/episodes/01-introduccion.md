@@ -11,11 +11,11 @@ permalink: /episodes/01-introduccion/
 
 ## Notebook
 
-- [01-introduccion.ipynb](../notebooks/01-introduccion.ipynb)
+- [01-introduccion.ipynb]({{ site.baseurl }}/episodes/notebooks/01-introduccion.ipynb)
 
 ## Scripts
 
-- [01-introduccion.py](../scripts/01-introduccion.py)
+- [01-introduccion.py]({{ site.baseurl }}/episodes/scripts/01-introduccion.py)
 
 ## Objetivos
 
