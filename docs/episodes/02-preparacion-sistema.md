@@ -1,6 +1,7 @@
 ---
 layout: default
 title: Episodio 2 - Preparacion de sistemas en OpenMM
+permalink: /episodes/02-preparacion-sistema/
 ---
 
 ## Overview

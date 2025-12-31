@@ -1,6 +1,7 @@
 ---
 layout: default
 title: Episodio 4 - Analisis de trayectorias con MDAnalysis
+permalink: /episodes/04-analisis-trayectorias/
 ---
 
 ## Overview

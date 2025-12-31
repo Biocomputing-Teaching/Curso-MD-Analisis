@@ -1,6 +1,7 @@
 ---
 layout: default
 title: Episodio 3 - Simulaciones clasicas y control de calidad
+permalink: /episodes/03-simulaciones-clasicas/
 ---
 
 ## Overview

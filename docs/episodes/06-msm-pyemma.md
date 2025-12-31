@@ -1,6 +1,7 @@
 ---
 layout: default
 title: Episodio 6 - Modelos de Markov con PyEMMA
+permalink: /episodes/06-msm-pyemma/
 ---
 
 ## Overview

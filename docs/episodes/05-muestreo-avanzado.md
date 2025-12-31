@@ -1,6 +1,7 @@
 ---
 layout: default
 title: Episodio 5 - Muestreo avanzado en OpenMM
+permalink: /episodes/05-muestreo-avanzado/
 ---
 
 ## Overview

@@ -1,6 +1,7 @@
 ---
 layout: default
 title: Episodio 1 - Introduccion y entorno de trabajo
+permalink: /episodes/01-introduccion/
 ---
 
 ## Overview
