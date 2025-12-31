@@ -10,11 +10,11 @@ title: Episodio 4 - Analisis de trayectorias con MDAnalysis
 
 ## Notebook
 
-- [04-analisis-trayectorias.ipynb]({{ site.baseurl }}/episodes/notebooks/04-analisis-trayectorias.ipynb)
+- [04-analisis-trayectorias.ipynb](../notebooks/04-analisis-trayectorias.ipynb)
 
 ## Scripts
 
-- [04-analisis-trayectorias.py]({{ site.baseurl }}/episodes/scripts/04-analisis-trayectorias.py)
+- [04-analisis-trayectorias.py](../scripts/04-analisis-trayectorias.py)
 
 ## Objetivos
 

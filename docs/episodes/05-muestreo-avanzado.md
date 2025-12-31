@@ -10,11 +10,11 @@ title: Episodio 5 - Muestreo avanzado en OpenMM
 
 ## Notebook
 
-- [05-muestreo-avanzado.ipynb]({{ site.baseurl }}/episodes/notebooks/05-muestreo-avanzado.ipynb)
+- [05-muestreo-avanzado.ipynb](../notebooks/05-muestreo-avanzado.ipynb)
 
 ## Scripts
 
-- [05-muestreo-avanzado.py]({{ site.baseurl }}/episodes/scripts/05-muestreo-avanzado.py)
+- [05-muestreo-avanzado.py](../scripts/05-muestreo-avanzado.py)
 
 ## Objetivos
 

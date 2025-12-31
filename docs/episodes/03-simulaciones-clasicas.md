@@ -10,11 +10,11 @@ title: Episodio 3 - Simulaciones clasicas y control de calidad
 
 ## Notebook
 
-- [03-simulaciones-clasicas.ipynb]({{ site.baseurl }}/episodes/notebooks/03-simulaciones-clasicas.ipynb)
+- [03-simulaciones-clasicas.ipynb](../notebooks/03-simulaciones-clasicas.ipynb)
 
 ## Scripts
 
-- [03-simulaciones-clasicas.py]({{ site.baseurl }}/episodes/scripts/03-simulaciones-clasicas.py)
+- [03-simulaciones-clasicas.py](../scripts/03-simulaciones-clasicas.py)
 
 ## Objetivos
 
