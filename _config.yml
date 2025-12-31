@@ -1,7 +1,10 @@
 theme: jekyll-theme-minimal
-  lsi: false
+lsi: false
 safe: true
 source: docs
+url: "https://biocomputing-teaching.github.io"
+baseurl: "/Curso-MD-Analisis"
+permalink: pretty
 defaults:
   -
     scope:

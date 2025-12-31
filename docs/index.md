@@ -4,110 +4,84 @@ layout: default
 title: /Home
 ---
 
-<H1>Curso práctico de Dinámica Molecular y Análisis de Trayectorias</H1>
+# Curso practico de Dinamica Molecular y Analisis de Trayectorias
 
-- [Organización](#organización)
-- [Requisitos previos](#requisitos-previos)
-- [Programa del curso](#programa-del-curso)
-  - [Día 1: Jueves 15 de enero](#día-1-jueves-15-de-enero)
-  - [Día 2: Viernes 16 de enero](#día-2-viernes-16-de-enero)
-  - [Día 3: Lunes 19 de enero (solo mañana)](#día-3-lunes-19-de-enero-solo-mañana)
-- [Herramientas utilizadas](#herramientas-utilizadas)
-- [Inscripción y contacto](#inscripción-y-contacto)
-- [Observaciones](#observaciones)
-- [Colaboradores](#colaboradores)
+Este repositorio contiene el material del curso en formato Carpentries, publicado con GitHub Pages en `docs/`.
 
-## Organización
+## Organizacion
 
-- **Fechas:** 15, 16 y 19 de enero de 2026  
-- **Lugar:** Universidad Andrés Bello, Concepción, Chile  
-- **Modalidad:** Presencial, práctico (mañana y tarde)  
-- **Idioma:** Español
-- **Profesor:** [Jordi Villà i Freixa](mailto:jordi.villa@uvic.cat), [Computational Biochemistry and Biophysics Lab](https://mon.uvic.cat/cbbl), [Universitat de Vic -Universitat Central de Catalunya](https://www.uvic.cat), [Institut de Recerca i Innovació en Ciències de la Vida i de la Salut a la Catalunya Central (IRIS-CC)](https://iris-cc.cat)
-
+- **Fechas:** 15, 16 y 19 de enero de 2026
+- **Lugar:** Universidad Andres Bello, Concepcion, Chile
+- **Modalidad:** Presencial, practico (manana y tarde)
+- **Idioma:** Espanol
+- **Profesor:** [Jordi Villa i Freixa](mailto:jordi.villa@uvic.cat), [Computational Biochemistry and Biophysics Lab](https://mon.uvic.cat/cbbl), [Universitat de Vic - Universitat Central de Catalunya](https://www.uvic.cat), [IRIS-CC](https://iris-cc.cat)
 - **Cupo limitado:** 15-20 participantes
-- **Inscripción previa obligatoria**
-- **Contacto:** Nombre del coordinador/a – [Verónica Andrea Jiménez Curihual](mailto:veronica.jimenez@unab.cl) 
+- **Inscripcion previa obligatoria**
+- **Contacto:** Veronica Andrea Jimenez Curihual [veronica.jimenez@unab.cl](mailto:veronica.jimenez@unab.cl)
 
 ## Requisitos previos
-- Conocimientos básicos de bioinformática o química computacional
-- Familiaridad con la línea de comandos de Linux
-- Conocimientos básicos de Python
-- Acceso a un clúster de cálculo habilitado con AMBER, Python, PyEMMA, etc.
+
+- Conocimientos basicos de bioinformatica o quimica computacional
+- Familiaridad con la linea de comandos de Linux
+- Conocimientos basicos de Python
+- Acceso a un cluster o workstation con GPU, idealmente con OpenMM
 
 ## Programa del curso
 
-### Día 1: Jueves 15 de enero
-**Tema central:** Introducción práctica a la dinámica molecular clásica
+### Dia 1: Jueves 15 de enero
+**Tema central:** Fundamentos de simulaciones clasicas con OpenMM
 
-**Mañana (09:00 - 13:00):**
-- Bienvenida y presentación del curso
-- Fundamentos de dinámica molecular (MD): teoría mínima imprescindible
-- Preparación de sistemas con `tleap` (AMBER)
-- Configuración de simulaciones clásicas (input files, topología, parámetros)
-- Ejecución de simulaciones cortas en el clúster (`pmemd/cuda` o `pmemd.MPI`)
+**Manana (09:00 - 13:00):**
+- Bienvenida y presentacion del curso
+- Teoria minima de dinamica molecular
+- Preparacion de sistemas en OpenMM (topologia, fuerza, solvente)
+- Parametrizacion con OpenMM y OpenFF
+- Ejecucion de simulaciones cortas en GPU
 
 **Tarde (14:30 - 18:00):**
-- Visualización y análisis básico de trayectorias con `cpptraj`
-- Introducción al análisis con `MDAnalysis` (Python)
-- Ejercicios prácticos: cálculo de RMSD, RMSF, radio de giro, distancias internas
+- Analisis basico de trayectorias con MDAnalysis
+- Ejercicios: RMSD, RMSF, radio de giro, distancias internas
+- Buenas practicas de control de calidad
 
-### Día 2: Viernes 16 de enero
-**Tema central:** Simulaciones avanzadas y modelos de Markov
+### Dia 2: Viernes 16 de enero
+**Tema central:** Tecnicas avanzadas y modelos de Markov
 
-**Mañana (09:00 - 13:00):**
-- Técnicas avanzadas de simulación:
-  - **Accelerated MD (aMD)**
+**Manana (09:00 - 13:00):**
+- Tecnicas avanzadas en OpenMM:
   - **Steered MD (SMD)**
-- Preparación de simulaciones aMD y SMD con AMBER
-- Consideraciones de eficiencia y escalabilidad al clúster
+  - **Umbrella Sampling**
+  - **Metadynamics**
+- Configuracion y ejecucion de protocolos avanzados
+- Consideraciones de eficiencia y escalabilidad
 
 **Tarde (14:30 - 18:00):**
-- Construcción de modelos de Markov con `PyEMMA`:
-  - Introducción a los **Markov State Models (MSM)**
-  - Extracción de features con `MDAnalysis` + `PyEMMA`
-  - Clustering y construcción del modelo
-  - Análisis de tiempos de relajación, estados metaestables
-- Ejemplo aplicado: detección de transiciones conformacionales en una proteína
+- Modelos de Markov con PyEMMA
+  - Introduccion a MSM
+  - Extraccion de features con MDAnalysis + PyEMMA
+  - Clustering y construccion del modelo
+  - Tiempos de relajacion y estados metaestables
+- Caso aplicado: transiciones conformacionales en una proteina
 
-### Día 3: Lunes 19 de enero (solo mañana)
-**Tema central:** Proyectos individuales y consultoría
+### Dia 3: Lunes 19 de enero (solo manana)
+**Tema central:** Proyectos individuales y consultoria
 
-**Mañana (09:30 - 13:00):**
-- Espacio para discusión de proyectos de los participantes
-- Consultoría técnica personalizada:
-  - Diseño experimental computacional
-  - Análisis de trayectorias
-  - Preparación de simulaciones en el clúster
-  - Revisión de scripts y código Python
-- Recomendaciones de buenas prácticas en simulaciones y análisis
+**Manana (09:30 - 13:00):**
+- Discusion de proyectos de los participantes
+- Consultoria tecnica personalizada
+- Recomendaciones de buenas practicas en simulaciones y analisis
 
-## Herramientas utilizadas
-- **AMBER** (tleap, pmemd, cpptraj)
-- **MDAnalysis**
-- **PyEMMA**
-- **Python 3**, Jupyter Notebooks
-- Clúster de cálculo con sistema de gestión de trabajos (ej. SLURM)
+## Curso en la web
 
----
-
-## Inscripción y contacto
-
-
----
-
-## Observaciones
-- Los participantes deben traer su propio computador portátil con acceso al clúster habilitado
-- Se facilitarán notebooks y scripts de análisis
-- El curso está orientado a estudiantes de posgrado, investigadores jóvenes y profesionales en bioquímica, biofísica o biología estructural
+- Sitio del curso: https://biocomputing-teaching.github.io/Curso-MD-Analisis/
+- Pagina principal: `docs/index.md`
+- Episodios Carpentries: `docs/episodes/`
 
 ## Colaboradores
 
-Con la colaboración de [![COZYME COST ACTION: Pan-European Network on Computational Redesign of Enzymes](figures/logo-cozyme-160x34.png)](https://cozyme.eu/)  Pan-European Network on Computational Redesign of Enzymes. 
+Con la colaboracion de [![COZYME COST ACTION: Pan-European Network on Computational Redesign of Enzymes](docs/figures/logo-cozyme-160x34.png)](https://cozyme.eu/) Pan-European Network on Computational Redesign of Enzymes.
 
-![COST-Actions](figures/COST_LOGO_white_tranparent_small-300x93.png)
+![COST-Actions](docs/figures/COST_LOGO_white_tranparent_small-300x93.png)
 
-Con el soporte de Fondecyt Fondo Nacional de Desarrollo Científico y Tecnológico
+Con el soporte de Fondecyt Fondo Nacional de Desarrollo Cientifico y Tecnologico
 
-![concyt](figures/logo-conicyt-chile-en-marcha.png)
-
+![concyt](docs/figures/logo-conicyt-chile-en-marcha.png)
