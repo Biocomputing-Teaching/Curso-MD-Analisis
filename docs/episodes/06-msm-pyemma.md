@@ -12,6 +12,7 @@ permalink: /episodes/06-msm-pyemma/
 ## Notebook
 
 - [06-msm-pyemma.ipynb]({{ site.baseurl }}/episodes/notebooks/06-msm-pyemma.ipynb)
+- [Ver en nbviewer](https://nbviewer.org/url/biocomputing-teaching.github.io/Curso-MD-Analisis/episodes/notebooks/06-msm-pyemma.ipynb)
 
 ## Scripts
 

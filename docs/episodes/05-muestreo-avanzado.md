@@ -12,6 +12,7 @@ permalink: /episodes/05-muestreo-avanzado/
 ## Notebook
 
 - [05-muestreo-avanzado.ipynb]({{ site.baseurl }}/episodes/notebooks/05-muestreo-avanzado.ipynb)
+- [Ver en nbviewer](https://nbviewer.org/url/biocomputing-teaching.github.io/Curso-MD-Analisis/episodes/notebooks/05-muestreo-avanzado.ipynb)
 
 ## Scripts
 

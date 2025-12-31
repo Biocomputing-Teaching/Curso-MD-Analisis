@@ -13,5 +13,5 @@ Listado de episodios del curso:
 - [Episodio 5: Muestreo avanzado en OpenMM]({{ site.baseurl }}/episodes/05-muestreo-avanzado/)
 - [Episodio 6: Modelos de Markov con PyEMMA]({{ site.baseurl }}/episodes/06-msm-pyemma/)
 
-Notebooks asociados: `docs/episodes/notebooks/`.
+Notebooks asociados: `docs/episodes/notebooks/` o [vista renderizada]({{ site.baseurl }}/episodes/notebooks/).
 Scripts asociados: `docs/episodes/scripts/`.

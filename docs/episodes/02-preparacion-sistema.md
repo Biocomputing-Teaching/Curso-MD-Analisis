@@ -12,6 +12,7 @@ permalink: /episodes/02-preparacion-sistema/
 ## Notebook
 
 - [02-preparacion-sistema.ipynb]({{ site.baseurl }}/episodes/notebooks/02-preparacion-sistema.ipynb)
+- [Ver en nbviewer](https://nbviewer.org/url/biocomputing-teaching.github.io/Curso-MD-Analisis/episodes/notebooks/02-preparacion-sistema.ipynb)
 
 ## Scripts
 

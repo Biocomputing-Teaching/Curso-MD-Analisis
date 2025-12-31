@@ -12,6 +12,7 @@ permalink: /episodes/01-introduccion/
 ## Notebook
 
 - [01-introduccion.ipynb]({{ site.baseurl }}/episodes/notebooks/01-introduccion.ipynb)
+- [Ver en nbviewer](https://nbviewer.org/url/biocomputing-teaching.github.io/Curso-MD-Analisis/episodes/notebooks/01-introduccion.ipynb)
 
 ## Scripts
 

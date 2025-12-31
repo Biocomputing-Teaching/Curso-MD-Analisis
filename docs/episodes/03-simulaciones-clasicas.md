@@ -12,6 +12,7 @@ permalink: /episodes/03-simulaciones-clasicas/
 ## Notebook
 
 - [03-simulaciones-clasicas.ipynb]({{ site.baseurl }}/episodes/notebooks/03-simulaciones-clasicas.ipynb)
+- [Ver en nbviewer](https://nbviewer.org/url/biocomputing-teaching.github.io/Curso-MD-Analisis/episodes/notebooks/03-simulaciones-clasicas.ipynb)
 
 ## Scripts
 

@@ -12,6 +12,7 @@ permalink: /episodes/04-analisis-trayectorias/
 ## Notebook
 
 - [04-analisis-trayectorias.ipynb]({{ site.baseurl }}/episodes/notebooks/04-analisis-trayectorias.ipynb)
+- [Ver en nbviewer](https://nbviewer.org/url/biocomputing-teaching.github.io/Curso-MD-Analisis/episodes/notebooks/04-analisis-trayectorias.ipynb)
 
 ## Scripts
 
