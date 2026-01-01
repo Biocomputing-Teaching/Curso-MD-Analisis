@@ -41,5 +41,71 @@
       </div>
       <div class="footer__copy">&copy; Curso MD - UNAB / UVic</div>
     </footer>
+    <script type="text/javascript">
+      (function () {
+        function copyText(text) {
+          if (navigator.clipboard && navigator.clipboard.writeText) {
+            return navigator.clipboard.writeText(text);
+          }
+          return new Promise(function (resolve, reject) {
+            var textarea = document.createElement('textarea');
+            textarea.value = text;
+            textarea.setAttribute('readonly', '');
+            textarea.style.position = 'absolute';
+            textarea.style.left = '-9999px';
+            document.body.appendChild(textarea);
+            textarea.select();
+            try {
+              document.execCommand('copy');
+              resolve();
+            } catch (err) {
+              reject(err);
+            } finally {
+              document.body.removeChild(textarea);
+            }
+          });
+        }
+
+        function addCopyButtons() {
+          document.querySelectorAll('pre > code').forEach(function (codeBlock) {
+            var pre = codeBlock.parentNode;
+            if (pre.querySelector('.copy-button')) {
+              return;
+            }
+
+            var button = document.createElement('button');
+            button.type = 'button';
+            button.className = 'copy-button';
+            button.setAttribute('aria-label', 'Copiar bloque de código');
+            button.innerHTML = '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M16 1H6c-1.1 0-2 .9-2 2v12h2V3h10V1zm3 4H10c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h9c1.1 0 2-.9 2-2V7c0-1.1-.9-2-2-2zm0 16h-9V7h9v14z"/></svg>';
+
+            button.addEventListener('click', function () {
+              var text = codeBlock.innerText;
+              copyText(text).then(function () {
+                button.classList.add('copy-button--done');
+                button.setAttribute('aria-label', 'Código copiado');
+                setTimeout(function () {
+                  button.classList.remove('copy-button--done');
+                  button.setAttribute('aria-label', 'Copiar bloque de código');
+                }, 1500);
+              }).catch(function () {
+                button.classList.add('copy-button--error');
+                setTimeout(function () {
+                  button.classList.remove('copy-button--error');
+                }, 1500);
+              });
+            });
+
+            pre.appendChild(button);
+          });
+        }
+
+        if (document.readyState === 'loading') {
+          document.addEventListener('DOMContentLoaded', addCopyButtons);
+        } else {
+          addCopyButtons();
+        }
+      })();
+    </script>
   </body>
 </html>
