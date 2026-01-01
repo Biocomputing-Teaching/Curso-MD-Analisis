@@ -26,10 +26,10 @@ conda install -c conda-forge openmm mdanalysis pyemma jupyterlab numpy scipy mat
 ```bash
 python - <<'PY'
 import openmm
-import mdanalysis as mda
+import MDAnalysis as mda
 import pyemma
 print('openmm', openmm.__version__)
-print('mdanalysis', mda.__version__)
+print('MDAnalysis', mda.__version__)
 print('pyemma', pyemma.__version__)
 PY
 ```
