@@ -9,7 +9,7 @@ permalink: /data/
 - [Descargar `alanine-dipeptide.pdb`]({{ site.baseurl }}/data/alanine-dipeptide.pdb): estructura mínima para pruebas con OpenMM.
 - [Descargar `alanine-dipeptide-multi.pdb`]({{ site.baseurl }}/data/alanine-dipeptide-multi.pdb): PDB multi-model para análisis de trayectorias sin DCD.
 - [Descargar `example_rmsd.csv`]({{ site.baseurl }}/data/example_rmsd.csv): serie de RMSD de ejemplo para gráficas.
-- [Descargar `alanine-dipeptide.dcd`]({{ site.baseurl }}/data/alanine-dipeptide.dcd): trayectoria corta generada con OpenMM.
+Para obtener el DCD, genera la trayectoria localmente (ver [Referencia]({{ site.baseurl }}/reference/)).
 
 ### Código completo del generador DCD
 
