@@ -26,6 +26,26 @@ El material del curso puede encontrarse en [este repositorio GitHub](https://git
 - Conocimientos básicos de Python
 - Acceso a un clúster o workstation con GPU, idealmente con OpenMM
 
+## Mantenimiento de episodios
+
+Para mantener sincronizados los bloques de código Python embebidos en los
+episodios con los scripts originales, ejecuta antes de commitejar:
+
+```bash
+make sync-code
+```
+
+Este comando actualiza los bloques en `docs/**/*.md` desde los scripts y
+notebooks bajo `docs/`. También permite forzar una fuente concreta con
+`<!-- sync-from: ruta/al/script.py -->` dentro del markdown y añade un enlace
+al script original bajo cada bloque.
+
+Para regenerar notebooks desde los scripts:
+
+```bash
+make sync-notebooks
+```
+
 ## Programa del curso
 
 ### Día 1: Jueves 15 de enero

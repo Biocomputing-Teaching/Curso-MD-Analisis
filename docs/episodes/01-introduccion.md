@@ -37,30 +37,13 @@ permalink: /episodes/01-introduccion/
 ```python
 from openmm import app
 import openmm as mm
-from openmm import unit
 
-pdb = app.PDBFile('alanine-dipeptide.pdb')
-forcefield = app.ForceField('amber14-all.xml', 'amber14/tip3pfb.xml')
-
-system = forcefield.createSystem(
-    pdb.topology,
-    nonbondedMethod=app.PME,
-    nonbondedCutoff=1.0 * unit.nanometer,
-    constraints=app.HBonds
-)
-
-integrator = mm.LangevinIntegrator(
-    300 * unit.kelvin,
-    1.0 / unit.picosecond,
-    2.0 * unit.femtoseconds
-)
-
-platform = mm.Platform.getPlatformByName('CUDA')
-simulation = app.Simulation(pdb.topology, system, integrator, platform)
-simulation.context.setPositions(pdb.positions)
-state = simulation.context.getState(getEnergy=True)
-print('Potential energy:', state.getPotentialEnergy())
+pdb = app.PDBFile('../../data/alanine-dipeptide.pdb')
+print('OpenMM', mm.__version__)
+print('Atoms:', pdb.topology.getNumAtoms())
 ```
+
+Fuente del script: [01-introduccion.py]({{ site.baseurl }}/episodes/scripts/01-introduccion.py)
 
 ## Ejercicio
 

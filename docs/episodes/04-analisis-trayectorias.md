@@ -51,7 +51,6 @@ else:
     output_name = 'rmsd_multimodel.png'
 
 atoms = u.select_atoms('all')
-
 R = rms.RMSD(atoms, atoms)
 R.run()
 
@@ -61,6 +60,8 @@ plt.ylabel('RMSD (A)')
 plt.title('RMSD')
 plt.savefig(output_name, dpi=150)
 ```
+
+Fuente del script: [04-analisis-trayectorias.py]({{ site.baseurl }}/episodes/scripts/04-analisis-trayectorias.py)
 
 ## Ejercicio
 

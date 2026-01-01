@@ -35,26 +35,22 @@ permalink: /episodes/06-msm-pyemma/
 ### Pipeline mínimo en PyEMMA
 
 ```python
+import numpy as np
 import pyemma
 
-# Cargar features (ejemplo: distancias)
-feat = pyemma.coordinates.featurizer('solvated.pdb')
-feat.add_distances(feat.select_Backbone(), periodic=False)
+x1 = np.random.normal(-1.0, 0.2, size=(1000, 1))
+x2 = np.random.normal(1.0, 0.2, size=(1000, 1))
+X = [np.vstack([x1, x2])]
 
-traj_files = ['traj_1.dcd', 'traj_2.dcd']
-X = pyemma.coordinates.load(traj_files, features=feat)
-
-# TICA
 tica = pyemma.coordinates.tica(X, lag=10)
 Y = tica.get_output()
 
-# Clustering
-cl = pyemma.coordinates.cluster_kmeans(Y, k=50, max_iter=50)
-
-# MSM
+cl = pyemma.coordinates.cluster_kmeans(Y, k=20, max_iter=50)
 msm = pyemma.msm.estimate_markov_model(cl.dtrajs, lag=10)
 print('Timescales:', msm.timescales_[:5])
 ```
+
+Fuente del script: [06-msm-pyemma.py]({{ site.baseurl }}/episodes/scripts/06-msm-pyemma.py)
 
 ## Ejercicio
 

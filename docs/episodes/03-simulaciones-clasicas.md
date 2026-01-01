@@ -35,35 +35,27 @@ permalink: /episodes/03-simulaciones-clasicas/
 ### Minimizar y correr una simulación corta
 
 ```python
-from openmm import app
+from openmm import app, unit
 import openmm as mm
-from openmm import unit
 
-pdb = app.PDBFile('solvated.pdb')
+pdb = app.PDBFile('../../data/alanine-dipeptide.pdb')
 forcefield = app.ForceField('amber14-all.xml', 'amber14/tip3pfb.xml')
 
-system = forcefield.createSystem(
-    pdb.topology,
-    nonbondedMethod=app.PME,
-    nonbondedCutoff=1.0 * unit.nanometer,
-    constraints=app.HBonds
-)
-
+system = forcefield.createSystem(pdb.topology, nonbondedMethod=app.NoCutoff, constraints=app.HBonds)
 integrator = mm.LangevinIntegrator(300 * unit.kelvin, 1.0 / unit.picosecond, 2.0 * unit.femtoseconds)
 
 simulation = app.Simulation(pdb.topology, system, integrator)
 simulation.context.setPositions(pdb.positions)
 
-print('Minimizing...')
-simulation.minimizeEnergy(maxIterations=500)
-
+simulation.minimizeEnergy(maxIterations=100)
 simulation.context.setVelocitiesToTemperature(300 * unit.kelvin)
+simulation.step(200)
 
-simulation.reporters.append(app.StateDataReporter('log.csv', 1000, step=True, temperature=True, potentialEnergy=True, density=True))
-simulation.reporters.append(app.DCDReporter('traj.dcd', 1000))
-
-simulation.step(5000)
+state = simulation.context.getState(getEnergy=True)
+print('Potential energy:', state.getPotentialEnergy())
 ```
+
+Fuente del script: [03-simulaciones-clasicas.py]({{ site.baseurl }}/episodes/scripts/03-simulaciones-clasicas.py)
 
 ## Ejercicio
 
