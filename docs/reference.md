@@ -1,7 +1,7 @@
 ---
 layout: default
 title: Referencia
-permalink: /reference
+permalink: /reference/
 ---
 
 ## Referencia rápida

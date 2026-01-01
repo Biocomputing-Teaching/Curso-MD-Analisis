@@ -1,7 +1,7 @@
 ---
 showheader: true
 layout: default
-permalink: /index
+permalink: /
 ---
 
 # Curso práctico de Dinámica Molecular y Análisis de Trayectorias

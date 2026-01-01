@@ -1,7 +1,7 @@
 ---
 layout: default
 title: Preparación
-permalink: /setup
+permalink: /setup/
 ---
 
 ## Requisitos de software

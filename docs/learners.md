@@ -1,7 +1,7 @@
 ---
 layout: default
 title: Participantes
-permalink: /participants
+permalink: /learners/
 ---
 
 ## Guía para participantes

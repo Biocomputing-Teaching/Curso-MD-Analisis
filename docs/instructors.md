@@ -1,7 +1,7 @@
 ---
 layout: default
 title: Instructores
-permalink: /instructors
+permalink: /instructors/
 ---
 
 ## Guía para instructores
