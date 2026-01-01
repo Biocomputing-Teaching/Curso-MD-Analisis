@@ -73,26 +73,30 @@ Aquest repositori no inclou `Gemfile`, així que l'opció més simple és usar
 Jekyll instal·lat com a gem global. Si prefereixes versions fixades, crea un
 `Gemfile` i usa `bundle exec` (fora de l'abast d'aquest README).
 
-### Linux (Ubuntu/Debian)
+### Instal·lació (Linux, Ubuntu/Debian)
 
 ```bash
 sudo apt-get update
 sudo apt-get install -y ruby-full build-essential zlib1g-dev
 gem install jekyll bundler webrick
-jekyll serve --source docs --livereload --baseurl /Curso-MD-Analisis
 ```
 
-### macOS (Homebrew)
+### Instal·lació (macOS, Homebrew)
 
 ```bash
 brew install ruby
 echo 'export PATH="/opt/homebrew/opt/ruby/bin:$PATH"' >> ~/.zshrc
 source ~/.zshrc
 gem install jekyll bundler webrick
+```
+
+### Execució local
+
+```bash
 jekyll serve --source docs --livereload --baseurl /Curso-MD-Analisis
 ```
 
-La web queda disponible a `http://127.0.0.1:4000/Curso-MD-Analisis/`.
+La web queda disponible a [http://127.0.0.1:4000/Curso-MD-Analisis/](http://127.0.0.1:4000/Curso-MD-Analisis/).
 
 ### Problemes típics
 
