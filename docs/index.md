@@ -5,7 +5,7 @@ layout: default
 
 # Curso practico de Dinamica Molecular y Analisis de Trayectorias
 
-Este repositorio contiene el material del curso en formato Carpentries, publicado con GitHub Pages en `docs/`.
+El material del curso puede encontrarse en [este repositorio GitHub](https://github.com/Biocomputing-Teaching/Curso-MD-Analisis).
 
 ## Organizacion
 
