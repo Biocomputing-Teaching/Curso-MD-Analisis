@@ -40,3 +40,13 @@ Los ejemplos del curso se almacenarán en `docs/data/` y `docs/figures/`.
 Los notebooks están en `docs/episodes/notebooks/`. Si se usan datasets grandes se compartirán por un enlace externo durante el curso.
 Los scripts equivalentes están en `docs/episodes/scripts/`.
 Para generar una trayectoria corta en DCD, ejecutar `python scripts/generate_example_dcd.py`.
+## Guía para participantes
+
+- Traer computador con acceso al clúster o GPU local.
+- Instalar el entorno indicado en la página de preparación.
+- Confirmar acceso a datos y notebooks antes del inicio.
+
+## Requisitos previos
+
+- Manejo básico de Linux.
+- Python básico.
