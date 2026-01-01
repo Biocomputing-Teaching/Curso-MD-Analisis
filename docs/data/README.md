@@ -1,8 +1,8 @@
 Datos de ejemplo para los ejercicios del curso.
 
-- `alanine-dipeptide.pdb`: estructura minima para pruebas con OpenMM.
-- `alanine-dipeptide-multi.pdb`: PDB multi-model para analisis de trayectorias sin DCD.
-- `example_rmsd.csv`: serie de RMSD de ejemplo para graficas.
+- `alanine-dipeptide.pdb`: estructura mínima para pruebas con OpenMM.
+- `alanine-dipeptide-multi.pdb`: PDB multi-model para análisis de trayectorias sin DCD.
+- `example_rmsd.csv`: serie de RMSD de ejemplo para gráficas.
 
 ## Generar trayectoria DCD
 

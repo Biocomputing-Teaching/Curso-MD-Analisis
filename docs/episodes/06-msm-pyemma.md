@@ -26,13 +26,13 @@ permalink: /episodes/06-msm-pyemma/
 
 ## Contenido
 
-- Seleccion de features y preprocesamiento.
-- Clustering y matriz de transicion.
-- Tiempos de relajacion y estados.
+- Selección de features y preprocesamiento.
+- Clustering y matriz de transición.
+- Tiempos de relajación y estados.
 
 ## Demo guiada
 
-### Pipeline minimo en PyEMMA
+### Pipeline mínimo en PyEMMA
 
 ```python
 import pyemma
@@ -63,5 +63,5 @@ print('Timescales:', msm.timescales_[:5])
 
 ## Puntos clave
 
-- La eleccion de features domina la calidad del MSM.
+- La elección de features domina la calidad del MSM.
 - Validar con implied timescales evita sobreajuste.

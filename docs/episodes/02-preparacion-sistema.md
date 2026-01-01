@@ -1,6 +1,6 @@
 ---
 layout: default
-title: Episodio 2 - Preparacion de sistemas en OpenMM
+title: Episodio 2 - Preparación de sistemas en OpenMM
 permalink: /episodes/02-preparacion-sistema/
 ---
 
@@ -21,14 +21,14 @@ permalink: /episodes/02-preparacion-sistema/
 ## Objetivos
 
 - Construir un sistema solvado con OpenMM.
-- Seleccionar campos de fuerza y parametros basicos.
-- Generar archivos iniciales para simulacion.
+- Seleccionar campos de fuerza y parámetros básicos.
+- Generar archivos iniciales para simulación.
 
 ## Contenido
 
-- Topologias y archivos PDB.
+- Topologías y archivos PDB.
 - ForceField y Modeller en OpenMM.
-- Solvatacion, iones y caja periodica.
+- Solvatación, iones y caja periódica.
 
 ## Demo guiada
 
@@ -56,10 +56,10 @@ print('Atoms after solvation:', modeller.topology.getNumAtoms())
 ## Ejercicio
 
 - Crear una caja con padding de 1.2 nm y 0.1 M.
-- Comparar el numero de atomos entre dos condiciones.
+- Comparar el número de átomos entre dos condiciones.
 - Guardar el sistema en `solvated.pdb`.
 
 ## Puntos clave
 
-- La preparacion determina la calidad de la simulacion.
+- La preparación determina la calidad de la simulación.
 - Mantener registros de cada paso facilita la reproducibilidad.

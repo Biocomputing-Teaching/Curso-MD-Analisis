@@ -1,12 +1,13 @@
 ---
 layout: default
 title: Instructores
+permalink: /instructors
 ---
 
-## Guia para instructores
+## Guía para instructores
 
 - Revisar que OpenMM y dependencias funcionen en el aula.
-- Preparar un conjunto minimo de datos de practica.
+- Preparar un conjunto mínimo de datos de práctica.
 - Validar que los notebooks se ejecuten en GPU y en CPU.
 
 ## Materiales

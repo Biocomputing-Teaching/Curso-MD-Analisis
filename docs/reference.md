@@ -1,11 +1,12 @@
 ---
 layout: default
 title: Referencia
+permalink: /reference
 ---
 
-## Referencia rapida
+## Referencia rápida
 
-### Comandos utiles
+### Comandos útiles
 
 ```bash
 # Activar entorno
@@ -24,9 +25,9 @@ jupyter lab
 ### Notas
 
 - Usa semillas reproducibles cuando el ejercicio lo permita.
-- Guarda parametros de simulacion junto con los resultados.
+- Guarda parámetros de simulación junto con los resultados.
 
-### Verificacion de enlaces
+### Verificación de enlaces
 
 ```bash
 python scripts/check_links.py

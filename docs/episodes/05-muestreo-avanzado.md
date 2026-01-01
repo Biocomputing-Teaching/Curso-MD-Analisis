@@ -22,30 +22,30 @@ permalink: /episodes/05-muestreo-avanzado/
 
 - Implementar SMD y umbrella sampling en OpenMM.
 - Diseñar un protocolo de metadynamics.
-- Evaluar convergencia basica.
+- Evaluar convergencia básica.
 
 ## Contenido
 
-- Potenciales de restriccion y CVs.
-- Ventanas y combinacion de perfiles.
-- Buenas practicas de muestreo.
+- Potenciales de restricción y CVs.
+- Ventanas y combinación de perfiles.
+- Buenas prácticas de muestreo.
 
 ## Demo guiada
 
-### Umbrella sampling con una restriccion armonica
+### Umbrella sampling con una restricción armónica
 
 ```python
 import openmm as mm
 from openmm import app, unit
 
 # Sistema base ya preparado
-# Se crea una restriccion armonica sobre una distancia
+# Se crea una restricción armónica sobre una distancia
 
 force = mm.CustomBondForce('0.5*k*(r-r0)^2')
 force.addPerBondParameter('k')
 force.addPerBondParameter('r0')
 
-# Atomos i, j (indices de ejemplo)
+# Átomos i, j (índices de ejemplo)
 force.addBond(10, 120, [1000.0 * unit.kilojoule_per_mole / unit.nanometer**2, 0.35 * unit.nanometer])
 
 system.addForce(force)
@@ -55,9 +55,9 @@ system.addForce(force)
 
 - Definir 5 ventanas con diferentes `r0`.
 - Ejecutar 0.5 ns por ventana.
-- Comparar perfiles de energia potencial.
+- Comparar perfiles de energía potencial.
 
 ## Puntos clave
 
-- El muestreo avanzado requiere diagnosticos de convergencia.
-- Documentar cada ventana y parametro es esencial.
+- El muestreo avanzado requiere diagnósticos de convergencia.
+- Documentar cada ventana y parámetro es esencial.

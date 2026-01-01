@@ -1,6 +1,6 @@
 ---
 layout: default
-title: Episodio 4 - Analisis de trayectorias con MDAnalysis
+title: Episodio 4 - Análisis de trayectorias con MDAnalysis
 permalink: /episodes/04-analisis-trayectorias/
 ---
 
@@ -22,13 +22,13 @@ permalink: /episodes/04-analisis-trayectorias/
 
 - Cargar trayectorias con MDAnalysis.
 - Calcular RMSD, RMSF y distancias internas.
-- Generar graficas reproducibles.
+- Generar gráficas reproducibles.
 
 ## Contenido
 
 - Universes, selections y atom groups.
-- Analisis basico y estadisticas.
-- Exportacion de resultados.
+- Análisis básico y estadísticas.
+- Exportación de resultados.
 
 ## Demo guiada
 
@@ -65,10 +65,10 @@ plt.savefig(output_name, dpi=150)
 ## Ejercicio
 
 - Calcular RMSF por residuo.
-- Comparar RMSD entre dos replicas.
+- Comparar RMSD entre dos réplicas.
 - Guardar figuras en `docs/figures/`.
 
 ## Puntos clave
 
-- La seleccion correcta de atomos es critica.
-- Automatizar analisis mejora la trazabilidad.
+- La selección correcta de átomos es crítica.
+- Automatizar análisis mejora la trazabilidad.

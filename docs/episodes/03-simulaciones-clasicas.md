@@ -1,6 +1,6 @@
 ---
 layout: default
-title: Episodio 3 - Simulaciones clasicas y control de calidad
+title: Episodio 3 - Simulaciones clásicas y control de calidad
 permalink: /episodes/03-simulaciones-clasicas/
 ---
 
@@ -20,19 +20,19 @@ permalink: /episodes/03-simulaciones-clasicas/
 
 ## Objetivos
 
-- Ejecutar minimizacion, calentamiento y produccion.
+- Ejecutar minimización, calentamiento y producción.
 - Configurar integradores y termostatos.
 - Evaluar estabilidad y calidad de la trayectoria.
 
 ## Contenido
 
 - Integradores (Langevin, Verlet).
-- Control de temperatura y presion.
-- Reporters para energia, trayectoria y log.
+- Control de temperatura y presión.
+- Reporters para energía, trayectoria y log.
 
 ## Demo guiada
 
-### Minimizar y correr una simulacion corta
+### Minimizar y correr una simulación corta
 
 ```python
 from openmm import app
@@ -68,10 +68,10 @@ simulation.step(5000)
 ## Ejercicio
 
 - Correr 10,000 pasos y guardar `log.csv`.
-- Graficar energia potencial vs tiempo.
-- Identificar si hay deriva de energia.
+- Graficar energía potencial vs tiempo.
+- Identificar si hay deriva de energía.
 
 ## Puntos clave
 
 - El control de calidad es parte del flujo de trabajo.
-- Reporters bien configurados ahorran tiempo de depuracion.
+- Reporters bien configurados ahorran tiempo de depuración.

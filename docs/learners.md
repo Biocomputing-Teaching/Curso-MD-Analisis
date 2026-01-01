@@ -1,15 +1,16 @@
 ---
 layout: default
 title: Participantes
+permalink: /participants
 ---
 
-## Guia para participantes
+## Guía para participantes
 
-- Traer computador con acceso al cluster o GPU local.
-- Instalar el entorno indicado en la pagina de preparacion.
+- Traer computador con acceso al clúster o GPU local.
+- Instalar el entorno indicado en la página de preparación.
 - Confirmar acceso a datos y notebooks antes del inicio.
 
 ## Requisitos previos
 
-- Manejo basico de Linux.
-- Python basico.
+- Manejo básico de Linux.
+- Python básico.

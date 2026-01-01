@@ -1,6 +1,6 @@
 ---
 layout: default
-title: Episodio 1 - Introduccion y entorno de trabajo
+title: Episodio 1 - Introducción y entorno de trabajo
 permalink: /episodes/01-introduccion/
 ---
 
@@ -20,19 +20,19 @@ permalink: /episodes/01-introduccion/
 
 ## Objetivos
 
-- Identificar los componentes de una simulacion MD.
+- Identificar los componentes de una simulación MD.
 - Configurar un entorno de trabajo reproducible.
 - Ejecutar un primer script de OpenMM.
 
 ## Contenido
 
-- Conceptos basicos: potencial, integrador, condiciones de borde.
+- Conceptos básicos: potencial, integrador, condiciones de borde.
 - Unidades y convenciones en OpenMM.
-- Estructura minima de un script en OpenMM.
+- Estructura mínima de un script en OpenMM.
 
 ## Demo guiada
 
-### Crear un sistema minimo en OpenMM
+### Crear un sistema mínimo en OpenMM
 
 ```python
 from openmm import app
@@ -64,11 +64,11 @@ print('Potential energy:', state.getPotentialEnergy())
 
 ## Ejercicio
 
-- Ejecutar el script en CPU y GPU (si esta disponible).
-- Registrar energia potencial y temperatura inicial.
+- Ejecutar el script en CPU y GPU (si está disponible).
+- Registrar energía potencial y temperatura inicial.
 - Guardar el entorno `conda list` en un archivo de texto.
 
 ## Puntos clave
 
 - OpenMM permite flujos de trabajo reproducibles en Python.
-- Es vital documentar unidades y parametros desde el inicio.
+- Es vital documentar unidades y parámetros desde el inicio.
