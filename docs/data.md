@@ -48,6 +48,6 @@ simulation.step(200)
 print('Wrote docs/data/alanine-dipeptide.dcd')
 ```
 
-Fuente del script: [generate_example_dcd.py](scripts/generate_example_dcd.py)
+Fuente del script: [generate_example_dcd.py](https://github.com/Biocomputing-Teaching/Curso-MD-Analisis/blob/main/scripts/generate_example_dcd.py)
 
 Nota: el comando para generar el DCD está en [Referencia]({{ site.baseurl }}/reference/).
