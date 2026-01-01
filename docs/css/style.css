@@ -91,13 +91,13 @@ pre code {
 
 .copy-button {
   position: absolute;
-  top: 0.65rem;
-  right: 0.65rem;
+  top: 0.5rem;
+  right: 0.5rem;
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  width: 2.15rem;
-  height: 2.15rem;
+  width: 2rem;
+  height: 2rem;
   border-radius: 8px;
   border: 1px solid #2b322c;
   background: rgba(17, 20, 17, 0.85);
