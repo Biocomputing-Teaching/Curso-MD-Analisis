@@ -43,3 +43,13 @@ jupyter lab
 ```bash
 python scripts/check_links.py
 ```
+
+## Generar trayectoria DCD
+
+Para crear un DCD corto con OpenMM:
+
+```bash
+python scripts/generate_example_dcd.py
+```
+
+Esto genera `docs/data/alanine-dipeptide.dcd`.
