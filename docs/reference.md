@@ -22,6 +22,17 @@ jupyter lab
 - `docs/data/` datos de ejemplo
 - `docs/figures/` figuras
 
+## Guía para instructores
+
+- Revisar que OpenMM y dependencias funcionen en el aula.
+- Preparar un conjunto mínimo de datos de práctica.
+- Validar que los notebooks se ejecuten en GPU y en CPU.
+
+## Materiales
+
+- Notebooks de ejemplo en `docs/episodes/`.
+- Figuras en `docs/figures/`.
+
 ### Notas
 
 - Usa semillas reproducibles cuando el ejercicio lo permita.
