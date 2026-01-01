@@ -6,8 +6,6 @@ permalink: /
 
 # Curso práctico de Dinámica Molecular y Análisis de Trayectorias
 
-El material del curso puede encontrarse en [este repositorio GitHub](https://github.com/Biocomputing-Teaching/Curso-MD-Analisis).
-
 ## Organización
 
 - **Fechas:** 15, 16 y 19 de enero de 2026
@@ -25,26 +23,6 @@ El material del curso puede encontrarse en [este repositorio GitHub](https://git
 - Familiaridad con la línea de comandos de Linux
 - Conocimientos básicos de Python
 - Acceso a un clúster o workstation con GPU, idealmente con OpenMM
-
-## Mantenimiento de episodios
-
-Para mantener sincronizados los bloques de código Python embebidos en los
-episodios con los scripts originales, ejecuta antes de commitejar:
-
-```bash
-make sync-code
-```
-
-Este comando actualiza los bloques en `docs/**/*.md` desde los scripts y
-notebooks bajo `docs/`. También permite forzar una fuente concreta con
-`<!-- sync-from: ruta/al/script.py -->` dentro del markdown y añade un enlace
-al script original bajo cada bloque.
-
-Para regenerar notebooks desde los scripts:
-
-```bash
-make sync-notebooks
-```
 
 ## Programa del curso
 
