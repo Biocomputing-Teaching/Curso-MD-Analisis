@@ -11,12 +11,12 @@ permalink: /episodes/01-introduccion/
 
 ## Notebook
 
-- [01-introduccion.ipynb]({{ site.baseurl }}/episodes/notebooks/01-introduccion.ipynb)
-- [Ver en nbviewer](https://nbviewer.org/url/biocomputing-teaching.github.io/Curso-MD-Analisis/episodes/notebooks/01-introduccion.ipynb)
+- <a href="https://biocomputing-teaching.github.io/Curso-MD-Analisis/episodes/notebooks/01-introduccion.ipynb">01-introduccion.ipynb</a>
+- <a href="https://nbviewer.org/url/biocomputing-teaching.github.io/Curso-MD-Analisis/episodes/notebooks/01-introduccion.ipynb">Ver en nbviewer</a>
 
 ## Scripts
 
-- [01-introduccion.py]({{ site.baseurl }}/episodes/scripts/01-introduccion.py)
+- <a href="https://biocomputing-teaching.github.io/Curso-MD-Analisis/episodes/scripts/01-introduccion.py">01-introduccion.py</a>
 
 ## Objetivos
 
@@ -43,7 +43,9 @@ print('OpenMM', mm.__version__)
 print('Atoms:', pdb.topology.getNumAtoms())
 ```
 
-Fuente del script: [01-introduccion.py]({{ site.baseurl }}/episodes/scripts/01-introduccion.py)
+Fuente del script: <a href="https://biocomputing-teaching.github.io/Curso-MD-Analisis/episodes/scripts/01-introduccion.py">01-introduccion.py</a>
+
+Fuente del script: <a href="https://biocomputing-teaching.github.io/Curso-MD-Analisis/episodes/scripts/01-introduccion.py">01-introduccion.py</a>
 
 ## Ejercicio
 

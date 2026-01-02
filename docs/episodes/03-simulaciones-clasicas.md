@@ -11,12 +11,12 @@ permalink: /episodes/03-simulaciones-clasicas/
 
 ## Notebook
 
-- [03-simulaciones-clasicas.ipynb]({{ site.baseurl }}/episodes/notebooks/03-simulaciones-clasicas.ipynb)
-- [Ver en nbviewer](https://nbviewer.org/url/biocomputing-teaching.github.io/Curso-MD-Analisis/episodes/notebooks/03-simulaciones-clasicas.ipynb)
+- <a href="https://biocomputing-teaching.github.io/Curso-MD-Analisis/episodes/notebooks/03-simulaciones-clasicas.ipynb">03-simulaciones-clasicas.ipynb</a>
+- <a href="https://nbviewer.org/url/biocomputing-teaching.github.io/Curso-MD-Analisis/episodes/notebooks/03-simulaciones-clasicas.ipynb">Ver en nbviewer</a>
 
 ## Scripts
 
-- [03-simulaciones-clasicas.py]({{ site.baseurl }}/episodes/scripts/03-simulaciones-clasicas.py)
+- <a href="https://biocomputing-teaching.github.io/Curso-MD-Analisis/episodes/scripts/03-simulaciones-clasicas.py">03-simulaciones-clasicas.py</a>
 
 ## Objetivos
 
@@ -55,11 +55,13 @@ state = simulation.context.getState(getEnergy=True)
 print('Potential energy:', state.getPotentialEnergy())
 ```
 
-Fuente del script: [03-simulaciones-clasicas.py]({{ site.baseurl }}/episodes/scripts/03-simulaciones-clasicas.py)
+Fuente del script: <a href="https://biocomputing-teaching.github.io/Curso-MD-Analisis/episodes/scripts/03-simulaciones-clasicas.py">03-simulaciones-clasicas.py</a>
+
+Fuente del script: <a href="https://biocomputing-teaching.github.io/Curso-MD-Analisis/episodes/scripts/03-simulaciones-clasicas.py">03-simulaciones-clasicas.py</a>
 
 ## Ejercicio
 
-- Correr 10,000 pasos y guardar `log.csv`.
+- Correr 10,000 pasos y guardar <a href="https://biocomputing-teaching.github.io/Curso-MD-Analisis/data/">log.csv</a>.
 - Graficar energía potencial vs tiempo.
 - Identificar si hay deriva de energía.
 

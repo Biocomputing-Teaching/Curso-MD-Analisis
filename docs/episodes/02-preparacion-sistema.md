@@ -11,12 +11,12 @@ permalink: /episodes/02-preparacion-sistema/
 
 ## Notebook
 
-- [02-preparacion-sistema.ipynb]({{ site.baseurl }}/episodes/notebooks/02-preparacion-sistema.ipynb)
-- [Ver en nbviewer](https://nbviewer.org/url/biocomputing-teaching.github.io/Curso-MD-Analisis/episodes/notebooks/02-preparacion-sistema.ipynb)
+- <a href="https://biocomputing-teaching.github.io/Curso-MD-Analisis/episodes/notebooks/02-preparacion-sistema.ipynb">02-preparacion-sistema.ipynb</a>
+- <a href="https://nbviewer.org/url/biocomputing-teaching.github.io/Curso-MD-Analisis/episodes/notebooks/02-preparacion-sistema.ipynb">Ver en nbviewer</a>
 
 ## Scripts
 
-- [02-preparacion-sistema.py]({{ site.baseurl }}/episodes/scripts/02-preparacion-sistema.py)
+- <a href="https://biocomputing-teaching.github.io/Curso-MD-Analisis/episodes/scripts/02-preparacion-sistema.py">02-preparacion-sistema.py</a>
 
 ## Objetivos
 
@@ -46,13 +46,15 @@ modeller.addSolvent(forcefield, model='tip3p', padding=1.0 * unit.nanometer)
 print('Atoms after solvation:', modeller.topology.getNumAtoms())
 ```
 
-Fuente del script: [02-preparacion-sistema.py]({{ site.baseurl }}/episodes/scripts/02-preparacion-sistema.py)
+Fuente del script: <a href="https://biocomputing-teaching.github.io/Curso-MD-Analisis/episodes/scripts/02-preparacion-sistema.py">02-preparacion-sistema.py</a>
+
+Fuente del script: <a href="https://biocomputing-teaching.github.io/Curso-MD-Analisis/episodes/scripts/02-preparacion-sistema.py">02-preparacion-sistema.py</a>
 
 ## Ejercicio
 
 - Crear una caja con padding de 1.2 nm y 0.1 M.
 - Comparar el número de átomos entre dos condiciones.
-- Guardar el sistema en `solvated.pdb`.
+- Guardar el sistema en <a href="https://biocomputing-teaching.github.io/Curso-MD-Analisis/data/">solvated.pdb</a>.
 
 ## Puntos clave
 

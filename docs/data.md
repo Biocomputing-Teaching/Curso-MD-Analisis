@@ -7,10 +7,10 @@ permalink: /data/
 
 ### Descargar materiales
 
-- [Descargar `alanine-dipeptide.pdb`]({{ site.baseurl }}/data/alanine-dipeptide.pdb): estructura mínima para pruebas con OpenMM.
-- [Descargar `alanine-dipeptide-multi.pdb`]({{ site.baseurl }}/data/alanine-dipeptide-multi.pdb): PDB multi-model para análisis de trayectorias sin DCD.
-- [Descargar `example_rmsd.csv`]({{ site.baseurl }}/data/example_rmsd.csv): serie de RMSD de ejemplo para gráficas.
-Para obtener el DCD, genera la trayectoria localmente (ver [Referencia]({{ site.baseurl }}/reference/)).
+- <a href="https://biocomputing-teaching.github.io/Curso-MD-Analisis/data/alanine-dipeptide.pdb">Descargar alanine-dipeptide.pdb</a>: estructura mínima para pruebas con OpenMM.
+- <a href="https://biocomputing-teaching.github.io/Curso-MD-Analisis/data/alanine-dipeptide-multi.pdb">Descargar alanine-dipeptide-multi.pdb</a>: PDB multi-model para análisis de trayectorias sin DCD.
+- <a href="https://biocomputing-teaching.github.io/Curso-MD-Analisis/data/example_rmsd.csv">Descargar example_rmsd.csv</a>: serie de RMSD de ejemplo para gráficas.
+Para obtener el DCD, genera la trayectoria localmente (ver <a href="https://biocomputing-teaching.github.io/Curso-MD-Analisis/reference/">Referencia</a>).
 
 ### Código completo del generador DCD
 
@@ -48,6 +48,8 @@ simulation.step(200)
 print('Wrote docs/data/alanine-dipeptide.dcd')
 ```
 
-Fuente del script: [generate_example_dcd.py](https://github.com/Biocomputing-Teaching/Curso-MD-Analisis/blob/main/scripts/generate_example_dcd.py)
+Fuente del script: <a href="https://github.com/Biocomputing-Teaching/Curso-MD-Analisis/blob/main/scripts/generate_example_dcd.py">generate_example_dcd.py</a>
 
-Nota: el comando para generar el DCD está en [Referencia]({{ site.baseurl }}/reference/).
+Fuente del script: <a href="https://github.com/Biocomputing-Teaching/Curso-MD-Analisis/blob/main/scripts/generate_example_dcd.py">generate_example_dcd.py</a>
+
+Nota: el comando para generar el DCD está en <a href="https://biocomputing-teaching.github.io/Curso-MD-Analisis/reference/">Referencia</a>.

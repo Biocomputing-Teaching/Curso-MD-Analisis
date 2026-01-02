@@ -12,10 +12,10 @@ permalink: /
 - **Lugar:** Universidad Andrés Bello, Concepción, Chile
 - **Modalidad:** Presencial, práctico (mañana y tarde)
 - **Idioma:** Español
-- **Profesor:** [Jordi Villà i Freixa](mailto:jordi.villa@uvic.cat), [Computational Biochemistry and Biophysics Lab](https://mon.uvic.cat/cbbl), [Universitat de Vic - Universitat Central de Catalunya](https://www.uvic.cat), [IRIS-CC](https://iris-cc.cat)
+- **Profesor:** <a href="mailto:jordi.villa@uvic.cat">Jordi Villà i Freixa</a>, <a href="https://mon.uvic.cat/cbbl">Computational Biochemistry and Biophysics Lab</a>, <a href="https://www.uvic.cat">Universitat de Vic - Universitat Central de Catalunya</a>, <a href="https://iris-cc.cat">IRIS-CC</a>
 - **Cupo limitado:** 15-20 participantes
 - **Inscripción previa obligatoria**
-- **Contacto:** Verónica Andrea Jiménez Curihual [veronica.jimenez@unab.cl](mailto:veronica.jimenez@unab.cl)
+- **Contacto:** Verónica Andrea Jiménez Curihual <a href="mailto:veronica.jimenez@unab.cl">veronica.jimenez@unab.cl</a>
 
 ## Requisitos previos
 
@@ -71,11 +71,11 @@ permalink: /
 
 ## Colaboradores
 
-Con la colaboración de [![COZYME COST ACTION: Pan-European Network on Computational Redesign of Enzymes](figures/logo-cozyme-160x34.png)](https://cozyme.eu/) Pan-European Network on Computational Redesign of Enzymes.
+Con la colaboración de <a href="https://biocomputing-teaching.github.io/Curso-MD-Analisis/figures/logo-cozyme-160x34.png">![COZYME COST ACTION: Pan-European Network on Computational Redesign of Enzymes</a>](https://cozyme.eu/) Pan-European Network on Computational Redesign of Enzymes.
 
-![COST-Actions](figures/COST_LOGO_white_tranparent_small-300x93.png)
+!<a href="https://biocomputing-teaching.github.io/Curso-MD-Analisis/figures/COST_LOGO_white_tranparent_small-300x93.png">COST-Actions</a>
 
 Con el soporte de Fondecyt Fondo Nacional de Desarrollo Científico y Tecnológico
 
-![concyt](figures/logo-conicyt-chile-en-marcha.png)
+!<a href="https://biocomputing-teaching.github.io/Curso-MD-Analisis/figures/logo-conicyt-chile-en-marcha.png">concyt</a>
 *_*

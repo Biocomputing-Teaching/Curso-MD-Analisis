@@ -11,12 +11,12 @@ permalink: /episodes/04-analisis-trayectorias/
 
 ## Notebook
 
-- [04-analisis-trayectorias.ipynb]({{ site.baseurl }}/episodes/notebooks/04-analisis-trayectorias.ipynb)
-- [Ver en nbviewer](https://nbviewer.org/url/biocomputing-teaching.github.io/Curso-MD-Analisis/episodes/notebooks/04-analisis-trayectorias.ipynb)
+- <a href="https://biocomputing-teaching.github.io/Curso-MD-Analisis/episodes/notebooks/04-analisis-trayectorias.ipynb">04-analisis-trayectorias.ipynb</a>
+- <a href="https://nbviewer.org/url/biocomputing-teaching.github.io/Curso-MD-Analisis/episodes/notebooks/04-analisis-trayectorias.ipynb">Ver en nbviewer</a>
 
 ## Scripts
 
-- [04-analisis-trayectorias.py]({{ site.baseurl }}/episodes/scripts/04-analisis-trayectorias.py)
+- <a href="https://biocomputing-teaching.github.io/Curso-MD-Analisis/episodes/scripts/04-analisis-trayectorias.py">04-analisis-trayectorias.py</a>
 
 ## Objetivos
 
@@ -61,7 +61,9 @@ plt.title('RMSD')
 plt.savefig(output_name, dpi=150)
 ```
 
-Fuente del script: [04-analisis-trayectorias.py]({{ site.baseurl }}/episodes/scripts/04-analisis-trayectorias.py)
+Fuente del script: <a href="https://biocomputing-teaching.github.io/Curso-MD-Analisis/episodes/scripts/04-analisis-trayectorias.py">04-analisis-trayectorias.py</a>
+
+Fuente del script: <a href="https://biocomputing-teaching.github.io/Curso-MD-Analisis/episodes/scripts/04-analisis-trayectorias.py">04-analisis-trayectorias.py</a>
 
 ## Ejercicio
 

@@ -11,12 +11,12 @@ permalink: /episodes/06-msm-pyemma/
 
 ## Notebook
 
-- [06-msm-pyemma.ipynb]({{ site.baseurl }}/episodes/notebooks/06-msm-pyemma.ipynb)
-- [Ver en nbviewer](https://nbviewer.org/url/biocomputing-teaching.github.io/Curso-MD-Analisis/episodes/notebooks/06-msm-pyemma.ipynb)
+- <a href="https://biocomputing-teaching.github.io/Curso-MD-Analisis/episodes/notebooks/06-msm-pyemma.ipynb">06-msm-pyemma.ipynb</a>
+- <a href="https://nbviewer.org/url/biocomputing-teaching.github.io/Curso-MD-Analisis/episodes/notebooks/06-msm-pyemma.ipynb">Ver en nbviewer</a>
 
 ## Scripts
 
-- [06-msm-pyemma.py]({{ site.baseurl }}/episodes/scripts/06-msm-pyemma.py)
+- <a href="https://biocomputing-teaching.github.io/Curso-MD-Analisis/episodes/scripts/06-msm-pyemma.py">06-msm-pyemma.py</a>
 
 ## Objetivos
 
@@ -50,7 +50,9 @@ msm = pyemma.msm.estimate_markov_model(cl.dtrajs, lag=10)
 print('Timescales:', msm.timescales_[:5])
 ```
 
-Fuente del script: [06-msm-pyemma.py]({{ site.baseurl }}/episodes/scripts/06-msm-pyemma.py)
+Fuente del script: <a href="https://biocomputing-teaching.github.io/Curso-MD-Analisis/episodes/scripts/06-msm-pyemma.py">06-msm-pyemma.py</a>
+
+Fuente del script: <a href="https://biocomputing-teaching.github.io/Curso-MD-Analisis/episodes/scripts/06-msm-pyemma.py">06-msm-pyemma.py</a>
 
 ## Ejercicio
 

@@ -11,12 +11,12 @@ permalink: /episodes/05-muestreo-avanzado/
 
 ## Notebook
 
-- [05-muestreo-avanzado.ipynb]({{ site.baseurl }}/episodes/notebooks/05-muestreo-avanzado.ipynb)
-- [Ver en nbviewer](https://nbviewer.org/url/biocomputing-teaching.github.io/Curso-MD-Analisis/episodes/notebooks/05-muestreo-avanzado.ipynb)
+- <a href="https://biocomputing-teaching.github.io/Curso-MD-Analisis/episodes/notebooks/05-muestreo-avanzado.ipynb">05-muestreo-avanzado.ipynb</a>
+- <a href="https://nbviewer.org/url/biocomputing-teaching.github.io/Curso-MD-Analisis/episodes/notebooks/05-muestreo-avanzado.ipynb">Ver en nbviewer</a>
 
 ## Scripts
 
-- [05-muestreo-avanzado.py]({{ site.baseurl }}/episodes/scripts/05-muestreo-avanzado.py)
+- <a href="https://biocomputing-teaching.github.io/Curso-MD-Analisis/episodes/scripts/05-muestreo-avanzado.py">05-muestreo-avanzado.py</a>
 
 ## Objetivos
 
@@ -52,7 +52,9 @@ system.addForce(force)
 print('Custom forces:', system.getNumForces())
 ```
 
-Fuente del script: [05-muestreo-avanzado.py]({{ site.baseurl }}/episodes/scripts/05-muestreo-avanzado.py)
+Fuente del script: <a href="https://biocomputing-teaching.github.io/Curso-MD-Analisis/episodes/scripts/05-muestreo-avanzado.py">05-muestreo-avanzado.py</a>
+
+Fuente del script: <a href="https://biocomputing-teaching.github.io/Curso-MD-Analisis/episodes/scripts/05-muestreo-avanzado.py">05-muestreo-avanzado.py</a>
 
 ## Ejercicio
 

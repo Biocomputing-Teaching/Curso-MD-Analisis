@@ -14,7 +14,9 @@ ROOT_DIR = Path(__file__).resolve().parents[1]
 DOCS_DIR = ROOT_DIR / "docs"
 CODE_BLOCK_PATTERN = re.compile(r"```python\n.*?\n```", re.DOTALL)
 SYNC_FROM_PATTERN = re.compile(r"<!--\s*sync-from:\s*(.*?)\s*-->")
-LINK_LINE_PATTERN = re.compile(r"\n\nFuente del script: \[.*?\]\(.*?\)")
+LINK_LINE_PATTERN = re.compile(r"\n\nFuente del script: .*")
+BASE_WEB = "https://biocomputing-teaching.github.io/Curso-MD-Analisis"
+BASE_GH = "https://github.com/Biocomputing-Teaching/Curso-MD-Analisis/blob/main"
 
 SCRIPTS_DIR_GLOB = "**/scripts/*.py"
 NOTEBOOKS_DIR_GLOB = "**/notebooks/*.ipynb"
@@ -47,11 +49,11 @@ def load_source_text(source_path: Path) -> str:
 def build_source_link(source_path: Path) -> str:
     if DOCS_DIR in source_path.parents:
         rel = source_path.relative_to(DOCS_DIR).as_posix()
-        href = f"{{{{ site.baseurl }}}}/{rel}"
+        href = f"{BASE_WEB}/{rel}"
     else:
         rel = source_path.relative_to(ROOT_DIR).as_posix()
-        href = rel
-    return f"\n\nFuente del script: [{source_path.name}]({href})"
+        href = f"{BASE_GH}/{rel}"
+    return f'\n\nFuente del script: <a href="{href}">{source_path.name}</a>'
 
 
 def sync_markdown(markdown_path: Path, sources: dict[str, Path]) -> bool:

@@ -34,12 +34,6 @@ print('pyemma', pyemma.__version__)
 PY
 ```
 
-## Datos y materiales
-
-Los ejemplos del curso se almacenarán en `docs/data/` y `docs/figures/`.
-Los notebooks están en `docs/episodes/notebooks/`. Si se usan datasets grandes se compartirán por un enlace externo durante el curso.
-Los scripts equivalentes están en `docs/episodes/scripts/`.
-Para generar una trayectoria corta en DCD, ejecutar `python scripts/generate_example_dcd.py`.
 ## Guía para participantes
 
 - Traer computador con acceso al clúster o GPU local.
