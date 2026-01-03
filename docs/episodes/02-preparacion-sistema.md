@@ -16,6 +16,13 @@ permalink: /episodes/02-preparacion-sistema/
 
 ## Scripts
 
+<div class="episode-nav">
+  <a href="https://biocomputing-teaching.github.io/Curso-MD-Analisis/episodes/01-introduccion/">Anterior</a>
+  <a href="https://biocomputing-teaching.github.io/Curso-MD-Analisis/episodes/">Todos los episodios</a>
+  <a href="https://biocomputing-teaching.github.io/Curso-MD-Analisis/episodes/03-simulaciones-clasicas/">Siguiente</a>
+</div>
+
+
 - <a href="https://biocomputing-teaching.github.io/Curso-MD-Analisis/episodes/scripts/02-preparacion-sistema.py">02-preparacion-sistema.py</a>
 
 ## Objetivos

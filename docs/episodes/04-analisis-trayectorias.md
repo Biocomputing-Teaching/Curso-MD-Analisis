@@ -16,6 +16,13 @@ permalink: /episodes/04-analisis-trayectorias/
 
 ## Scripts
 
+<div class="episode-nav">
+  <a href="https://biocomputing-teaching.github.io/Curso-MD-Analisis/episodes/03-simulaciones-clasicas/">Anterior</a>
+  <a href="https://biocomputing-teaching.github.io/Curso-MD-Analisis/episodes/">Todos los episodios</a>
+  <a href="https://biocomputing-teaching.github.io/Curso-MD-Analisis/episodes/05-muestreo-avanzado/">Siguiente</a>
+</div>
+
+
 - <a href="https://biocomputing-teaching.github.io/Curso-MD-Analisis/episodes/scripts/04-analisis-trayectorias.py">04-analisis-trayectorias.py</a>
 
 ## Objetivos

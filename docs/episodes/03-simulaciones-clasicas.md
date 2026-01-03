@@ -16,6 +16,13 @@ permalink: /episodes/03-simulaciones-clasicas/
 
 ## Scripts
 
+<div class="episode-nav">
+  <a href="https://biocomputing-teaching.github.io/Curso-MD-Analisis/episodes/02-preparacion-sistema/">Anterior</a>
+  <a href="https://biocomputing-teaching.github.io/Curso-MD-Analisis/episodes/">Todos los episodios</a>
+  <a href="https://biocomputing-teaching.github.io/Curso-MD-Analisis/episodes/04-analisis-trayectorias/">Siguiente</a>
+</div>
+
+
 - <a href="https://biocomputing-teaching.github.io/Curso-MD-Analisis/episodes/scripts/03-simulaciones-clasicas.py">03-simulaciones-clasicas.py</a>
 
 ## Objetivos

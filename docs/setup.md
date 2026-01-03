@@ -18,7 +18,7 @@ permalink: /setup/
 ```bash
 conda create -n md-openmm python=3.10
 conda activate md-openmm
-conda install -c conda-forge openmm mdanalysis pyemma jupyterlab numpy scipy matplotlib
+conda install -c conda-forge openmm mdanalysis deeptime jupyterlab numpy scipy matplotlib
 ```
 
 ## Verificación rápida
@@ -27,10 +27,10 @@ conda install -c conda-forge openmm mdanalysis pyemma jupyterlab numpy scipy mat
 python - <<'PY'
 import openmm
 import MDAnalysis as mda
-import pyemma
+import deeptime
 print('openmm', openmm.__version__)
 print('MDAnalysis', mda.__version__)
-print('pyemma', pyemma.__version__)
+print('deeptime', deeptime.__version__)
 PY
 ```
 
@@ -43,4 +43,4 @@ PY
 ## Requisitos previos
 
 - Manejo básico de Linux.
-- Python básico.
+- Se asume un manejo básico de python. Explorar, por ejemplo, este enlace: [Biomolecular simulation: python basics](https://emleddin.github.io/2020-06-05-py-tutorial/01-introduction/index.html)

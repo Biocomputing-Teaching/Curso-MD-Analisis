@@ -16,6 +16,13 @@ permalink: /episodes/05-muestreo-avanzado/
 
 ## Scripts
 
+<div class="episode-nav">
+  <a href="https://biocomputing-teaching.github.io/Curso-MD-Analisis/episodes/04-analisis-trayectorias/">Anterior</a>
+  <a href="https://biocomputing-teaching.github.io/Curso-MD-Analisis/episodes/">Todos los episodios</a>
+  <a href="https://biocomputing-teaching.github.io/Curso-MD-Analisis/episodes/06-msm-pyemma/">Siguiente</a>
+</div>
+
+
 - <a href="https://biocomputing-teaching.github.io/Curso-MD-Analisis/episodes/scripts/05-muestreo-avanzado.py">05-muestreo-avanzado.py</a>
 
 ## Objetivos

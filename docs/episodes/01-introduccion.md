@@ -16,6 +16,13 @@ permalink: /episodes/01-introduccion/
 
 ## Scripts
 
+<div class="episode-nav">
+  
+  <a href="https://biocomputing-teaching.github.io/Curso-MD-Analisis/episodes/">Todos los episodios</a>
+  <a href="https://biocomputing-teaching.github.io/Curso-MD-Analisis/episodes/02-preparacion-sistema/">Siguiente</a>
+</div>
+
+
 - <a href="https://biocomputing-teaching.github.io/Curso-MD-Analisis/episodes/scripts/01-introduccion.py">01-introduccion.py</a>
 
 ## Objetivos

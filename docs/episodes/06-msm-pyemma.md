@@ -16,6 +16,13 @@ permalink: /episodes/06-msm-pyemma/
 
 ## Scripts
 
+<div class="episode-nav">
+  <a href="https://biocomputing-teaching.github.io/Curso-MD-Analisis/episodes/05-muestreo-avanzado/">Anterior</a>
+  <a href="https://biocomputing-teaching.github.io/Curso-MD-Analisis/episodes/">Todos los episodios</a>
+  
+</div>
+
+
 - <a href="https://biocomputing-teaching.github.io/Curso-MD-Analisis/episodes/scripts/06-msm-pyemma.py">06-msm-pyemma.py</a>
 
 ## Objetivos
