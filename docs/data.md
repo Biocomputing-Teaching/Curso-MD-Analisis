@@ -7,10 +7,19 @@ permalink: /data/
 
 ### Descargar materiales
 
-- <a href="https://biocomputing-teaching.github.io/Curso-MD-Analisis/data/alanine-dipeptide.pdb">Descargar alanine-dipeptide.pdb</a>: estructura mínima para pruebas con OpenMM.
-- <a href="https://biocomputing-teaching.github.io/Curso-MD-Analisis/data/alanine-dipeptide-multi.pdb">Descargar alanine-dipeptide-multi.pdb</a>: PDB multi-model para análisis de trayectorias sin DCD.
-- <a href="https://biocomputing-teaching.github.io/Curso-MD-Analisis/data/example_rmsd.csv">Descargar example_rmsd.csv</a>: serie de RMSD de ejemplo para gráficas.
-Para obtener el DCD, genera la trayectoria localmente (ver <a href="https://biocomputing-teaching.github.io/Curso-MD-Analisis/reference/">Referencia</a>).
+Los datos del curso viven en <a href="https://github.com/Biocomputing-Teaching/Curso-MD-Data">Curso-MD-Data</a>. Descárgalos a `COURSE_DIR/data` siguiendo las instrucciones de <a href="{{ site.baseurl }}/setup/">Preparación</a>.
+
+- <a href="https://github.com/Biocomputing-Teaching/Curso-MD-Data/raw/main/alanine-dipeptide.pdb">Descargar alanine-dipeptide.pdb</a>: estructura mínima para pruebas con OpenMM.
+- <a href="https://github.com/Biocomputing-Teaching/Curso-MD-Data/raw/main/alanine-dipeptide-multi.pdb">Descargar alanine-dipeptide-multi.pdb</a>: PDB multi-model para análisis de trayectorias sin DCD.
+- <a href="https://github.com/Biocomputing-Teaching/Curso-MD-Data/raw/main/example_rmsd.csv">Descargar example_rmsd.csv</a>: serie de RMSD de ejemplo para gráficas.
+Para obtener el DCD, genera la trayectoria localmente (ver <a href="{{ site.baseurl }}/reference/">Referencia</a>).
+
+### Datos para complejo proteína-ligando (OpenMM)
+
+- <a href="https://github.com/Biocomputing-Teaching/Curso-MD-Data/raw/main/complex/protein_orig.pdb">Descargar protein_orig.pdb</a>: proteína con ligando (para preparación).
+- <a href="https://github.com/Biocomputing-Teaching/Curso-MD-Data/raw/main/complex/protein.pdb">Descargar protein.pdb</a>: proteína preparada para simulación.
+- <a href="https://github.com/Biocomputing-Teaching/Curso-MD-Data/raw/main/complex/ligand1.mol">Descargar ligand1.mol</a>: ligando en formato MOL.
+- <a href="https://github.com/Biocomputing-Teaching/Curso-MD-Data/raw/main/complex/ligand1.sdf">Descargar ligand1.sdf</a>: ligando en formato SDF.
 
 ### Código completo del generador DCD
 
@@ -50,6 +59,4 @@ print('Wrote docs/data/alanine-dipeptide.dcd')
 
 Fuente del script: <a href="https://github.com/Biocomputing-Teaching/Curso-MD-Analisis/blob/main/scripts/generate_example_dcd.py">generate_example_dcd.py</a>
 
-Fuente del script: <a href="https://github.com/Biocomputing-Teaching/Curso-MD-Analisis/blob/main/scripts/generate_example_dcd.py">generate_example_dcd.py</a>
-
-Nota: el comando para generar el DCD está en <a href="https://biocomputing-teaching.github.io/Curso-MD-Analisis/reference/">Referencia</a>.
+Nota: el comando para generar el DCD está en <a href="{{ site.baseurl }}/reference/">Referencia</a>.

@@ -1,24 +1,58 @@
+#!/usr/bin/env python3
+import argparse
 import os
-import MDAnalysis as mda
-from MDAnalysis.analysis import rms
-import matplotlib.pyplot as plt
+from pathlib import Path
 
-pdb_path = '../../data/alanine-dipeptide.pdb'
-dcd_path = '../../data/alanine-dipeptide.dcd'
+import mdtraj as md
+import plotly.graph_objects as go
 
-if os.path.exists(dcd_path):
-    u = mda.Universe(pdb_path, dcd_path)
-    output_name = 'rmsd_dcd.png'
-else:
-    u = mda.Universe('../../data/alanine-dipeptide-multi.pdb')
-    output_name = 'rmsd_multimodel.png'
 
-atoms = u.select_atoms('all')
-R = rms.RMSD(atoms, atoms)
-R.run()
+def main() -> None:
+    parser = argparse.ArgumentParser(description="Analyse complex trajectory")
+    parser.add_argument("-p", "--protein", default="output_minimised.pdb", help="Protein PDB file")
+    parser.add_argument("-t", "--trajectory", default="output_traj.dcd", help="Trajectory DCD file")
+    parser.add_argument("-o", "--output", default="output_reimaged", help="Output base name")
+    parser.add_argument("-r", "--remove-waters", action="store_true", help="Remove waters and ions")
+    args = parser.parse_args()
 
-plt.plot(R.results.rmsd[:, 1], R.results.rmsd[:, 2])
-plt.xlabel('Frame')
-plt.ylabel('RMSD (A)')
-plt.title('RMSD')
-plt.savefig(output_name, dpi=150)
+    print("Reading trajectory", args.trajectory)
+    traj = md.load(args.trajectory, top=args.protein)
+    traj.image_molecules(inplace=True)
+
+    if args.remove_waters:
+        print("Removing waters")
+        traj = traj.atom_slice(traj.top.select("not resname HOH POPC CL NA"))
+
+    print("Realigning")
+    prot = traj.top.select("protein")
+    traj.superpose(traj[0], atom_indices=prot)
+
+    out_dir = COURSE_DIR / "results" / "04-analisis-trayectorias" / "complex"
+    out_dir.mkdir(parents=True, exist_ok=True)
+    output_base = str(out_dir / args.output)
+
+    print("Writing re-imaged PDB", output_base + ".pdb")
+    traj[0].save(output_base + ".pdb")
+
+    print("Writing re-imaged trajectory", output_base + ".dcd")
+    traj.save(output_base + ".dcd")
+
+    atoms = traj.top.select("chainid 1")
+    rmsd_lig = md.rmsd(traj, traj, frame=0, atom_indices=atoms, parallel=True, precentered=False)
+
+    atoms = traj.top.select("chainid 0 and backbone")
+    rmsd_bck = md.rmsd(traj, traj, frame=0, atom_indices=atoms, parallel=True, precentered=False)
+
+    fig = go.Figure()
+    fig.add_trace(go.Scatter(x=traj.time, y=rmsd_lig, mode="lines", name="Ligand"))
+    fig.add_trace(go.Scatter(x=traj.time, y=rmsd_bck, mode="lines", name="Backbone"))
+
+    fig.update_layout(title="Trajectory for " + args.trajectory, xaxis_title="Frame", yaxis_title="RMSD")
+
+    file = output_base + ".svg"
+    print("Writing RMSD output to", file)
+    fig.write_image(file)
+
+
+if __name__ == "__main__":
+    main()

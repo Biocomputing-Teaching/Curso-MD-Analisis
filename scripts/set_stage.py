@@ -13,6 +13,7 @@ NAV_ITEMS = {
         ("Inicio", "/"),
         ("Preparación", "/setup/"),
         ("Referencia", "/reference/"),
+        ("Recursos", "/resources/"),
     ],
     "course": [
         ("Inicio", "/"),
@@ -20,6 +21,8 @@ NAV_ITEMS = {
         ("Episodios", "/episodes/"),
         ("Referencia", "/reference/"),
         ("Datos", "/data/"),
+        ("Recursos", "/resources/"),
+        ("Créditos", "/credits/"),
     ],
 }
 

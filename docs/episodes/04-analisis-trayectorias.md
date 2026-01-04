@@ -1,84 +1,64 @@
 ---
 layout: default
-title: Episodio 4 - Análisis de trayectorias con MDAnalysis
+title: Episodio 4 - Análisis de trayectorias con MDTraj
 permalink: /episodes/04-analisis-trayectorias/
 ---
+
+<div class="episode-nav">
+  <a href="{{ site.baseurl }}/episodes/03-simulaciones-clasicas/">Anterior</a>
+  <a href="{{ site.baseurl }}/episodes/">Todos los episodios</a>
+  <a href="{{ site.baseurl }}/episodes/05-muestreo-avanzado/">Siguiente</a>
+</div>
 
 ## Overview
 
 - **Teaching:** 60 min
 - **Exercises:** 45 min
 
-## Notebook
-
-- <a href="https://biocomputing-teaching.github.io/Curso-MD-Analisis/episodes/notebooks/04-analisis-trayectorias.ipynb">04-analisis-trayectorias.ipynb</a>
-- <a href="https://nbviewer.org/url/biocomputing-teaching.github.io/Curso-MD-Analisis/episodes/notebooks/04-analisis-trayectorias.ipynb">Ver en nbviewer</a>
-
-## Scripts
-
-<div class="episode-nav">
-  <a href="https://biocomputing-teaching.github.io/Curso-MD-Analisis/episodes/03-simulaciones-clasicas/">Anterior</a>
-  <a href="https://biocomputing-teaching.github.io/Curso-MD-Analisis/episodes/">Todos los episodios</a>
-  <a href="https://biocomputing-teaching.github.io/Curso-MD-Analisis/episodes/05-muestreo-avanzado/">Siguiente</a>
-</div>
-
-
-- <a href="https://biocomputing-teaching.github.io/Curso-MD-Analisis/episodes/scripts/04-analisis-trayectorias.py">04-analisis-trayectorias.py</a>
-
 ## Objetivos
 
-- Cargar trayectorias con MDAnalysis.
-- Calcular RMSD, RMSF y distancias internas.
-- Generar gráficas reproducibles.
+- Analizar trayectorias simples y complejas.
+- Reimaginar y realinear trayectorias.
+- Generar RMSD con MDTraj.
 
 ## Contenido
 
-- Universes, selections y atom groups.
-- Análisis básico y estadísticas.
-- Exportación de resultados.
+- Lectura de DCD con MDTraj.
+- Reimaging y superposición al frame inicial.
+- Gráficas para comparar sistemas.
 
 ## Demo guiada
 
-### RMSD con MDAnalysis
+### Parte simple: RMSD de alanina
 
-```python
-import os
-import MDAnalysis as mda
-from MDAnalysis.analysis import rms
-import matplotlib.pyplot as plt
+<!-- sync-from: docs/episodes/scripts/04-analisis-trayectorias_simple.py -->
+<div class="notebook-embed"><iframe src="{{ site.baseurl }}/episodes/notebooks/rendered/04-analisis-trayectorias_simple.html" loading="lazy"></iframe><div class="notebook-links"><a href="{{ site.baseurl }}/episodes/notebooks/04-analisis-trayectorias_simple.ipynb" download>Descargar notebook</a> | <a href="{{ site.baseurl }}/episodes/scripts/04-analisis-trayectorias_simple.py" download>Descargar script (.py)</a></div></div>
 
-pdb_path = '../../data/alanine-dipeptide.pdb'
-dcd_path = '../../data/alanine-dipeptide.dcd'
+### Parte compleja: RMSD del complejo
 
-if os.path.exists(dcd_path):
-    u = mda.Universe(pdb_path, dcd_path)
-    output_name = 'rmsd_dcd.png'
-else:
-    u = mda.Universe('../../data/alanine-dipeptide-multi.pdb')
-    output_name = 'rmsd_multimodel.png'
-
-atoms = u.select_atoms('all')
-R = rms.RMSD(atoms, atoms)
-R.run()
-
-plt.plot(R.results.rmsd[:, 1], R.results.rmsd[:, 2])
-plt.xlabel('Frame')
-plt.ylabel('RMSD (A)')
-plt.title('RMSD')
-plt.savefig(output_name, dpi=150)
-```
-
-Fuente del script: <a href="https://biocomputing-teaching.github.io/Curso-MD-Analisis/episodes/scripts/04-analisis-trayectorias.py">04-analisis-trayectorias.py</a>
-
-Fuente del script: <a href="https://biocomputing-teaching.github.io/Curso-MD-Analisis/episodes/scripts/04-analisis-trayectorias.py">04-analisis-trayectorias.py</a>
+<!-- sync-from: docs/episodes/scripts/04-analisis-trayectorias.py -->
+<div class="notebook-embed"><iframe src="{{ site.baseurl }}/episodes/notebooks/rendered/04-analisis-trayectorias.html" loading="lazy"></iframe><div class="notebook-links"><a href="{{ site.baseurl }}/episodes/notebooks/04-analisis-trayectorias.ipynb" download>Descargar notebook</a> | <a href="{{ site.baseurl }}/episodes/scripts/04-analisis-trayectorias.py" download>Descargar script (.py)</a></div></div>
 
 ## Ejercicio
 
-- Calcular RMSF por residuo.
-- Comparar RMSD entre dos réplicas.
-- Guardar figuras en `docs/figures/`.
+- Ejecutar el análisis simple con <a href="{{ site.baseurl }}/data/">traj.dcd</a>.
+- Ejecutar el análisis del complejo con <a href="{{ site.baseurl }}/reference/">output_traj.dcd</a>.
+- Guardar las figuras resultantes.
 
 ## Puntos clave
 
-- La selección correcta de átomos es crítica.
-- Automatizar análisis mejora la trazabilidad.
+- Las métricas son comparables entre sistemas.
+- MDTraj permite análisis reproducible con pocas líneas.
+
+## Notebooks y scripts
+
+- <a href="{{ site.baseurl }}/episodes/notebooks/04-analisis-trayectorias_simple.ipynb">04-analisis-trayectorias_simple.ipynb</a>
+- <a href="{{ site.baseurl }}/episodes/notebooks/04-analisis-trayectorias.ipynb">04-analisis-trayectorias.ipynb</a>
+- <a href="{{ site.baseurl }}/episodes/scripts/04-analisis-trayectorias_simple.py">04-analisis-trayectorias_simple.py</a>
+- <a href="{{ site.baseurl }}/episodes/scripts/04-analisis-trayectorias.py">04-analisis-trayectorias.py</a>
+
+<div class="episode-nav">
+  <a href="{{ site.baseurl }}/episodes/03-simulaciones-clasicas/">Anterior</a>
+  <a href="{{ site.baseurl }}/episodes/">Todos los episodios</a>
+  <a href="{{ site.baseurl }}/episodes/05-muestreo-avanzado/">Siguiente</a>
+</div>

@@ -52,7 +52,7 @@ Para crear un DCD corto con OpenMM:
 python scripts/generate_example_dcd.py
 ```
 
-Esto genera <a href="https://biocomputing-teaching.github.io/Curso-MD-Analisis/data/alanine-dipeptide.dcd">alanine-dipeptide.dcd</a>.
+Esto genera <a href="https://github.com/Biocomputing-Teaching/Curso-MD-Data/raw/main/alanine-dipeptide.dcd">alanine-dipeptide.dcd</a>.
 
 ## Documentación técnica del repositorio
 

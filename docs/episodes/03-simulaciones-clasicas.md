@@ -4,75 +4,61 @@ title: Episodio 3 - Simulaciones clásicas y control de calidad
 permalink: /episodes/03-simulaciones-clasicas/
 ---
 
+<div class="episode-nav">
+  <a href="{{ site.baseurl }}/episodes/02-preparacion-sistema/">Anterior</a>
+  <a href="{{ site.baseurl }}/episodes/">Todos los episodios</a>
+  <a href="{{ site.baseurl }}/episodes/04-analisis-trayectorias/">Siguiente</a>
+</div>
+
 ## Overview
 
 - **Teaching:** 60 min
 - **Exercises:** 45 min
 
-## Notebook
-
-- <a href="https://biocomputing-teaching.github.io/Curso-MD-Analisis/episodes/notebooks/03-simulaciones-clasicas.ipynb">03-simulaciones-clasicas.ipynb</a>
-- <a href="https://nbviewer.org/url/biocomputing-teaching.github.io/Curso-MD-Analisis/episodes/notebooks/03-simulaciones-clasicas.ipynb">Ver en nbviewer</a>
-
-## Scripts
-
-<div class="episode-nav">
-  <a href="https://biocomputing-teaching.github.io/Curso-MD-Analisis/episodes/02-preparacion-sistema/">Anterior</a>
-  <a href="https://biocomputing-teaching.github.io/Curso-MD-Analisis/episodes/">Todos los episodios</a>
-  <a href="https://biocomputing-teaching.github.io/Curso-MD-Analisis/episodes/04-analisis-trayectorias/">Siguiente</a>
-</div>
-
-
-- <a href="https://biocomputing-teaching.github.io/Curso-MD-Analisis/episodes/scripts/03-simulaciones-clasicas.py">03-simulaciones-clasicas.py</a>
-
 ## Objetivos
 
-- Ejecutar minimización, calentamiento y producción.
-- Configurar integradores y termostatos.
-- Evaluar estabilidad y calidad de la trayectoria.
+- Simular alanina y un complejo proteína-ligando.
+- Configurar integrador de Langevin y reportes.
+- Generar PDB minimizado y trayectorias DCD.
 
 ## Contenido
 
-- Integradores (Langevin, Verlet).
-- Control de temperatura y presión.
-- Reporters para energía, trayectoria y log.
+- Simulación simple con alanina.
+- SystemGenerator con FF14SB y GAFF para el complejo.
+- Reporters para energía y trayectoria.
 
 ## Demo guiada
 
-### Minimizar y correr una simulación corta
+### Parte simple: simulación de alanina
 
-```python
-from openmm import app, unit
-import openmm as mm
+<!-- sync-from: docs/episodes/scripts/03-simulaciones-clasicas_simple.py -->
+<div class="notebook-embed"><iframe src="{{ site.baseurl }}/episodes/notebooks/rendered/03-simulaciones-clasicas_simple.html" loading="lazy"></iframe><div class="notebook-links"><a href="{{ site.baseurl }}/episodes/notebooks/03-simulaciones-clasicas_simple.ipynb" download>Descargar notebook</a> | <a href="{{ site.baseurl }}/episodes/scripts/03-simulaciones-clasicas_simple.py" download>Descargar script (.py)</a></div></div>
 
-pdb = app.PDBFile('../../data/alanine-dipeptide.pdb')
-forcefield = app.ForceField('amber14-all.xml', 'amber14/tip3pfb.xml')
+### Parte compleja: simulación del complejo
 
-system = forcefield.createSystem(pdb.topology, nonbondedMethod=app.NoCutoff, constraints=app.HBonds)
-integrator = mm.LangevinIntegrator(300 * unit.kelvin, 1.0 / unit.picosecond, 2.0 * unit.femtoseconds)
-
-simulation = app.Simulation(pdb.topology, system, integrator)
-simulation.context.setPositions(pdb.positions)
-
-simulation.minimizeEnergy(maxIterations=100)
-simulation.context.setVelocitiesToTemperature(300 * unit.kelvin)
-simulation.step(200)
-
-state = simulation.context.getState(getEnergy=True)
-print('Potential energy:', state.getPotentialEnergy())
-```
-
-Fuente del script: <a href="https://biocomputing-teaching.github.io/Curso-MD-Analisis/episodes/scripts/03-simulaciones-clasicas.py">03-simulaciones-clasicas.py</a>
-
-Fuente del script: <a href="https://biocomputing-teaching.github.io/Curso-MD-Analisis/episodes/scripts/03-simulaciones-clasicas.py">03-simulaciones-clasicas.py</a>
+<!-- sync-from: docs/episodes/scripts/03-simulaciones-clasicas.py -->
+<div class="notebook-embed"><iframe src="{{ site.baseurl }}/episodes/notebooks/rendered/03-simulaciones-clasicas.html" loading="lazy"></iframe><div class="notebook-links"><a href="{{ site.baseurl }}/episodes/notebooks/03-simulaciones-clasicas.ipynb" download>Descargar notebook</a> | <a href="{{ site.baseurl }}/episodes/scripts/03-simulaciones-clasicas.py" download>Descargar script (.py)</a></div></div>
 
 ## Ejercicio
 
-- Correr 10,000 pasos y guardar <a href="https://biocomputing-teaching.github.io/Curso-MD-Analisis/data/">log.csv</a>.
-- Graficar energía potencial vs tiempo.
-- Identificar si hay deriva de energía.
+- Cambiar `--steps` y `--interval` en ambos sistemas.
+- Verificar los archivos de salida de alanina y del complejo.
+- Probar con otro `--output` base en el complejo.
 
 ## Puntos clave
 
-- El control de calidad es parte del flujo de trabajo.
-- Reporters bien configurados ahorran tiempo de depuración.
+- Los conceptos básicos se prueban con alanina.
+- El complejo introduce más átomos y mayor coste.
+
+## Notebooks y scripts
+
+- <a href="{{ site.baseurl }}/episodes/notebooks/03-simulaciones-clasicas_simple.ipynb">03-simulaciones-clasicas_simple.ipynb</a>
+- <a href="{{ site.baseurl }}/episodes/notebooks/03-simulaciones-clasicas.ipynb">03-simulaciones-clasicas.ipynb</a>
+- <a href="{{ site.baseurl }}/episodes/scripts/03-simulaciones-clasicas_simple.py">03-simulaciones-clasicas_simple.py</a>
+- <a href="{{ site.baseurl }}/episodes/scripts/03-simulaciones-clasicas.py">03-simulaciones-clasicas.py</a>
+
+<div class="episode-nav">
+  <a href="{{ site.baseurl }}/episodes/02-preparacion-sistema/">Anterior</a>
+  <a href="{{ site.baseurl }}/episodes/">Todos los episodios</a>
+  <a href="{{ site.baseurl }}/episodes/04-analisis-trayectorias/">Siguiente</a>
+</div>

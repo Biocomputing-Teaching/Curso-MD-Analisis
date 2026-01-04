@@ -6,15 +6,23 @@ permalink: /episodes/notebooks/
 
 ## Notebooks del curso
 
-GitHub Pages sirve los archivos `.ipynb` como texto. Para verlos renderizados, usa los enlaces de nbviewer:
+Los notebooks se renderizan como HTML local (en la carpeta <a href="{{ site.baseurl }}/episodes/notebooks/rendered/">rendered</a>) y también se pueden descargar como .ipynb.
 
-- <a href="https://nbviewer.org/url/biocomputing-teaching.github.io/Curso-MD-Analisis/episodes/notebooks/01-introduccion.ipynb">Episodio 1: Introducción</a>
-- <a href="https://nbviewer.org/url/biocomputing-teaching.github.io/Curso-MD-Analisis/episodes/notebooks/02-preparacion-sistema.ipynb">Episodio 2: Preparación de sistemas</a>
-- <a href="https://nbviewer.org/url/biocomputing-teaching.github.io/Curso-MD-Analisis/episodes/notebooks/03-simulaciones-clasicas.ipynb">Episodio 3: Simulaciones clásicas</a>
-- <a href="https://nbviewer.org/url/biocomputing-teaching.github.io/Curso-MD-Analisis/episodes/notebooks/04-analisis-trayectorias.ipynb">Episodio 4: Análisis de trayectorias</a>
-- <a href="https://nbviewer.org/url/biocomputing-teaching.github.io/Curso-MD-Analisis/episodes/notebooks/05-muestreo-avanzado.ipynb">Episodio 5: Muestreo avanzado</a>
-- <a href="https://nbviewer.org/url/biocomputing-teaching.github.io/Curso-MD-Analisis/episodes/notebooks/06-msm-pyemma.ipynb">Episodio 6: MSM con PyEMMA</a>
+- <a href="{{ site.baseurl }}/episodes/notebooks/rendered/01-introduccion_simple.html">Episodio 1: Introducción (simple)</a>
+- <a href="{{ site.baseurl }}/episodes/notebooks/rendered/01-introduccion.html">Episodio 1: Introducción (complex)</a>
+- <a href="{{ site.baseurl }}/episodes/notebooks/rendered/02-preparacion-sistema_simple.html">Episodio 2: Preparación (simple)</a>
+- <a href="{{ site.baseurl }}/episodes/notebooks/rendered/02-preparacion-sistema.html">Episodio 2: Preparación (complex)</a>
+- <a href="{{ site.baseurl }}/episodes/notebooks/rendered/03-simulaciones-clasicas_simple.html">Episodio 3: Simulaciones (simple)</a>
+- <a href="{{ site.baseurl }}/episodes/notebooks/rendered/03-simulaciones-clasicas.html">Episodio 3: Simulaciones (complex)</a>
+- <a href="{{ site.baseurl }}/episodes/notebooks/rendered/04-analisis-trayectorias_simple.html">Episodio 4: Análisis (simple)</a>
+- <a href="{{ site.baseurl }}/episodes/notebooks/rendered/04-analisis-trayectorias.html">Episodio 4: Análisis (complex)</a>
+- <a href="{{ site.baseurl }}/episodes/notebooks/rendered/05-muestreo-avanzado_simple.html">Episodio 5: Muestreo (simple)</a>
+- <a href="{{ site.baseurl }}/episodes/notebooks/rendered/05-muestreo-avanzado.html">Episodio 5: Muestreo (complex)</a>
+- <a href="{{ site.baseurl }}/episodes/notebooks/rendered/06-pyemma-alanine.html">Episodio 6: PyEMMA (alanina)</a>
+- <a href="{{ site.baseurl }}/episodes/notebooks/rendered/06-pyemma-complex.html">Episodio 6: PyEMMA (complejo)</a>
+- <a href="{{ site.baseurl }}/episodes/notebooks/rendered/07-deeptime-alanine.html">Episodio 7: deeptime (alanina)</a>
+- <a href="{{ site.baseurl }}/episodes/notebooks/rendered/07-deeptime-complex.html">Episodio 7: deeptime (complejo)</a>
 
 Si prefieres descargar los notebooks:
 
-- <a href="https://biocomputing-teaching.github.io/Curso-MD-Analisis/episodes/notebooks/../notebooks">Descargar episodios</a>
+- <a href="{{ site.baseurl }}/episodes/notebooks/">Descargar episodios</a>

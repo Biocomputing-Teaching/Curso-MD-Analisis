@@ -4,72 +4,61 @@ title: Episodio 5 - Muestreo avanzado en OpenMM
 permalink: /episodes/05-muestreo-avanzado/
 ---
 
+<div class="episode-nav">
+  <a href="{{ site.baseurl }}/episodes/04-analisis-trayectorias/">Anterior</a>
+  <a href="{{ site.baseurl }}/episodes/">Todos los episodios</a>
+  <a href="{{ site.baseurl }}/episodes/06-pyemma/">Siguiente</a>
+</div>
+
 ## Overview
 
 - **Teaching:** 60 min
 - **Exercises:** 45 min
 
-## Notebook
-
-- <a href="https://biocomputing-teaching.github.io/Curso-MD-Analisis/episodes/notebooks/05-muestreo-avanzado.ipynb">05-muestreo-avanzado.ipynb</a>
-- <a href="https://nbviewer.org/url/biocomputing-teaching.github.io/Curso-MD-Analisis/episodes/notebooks/05-muestreo-avanzado.ipynb">Ver en nbviewer</a>
-
-## Scripts
-
-<div class="episode-nav">
-  <a href="https://biocomputing-teaching.github.io/Curso-MD-Analisis/episodes/04-analisis-trayectorias/">Anterior</a>
-  <a href="https://biocomputing-teaching.github.io/Curso-MD-Analisis/episodes/">Todos los episodios</a>
-  <a href="https://biocomputing-teaching.github.io/Curso-MD-Analisis/episodes/06-msm-pyemma/">Siguiente</a>
-</div>
-
-
-- <a href="https://biocomputing-teaching.github.io/Curso-MD-Analisis/episodes/scripts/05-muestreo-avanzado.py">05-muestreo-avanzado.py</a>
-
 ## Objetivos
 
-- Implementar SMD y umbrella sampling en OpenMM.
-- Diseñar un protocolo de metadynamics.
-- Evaluar convergencia básica.
+- Aplicar una restricción simple en alanina.
+- Simular un complejo con solvente explícito.
+- Usar barostato para sistemas periódicos.
 
 ## Contenido
 
-- Potenciales de restricción y CVs.
-- Ventanas y combinación de perfiles.
-- Buenas prácticas de muestreo.
+- Restricciones armónicas en sistemas pequeños.
+- Solvatación con Modeller para sistemas grandes.
+- Caja periódica y condiciones de contorno.
 
 ## Demo guiada
 
-### Umbrella sampling con una restricción armónica
+### Parte simple: restricción en alanina
 
-```python
-import openmm as mm
-from openmm import app, unit
+<!-- sync-from: docs/episodes/scripts/05-muestreo-avanzado_simple.py -->
+<div class="notebook-embed"><iframe src="{{ site.baseurl }}/episodes/notebooks/rendered/05-muestreo-avanzado_simple.html" loading="lazy"></iframe><div class="notebook-links"><a href="{{ site.baseurl }}/episodes/notebooks/05-muestreo-avanzado_simple.ipynb" download>Descargar notebook</a> | <a href="{{ site.baseurl }}/episodes/scripts/05-muestreo-avanzado_simple.py" download>Descargar script (.py)</a></div></div>
 
-pdb = app.PDBFile('../../data/alanine-dipeptide.pdb')
-forcefield = app.ForceField('amber14-all.xml', 'amber14/tip3pfb.xml')
+### Parte compleja: solvatación y barostato
 
-system = forcefield.createSystem(pdb.topology, nonbondedMethod=app.NoCutoff)
-
-force = mm.CustomBondForce('0.5*k*(r-r0)^2')
-force.addPerBondParameter('k')
-force.addPerBondParameter('r0')
-force.addBond(1, 4, [1000.0 * unit.kilojoule_per_mole / unit.nanometer**2, 0.35 * unit.nanometer])
-system.addForce(force)
-
-print('Custom forces:', system.getNumForces())
-```
-
-Fuente del script: <a href="https://biocomputing-teaching.github.io/Curso-MD-Analisis/episodes/scripts/05-muestreo-avanzado.py">05-muestreo-avanzado.py</a>
-
-Fuente del script: <a href="https://biocomputing-teaching.github.io/Curso-MD-Analisis/episodes/scripts/05-muestreo-avanzado.py">05-muestreo-avanzado.py</a>
+<!-- sync-from: docs/episodes/scripts/05-muestreo-avanzado.py -->
+<div class="notebook-embed"><iframe src="{{ site.baseurl }}/episodes/notebooks/rendered/05-muestreo-avanzado.html" loading="lazy"></iframe><div class="notebook-links"><a href="{{ site.baseurl }}/episodes/notebooks/05-muestreo-avanzado.ipynb" download>Descargar notebook</a> | <a href="{{ site.baseurl }}/episodes/scripts/05-muestreo-avanzado.py" download>Descargar script (.py)</a></div></div>
 
 ## Ejercicio
 
-- Definir 5 ventanas con diferentes `r0`.
-- Ejecutar 0.5 ns por ventana.
-- Comparar perfiles de energía potencial.
+- Ejecutar la restricción y revisar la estabilidad.
+- Ejecutar con `--solvate` y `--padding 12`.
+- Probar otro `--water-model` y comparar el número de átomos.
 
 ## Puntos clave
 
-- El muestreo avanzado requiere diagnósticos de convergencia.
-- Documentar cada ventana y parámetro es esencial.
+- Las restricciones permiten explorar ventanas simples.
+- La solvatación convierte el sistema en periódico.
+
+## Notebooks y scripts
+
+- <a href="{{ site.baseurl }}/episodes/notebooks/05-muestreo-avanzado_simple.ipynb">05-muestreo-avanzado_simple.ipynb</a>
+- <a href="{{ site.baseurl }}/episodes/notebooks/05-muestreo-avanzado.ipynb">05-muestreo-avanzado.ipynb</a>
+- <a href="{{ site.baseurl }}/episodes/scripts/05-muestreo-avanzado_simple.py">05-muestreo-avanzado_simple.py</a>
+- <a href="{{ site.baseurl }}/episodes/scripts/05-muestreo-avanzado.py">05-muestreo-avanzado.py</a>
+
+<div class="episode-nav">
+  <a href="{{ site.baseurl }}/episodes/04-analisis-trayectorias/">Anterior</a>
+  <a href="{{ site.baseurl }}/episodes/">Todos los episodios</a>
+  <a href="{{ site.baseurl }}/episodes/06-pyemma/">Siguiente</a>
+</div>

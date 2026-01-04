@@ -42,6 +42,46 @@ nav a:focus {
   color: var(--accent);
 }
 
+.notebook-embed {
+  margin: 1.5rem 0;
+  border: 1px solid var(--rule);
+  border-radius: 12px;
+  overflow: hidden;
+  background: var(--paper);
+}
+
+.notebook-embed iframe {
+  width: 100%;
+  height: 640px;
+  border: 0;
+}
+
+.notebook-links {
+  padding: 0.75rem 1rem;
+  background: #f6f3ee;
+  font-size: 0.95rem;
+}
+
+.resources-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 1.5rem 0;
+  font-family: "IBM Plex Sans", "Helvetica", sans-serif;
+  font-size: 0.95rem;
+}
+
+.resources-table th,
+.resources-table td {
+  border: 1px solid var(--rule);
+  padding: 0.5rem 0.75rem;
+  text-align: left;
+  vertical-align: top;
+}
+
+.resources-table th {
+  background: #f0ebe2;
+}
+
 h1, h2, h3, h4 {
   font-family: "IBM Plex Sans", "Helvetica", sans-serif;
   letter-spacing: -0.01em;
@@ -90,19 +130,20 @@ pre code {
 }
 
 .episode-nav {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 0.75rem 1.5rem;
+  display: block;
   margin: 0.75rem 0 1rem;
   font-family: "IBM Plex Sans", "Helvetica", sans-serif;
   font-size: 0.92rem;
 }
 
 .episode-nav a {
+  display: inline-block;
   color: var(--accent);
   text-decoration: none;
   border-bottom: 1px solid transparent;
   padding-bottom: 0.1rem;
+  margin-right: 1.5rem;
+  margin-bottom: 0.75rem;
 }
 
 .episode-nav a:hover,
