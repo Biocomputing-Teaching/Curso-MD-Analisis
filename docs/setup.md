@@ -54,19 +54,19 @@ Estructura esperada dentro de `COURSE_DIR`:
 - `data/` con todos los archivos de entrada.
 - `results/` para todos los resultados generados por los episodios.
 
-Descarga el repositorio <a href="https://github.com/Biocomputing-Teaching/Curso-MD-Data">Curso-MD-Data</a> (los archivos están en la raíz) y colócalo en `COURSE_DIR/data`:
+Descarga el repositorio <a href="https://github.com/Biocomputing-Teaching/Course-MD-Data">Course-MD-Data</a> (los archivos están en la raíz) y colócalo en `COURSE_DIR/data`:
 
 ```bash
 cd $COURSE_DIR
-curl -L -o Curso-MD-Data.zip https://github.com/Biocomputing-Teaching/Curso-MD-Data/archive/refs/heads/main.zip
-unzip -q Curso-MD-Data.zip
+curl -L -o Course-MD-Data.zip https://github.com/Biocomputing-Teaching/Course-MD-Data/archive/refs/heads/main.zip
+unzip -q Course-MD-Data.zip
 rm -rf "$COURSE_DIR/data"
 mkdir -p "$COURSE_DIR/data"
-cp -R Curso-MD-Data-main/* "$COURSE_DIR/data"
-rm -rf Curso-MD-Data-main Curso-MD-Data.zip
+cp -R Course-MD-Data-main/* "$COURSE_DIR/data"
+rm -rf Course-MD-Data-main Course-MD-Data.zip
 ```
 
-Si lo prefieres, puedes clonar `Curso-MD-Data` con `git` y copiar su contenido a `COURSE_DIR/data`.
+Si lo prefieres, puedes clonar `Course-MD-Data` con `git` y copiar su contenido a `COURSE_DIR/data`.
 
 ## Verificación rápida
 

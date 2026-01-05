@@ -43,7 +43,7 @@ permalink: /episodes/01-introduccion/
 ## Ejercicio
 
 - Ejecutar el script simple y confirmar los conteos de átomos.
-- Ejecutar el script complejo y cambiar el ligando por <a href="https://github.com/Biocomputing-Teaching/Curso-MD-Data/raw/main/complex/ligand1.sdf">ligand1.sdf</a>.
+- Ejecutar el script complejo y cambiar el ligando por <a href="https://github.com/Biocomputing-Teaching/Course-MD-Data/raw/main/complex/ligand1.sdf">ligand1.sdf</a>.
 - Guardar la salida en un archivo de texto.
 
 

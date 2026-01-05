@@ -40,7 +40,7 @@ Esto genera la carpeta principal (por defecto `~/Concepcion26`), crea `data/` y 
 Después, copia los datos dentro de `data/`:
 
 ```bash
-cp -R Curso-MD-Data-main/* "$COURSE_DIR/data"
+cp -R Course-MD-Data-main/* "$COURSE_DIR/data"
 ```
 
 ## Demo guiada
