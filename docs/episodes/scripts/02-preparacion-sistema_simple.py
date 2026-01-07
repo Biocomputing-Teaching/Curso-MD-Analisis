@@ -27,3 +27,5 @@ with OUTPUT.open("w") as outfile:
     PDBFile.writeFile(modeller.topology, modeller.positions, outfile)
 
 print("Written", OUTPUT)
+
+# %%

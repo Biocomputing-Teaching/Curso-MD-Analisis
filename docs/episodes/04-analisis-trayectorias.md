@@ -10,10 +10,19 @@ permalink: /episodes/04-analisis-trayectorias/
   <a href="{{ site.baseurl }}/episodes/05-muestreo-avanzado/">Siguiente</a>
 </div>
 
-## Overview
+<!-- toc:start -->
+## Tabla de contenidos
+- [Duración](#duracion)
+- [Objetivos](#objetivos)
+- [Contenido](#contenido)
+- [Parte simple](#parte-simple)
+- [Parte compleja](#parte-compleja)
+<!-- toc:end -->
 
-- **Teaching:** 60 min
-- **Exercises:** 45 min
+## Duración
+
+- **Sesión:** 60 min
+- **Ejercicios:** 45 min
 
 ## Objetivos
 
@@ -27,34 +36,45 @@ permalink: /episodes/04-analisis-trayectorias/
 - Reimaging y superposición al frame inicial.
 - Gráficas para comparar sistemas.
 
-## Demo guiada
+## Parte simple
 
-### Parte simple: RMSD de alanina
+### Demo guiada
 
 <!-- sync-from: docs/episodes/scripts/04-analisis-trayectorias_simple.py -->
 <div class="notebook-embed"><iframe src="{{ site.baseurl }}/episodes/notebooks/rendered/04-analisis-trayectorias_simple.html" loading="lazy"></iframe><div class="notebook-links"><a href="{{ site.baseurl }}/episodes/notebooks/04-analisis-trayectorias_simple.ipynb" download>Descargar notebook</a> | <a href="{{ site.baseurl }}/episodes/scripts/04-analisis-trayectorias_simple.py" download>Descargar script (.py)</a></div></div>
 
-### Parte compleja: RMSD del complejo
+### Ejercicio
+
+- Ejecutar el análisis simple con <a href="{{ site.baseurl }}/data/">traj.dcd</a>.
+
+### Puntos clave
+
+- Las métricas son comparables entre sistemas.
+
+### Notebooks y scripts
+
+- <a href="{{ site.baseurl }}/episodes/notebooks/04-analisis-trayectorias_simple.ipynb">04-analisis-trayectorias_simple.ipynb</a> (<a href="{{ site.baseurl }}/episodes/notebooks/rendered/04-analisis-trayectorias_simple.html">HTML</a> | <a href="https://nbviewer.org/url/biocomputing-teaching.github.io/Curso-MD-Analisis/episodes/notebooks/04-analisis-trayectorias_simple.ipynb">nbviewer</a>)
+- <a href="{{ site.baseurl }}/episodes/scripts/04-analisis-trayectorias_simple.py">04-analisis-trayectorias_simple.py</a>
+
+## Parte compleja
+
+### Demo guiada
 
 <!-- sync-from: docs/episodes/scripts/04-analisis-trayectorias.py -->
 <div class="notebook-embed"><iframe src="{{ site.baseurl }}/episodes/notebooks/rendered/04-analisis-trayectorias.html" loading="lazy"></iframe><div class="notebook-links"><a href="{{ site.baseurl }}/episodes/notebooks/04-analisis-trayectorias.ipynb" download>Descargar notebook</a> | <a href="{{ site.baseurl }}/episodes/scripts/04-analisis-trayectorias.py" download>Descargar script (.py)</a></div></div>
 
-## Ejercicio
+### Ejercicio
 
-- Ejecutar el análisis simple con <a href="{{ site.baseurl }}/data/">traj.dcd</a>.
 - Ejecutar el análisis del complejo con <a href="{{ site.baseurl }}/reference/">output_traj.dcd</a>.
 - Guardar las figuras resultantes.
 
-## Puntos clave
+### Puntos clave
 
-- Las métricas son comparables entre sistemas.
 - MDTraj permite análisis reproducible con pocas líneas.
 
-## Notebooks y scripts
+### Notebooks y scripts
 
-- <a href="{{ site.baseurl }}/episodes/notebooks/04-analisis-trayectorias_simple.ipynb">04-analisis-trayectorias_simple.ipynb</a>
-- <a href="{{ site.baseurl }}/episodes/notebooks/04-analisis-trayectorias.ipynb">04-analisis-trayectorias.ipynb</a>
-- <a href="{{ site.baseurl }}/episodes/scripts/04-analisis-trayectorias_simple.py">04-analisis-trayectorias_simple.py</a>
+- <a href="{{ site.baseurl }}/episodes/notebooks/04-analisis-trayectorias.ipynb">04-analisis-trayectorias.ipynb</a> (<a href="{{ site.baseurl }}/episodes/notebooks/rendered/04-analisis-trayectorias.html">HTML</a> | <a href="https://nbviewer.org/url/biocomputing-teaching.github.io/Curso-MD-Analisis/episodes/notebooks/04-analisis-trayectorias.ipynb">nbviewer</a>)
 - <a href="{{ site.baseurl }}/episodes/scripts/04-analisis-trayectorias.py">04-analisis-trayectorias.py</a>
 
 <div class="episode-nav">

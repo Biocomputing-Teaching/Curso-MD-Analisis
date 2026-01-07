@@ -7511,25 +7511,44 @@ a.anchor-link {
 <!-- End of mermaid configuration --></head>
 <body class="jp-Notebook" data-jp-theme-light="true" data-jp-theme-name="JupyterLab Light">
 <main>
-<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=43044d33">
+<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=8c681499b6814a7ebd74d32c03d90035">
 <div class="jp-Cell-inputWrapper" tabindex="0">
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
-<h1 id="PyEMMA---Complejo">PyEMMA - Complejo<a class="anchor-link" href="#PyEMMA---Complejo">¶</a></h1><h2 id="Tutorial-00---Showcase">Tutorial 00 - Showcase<a class="anchor-link" href="#Tutorial-00---Showcase">¶</a></h2><p>Descripción breve del flujo completo.</p>
-<h2 id="Tutorial-01---Data-IO-&amp;-featurization">Tutorial 01 - Data IO &amp; featurization<a class="anchor-link" href="#Tutorial-01---Data-IO-&amp;-featurization">¶</a></h2><p>Carga y definición de features.</p>
-<h2 id="Tutorial-02---Dimension-reduction-&amp;-discretization">Tutorial 02 - Dimension reduction &amp; discretization<a class="anchor-link" href="#Tutorial-02---Dimension-reduction-&amp;-discretization">¶</a></h2><p>TICA + clustering.</p>
-<h2 id="Tutorial-03---MSM-estimation-&amp;-validation">Tutorial 03 - MSM estimation &amp; validation<a class="anchor-link" href="#Tutorial-03---MSM-estimation-&amp;-validation">¶</a></h2><p>ITS y validación básica.</p>
-<h2 id="Tutorial-04---MSM-analysis">Tutorial 04 - MSM analysis<a class="anchor-link" href="#Tutorial-04---MSM-analysis">¶</a></h2><p>Escalas de tiempo y estados activos.</p>
-<h2 id="Tutorial-05---PCCA-&amp;-TPT">Tutorial 05 - PCCA &amp; TPT<a class="anchor-link" href="#Tutorial-05---PCCA-&amp;-TPT">¶</a></h2><p>Macroestados y flujos.</p>
-<h2 id="Tutorial-06---Expectations-&amp;-observables">Tutorial 06 - Expectations &amp; observables<a class="anchor-link" href="#Tutorial-06---Expectations-&amp;-observables">¶</a></h2><p>Observables simples.</p>
-<h2 id="Tutorial-07---Hidden-Markov-models">Tutorial 07 - Hidden Markov models<a class="anchor-link" href="#Tutorial-07---Hidden-Markov-models">¶</a></h2><p>Modelo HMM bayesiano.</p>
-<h2 id="Tutorial-08---Common-problems">Tutorial 08 - Common problems<a class="anchor-link" href="#Tutorial-08---Common-problems">¶</a></h2><p>Conectividad y fracción activa.</p>
+<h1 id="Episodio-6---MSM-con-PyEMMA">Episodio 6 - MSM con PyEMMA<a class="anchor-link" href="#Episodio-6---MSM-con-PyEMMA">¶</a></h1><h2 id="Parte-compleja:-prote%C3%ADna-ligando">Parte compleja: proteína-ligando<a class="anchor-link" href="#Parte-compleja:-prote%C3%ADna-ligando">¶</a></h2><p>En este notebook construyes MSM con PyEMMA paso a paso.
+Usarás trayectorias del complejo proteína-ligando para entrenar y validar el modelo.</p>
 </div>
 </div>
 </div>
-</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell jp-mod-noOutputs" id="cell-id=0c05ed1b">
+</div>
+<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=c2f44f83c1a8485785f2009a4092b6cb">
+<div class="jp-Cell-inputWrapper" tabindex="0">
+<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
+</div>
+<div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
+</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
+<h2 id="Tabla-de-contenidos">Tabla de contenidos<a class="anchor-link" href="#Tabla-de-contenidos">¶</a></h2><ul>
+<li><a href="#parte-compleja-proteina-ligando">Parte compleja: proteína-ligando</a></li>
+<li><a href="#parte-compleja-proteina-ligando">Parte compleja: proteína-ligando</a></li>
+<li><a href="#paso-1">Paso 1</a></li>
+</ul>
+</div>
+</div>
+</div>
+</div>
+<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=888dcbca9e904f9785dbfb8ba289eca5">
+<div class="jp-Cell-inputWrapper" tabindex="0">
+<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
+</div>
+<div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
+</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
+<h2 id="Paso-1">Paso 1<a class="anchor-link" href="#Paso-1">¶</a></h2>
+</div>
+</div>
+</div>
+</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell jp-mod-noOutputs" id="cell-id=47c6f1ee57bd476db0cde55cae326ed7">
 <div class="jp-Cell-inputWrapper" tabindex="0">
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>

@@ -57,6 +57,7 @@ Estructura esperada dentro de `COURSE_DIR`:
 Descarga el repositorio <a href="https://github.com/Biocomputing-Teaching/Course-MD-Data">Course-MD-Data</a> (los archivos están en la raíz) y colócalo en `COURSE_DIR/data`:
 
 ```bash
+mkdir -p $COURSE_DIR
 cd $COURSE_DIR
 curl -L -o Course-MD-Data.zip https://github.com/Biocomputing-Teaching/Course-MD-Data/archive/refs/heads/main.zip
 unzip -q Course-MD-Data.zip

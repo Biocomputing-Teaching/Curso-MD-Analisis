@@ -47,7 +47,7 @@ def main() -> None:
     parser.add_argument("-i", "--interval", type=int, default=1000, help="Reporting interval")
     parser.add_argument("-t", "--temperature", type=int, default=300, help="Temperature (K)")
     parser.add_argument("-e", "--equilibration-steps", type=int, default=200, help="Equilibration steps")
-    args = parser.parse_args()
+    args = parser.parse_args(args=[])
 
     t0 = time.time()
     out_dir = COURSE_DIR / "results" / "03-simulaciones-clasicas" / "complex"

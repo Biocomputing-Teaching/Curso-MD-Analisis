@@ -13,7 +13,7 @@ def main() -> None:
     parser.add_argument("-t", "--trajectory", default="output_traj.dcd", help="Trajectory DCD file")
     parser.add_argument("-o", "--output", default="output_reimaged", help="Output base name")
     parser.add_argument("-r", "--remove-waters", action="store_true", help="Remove waters and ions")
-    args = parser.parse_args()
+    args = parser.parse_args(args=[])
 
     print("Reading trajectory", args.trajectory)
     traj = md.load(args.trajectory, top=args.protein)

@@ -1,4 +1,50 @@
 
+    # Exploracio rapida de la sequencia abans de la visualitzacio (BioPython)
+    import os
+    from pathlib import Path
+
+    COURSE_DIR = Path(os.environ.get("COURSE_DIR", str(Path.home() / "Concepcion26"))).expanduser()
+    PROTEIN_PDB = COURSE_DIR / "data" / "complex" / "protein.pdb"
+
+    try:
+        from Bio.PDB import PDBParser
+    except ImportError as exc:
+        raise SystemExit(
+            "Biopython is required for this step. Install with:"
+            "  conda install -c conda-forge biopython"
+        ) from exc
+
+    parser = PDBParser(QUIET=True)
+    structure = parser.get_structure("protein", str(PROTEIN_PDB))
+
+    three_to_one = {
+        "ALA": "A", "ARG": "R", "ASN": "N", "ASP": "D", "CYS": "C",
+        "GLN": "Q", "GLU": "E", "GLY": "G", "HIS": "H", "ILE": "I",
+        "LEU": "L", "LYS": "K", "MET": "M", "PHE": "F", "PRO": "P",
+        "SER": "S", "THR": "T", "TRP": "W", "TYR": "Y", "VAL": "V",
+        "HID": "H", "HIE": "H", "HIP": "H",
+    }
+
+    sequences = {}
+    for model in structure:
+        for chain in model:
+            seq = []
+            for residue in chain:
+                if residue.id[0] != " ":
+                    continue
+                seq.append(three_to_one.get(residue.resname, "X"))
+            if seq:
+                sequences[chain.id] = "".join(seq)
+        break
+
+    print("Protein PDB:", PROTEIN_PDB)
+    for chain, seq in sequences.items():
+        print(f"Chain {chain}: {len(seq)} residues")
+        print(seq)
+
+# %%
+
+
     # Visualizacion interactiva (requiere nglview)
     import os
     from pathlib import Path
@@ -11,8 +57,7 @@
         import nglview as nv
     except ImportError as exc:
         raise SystemExit(
-            "nglview is required for visualization. Install with:
-"
+            "nglview is required for visualization. Install with:"
             "  conda install -c conda-forge nglview"
         ) from exc
 

@@ -1,4 +1,37 @@
 
+        # Exploracio rapida dels residus abans de la visualitzacio (BioPython)
+        import os
+        from pathlib import Path
+
+        COURSE_DIR = Path(os.environ.get("COURSE_DIR", str(Path.home() / "Concepcion26"))).expanduser()
+        PDB_PATH = COURSE_DIR / "data" / "alanine-dipeptide.pdb"
+
+        try:
+            from Bio.PDB import PDBParser
+        except ImportError as exc:
+            raise SystemExit(
+                "Biopython is required for this step. Install with:"
+                "  conda install -c conda-forge biopython"
+            ) from exc
+
+        parser = PDBParser(QUIET=True)
+        structure = parser.get_structure("alanine", str(PDB_PATH))
+
+        residues = []
+        for model in structure:
+            for chain in model:
+                for residue in chain:
+                    if residue.id[0] != " ":
+                        continue
+                    residues.append((chain.id, residue.id[1], residue.resname))
+            break
+
+        print("PDB:", PDB_PATH)
+        print("Residus:", " - ".join(f"{r[2]}({r[0]}{r[1]})" for r in residues))
+
+# %%
+
+
     # Visualizacion interactiva (requiere nglview)
     import os
     from pathlib import Path
@@ -117,3 +150,5 @@ system_generator = SystemGenerator(forcefields=[protein_ff])
 system = system_generator.create_system(modeller.topology)
 
 write_amber_files(modeller.topology, system, modeller.positions, OUT_DIR, "alanine-dipeptide")
+
+# %%

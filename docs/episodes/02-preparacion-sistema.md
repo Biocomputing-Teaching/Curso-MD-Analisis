@@ -10,10 +10,21 @@ permalink: /episodes/02-preparacion-sistema/
   <a href="{{ site.baseurl }}/episodes/03-simulaciones-clasicas/">Siguiente</a>
 </div>
 
-## Overview
+<!-- toc:start -->
+## Tabla de contenidos
+- [Duración](#duracion)
+- [Objetivos](#objetivos)
+- [Contenido](#contenido)
+- [Preparar la carpeta de trabajo](#preparar-la-carpeta-de-trabajo)
+- [Parte simple](#parte-simple)
+- [Parte compleja](#parte-compleja)
+- [Puntos clave](#puntos-clave)
+<!-- toc:end -->
 
-- **Teaching:** 60 min
-- **Exercises:** 45 min
+## Duración
+
+- **Sesión:** 60 min
+- **Ejercicios:** 45 min
 
 ## Objetivos
 
@@ -43,35 +54,43 @@ Después, copia los datos dentro de `data/`:
 cp -R Course-MD-Data-main/* "$COURSE_DIR/data"
 ```
 
-## Demo guiada
+## Parte simple
 
-### Parte simple: preparación de alanina
+### Demo guiada
 
 <!-- sync-from: docs/episodes/scripts/02-preparacion-sistema_simple.py -->
 <div class="notebook-embed"><iframe src="{{ site.baseurl }}/episodes/notebooks/rendered/02-preparacion-sistema_simple.html" loading="lazy"></iframe><div class="notebook-links"><a href="{{ site.baseurl }}/episodes/notebooks/02-preparacion-sistema_simple.ipynb" download>Descargar notebook</a> | <a href="{{ site.baseurl }}/episodes/scripts/02-preparacion-sistema_simple.py" download>Descargar script (.py)</a></div></div>
 
-### Parte compleja: preparación de proteína
+### Ejercicio
+
+- Ejecutar el script simple y revisar `"$COURSE_DIR/results/02-preparacion-sistema/simple/alanine_solvated.pdb"`.
+
+### Notebooks y scripts
+
+- <a href="{{ site.baseurl }}/episodes/notebooks/02-preparacion-sistema_simple.ipynb">02-preparacion-sistema_simple.ipynb</a> (<a href="{{ site.baseurl }}/episodes/notebooks/rendered/02-preparacion-sistema_simple.html">HTML</a> | <a href="https://nbviewer.org/url/biocomputing-teaching.github.io/Curso-MD-Analisis/episodes/notebooks/02-preparacion-sistema_simple.ipynb">nbviewer</a>)
+- <a href="{{ site.baseurl }}/episodes/scripts/02-preparacion-sistema_simple.py">02-preparacion-sistema_simple.py</a>
+
+## Parte compleja
+
+### Demo guiada
 
 <!-- sync-from: docs/episodes/scripts/02-preparacion-sistema.py -->
 <div class="notebook-embed"><iframe src="{{ site.baseurl }}/episodes/notebooks/rendered/02-preparacion-sistema.html" loading="lazy"></iframe><div class="notebook-links"><a href="{{ site.baseurl }}/episodes/notebooks/02-preparacion-sistema.ipynb" download>Descargar notebook</a> | <a href="{{ site.baseurl }}/episodes/scripts/02-preparacion-sistema.py" download>Descargar script (.py)</a></div></div>
 
-## Ejercicio
+### Ejercicio
 
-- Ejecutar el script simple y revisar `"$COURSE_DIR/results/02-preparacion-sistema/simple/alanine_solvated.pdb"`.
 - Ejecutar el script complejo con `--output-dir outputs`.
 - Probar un `--output-base` diferente.
+
+### Notebooks y scripts
+
+- <a href="{{ site.baseurl }}/episodes/notebooks/02-preparacion-sistema.ipynb">02-preparacion-sistema.ipynb</a> (<a href="{{ site.baseurl }}/episodes/notebooks/rendered/02-preparacion-sistema.html">HTML</a> | <a href="https://nbviewer.org/url/biocomputing-teaching.github.io/Curso-MD-Analisis/episodes/notebooks/02-preparacion-sistema.ipynb">nbviewer</a>)
+- <a href="{{ site.baseurl }}/episodes/scripts/02-preparacion-sistema.py">02-preparacion-sistema.py</a>
 
 ## Puntos clave
 
 - La preparación depende del sistema objetivo.
 - Guardar versiones preparadas facilita la trazabilidad.
-
-## Notebooks y scripts
-
-- <a href="{{ site.baseurl }}/episodes/notebooks/02-preparacion-sistema_simple.ipynb">02-preparacion-sistema_simple.ipynb</a>
-- <a href="{{ site.baseurl }}/episodes/notebooks/02-preparacion-sistema.ipynb">02-preparacion-sistema.ipynb</a>
-- <a href="{{ site.baseurl }}/episodes/scripts/02-preparacion-sistema_simple.py">02-preparacion-sistema_simple.py</a>
-- <a href="{{ site.baseurl }}/episodes/scripts/02-preparacion-sistema.py">02-preparacion-sistema.py</a>
 
 <div class="episode-nav">
   <a href="{{ site.baseurl }}/episodes/01-introduccion/">Anterior</a>

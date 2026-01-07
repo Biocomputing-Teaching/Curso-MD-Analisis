@@ -10,10 +10,19 @@ permalink: /episodes/03-simulaciones-clasicas/
   <a href="{{ site.baseurl }}/episodes/04-analisis-trayectorias/">Siguiente</a>
 </div>
 
-## Overview
+<!-- toc:start -->
+## Tabla de contenidos
+- [Duración](#duracion)
+- [Objetivos](#objetivos)
+- [Contenido](#contenido)
+- [Parte simple](#parte-simple)
+- [Parte compleja](#parte-compleja)
+<!-- toc:end -->
 
-- **Teaching:** 60 min
-- **Exercises:** 45 min
+## Duración
+
+- **Sesión:** 60 min
+- **Ejercicios:** 45 min
 
 ## Objetivos
 
@@ -27,34 +36,47 @@ permalink: /episodes/03-simulaciones-clasicas/
 - SystemGenerator con FF14SB y GAFF para el complejo.
 - Reporters para energía y trayectoria.
 
-## Demo guiada
+## Parte simple
 
-### Parte simple: simulación de alanina
+### Demo guiada
 
 <!-- sync-from: docs/episodes/scripts/03-simulaciones-clasicas_simple.py -->
 <div class="notebook-embed"><iframe src="{{ site.baseurl }}/episodes/notebooks/rendered/03-simulaciones-clasicas_simple.html" loading="lazy"></iframe><div class="notebook-links"><a href="{{ site.baseurl }}/episodes/notebooks/03-simulaciones-clasicas_simple.ipynb" download>Descargar notebook</a> | <a href="{{ site.baseurl }}/episodes/scripts/03-simulaciones-clasicas_simple.py" download>Descargar script (.py)</a></div></div>
 
-### Parte compleja: simulación del complejo
+### Ejercicio
+
+- Cambiar `--steps` y `--interval` en el sistema simple.
+- Verificar los archivos de salida de alanina.
+
+### Puntos clave
+
+- Los conceptos básicos se prueban con alanina.
+
+### Notebooks y scripts
+
+- <a href="{{ site.baseurl }}/episodes/notebooks/03-simulaciones-clasicas_simple.ipynb">03-simulaciones-clasicas_simple.ipynb</a> (<a href="{{ site.baseurl }}/episodes/notebooks/rendered/03-simulaciones-clasicas_simple.html">HTML</a> | <a href="https://nbviewer.org/url/biocomputing-teaching.github.io/Curso-MD-Analisis/episodes/notebooks/03-simulaciones-clasicas_simple.ipynb">nbviewer</a>)
+- <a href="{{ site.baseurl }}/episodes/scripts/03-simulaciones-clasicas_simple.py">03-simulaciones-clasicas_simple.py</a>
+
+## Parte compleja
+
+### Demo guiada
 
 <!-- sync-from: docs/episodes/scripts/03-simulaciones-clasicas.py -->
 <div class="notebook-embed"><iframe src="{{ site.baseurl }}/episodes/notebooks/rendered/03-simulaciones-clasicas.html" loading="lazy"></iframe><div class="notebook-links"><a href="{{ site.baseurl }}/episodes/notebooks/03-simulaciones-clasicas.ipynb" download>Descargar notebook</a> | <a href="{{ site.baseurl }}/episodes/scripts/03-simulaciones-clasicas.py" download>Descargar script (.py)</a></div></div>
 
-## Ejercicio
+### Ejercicio
 
-- Cambiar `--steps` y `--interval` en ambos sistemas.
-- Verificar los archivos de salida de alanina y del complejo.
+- Cambiar `--steps` y `--interval` en el sistema complejo.
+- Verificar los archivos de salida del complejo.
 - Probar con otro `--output` base en el complejo.
 
-## Puntos clave
+### Puntos clave
 
-- Los conceptos básicos se prueban con alanina.
 - El complejo introduce más átomos y mayor coste.
 
-## Notebooks y scripts
+### Notebooks y scripts
 
-- <a href="{{ site.baseurl }}/episodes/notebooks/03-simulaciones-clasicas_simple.ipynb">03-simulaciones-clasicas_simple.ipynb</a>
-- <a href="{{ site.baseurl }}/episodes/notebooks/03-simulaciones-clasicas.ipynb">03-simulaciones-clasicas.ipynb</a>
-- <a href="{{ site.baseurl }}/episodes/scripts/03-simulaciones-clasicas_simple.py">03-simulaciones-clasicas_simple.py</a>
+- <a href="{{ site.baseurl }}/episodes/notebooks/03-simulaciones-clasicas.ipynb">03-simulaciones-clasicas.ipynb</a> (<a href="{{ site.baseurl }}/episodes/notebooks/rendered/03-simulaciones-clasicas.html">HTML</a> | <a href="https://nbviewer.org/url/biocomputing-teaching.github.io/Curso-MD-Analisis/episodes/notebooks/03-simulaciones-clasicas.ipynb">nbviewer</a>)
 - <a href="{{ site.baseurl }}/episodes/scripts/03-simulaciones-clasicas.py">03-simulaciones-clasicas.py</a>
 
 <div class="episode-nav">

@@ -10,10 +10,20 @@ permalink: /episodes/06-pyemma/
   <a href="{{ site.baseurl }}/episodes/07-deeptime/">Siguiente</a>
 </div>
 
-## Overview
+<!-- toc:start -->
+## Tabla de contenidos
+- [Duración](#duracion)
+- [Objetivos](#objetivos)
+- [Contenido](#contenido)
+- [Tutoriales PyEMMA cubiertos (ambos sistemas)](#tutoriales-pyemma-cubiertos-ambos-sistemas)
+- [Parte simple](#parte-simple)
+- [Parte compleja](#parte-compleja)
+<!-- toc:end -->
 
-- **Teaching:** 70 min
-- **Exercises:** 50 min
+## Duración
+
+- **Sesión:** 70 min
+- **Ejercicios:** 50 min
 
 ## Objetivos
 
@@ -27,18 +37,6 @@ permalink: /episodes/06-pyemma/
 - Estimación y validación del MSM.
 - Análisis, PCCA/TPT y HMM.
 
-## Demo guiada
-
-### Parte simple: alanina dipeptido
-
-<!-- sync-from: docs/episodes/scripts/06-pyemma-alanine.py -->
-<div class="notebook-embed"><iframe src="{{ site.baseurl }}/episodes/notebooks/rendered/06-pyemma-alanine.html" loading="lazy"></iframe><div class="notebook-links"><a href="{{ site.baseurl }}/episodes/notebooks/06-pyemma-alanine.ipynb" download>Descargar notebook</a> | <a href="{{ site.baseurl }}/episodes/scripts/06-pyemma-alanine.py" download>Descargar script (.py)</a></div></div>
-
-### Parte compleja: proteína-ligando
-
-<!-- sync-from: docs/episodes/scripts/06-pyemma-complex.py -->
-<div class="notebook-embed"><iframe src="{{ site.baseurl }}/episodes/notebooks/rendered/06-pyemma-complex.html" loading="lazy"></iframe><div class="notebook-links"><a href="{{ site.baseurl }}/episodes/notebooks/06-pyemma-complex.ipynb" download>Descargar notebook</a> | <a href="{{ site.baseurl }}/episodes/scripts/06-pyemma-complex.py" download>Descargar script (.py)</a></div></div>
-
 ## Tutoriales PyEMMA cubiertos (ambos sistemas)
 
 - 00 - Showcase pentapeptide: flujo completo de preparación.
@@ -51,22 +49,45 @@ permalink: /episodes/06-pyemma/
 - 07 - Hidden Markov models: HMM bayesiano.
 - 08 - Common problems: fracción activa y conectividad.
 
-## Ejercicio
+## Parte simple
+
+### Demo guiada
+
+<!-- sync-from: docs/episodes/scripts/06-pyemma-alanine.py -->
+<div class="notebook-embed"><iframe src="{{ site.baseurl }}/episodes/notebooks/rendered/06-pyemma-alanine.html" loading="lazy"></iframe><div class="notebook-links"><a href="{{ site.baseurl }}/episodes/notebooks/06-pyemma-alanine.ipynb" download>Descargar notebook</a> | <a href="{{ site.baseurl }}/episodes/scripts/06-pyemma-alanine.py" download>Descargar script (.py)</a></div></div>
+
+### Ejercicio
 
 - Ejecutar PyEMMA en alanina con <a href="{{ site.baseurl }}/data/">traj.dcd</a> y <a href="{{ site.baseurl }}/data/alanine-dipeptide.pdb">alanine-dipeptide.pdb</a>.
+
+### Puntos clave
+
+- El sistema simple valida el flujo antes del complejo.
+
+### Notebooks y scripts
+
+- <a href="{{ site.baseurl }}/episodes/notebooks/06-pyemma-alanine.ipynb">06-pyemma-alanine.ipynb</a> (<a href="{{ site.baseurl }}/episodes/notebooks/rendered/06-pyemma-alanine.html">HTML</a> | <a href="https://nbviewer.org/url/biocomputing-teaching.github.io/Curso-MD-Analisis/episodes/notebooks/06-pyemma-alanine.ipynb">nbviewer</a>)
+- <a href="{{ site.baseurl }}/episodes/scripts/06-pyemma-alanine.py">06-pyemma-alanine.py</a>
+
+## Parte compleja
+
+### Demo guiada
+
+<!-- sync-from: docs/episodes/scripts/06-pyemma-complex.py -->
+<div class="notebook-embed"><iframe src="{{ site.baseurl }}/episodes/notebooks/rendered/06-pyemma-complex.html" loading="lazy"></iframe><div class="notebook-links"><a href="{{ site.baseurl }}/episodes/notebooks/06-pyemma-complex.ipynb" download>Descargar notebook</a> | <a href="{{ site.baseurl }}/episodes/scripts/06-pyemma-complex.py" download>Descargar script (.py)</a></div></div>
+
+### Ejercicio
+
 - Ejecutar PyEMMA en el complejo con <a href="{{ site.baseurl }}/reference/">output_traj.dcd</a> y <a href="{{ site.baseurl }}/reference/">output_minimised.pdb</a>.
 - Comparar las escalas de tiempo e ITS.
 
-## Puntos clave
+### Puntos clave
 
 - PyEMMA permite un pipeline completo y reproducible.
-- El sistema simple valida el flujo antes del complejo.
 
-## Notebooks y scripts
+### Notebooks y scripts
 
-- <a href="{{ site.baseurl }}/episodes/notebooks/06-pyemma-alanine.ipynb">06-pyemma-alanine.ipynb</a>
-- <a href="{{ site.baseurl }}/episodes/notebooks/06-pyemma-complex.ipynb">06-pyemma-complex.ipynb</a>
-- <a href="{{ site.baseurl }}/episodes/scripts/06-pyemma-alanine.py">06-pyemma-alanine.py</a>
+- <a href="{{ site.baseurl }}/episodes/notebooks/06-pyemma-complex.ipynb">06-pyemma-complex.ipynb</a> (<a href="{{ site.baseurl }}/episodes/notebooks/rendered/06-pyemma-complex.html">HTML</a> | <a href="https://nbviewer.org/url/biocomputing-teaching.github.io/Curso-MD-Analisis/episodes/notebooks/06-pyemma-complex.ipynb">nbviewer</a>)
 - <a href="{{ site.baseurl }}/episodes/scripts/06-pyemma-complex.py">06-pyemma-complex.py</a>
 
 <div class="episode-nav">
