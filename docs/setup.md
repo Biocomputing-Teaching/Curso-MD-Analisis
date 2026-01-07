@@ -30,7 +30,7 @@ conda install -c conda-forge openmm mdanalysis pyemma deeptime jupyterlab numpy 
 
 Nota: el desarrollo de pyemma se ha abandonado, con lo que su instalación es más problemática, y ahora los esfuerzos se destinan al desarollo de deeptime con una visión más amplia del análisis de datos en simulación.
 
-## Notes
+## Notas
 
 - Si `nglview` falla por un conflicto entre `bleach` y `tinycss2`, prueba:
 

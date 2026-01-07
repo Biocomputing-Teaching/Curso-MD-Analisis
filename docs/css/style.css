@@ -16,7 +16,7 @@ body {
   margin: 0;
   font-family: "Source Serif Pro", "Georgia", serif;
   color: var(--ink);
-  background: linear-gradient(160deg, #f4efe8 0%, #f9f7f3 60%, #f0f3f2 100%);
+  background: #cf0a2c;
   line-height: 1.6;
 }
 
