@@ -71,11 +71,10 @@ permalink: /
 
 ## Colaboradores
 
-Con la colaboración de <a href="{{ site.baseurl }}/figures/logo-cozyme-160x34.png">![COZYME COST ACTION: Pan-European Network on Computational Redesign of Enzymes</a>](https://cozyme.eu/) Pan-European Network on Computational Redesign of Enzymes.
+Con la colaboración de [![COZYME COST ACTION: Pan-European Network on Computational Redesign of Enzymes]({{ site.baseurl }}/figures/logo-cozyme-160x34.png)](https://cozyme.eu/). Pan-European Network on Computational Redesign of Enzymes.
 
-!<a href="{{ site.baseurl }}/figures/COST_LOGO_white_tranparent_small-300x93.png">COST-Actions</a>
+![COST-Actions]({{ site.baseurl }}/figures/COST_LOGO_white_tranparent_small-300x93.png)
 
 Con el soporte de Fondecyt Fondo Nacional de Desarrollo Científico y Tecnológico
 
-!<a href="{{ site.baseurl }}/figures/logo-conicyt-chile-en-marcha.png">concyt</a>
-*_*
+![Conicyt]({{ site.baseurl }}/figures/logo-conicyt-chile-en-marcha.png)

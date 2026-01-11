@@ -25,6 +25,10 @@ permalink: /setup/
 ```bash
 conda create -n md-openmm python=3.10
 conda activate md-openmm
+conda install -c conda-forge jupyterlab numpy scipy matplotlib   plotly python-kaleido nglview ipywidgets jupyterlab_widgets
+conda install -c conda-forge openmm 
+conda install -c conda-forge mdanalysis deeptime openff-toolkit openmmforcefields pdbfixer mdtraj biopython 
+conda install -c conda-forge pyemma
 conda install -c conda-forge openmm mdanalysis pyemma deeptime jupyterlab numpy scipy matplotlib openff-toolkit openmmforcefields pdbfixer mdtraj plotly python-kaleido biopython nglview ipywidgets jupyterlab_widgets
 ```
 
