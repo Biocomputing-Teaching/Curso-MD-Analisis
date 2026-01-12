@@ -5,7 +5,7 @@
 \begin{frame}
 \frametitle{Flujo general de OpenMM}
 \begin{itemize}
-  \item Cargar estructuras PDB/GROMACS/AMBER/CHARMM/TINKER desde los scripts oficiales (p.ej., `simulatePdb.py`, `simulateGromacs.py`, `simulateAmber.py` y `simulateCharmm.py`).
+  \item Cargar estructuras PDB/GROMACS/AMBER/CHARMM/TINKER desde los scripts oficiales (p.ej., \href{https://github.com/openmm/openmm/blob/master/examples/python-examples/simulatePdb.py}{\texttt{simulatePdb.py}}, \href{https://github.com/openmm/openmm/blob/master/examples/python-examples/simulateGromacs.py}{\texttt{simulateGromacs.py}}, \href{https://github.com/openmm/openmm/blob/master/examples/python-examples/simulateAmber.py}{\texttt{simulateAmber.py}} y \href{https://github.com/openmm/openmm/blob/master/examples/python-examples/simulateCharmm.py}{\texttt{simulateCharmm.py}}).
   \item Generar objetos `Topology`, `System` e `Integrator` y sincronizar `StateReporter`/`TrajectoryReporter` para registrar energ\'ias, fuerzas y coordenadas.
   \item Ejecutar integraciones con pasos definidos desde la capa de aplicaci\'on y guardar checkpoints con la rutina de OpenMM-Setup (User Guide §3.5-3.15).
 \end{itemize}
@@ -14,8 +14,8 @@
 \begin{frame}
 \frametitle{Entradas externas}
 \begin{itemize}
-  \item `simulateAmber.py` acepta `.prmtop` + `.inpcrd`, mientras que `simulateCharmm.py` y `simulateGromacs.py` respetan sus formatos nativos.
-  \item `simulatePdb.py` es el punto de partida tradicional para dip\u00e9ptido de alanina o prote\'inas-ligando sin parametrizar.
+  \item \href{https://github.com/openmm/openmm/blob/master/examples/python-examples/simulateAmber.py}{\texttt{simulateAmber.py}} acepta `.prmtop` + `.inpcrd`, mientras que \href{https://github.com/openmm/openmm/blob/master/examples/python-examples/simulateCharmm.py}{\texttt{simulateCharmm.py}} y \href{https://github.com/openmm/openmm/blob/master/examples/python-examples/simulateGromacs.py}{\texttt{simulateGromacs.py}} respetan sus formatos nativos.
+  \item \href{https://github.com/openmm/openmm/blob/master/examples/python-examples/simulatePdb.py}{\texttt{simulatePdb.py}} es el punto de partida tradicional para dip\u00e9ptido de alanina o prote\'inas-ligando sin parametrizar.
   \item Todos incluyen funciones para modificar `reporters` y acomodar formatos de salida que luego procesaremos con scripts Python de an\'alisis.
 \end{itemize}
 \end{frame}

@@ -5,7 +5,7 @@
 \begin{frame}
 \frametitle{Pipeline previo al análisis}
 \begin{enumerate}
-  \item Convertir y limpiar trayectorias con `simulatePdb.py` o `simulateGromacs.py`.
+  \item Convertir y limpiar trayectorias con \href{https://github.com/openmm/openmm/blob/master/examples/python-examples/simulatePdb.py}{\texttt{simulatePdb.py}} o \href{https://github.com/openmm/openmm/blob/master/examples/python-examples/simulateGromacs.py}{\texttt{simulateGromacs.py}}.
   \item Alinear estructuras y eliminar solvente irrelevante.
   \item Definir subconjuntos de átomos y escribir DCD/NetCDF para análisis posteriores.
 \end{enumerate}
@@ -28,7 +28,7 @@
 \end{align*}
 \begin{itemize}
   \item Usamos el algoritmo de Kabsch para rotaciones óptimas.
-  \item Documentamos con `simulateAmber.py` y la salida en CSV para cada réplica.
+  \item Documentamos con \href{https://github.com/openmm/openmm/blob/master/examples/python-examples/simulateAmber.py}{\texttt{simulateAmber.py}} y la salida en CSV para cada réplica.
 \end{itemize}
 \end{frame}
 
@@ -49,7 +49,7 @@
 \frametitle{Extremos y contactos}
 \begin{itemize}
   \item Mapas binarios con umbral de 0.45 nm generan matrices de contacto.
-  \item Las columnas representan cambios de dominios detectados por `simulateCharmm.py`.
+  \item Las columnas representan cambios de dominios detectados por \href{https://github.com/openmm/openmm/blob/master/examples/python-examples/simulateCharmm.py}{\texttt{simulateCharmm.py}}.
 \end{itemize}
 \end{frame}
 
@@ -62,7 +62,7 @@
 \end{align*}
 \begin{itemize}
   \item Proyectamos sobre los primeros autovectores y definimos ejes de evento.
-  \item Relacionamos con \texttt{coarse\_grained\_polymer.py} para comparar modos lentos de polímeros y proteínas.
+  \item Relacionamos con \href{https://openmm.github.io/openmm-cookbook/latest/notebooks/tutorials/coarse_grained_polymer.html}{\texttt{coarse\_grained\_polymer.py}} para comparar modos lentos de polímeros y proteínas.
 \end{itemize}
 \end{frame}
 
@@ -101,7 +101,7 @@
   g(r) &= \frac{1}{4\pi r^2\rho}\left\langle \sum_{i\ne j}\delta(r-r_{ij})\right\rangle.
 \end{align*}
 \begin{itemize}
-  \item Comparar con `argon-chemical-potential.py` para validar.
+  \item Comparar con \href{https://github.com/openmm/openmm/blob/master/examples/python-examples/argon-chemical-potential.py}{\texttt{argon-chemical-potential.py}} para validar.
   \item Usa histogramas reponderados para estimar $F(r)=-\kbt\ln g(r)$.
 \end{itemize}
 \end{frame}
@@ -111,7 +111,7 @@
 \begin{itemize}
   \item La proyección $F(s)=-\kbt\ln P(s)$ requiere CVs robustos.
   \item Integrar con ventanas de `umbrella sampling` y combinar con MBAR.
-  \item Comparar perfiles unidimensionales con `simulateAmber.py`.
+  \item Comparar perfiles unidimensionales con \href{https://github.com/openmm/openmm/blob/master/examples/python-examples/simulateAmber.py}{\texttt{simulateAmber.py}}.
   \item Validar con histogramas solapados manualmente.
 \end{itemize}
 \end{frame}
@@ -144,7 +144,7 @@
 \begin{frame}
 \frametitle{Reportes finales}
 \begin{itemize}
-  \item Generar tablas de RMSD/RMSF/radio de giro con `simulateCharmm.py`.
+  \item Generar tablas de RMSD/RMSF/radio de giro con \href{https://github.com/openmm/openmm/blob/master/examples/python-examples/simulateCharmm.py}{\texttt{simulateCharmm.py}}.
   \item Exportar CSV/HDF para facilitar el paso a PyEMMA/Deeptime.
 \end{itemize}
 \end{frame}

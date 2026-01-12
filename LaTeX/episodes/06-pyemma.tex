@@ -5,7 +5,7 @@
 \begin{frame}
 \frametitle{Transformar datos}
 \begin{itemize}
-  \item \texttt{simulateAmber.py} y \texttt{simulateCharmm.py} producen trayectorias DCD que alimentamos a PyEMMA.
+  \item \href{https://github.com/openmm/openmm/blob/master/examples/python-examples/simulateAmber.py}{\texttt{simulateAmber.py}} y \href{https://github.com/openmm/openmm/blob/master/examples/python-examples/simulateCharmm.py}{\texttt{simulateCharmm.py}} producen trayectorias DCD que alimentamos a PyEMMA.
   \item Alinear, recortar solvente y guardar en HDF5 para economía de almacenamiento.
   \item Reportes de energía y RMSD se usan como checks previos a la discretización.
 \end{itemize}
@@ -108,7 +108,7 @@
   \item Remuestrear trayectorias discretizadas para intervalos confiables.
   \item PyEMMA guarda pesos y permite reproducir con semilla distinta.
   \item Imponemos reversibilidad para reducir ruido.
-  \item Ajustamos priors a partir de las fuerzas detectadas en \texttt{simulateAmber.py}.
+  \item Ajustamos priors a partir de las fuerzas detectadas en \href{https://github.com/openmm/openmm/blob/master/examples/python-examples/simulateAmber.py}{\texttt{simulateAmber.py}}.
 \end{itemize}
 \end{frame}
 
@@ -120,7 +120,7 @@
   \item Flujos \(f_{ij}=\pi_i T_{ij} q_i (1-q_j)\) identifican rutas reactivas.
   \item El committor \(q_i = P(\text{llegar a B antes que a A}\mid X_0=i)\) define el progreso.
   \item Grafo de transiciones coloreado por flujo destaca cuellos de botella cinéticos.
-  \item \texttt{simulateGromacs.py} proporciona las trayectorias de referencia.
+  \item \href{https://github.com/openmm/openmm/blob/master/examples/python-examples/simulateGromacs.py}{\texttt{simulateGromacs.py}} proporciona las trayectorias de referencia.
 \end{itemize}
 \end{frame}
 

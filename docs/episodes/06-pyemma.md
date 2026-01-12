@@ -43,9 +43,9 @@ permalink: /episodes/06-pyemma/
 
 Los scripts oficiales de OpenMM generan las trayectorias que luego featurizamos con PyEMMA:
 
-- `simulatePdb.py`: entrada mínima para validar el pipeline con alanina.
-- `simulateAmber.py`: producción con prmtop/inpcrd para el complejo proteína-ligando.
-- `simulateGromacs.py` y `simulateCharmm.py`: soporte multi-formato cuando el sistema viene de otros paquetes.
+- [`simulatePdb.py`](https://github.com/openmm/openmm/blob/master/examples/python-examples/simulatePdb.py): entrada mínima para validar el pipeline con alanina.
+- [`simulateAmber.py`](https://github.com/openmm/openmm/blob/master/examples/python-examples/simulateAmber.py): producción con prmtop/inpcrd para el complejo proteína-ligando.
+- [`simulateGromacs.py`](https://github.com/openmm/openmm/blob/master/examples/python-examples/simulateGromacs.py) y [`simulateCharmm.py`](https://github.com/openmm/openmm/blob/master/examples/python-examples/simulateCharmm.py): soporte multi-formato cuando el sistema viene de otros paquetes.
 
 Todas las trayectorias se convierten a DCD y se acompañan de reportes de energía para verificar estabilidad antes de discretizar.
 

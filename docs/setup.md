@@ -72,11 +72,11 @@ pip install pyemma
 
 La guía de OpenMM incluye scripts en `python-examples`:
 
-- `simulatePdb.py` (PDB directo)
-- `simulateAmber.py` (prmtop + inpcrd)
-- `simulateCharmm.py` (psf + crd)
-- `simulateGromacs.py` (top + gro)
-- `simulateTinker.py` (AMOEBA)
+- [`simulatePdb.py`](https://github.com/openmm/openmm/blob/master/examples/python-examples/simulatePdb.py) (PDB directo)
+- [`simulateAmber.py`](https://github.com/openmm/openmm/blob/master/examples/python-examples/simulateAmber.py) (prmtop + inpcrd)
+- [`simulateCharmm.py`](https://github.com/openmm/openmm/blob/master/examples/python-examples/simulateCharmm.py) (psf + crd)
+- [`simulateGromacs.py`](https://github.com/openmm/openmm/blob/master/examples/python-examples/simulateGromacs.py) (top + gro)
+- [`simulateTinker.py`](https://github.com/openmm/openmm/blob/master/examples/python-examples/simulateTinker.py) (AMOEBA)
 
 Ejemplo genérico:
 

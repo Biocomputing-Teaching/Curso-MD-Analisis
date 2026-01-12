@@ -78,11 +78,11 @@ Todos los scripts enlazados utilizan esta arquitectura y sirven como ejemplos gu
 
 Para alimentar el análisis, apoyamos los scripts oficiales descritos en la guía de OpenMM:
 
-- `simulatePdb.py`: simulaciones rápidas desde PDB, útil para pruebas de recocido.
-- `simulateAmber.py`: entrada AMBER (prmtop/inpcrd) para comparar energías con y sin solvente.
-- `simulateCharmm.py`: topologías PSF/CRD para evaluar restricciones y reportes.
-- `simulateGromacs.py`: entrada GROMACS (top/gro), ideal para validar preprocesado.
-- `simulateTinker.py`: AMOEBA, útil para contrastar efectos de polarización.
+- [`simulatePdb.py`](https://github.com/openmm/openmm/blob/master/examples/python-examples/simulatePdb.py): simulaciones rápidas desde PDB, útil para pruebas de recocido.
+- [`simulateAmber.py`](https://github.com/openmm/openmm/blob/master/examples/python-examples/simulateAmber.py): entrada AMBER (prmtop/inpcrd) para comparar energías con y sin solvente.
+- [`simulateCharmm.py`](https://github.com/openmm/openmm/blob/master/examples/python-examples/simulateCharmm.py): topologías PSF/CRD para evaluar restricciones y reportes.
+- [`simulateGromacs.py`](https://github.com/openmm/openmm/blob/master/examples/python-examples/simulateGromacs.py): entrada GROMACS (top/gro), ideal para validar preprocesado.
+- [`simulateTinker.py`](https://github.com/openmm/openmm/blob/master/examples/python-examples/simulateTinker.py): AMOEBA, útil para contrastar efectos de polarización.
 
 En cada caso, las salidas (DCD, CSV y reportes de energía) se usan en los ejercicios de este episodio.
 

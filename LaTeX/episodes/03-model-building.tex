@@ -57,7 +57,7 @@
 \frametitle{Modelado conforme a la gu\'ia oficial}
 \begin{itemize}
   \item OpenMM User Guide (§4.1-4.6) sugiere reconectar hidrógenos, solvatación y adición de membranas antes de parametrizar.
-  \item El repositorio de ejemplos incluye `simulateAmber.py` + `simulateCharmm.py`, y `argon-chemical-potential.py` para verificar energías libres en líquidos simples.
+  \item El repositorio de ejemplos incluye \href{https://github.com/openmm/openmm/blob/master/examples/python-examples/simulateAmber.py}{\texttt{simulateAmber.py}} + \href{https://github.com/openmm/openmm/blob/master/examples/python-examples/simulateCharmm.py}{\texttt{simulateCharmm.py}}, y \href{https://github.com/openmm/openmm/blob/master/examples/python-examples/argon-chemical-potential.py}{\texttt{argon-chemical-potential.py}} para verificar energías libres en líquidos simples.
   \item Podemos reutilizar la infraestructura para el dipéptido de alanina y el complejo proteína-ligando, pero extendiendo los scripts con variables de membrana o polímeros coarse-grained.
 \end{itemize}
 \end{frame}
@@ -65,8 +65,8 @@
 \begin{frame}
 \frametitle{Sistemas adicionales}
 \begin{itemize}
-  \item \texttt{coarse\_grained\_polymer.py} (OpenMM Cookbook) crea topologías bead-spring que muestran cómo definir masas y enlaces manualmente.
-  \item Ese mismo enfoque se conecta con el script `argon-chemical-potential.py`, donde se parametrizan fuerzas de Lennard-Jones y se mide energía libre de inserción.
+  \item \href{https://openmm.github.io/openmm-cookbook/latest/notebooks/tutorials/coarse_grained_polymer.html}{\texttt{coarse\_grained\_polymer.py}} (OpenMM Cookbook) crea topologías bead-spring que muestran cómo definir masas y enlaces manualmente.
+  \item Ese mismo enfoque se conecta con el script \href{https://github.com/openmm/openmm/blob/master/examples/python-examples/argon-chemical-potential.py}{\texttt{argon-chemical-potential.py}}, donde se parametrizan fuerzas de Lennard-Jones y se mide energía libre de inserción.
   \item Los modelos biomoleculares se benefician al combinar estos ejemplos ligeros con la solvatación y el tratamiento de ligandos pesados en Amber.
 \end{itemize}
 \end{frame}
@@ -75,7 +75,7 @@
 \frametitle{Membranas y solventes}
 \begin{itemize}
   \item Añadir solvente con `Modeller.addSolvent` y escoger OPC/TIP3P (User Guide §4.2).
-  \item Si hay membranas, usar `Modeller.addMembrane` y luego `simulateAmber.py` con barostato anisotrópico.
+  \item Si hay membranas, usar `Modeller.addMembrane` y luego \href{https://github.com/openmm/openmm/blob/master/examples/python-examples/simulateAmber.py}{\texttt{simulateAmber.py}} con barostato anisotrópico.
   \item Guardar la topología final para reproducir exactamente el sistema (OpenMM App §4.6).
 \end{itemize}
 \end{frame}

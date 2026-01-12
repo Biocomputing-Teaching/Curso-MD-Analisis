@@ -42,9 +42,9 @@ permalink: /episodes/07-deeptime/
 
 En este episodio reutilizamos los scripts del Application Layer de OpenMM para construir datos homogéneos:
 
-- `simulatePdb.py`: trayectorias rápidas para validación de Koopman.
-- `simulateAmber.py`: series largas para estimar espectros y validación CK.
-- `simulateTinker.py`: ejemplos AMOEBA para comparar con modelos clásicos.
+- [`simulatePdb.py`](https://github.com/openmm/openmm/blob/master/examples/python-examples/simulatePdb.py): trayectorias rápidas para validación de Koopman.
+- [`simulateAmber.py`](https://github.com/openmm/openmm/blob/master/examples/python-examples/simulateAmber.py): series largas para estimar espectros y validación CK.
+- [`simulateTinker.py`](https://github.com/openmm/openmm/blob/master/examples/python-examples/simulateTinker.py): ejemplos AMOEBA para comparar con modelos clásicos.
 
 Estas salidas se procesan con `deeptime` para mantener consistencia con PyEMMA.
 
