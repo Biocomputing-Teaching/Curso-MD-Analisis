@@ -7,7 +7,7 @@ title: Sobre Jordi Villà i Freixa
 
 Jordi Villà i Freixa es catedrático en la Universitat de Vic – Universitat Central de Catalunya (UVic-UCC) y lidera el **Computational Biochemistry and Biophysics Lab (CBBL)**. Su formación incluye la licenciatura en Ciencias Químicas (UAB, 1993) y el doctorado en Química con honores (UAB, 1998). Ha desarrollado su carrera académica en la UVic-UCC, la Universitat Pompeu Fabra y la Universitat Internacional de Catalunya, y ha ocupado cargos de gestión universitaria como vicerrector y director de escuela. También ha realizado estancias de investigación en universidades de Estados Unidos y Europa.
 
-Su trayectoria incluye participación en proyectos europeos y nacionales, más de 50 publicaciones en revistas indexadas, y la supervisión de tesis doctorales. Ha sido evaluador y miembro de comités científicos y de calidad académica, y cofundador de la empresa aScidea (Computational Biology Solutions).
+Su trayectoria incluye participación en proyectos europeos y nacionales, más de 60 publicaciones en revistas indexadas, y la supervisión de tesis doctorales. Ha sido evaluador y miembro de comités científicos y de calidad académica, y cofundador de la empresa aScidea (Computational Biology Solutions).
 
 ## Enlaces
 

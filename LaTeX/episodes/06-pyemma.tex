@@ -5,7 +5,7 @@
 \begin{frame}
 \frametitle{Transformar datos}
 \begin{itemize}
-  \item \href{https://github.com/openmm/openmm/blob/master/examples/python-examples/simulateAmber.py}{\texttt{simulateAmber.py}} y \href{https://github.com/openmm/openmm/blob/master/examples/python-examples/simulateCharmm.py}{\texttt{simulateCharmm.py}} producen trayectorias DCD que alimentamos a PyEMMA.
+  \item \href{https://github.com/openmm/openmm/blob/master/examples/python-examples/simulateAmber.py}{simulateAmber.py} y \href{https://github.com/openmm/openmm/blob/master/examples/python-examples/simulateCharmm.py}{simulateCharmm.py} producen trayectorias DCD que alimentamos a PyEMMA\@.
   \item Alinear, recortar solvente y guardar en HDF5 para economía de almacenamiento.
   \item Reportes de energía y RMSD se usan como checks previos a la discretización.
 \end{itemize}
@@ -15,7 +15,7 @@
 \frametitle{Extracción de características}
 \begin{itemize}
   \item Distancias, dihedros y contactos entre ligando y proteína forman el vector $\mathbf{x}$.
-  \item La matriz de covarianza $C=\langle (\mathbf{x}-\langle\mathbf{x}\rangle)(\mathbf{x}-\langle\mathbf{x}\rangle)^T\rangle$ se proyecta.
+  \item La matriz de covarianza $C=\langle (\mathbf{x}-\bar{\mathbf{x}})(\mathbf{x}-\bar{\mathbf{x}})^T\rangle$ se proyecta.
   \item Todos los scripts de la guía (simulateGromacs, simulateTinker) comparten esta salida para alimentar PyEMMA.
 \end{itemize}
 \end{frame}
