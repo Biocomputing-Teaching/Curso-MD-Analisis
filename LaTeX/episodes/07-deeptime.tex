@@ -1,0 +1,158 @@
+\section[Deeptime]{Episodio 7: Modelos y espectros con Deeptime}
+
+\subsection{Operadores de transferencia}
+
+\begin{frame}
+\frametitle{Definición}
+\begin{align*}
+  (\mathcal{T}_\tau f)(x) &= \mathbb{E}[f(X_{t+\tau})\mid X_t=x].
+\end{align*}
+\begin{itemize}
+  \item Extiende MSM al espacio continuo de observables.
+  \item PyEMMA y Deeptime comparten la base de datos generada por `simulateAmber.py`.
+\end{itemize}
+\end{frame}
+
+\begin{frame}
+\frametitle{Koopman vs Perron-Frobenius}
+\begin{itemize}
+  \item Koopman actúa sobre observables (funciones).
+  \item Perron-Frobenius actúa sobre densidades.
+  \item Permiten construir `TransferOperator` en Deeptime.
+\end{itemize}
+\end{frame}
+
+\subsection{Espectro y modos}
+
+\begin{frame}
+\frametitle{Problema espectral}
+\begin{align*}
+  \mathcal{T}_\tau \psi_i &= \lambda_i \psi_i.
+\end{align*}
+\begin{itemize}
+  \item Los autovalores \(\lambda_i\) definen tiempos implícitos \(t_i=-\tau/\ln\lambda_i\).
+  \item \(\lambda_1=1\) para equilibrio y valores próximos a 1 indican procesos lentos.
+\end{itemize}
+\end{frame}
+
+\begin{frame}
+\frametitle{Modos espectrales}
+\begin{center}
+  \includegraphics[width=0.72\linewidth]{episodes/eigenvects.pdf}
+\end{center}
+{\tiny Visualización de modos lentos (OpenMM Cookbook REST). \cita{img-eigenvects}}
+\end{frame}
+
+\subsection{Bases y proyecciones}
+
+\begin{frame}
+\frametitle{Expansión en bases}
+\begin{align*}
+  f(x) &= \sum_i c_i \phi_i(x).
+\end{align*}
+\begin{itemize}
+  \item Deeptime permite bases lineales/no lineales: kernels y redes.
+\end{itemize}
+\end{frame}
+
+\begin{frame}
+\frametitle{Bases y proyecciones}
+\begin{columns}
+  \column{0.5\linewidth}
+  \begin{center}
+    \includegraphics[width=\linewidth]{episodes/Linalg_non_orthog_basis_R2_2-1.png}
+  \end{center}
+  \column{0.5\linewidth}
+  \begin{center}
+    \includegraphics[width=\linewidth]{episodes/Linalg_xyperp_not_yz.png}
+  \end{center}
+\end{columns}
+{\tiny Fuente: referencia pendiente. \cita{unknown}}
+\end{frame}
+
+\begin{frame}
+\frametitle{Error y regularización}
+\begin{itemize}
+  \item Bases pobres generan sesgo espectral.
+  \item Regularizar con \(L_2\) y validación cruzada.
+\end{itemize}
+\end{frame}
+
+\subsection{tICA y VAMP}
+
+\begin{frame}
+\frametitle{tICA en Deeptime}
+\begin{align*}
+  C_\tau \mathbf{w} &= \lambda C_0 \mathbf{w}.
+\end{align*}
+\begin{itemize}
+  \item Maximiza correlación a largo plazo.
+\end{itemize}
+\end{frame}
+
+\begin{frame}
+\frametitle{VAMP score}
+\begin{align*}
+  \mathcal{R}_2 &= \sum_i \sigma_i^2.
+\end{align*}
+\begin{itemize}
+  \item Evalúa calidad espectral para escoger features.
+\end{itemize}
+\end{frame}
+
+\subsection{Modelos avanzados}
+
+\begin{frame}
+\frametitle{Aproximación de Koopman}
+\begin{itemize}
+  \item Expandir observables en bases lineales/no lineales.
+  \item Obtenemos representaciones reducidas y más interpretables.
+\end{itemize}
+\end{frame}
+
+\begin{frame}
+\frametitle{Modelos kernel y neuronales}
+\begin{itemize}
+  \item Kernels capturan no linealidades; redes requieren validación estricta.
+  \item Regularizar con dropout o \(L_2\) para prevenir sobreajuste.
+\end{itemize}
+\end{frame}
+
+\subsection{Validación y scores}
+
+\begin{frame}
+\frametitle{Validación y robustez}
+\begin{itemize}
+  \item Dividir en bloques temporales evita fuga de información.
+  \item Comparar scores espectrales entre conjuntos.
+  \item \(T(n\tau)\approx T(\tau)^n\) valida consistencia temporal.
+  \item Variar \(\tau\) y clustering permite detectar sensibilidad.
+\end{itemize}
+\end{frame}
+
+\subsection{Pipeline con Deeptime}
+
+\begin{frame}
+\frametitle{Flujo básico}
+\begin{itemize}
+  \item Features \(\rightarrow\) tICA/VAMP \(\rightarrow\) modelo espectral.
+  \item Usar `simulatePdb.py` para generar trayectorias y `OpenMMTools` para preparar `REST`.
+\end{itemize}
+\end{frame}
+
+\begin{frame}
+\frametitle{Visualización}
+\begin{itemize}
+  \item Proyecciones 2D con FES y comparación con MSM.
+\end{itemize}
+\end{frame}
+
+\subsection{Resumen}
+
+\begin{frame}
+\frametitle{Resumen del episodio}
+\begin{itemize}
+  \item Deeptime extiende MSM con operadores espectrales y validación cruzada.
+  \item Combinamos features, VAMP y scores para seleccionar modelos robustos.
+\end{itemize}
+\end{frame}

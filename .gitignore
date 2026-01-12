@@ -16,3 +16,30 @@ _site/
 # counterproductive to check this file into the repository.
 # Details at https://github.com/github/pages-gem/issues/768
 Gemfile.lock
+*.aux
+*.blg
+*.bcf
+*.bjerrum.gnuplot
+*.fls
+*.fdb_latexmk
+*.ilg
+*.ind
+*.lof
+*.log
+*.lot
+*.nav
+*.out
+*.pdfsync
+*.snm
+*.synctex.gz
+*.toc
+*.vrb   
+*.run.xml
+.cvsignore
+.DS_Store
+Thumbs.db
+*.pyc
+*.doc
+*.docx
+info.txt
+*.bbl

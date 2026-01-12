@@ -1,12 +1,12 @@
 ---
 layout: default
-title: Episodio 1 - Introducción y entorno de trabajo
+title: Episodio 1 - Introducción (entorno y datos)
 permalink: /episodes/01-introduccion/
 ---
 
 <div class="episode-nav">
   <a href="{{ site.baseurl }}/episodes/">Todos los episodios</a>
-  <a href="{{ site.baseurl }}/episodes/02-preparacion-sistema/">Siguiente</a>
+  <a href="{{ site.baseurl }}/episodes/03-simulaciones-clasicas/">Siguiente</a>
 </div>
 
 <!-- toc:start -->
@@ -30,13 +30,14 @@ permalink: /episodes/01-introduccion/
 
 - Identificar los archivos de entrada para alanina y complejo proteína-ligando.
 - Verificar que OpenMM y OpenFF Toolkit funcionen en el entorno.
-- Cargar datos base para ambos sistemas.
+- Cargar datos base para ambos sistemas siguiendo el flujo de primeros pasos.
 
 ## Contenido
 
 - PDB y MOL/SDF como entradas.
 - Lectura de alanina con OpenMM.
 - Lectura de proteína y ligando con OpenFF Toolkit.
+- Ruta de trabajo `COURSE_DIR` y validación del entorno.
 
 ## Parte simple
 
@@ -80,5 +81,5 @@ permalink: /episodes/01-introduccion/
   
 <div class="episode-nav">
   <a href="{{ site.baseurl }}/episodes/">Todos los episodios</a>
-  <a href="{{ site.baseurl }}/episodes/02-preparacion-sistema/">Siguiente</a>
+  <a href="{{ site.baseurl }}/episodes/03-simulaciones-clasicas/">Siguiente</a>
 </div>

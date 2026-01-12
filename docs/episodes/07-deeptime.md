@@ -14,6 +14,8 @@ permalink: /episodes/07-deeptime/
 - [Duración](#duracion)
 - [Objetivos](#objetivos)
 - [Contenido](#contenido)
+- [Scripts de la guía para preparar datos](#scripts-de-la-guia-para-preparar-datos)
+- [Fundamentos operatoriales](#fundamentos-operatoriales)
 - [Parte simple](#parte-simple)
 - [Parte compleja](#parte-compleja)
 <!-- toc:end -->
@@ -25,16 +27,42 @@ permalink: /episodes/07-deeptime/
 
 ## Objetivos
 
-- Construir MSM con deeptime para un sistema simple y uno complejo.
-- Aplicar TICA, clustering y MSM en un flujo reproducible.
-- Comparar resultados con PyEMMA.
+- Explorar MSM y análisis espectral utilizando el paquete `deeptime`.
+- Introducir la interpretación del operador de Koopman y su relación con las dinámicas visibles.
+- Comparar los resultados con PyEMMA y reforzar la elección de features.
 
 ## Contenido
 
-- Features basados en distancias.
-- Reducción de dimensionalidad con TICA.
-- Estimación de MSM con MaximumLikelihoodMSM.
-- Flujo inspirado en el ejemplo de <a href="https://github.com/joanmp-uoc/TFM">Joan Mora</a> (PCA + clustering + MSM).
+- Features basadas en distancias y torsiones.
+- Reducción con TICA y transformaciones lineales.
+- Estimación de MSM con `MaximumLikelihoodMSM` y validación.
+- Estudios espectrales con `KoopmanModel` y análisis de macrostados.
+
+## Scripts de la guía para preparar datos
+
+En este episodio reutilizamos los scripts del Application Layer de OpenMM para construir datos homogéneos:
+
+- `simulatePdb.py`: trayectorias rápidas para validación de Koopman.
+- `simulateAmber.py`: series largas para estimar espectros y validación CK.
+- `simulateTinker.py`: ejemplos AMOEBA para comparar con modelos clásicos.
+
+Estas salidas se procesan con `deeptime` para mantener consistencia con PyEMMA.
+
+## Fundamentos operatoriales
+
+El operador de Koopman actúa sobre una observación $g(\mathbf{x})$ propagándola en el tiempo
+
+$$
+(\mathcal{K}_\tau g)(\mathbf{x}) = \mathbb{E}[g(\mathbf{x}_{t+\tau}) | \mathbf{x}_t = \mathbf{x}],
+$$
+
+que en la práctica se aproxima con matrices $K_{ij}$ que relacionan microestados. La diagonalización de $K$ proporciona valores propios $\lambda_k$ y funciones propias $\psi_k$, de modo que se puede reconstruir el estado estacionario
+
+$$
+\rho(\mathbf{x}) \approx \sum_k \lambda_k \psi_k(\mathbf{x}).
+$$
+
+La simulación de `deeptime` complementa esta visión al permitir estimar la matriz de transferencia y calcular proyecciones espectrales para distinguir macrostados.
 
 ## Parte simple
 
@@ -45,11 +73,13 @@ permalink: /episodes/07-deeptime/
 
 ### Ejercicio
 
-- Ejecutar deeptime en alanina con <a href="{{ site.baseurl }}/data/">traj.dcd</a> y <a href="{{ site.baseurl }}/data/alanine-dipeptide.pdb">alanine-dipeptide.pdb</a>.
+- Ejecutar el canal simple en alanina y ajustar la descomposición SVD para TICA.
+- Comparar los primeros tres valores propios con el modelo PyEMMA: ¿coinciden los tiempos de relajación?
 
 ### Puntos clave
 
-- deeptime ofrece un pipeline MSM ligero y modular.
+- La normalización de features garantiza que las funciones propias sean significativas.
+- El uso de `KoopmanModel` permite extraer observables que capturan la dinámica lenta.
 
 ### Notebooks y scripts
 
@@ -65,12 +95,13 @@ permalink: /episodes/07-deeptime/
 
 ### Ejercicio
 
-- Ejecutar deeptime en el complejo con <a href="{{ site.baseurl }}/reference/">output_traj.dcd</a> y <a href="{{ site.baseurl }}/reference/">output_minimised.pdb</a>.
-- Comparar las escalas de tiempo con PyEMMA.
+- Usar el complejo proteína-ligando y construir una MSM con `MaximumLikelihoodMSM`.
+- Realizar análisis de `ChapmanKolmogorov` y comparar con los resultados de PyEMMA, enfocándose en la conservación de probabilidades.
 
 ### Puntos clave
 
-- La comparación con PyEMMA ayuda a validar resultados.
+- El operador de Koopman describe cómo la observación se propaga con $\tau$ y se compara con la matriz de transición clásica.
+- Los espacios latentes permiten distinguir macrostados y estudiar flujos de transición.
 
 ### Notebooks y scripts
 

@@ -1,13 +1,13 @@
 ---
 layout: default
-title: Episodio 4 - Análisis de trayectorias con MDTraj
+title: Episodio 5 - Análisis de trayectorias con MDTraj
 permalink: /episodes/04-analisis-trayectorias/
 ---
 
 <div class="episode-nav">
-  <a href="{{ site.baseurl }}/episodes/03-simulaciones-clasicas/">Anterior</a>
+  <a href="{{ site.baseurl }}/episodes/05-muestreo-avanzado/">Anterior</a>
   <a href="{{ site.baseurl }}/episodes/">Todos los episodios</a>
-  <a href="{{ site.baseurl }}/episodes/05-muestreo-avanzado/">Siguiente</a>
+  <a href="{{ site.baseurl }}/episodes/06-pyemma/">Siguiente</a>
 </div>
 
 <!-- toc:start -->
@@ -78,7 +78,7 @@ permalink: /episodes/04-analisis-trayectorias/
 - <a href="{{ site.baseurl }}/episodes/scripts/04-analisis-trayectorias.py">04-analisis-trayectorias.py</a>
 
 <div class="episode-nav">
-  <a href="{{ site.baseurl }}/episodes/03-simulaciones-clasicas/">Anterior</a>
+  <a href="{{ site.baseurl }}/episodes/05-muestreo-avanzado/">Anterior</a>
   <a href="{{ site.baseurl }}/episodes/">Todos los episodios</a>
-  <a href="{{ site.baseurl }}/episodes/05-muestreo-avanzado/">Siguiente</a>
+  <a href="{{ site.baseurl }}/episodes/06-pyemma/">Siguiente</a>
 </div>

@@ -21,6 +21,24 @@ Para obtener el DCD, genera la trayectoria localmente (ver <a href="{{ site.base
 - <a href="https://github.com/Biocomputing-Teaching/Course-MD-Data/raw/main/complex/ligand1.mol">Descargar ligand1.mol</a>: ligando en formato MOL.
 - <a href="https://github.com/Biocomputing-Teaching/Course-MD-Data/raw/main/complex/ligand1.sdf">Descargar ligand1.sdf</a>: ligando en formato SDF.
 
+### Datos OpenMM (python-examples)
+
+Los ejemplos oficiales de OpenMM usan archivos de entrada que puedes descargar desde el repo de OpenMM.
+Guárdalos en `COURSE_DIR/data/openmm-examples` para los scripts del Episodio 2 (Ejecución de simulaciones).
+
+```bash
+mkdir -p "$COURSE_DIR/data/openmm-examples"
+base="https://raw.githubusercontent.com/openmm/openmm/master/examples/python-examples"
+for file in \\
+  input.pdb input.inpcrd input.prmtop input.gro input.top \\
+  ala_ala_ala.pdb ala_ala_ala.psf charmm22.rtf charmm22.par \\
+  amoeba_solvated_phenol.xyz amoeba_phenol.prm amoebabio18.prm; do
+  curl -L -o "$COURSE_DIR/data/openmm-examples/$file" "$base/$file"
+done
+```
+
+Nota: el ejemplo Gromacs requiere acceso a los ficheros de force field (`includeDir`). Si no los tienes instalados, usa solo los ejemplos PDB/AMBER/CHARMM/Tinker.
+
 ### Código completo del generador DCD
 
 ```python

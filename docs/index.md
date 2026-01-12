@@ -19,7 +19,7 @@ permalink: /
 
 ## Requisitos previos
 
-- Conocimientos básicos de bioinformática o química computacional
+- Conocimientos básicos de simulaciones moleculares o química computacional
 - Familiaridad con la línea de comandos de Linux
 - Conocimientos básicos de Python
 - Acceso a un clúster o workstation con GPU, idealmente con OpenMM
@@ -67,6 +67,12 @@ permalink: /
 - Discusión de proyectos de los participantes
 - Consultoría técnica personalizada
 - Recomendaciones de buenas prácticas en simulaciones y análisis
+
+## Charla del curso
+
+Material ampliado basado en el beamer del curso, con un capítulo HTML por sesión:
+
+- <a href="{{ site.baseurl }}/talks/">Acceder a la charla y a los capítulos</a>
 
 
 ## Colaboradores

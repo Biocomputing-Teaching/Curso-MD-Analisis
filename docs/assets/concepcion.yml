@@ -1,0 +1,24 @@
+name: concepcion
+channels:
+  - conda-forge
+dependencies:
+  - python=3.10
+  - jupyterlab
+  - numpy
+  - scipy
+  - matplotlib
+  - plotly
+  - python-kaleido
+  - nglview
+  - ipywidgets
+  - jupyterlab_widgets
+  - openmm
+  - mdanalysis
+  - deeptime
+  - openff-toolkit
+  - openmmforcefields
+  - pdbfixer
+  - mdtraj
+  - biopython
+  - pyemma
+  - git

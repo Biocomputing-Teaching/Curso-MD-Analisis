@@ -1,0 +1,572 @@
+\section[Preparacion]{Episodio 3: Preparaci\'on y edici\'on del sistema}
+
+\subsection{Objetivos y flujo}
+
+\begin{frame}
+\frametitle{Objetivos del episodio}
+\begin{itemize}
+  \item Preparar sistemas listos para simular con OpenMM.
+  \item Estandarizar topolog\'ias y coordenadas.
+  \item Generar entradas reproducibles y verificables.
+\end{itemize}
+\end{frame}
+
+\begin{frame}
+\frametitle{Flujo de preparaci\'on}
+\begin{enumerate}
+  \item Lectura de estructura (PDB/MOL2/SDF).
+  \item Reparaci\'on y completado de residuos.
+  \item Protonaci\'on y asignaci\'on de cargas.
+  \item Solvataci\'on, iones y caja.
+  \item Minimizado y validaci\'on.
+\end{enumerate}
+\end{frame}
+
+\begin{frame}
+\frametitle{Archivos de entrada}
+\begin{itemize}
+  \item PDB: coordenadas y metadatos experimentales.
+  \item MOL2/SDF: ligandos y peque\~nas mol\'eculas.
+  \item Topolog\'ia y par\'ametros se asignan despu\'es de la lectura.
+\end{itemize}
+\end{frame}
+
+\begin{frame}
+\frametitle{Identificadores esenciales}
+\begin{align*}
+  \text{Residuo} &= (\text{cadena},\text{n\'umero},\text{nombre}),\\
+  \text{\'Atomo} &= (\text{tipo},\text{elemento},\text{carga}).
+\end{align*}
+\begin{itemize}
+  \item Los identificadores consistentes evitan errores en el campo de fuerza.
+\end{itemize}
+\end{frame}
+
+\begin{frame}
+\frametitle{Reproducibilidad}
+\begin{itemize}
+  \item Guardar scripts de preparaci\'on.
+  \item Documentar versiones de librer\'ias y par\'ametros.
+  \item Evitar pasos manuales no trazables.
+\end{itemize}
+\end{frame}
+
+\subsection{Modelado guiado}
+
+\begin{frame}
+\frametitle{Modelado conforme a la gu\'ia oficial}
+\begin{itemize}
+  \item OpenMM User Guide (§4.1-4.6) sugiere reconectar hidrógenos, solvatación y adición de membranas antes de parametrizar.
+  \item El repositorio de ejemplos incluye `simulateAmber.py` + `simulateCharmm.py`, y `argon-chemical-potential.py` para verificar energías libres en líquidos simples.
+  \item Podemos reutilizar la infraestructura para el dipéptido de alanina y el complejo proteína-ligando, pero extendiendo los scripts con variables de membrana o polímeros coarse-grained.
+\end{itemize}
+\end{frame}
+
+\begin{frame}
+\frametitle{Sistemas adicionales}
+\begin{itemize}
+  \item \texttt{coarse\_grained\_polymer.py} (OpenMM Cookbook) crea topologías bead-spring que muestran cómo definir masas y enlaces manualmente.
+  \item Ese mismo enfoque se conecta con el script `argon-chemical-potential.py`, donde se parametrizan fuerzas de Lennard-Jones y se mide energía libre de inserción.
+  \item Los modelos biomoleculares se benefician al combinar estos ejemplos ligeros con la solvatación y el tratamiento de ligandos pesados en Amber.
+\end{itemize}
+\end{frame}
+
+\begin{frame}
+\frametitle{Membranas y solventes}
+\begin{itemize}
+  \item Añadir solvente con `Modeller.addSolvent` y escoger OPC/TIP3P (User Guide §4.2).
+  \item Si hay membranas, usar `Modeller.addMembrane` y luego `simulateAmber.py` con barostato anisotrópico.
+  \item Guardar la topología final para reproducir exactamente el sistema (OpenMM App §4.6).
+\end{itemize}
+\end{frame}
+
+\subsection{Calidad de la estructura}
+
+\begin{frame}
+\frametitle{Calidad del PDB}
+\begin{itemize}
+  \item Resoluci\'on y factores B informan sobre la incertidumbre.
+  \item Regiones flexibles suelen presentar huecos o baja ocupaci\'on.
+\end{itemize}
+\end{frame}
+
+\begin{frame}
+\frametitle{Residuos faltantes}
+\begin{itemize}
+  \item Los PDB pueden carecer de segmentos completos.
+  \item La reconstrucci\'on requiere inferir geometr\'ia y estereoq\'u\'imica.
+\end{itemize}
+\end{frame}
+
+\begin{frame}
+\frametitle{AltLocs y ocupaci\'on}
+\begin{align*}
+  \sum_k \text{occ}_k &\le 1.
+\end{align*}
+\begin{itemize}
+  \item Elegir la conformaci\'on dominante o promediar seg\'un objetivo.
+\end{itemize}
+\end{frame}
+
+\begin{frame}
+\frametitle{Sitio activo en PDB}
+\begin{center}
+  \includegraphics[width=0.78\linewidth]{episodes/pdb_reaction_site.png}
+\end{center}
+\end{frame}
+
+\begin{frame}
+\frametitle{Superposici\'on y RMSD}
+\begin{align*}
+  \text{RMSD} &= \sqrt{\frac{1}{N}\sum_{i=1}^N \lVert \mathbf{r}_i-\mathbf{r}_i^{\,\text{ref}} \rVert^2 }.
+\end{align*}
+\begin{itemize}
+  \item Verifica coherencia con estructuras de referencia.
+\end{itemize}
+\end{frame}
+
+\subsection{Reparaci\'on y completado}
+
+\begin{frame}
+\frametitle{PDBFixer/Modeller}
+\begin{itemize}
+  \item Rellena residuos, corrige nombres y quita ligandos no deseados.
+  \item Prepara el sistema para asignar campo de fuerza.
+\end{itemize}
+\end{frame}
+
+\begin{frame}
+\frametitle{Inserci\'on de residuos}
+\begin{itemize}
+  \item Se usa informaci\'on geom\'etrica y estereoq\'u\'imica.
+  \item Minimizado local para aliviar choques.
+\end{itemize}
+\end{frame}
+
+\begin{frame}
+\frametitle{Protonaci\'on y pH}
+\begin{align*}
+  \frac{[A^-]}{[HA]} &= 10^{\mathrm{pH}-\mathrm{p}K_a}.
+\end{align*}
+\begin{itemize}
+  \item Determina estados de carga de residuos titulables.
+\end{itemize}
+\end{frame}
+
+\begin{frame}
+\frametitle{Estados de carga}
+\begin{itemize}
+  \item Ajustar histidinas (HID/HIE/HIP), ASP/GLU, LYS/ARG.
+  \item Coherencia con el entorno del sitio activo.
+\end{itemize}
+\end{frame}
+
+\begin{frame}
+\frametitle{Crecimiento estructural}
+\begin{center}
+  \includegraphics[width=0.72\linewidth]{episodes/pdb_growth.png}
+\end{center}
+\end{frame}
+
+\subsection{Campos de fuerza}
+
+\begin{frame}
+\frametitle{Descomposici\'on del potencial}
+\begin{align*}
+  U &= U_{\text{enlace}} + U_{\text{\'angulo}} + U_{\text{dihedro}} + U_{\text{no enlazado}}.
+\end{align*}
+\begin{itemize}
+  \item Base del c\'alculo de fuerzas y energ\'ias.
+\end{itemize}
+\end{frame}
+
+\begin{frame}
+\frametitle{Enlaces y \`angulos}
+\begin{align*}
+  U_{\text{enlace}} &= \sum_b k_b (r_b-r_b^0)^2,\\
+  U_{\text{\'angulo}} &= \sum_a k_a (\theta_a-\theta_a^0)^2.
+\end{align*}
+\begin{itemize}
+  \item Aproximaci\'on arm\'onica alrededor del equilibrio.
+\end{itemize}
+\end{frame}
+
+\begin{frame}
+\frametitle{Dihedros}
+\begin{align*}
+  U_{\text{dihedro}} &= \sum_d \frac{V_d}{2}\left[1+\cos(n_d\phi_d-\gamma_d)\right].
+\end{align*}
+\begin{itemize}
+  \item Controlan barreras rotacionales y conformaciones.
+\end{itemize}
+\end{frame}
+
+\begin{frame}
+\frametitle{No enlazados}
+\begin{align*}
+  U_{\text{LJ}} &= 4\epsilon\left[\left(\frac{\sigma}{r}\right)^{12}-\left(\frac{\sigma}{r}\right)^6\right],\\
+  U_{\text{C}} &= \frac{1}{4\pi\varepsilon_0}\frac{q_i q_j}{r_{ij}}.
+\end{align*}
+\begin{itemize}
+  \item LJ y Coulomb dominan interacciones a distancia.
+\end{itemize}
+\end{frame}
+
+\begin{frame}
+\frametitle{Selecci\'on del campo de fuerza}
+\begin{itemize}
+  \item Prote\'inas: AMBER/CHARMM/OPLS.
+  \item Ligandos: OpenFF u otros parametrizadores.
+  \item Validar compatibilidad con el sistema.
+\end{itemize}
+\end{frame}
+
+\begin{frame}
+\frametitle{Consistencia de par\'ametros}
+\begin{itemize}
+  \item Evitar mezclar campos de fuerza sin reglas claras.
+  \item Revisar unidades y escalas de energ\'ia.
+\end{itemize}
+\end{frame}
+
+\subsection{Ligandos y cargas}
+
+\begin{frame}
+\frametitle{Cargas parciales}
+\begin{align*}
+  \sum_i q_i &= Q_{\text{total}}.
+\end{align*}
+\begin{itemize}
+  \item El total debe coincidir con el estado de protonaci\'on.
+\end{itemize}
+\end{frame}
+
+\begin{frame}
+\frametitle{Ajuste electrost\'atico}
+\begin{itemize}
+  \item RESP y AM1-BCC derivan cargas de potenciales electrost\'aticos.
+  \item La distribuci\'on de cargas afecta energ\'ias de uni\'on.
+\end{itemize}
+\end{frame}
+
+\begin{frame}
+\frametitle{Escaneo de dihedros}
+\begin{align*}
+  E(\phi) &= E_0 + \sum_k V_k \cos(k\phi-\gamma_k).
+\end{align*}
+\begin{itemize}
+  \item Ajusta perfiles rotacionales en ligandos.
+\end{itemize}
+\end{frame}
+
+\begin{frame}
+\frametitle{Asignaci\'on de tipos}
+\begin{itemize}
+  \item Tipos at\'omicos determinan par\'ametros LJ y enlaces.
+  \item Inconsistencias producen energ\'ias no f\'isicas.
+\end{itemize}
+\end{frame}
+
+\begin{frame}
+\frametitle{Validaci\'on del ligando}
+\begin{itemize}
+  \item Revisar geometr\'ia, quiralidad y cargas netas.
+  \item Comparar con referencias experimentales o QM.
+\end{itemize}
+\end{frame}
+
+\subsection{Solvataci\'on}
+
+\begin{frame}
+\frametitle{Elecci\'on de caja}
+\begin{itemize}
+  \item C\'ubica, ortorr\'ombica o dodeca\'edrica.
+  \item Compromiso entre coste y distancia a la imagen.
+\end{itemize}
+\end{frame}
+
+\begin{frame}
+\frametitle{N\'umero de mol\'eculas de agua}
+\begin{align*}
+  N_{\text{H2O}} &\approx \rho\,V\,\frac{N_A}{M_{\text{H2O}}}.
+\end{align*}
+\begin{itemize}
+  \item Estima el tama\~no de caja seg\'un densidad objetivo.
+\end{itemize}
+\end{frame}
+
+\begin{frame}
+\frametitle{Concentraci\'on i\'onica}
+\begin{align*}
+  N_{\text{ion}} &= C\,V\,N_A.
+\end{align*}
+\begin{itemize}
+  \item Ajustar molaridad para condiciones fisiol\'ogicas.
+\end{itemize}
+\end{frame}
+
+\begin{frame}
+\frametitle{Caja solvatada}
+\begin{center}
+  \includegraphics[width=0.7\linewidth]{episodes/1i45_wat_box.png}
+\end{center}
+\end{frame}
+
+\begin{frame}
+\frametitle{Modelos de agua}
+\begin{itemize}
+  \item TIP3P, SPC/E, TIP4P: distintas densidades y din\'amicas.
+  \item Elegir el modelo compatible con el campo de fuerza.
+\end{itemize}
+\end{frame}
+
+\begin{frame}
+\frametitle{Recorte de solvente}
+\begin{itemize}
+  \item Mantener un colch\'on m\'inimo alrededor del soluto.
+  \item Evita interacciones artificiales con la imagen peri\'odica.
+\end{itemize}
+\end{frame}
+
+\begin{frame}
+\frametitle{Chequeo de densidad}
+\begin{itemize}
+  \item Verificar densidad tras equilibrado NPT.
+  \item Ajustar tama\~no si la densidad se desv\'ia.
+\end{itemize}
+\end{frame}
+
+\subsection{Iones y electrost\'atica}
+
+\begin{frame}
+\frametitle{Neutralizaci\'on}
+\begin{itemize}
+  \item Neutralizar la carga neta mejora estabilidad num\'erica.
+\end{itemize}
+\end{frame}
+
+\begin{frame}
+\frametitle{Fuerza i\'onica}
+\begin{align*}
+  I &= \frac{1}{2}\sum_i c_i z_i^2.
+\end{align*}
+\begin{itemize}
+  \item Controla apantallamiento electrost\'atico.
+\end{itemize}
+\end{frame}
+
+\begin{frame}
+\frametitle{Longitud de Debye}
+\begin{align*}
+  \lambda_D &= \sqrt{\frac{\varepsilon \kb T}{2N_A e^2 I}}.
+\end{align*}
+\begin{itemize}
+  \item Define el rango de interacciones electrost\'aticas en soluci\'on.
+\end{itemize}
+\end{frame}
+
+\begin{frame}
+\frametitle{PME y corte}
+\begin{itemize}
+  \item PME trata Coulomb de largo alcance de forma eficiente.
+  \item Elegir corte consistente con la caja.
+\end{itemize}
+\end{frame}
+
+\begin{frame}
+\frametitle{Balance carga/solvente}
+\begin{itemize}
+  \item Comprobar que el sistema no est\'e sobrecargado de iones.
+\end{itemize}
+\end{frame}
+
+\subsection{Membranas}
+
+\begin{frame}
+\frametitle{Modelos de membrana}
+\begin{itemize}
+  \item Bicapas lip\'idicas requieren cajas anisotr\'opicas.
+  \item La orientaci\'on debe ser coherente con la prote\'ina.
+\end{itemize}
+\end{frame}
+
+\begin{frame}
+\frametitle{Bicapa lip\'idica}
+\begin{center}
+  \includegraphics[width=0.72\linewidth]{episodes/lipids_bilayer.pdf}
+\end{center}
+\end{frame}
+
+\begin{frame}
+\frametitle{Area por l\'ipido}
+\begin{align*}
+  A_{\text{lip}} &= \frac{A_{\text{caja}}}{N_{\text{lip}}/2}.
+\end{align*}
+\begin{itemize}
+  \item M\'etrica clave para estabilidad de la membrana.
+\end{itemize}
+\end{frame}
+
+\begin{frame}
+\frametitle{Espesor de membrana}
+\begin{itemize}
+  \item Controla la exposici\'on de dominios hidrof\'obicos.
+  \item Ajuste con minimizado y equilibrado.
+\end{itemize}
+\end{frame}
+
+\begin{frame}
+\frametitle{Restricciones iniciales}
+\begin{itemize}
+  \item Restringir la prote\'ina evita colapsos durante equilibrado.
+\end{itemize}
+\end{frame}
+
+\subsection{Minimizado}
+
+\begin{frame}
+\frametitle{Funci\'on objetivo}
+\begin{align*}
+  \min_{\mathbf{r}}\; U(\mathbf{r}).
+\end{align*}
+\begin{itemize}
+  \item Reduce choques y mejora la estabilidad inicial.
+\end{itemize}
+\end{frame}
+
+\begin{frame}
+\frametitle{Descenso del gradiente}
+\begin{align*}
+  \mathbf{r}_{k+1} &= \mathbf{r}_k - \alpha_k \nabla U(\mathbf{r}_k).
+\end{align*}
+\begin{itemize}
+  \item M\'etodo robusto para minimizar energ\'ias altas.
+\end{itemize}
+\end{frame}
+
+\begin{frame}
+\frametitle{Gradiente conjugado}
+\begin{itemize}
+  \item M\'as eficiente cerca del m\'inimo.
+  \item Reduce el n\'umero de evaluaciones de fuerza.
+\end{itemize}
+\end{frame}
+
+\begin{frame}
+\frametitle{Restricciones arm\'onicas}
+\begin{align*}
+  U_{\text{rest}} &= \frac{k}{2}\sum_i \lVert \mathbf{r}_i-\mathbf{r}_i^0 \rVert^2.
+\end{align*}
+\begin{itemize}
+  \item Mantienen la estructura mientras se relaja el solvente.
+\end{itemize}
+\end{frame}
+
+\begin{frame}
+\frametitle{Criterios de convergencia}
+\begin{itemize}
+  \item Normas del gradiente y disminuci\'on de energ\'ia.
+  \item Detener cuando las fuerzas son peque\~nas.
+\end{itemize}
+\end{frame}
+
+\subsection{Validaci\'on}
+
+\begin{frame}
+\frametitle{Chequeo geom\'etrico}
+\begin{itemize}
+  \item Longitudes y \`angulos razonables.
+  \item Ausencia de choques est\'ericos.
+\end{itemize}
+\end{frame}
+
+\begin{frame}
+\frametitle{Energia por componente}
+\begin{itemize}
+  \item Revisar contribuciones LJ, Coulomb y enlaces.
+  \item Identificar valores extremos.
+\end{itemize}
+\end{frame}
+
+\begin{frame}
+\frametitle{Comparaci\'on con referencia}
+\begin{align*}
+  \Delta U &= U_{\text{nuevo}}-U_{\text{ref}}.
+\end{align*}
+\begin{itemize}
+  \item Diferencias grandes indican problemas de parametrizaci\'on.
+\end{itemize}
+\end{frame}
+
+\begin{frame}
+\frametitle{Chequeo de estabilidad}
+\begin{itemize}
+  \item Ejecutar un NVT corto para detectar explosiones num\'ericas.
+  \item Inspeccionar energ\'ia potencial y temperatura.
+\end{itemize}
+\end{frame}
+
+\begin{frame}
+\frametitle{Solvente estable}
+\begin{itemize}
+  \item Verificar que no hay vac\'ios ni solapamientos.
+\end{itemize}
+\end{frame}
+
+\begin{frame}
+\frametitle{Lista de control}
+\begin{itemize}
+  \item PDB limpio, protonaci\'on correcta, sistema neutralizado.
+  \item Archivo de topolog\'ia guardado.
+\end{itemize}
+\end{frame}
+
+\subsection{Exportaci\'on}
+
+\begin{frame}
+\frametitle{Guardar el sistema}
+\begin{itemize}
+  \item Exportar PDB y topolog\'ia con par\'ametros.
+  \item Guardar estado de minimizado.
+\end{itemize}
+\end{frame}
+
+\begin{frame}
+\frametitle{Formatos de salida}
+\begin{itemize}
+  \item PDB, Amber prmtop/inpcrd, OpenMM XML.
+\end{itemize}
+\end{frame}
+
+\begin{frame}
+\frametitle{Trazabilidad}
+\begin{itemize}
+  \item Registrar scripts y configuraciones usadas.
+  \item Versionar los par\'ametros.
+\end{itemize}
+\end{frame}
+
+\begin{frame}
+\frametitle{Semillas y reproducibilidad}
+\begin{itemize}
+  \item Guardar semillas de generadores aleatorios.
+  \item Documentar condiciones iniciales.
+\end{itemize}
+\end{frame}
+
+\begin{frame}
+\frametitle{Estructura de carpetas}
+\begin{itemize}
+  \item Separar entradas, resultados y archivos temporales.
+  \item Facilita auditor\\'ia y reutilizaci\\'on del sistema.
+\end{itemize}
+\end{frame}
+
+\begin{frame}
+\frametitle{Resumen del episodio}
+\begin{itemize}
+  \item Preparar el sistema es clave para resultados fiables.
+  \item Las decisiones en protonaci\'on y solvataci\'on impactan la din\'amica.
+  \item Una buena validaci\'on evita errores costosos.
+\end{itemize}
+\end{frame}

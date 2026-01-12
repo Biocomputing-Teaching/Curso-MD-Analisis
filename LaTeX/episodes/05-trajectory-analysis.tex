@@ -1,0 +1,162 @@
+\section[Análisis]{Episodio 5: Análisis de trayectorias}
+
+\subsection{Preprocesado y limpieza}
+
+\begin{frame}
+\frametitle{Pipeline previo al análisis}
+\begin{enumerate}
+  \item Convertir y limpiar trayectorias con `simulatePdb.py` o `simulateGromacs.py`.
+  \item Alinear estructuras y eliminar solvente irrelevante.
+  \item Definir subconjuntos de átomos y escribir DCD/NetCDF para análisis posteriores.
+\end{enumerate}
+{\tiny Scripts del Application Layer de OpenMM. \cita{OpenMMUserguide2024}}
+\end{frame}
+
+\begin{frame}
+\frametitle{Velocidades y distribuciones}
+\begin{itemize}
+  \item `StateDataReporter` y `DCDReporter` construyen histogramas de $v_i$ y energías.
+  \item Por el teorema de equipartición: $\langle K \rangle = \frac{3N}{2}\kbt$ para sistemas clásicos.
+  \item Controlar $C(t)=\langle A(0)A(t)\rangle$ arroja las escalas relevantes.
+\end{itemize}
+\end{frame}
+
+\begin{frame}
+\frametitle{RMSD y alineamientos}
+\begin{align*}
+  \text{RMSD}(t) &= \sqrt{\frac{1}{N}\sum_{i=1}^N\lVert\mathbf{r}_i(t)-\mathbf{r}_i^{\text{ref}}\rVert^2}.
+\end{align*}
+\begin{itemize}
+  \item Usamos el algoritmo de Kabsch para rotaciones óptimas.
+  \item Documentamos con `simulateAmber.py` y la salida en CSV para cada réplica.
+\end{itemize}
+\end{frame}
+
+\subsection{Velocidades e inercia}
+
+\begin{frame}
+\frametitle{Radio de giro y tensor de inercia}
+\begin{align*}
+  I_{ab} &= \sum_i m_i\left(r_i^2\delta_{ab}-r_{ia}r_{ib}\right).
+\end{align*}
+\begin{itemize}
+  \item Autovalores de $I$ describen la anisotropía global.
+  \item Monitorear $R_g^2=\frac{1}{N}\sum_i m_i\lVert \mathbf{r}_i-\mathbf{r}_{\text{CM}}\rVert^2$ por réplica.
+\end{itemize}
+\end{frame}
+
+\begin{frame}
+\frametitle{Extremos y contactos}
+\begin{itemize}
+  \item Mapas binarios con umbral de 0.45 nm generan matrices de contacto.
+  \item Las columnas representan cambios de dominios detectados por `simulateCharmm.py`.
+\end{itemize}
+\end{frame}
+
+\subsection{Reducción y clustering}
+
+\begin{frame}
+\frametitle{Covarianza y PCA}
+\begin{align*}
+  C &= \langle (\mathbf{x}-\langle \mathbf{x}\rangle)(\mathbf{x}-\langle \mathbf{x}\rangle)^T\rangle.
+\end{align*}
+\begin{itemize}
+  \item Proyectamos sobre los primeros autovectores y definimos ejes de evento.
+  \item Relacionamos con \texttt{coarse\_grained\_polymer.py} para comparar modos lentos de polímeros y proteínas.
+\end{itemize}
+\end{frame}
+
+\begin{frame}
+\frametitle{Agrupamiento jerárquico}
+\begin{itemize}
+  \item Usamos enlaces promedio e índice silhouette para decidir $k$.
+  \item Una mala elección produce microestados vacíos; preferimos ensayos progresivos.
+\end{itemize}
+\end{frame}
+
+\begin{frame}
+\frametitle{Transiciones y grafos}
+\begin{itemize}
+  \item Grafos de estados (ver `graph.png`) representan canales cinéticos.
+  \item Los bordes anotados reflejan flujos medidos por scripts de OpenMMTools.
+\end{itemize}
+\end{frame}
+
+\begin{frame}
+\frametitle{Autovalores y modos}
+\begin{align*}
+  C\mathbf{w} &= \lambda \mathbf{w},\quad \lambda \in \mathbb{R}_+.
+\end{align*}
+\begin{itemize}
+  \item Los modos dominantes identifican movimientos colectivos.
+  \item Guardamos proyecciones para alimentar modelos de Markov.
+\end{itemize}
+\end{frame}
+
+\subsection{Energías libres y superficies}
+
+\begin{frame}
+\frametitle{Funciones de densidad}
+\begin{align*}
+  g(r) &= \frac{1}{4\pi r^2\rho}\left\langle \sum_{i\ne j}\delta(r-r_{ij})\right\rangle.
+\end{align*}
+\begin{itemize}
+  \item Comparar con `argon-chemical-potential.py` para validar.
+  \item Usa histogramas reponderados para estimar $F(r)=-\kbt\ln g(r)$.
+\end{itemize}
+\end{frame}
+
+\begin{frame}
+\frametitle{Superficies de energía libre y barreras}
+\begin{itemize}
+  \item La proyección $F(s)=-\kbt\ln P(s)$ requiere CVs robustos.
+  \item Integrar con ventanas de `umbrella sampling` y combinar con MBAR.
+  \item Comparar perfiles unidimensionales con `simulateAmber.py`.
+  \item Validar con histogramas solapados manualmente.
+\end{itemize}
+\end{frame}
+
+\subsection{Estadística y confianza}
+
+\begin{frame}
+\frametitle{Bootstrap y bloqueos}
+\begin{itemize}
+  \item Re-muestrear bloques para estimar varianzas.
+  \item Las autocorrelaciones (ver \texttt{bs\_autocorrelation.pdf}) determinan el tamaño del bloque.
+\end{itemize}
+\end{frame}
+
+\begin{frame}
+\frametitle{Autocorrelaciones de bloques}
+\begin{center}
+  \includegraphics[width=0.78\linewidth]{episodes/bs_autocorrelation.pdf}
+\end{center}
+{\tiny Fuente: OpenMM Cookbook (simulation parameters). \cita{img-bs-autocorrelation}}
+\end{frame}
+
+\begin{frame}
+\frametitle{Serie de errores}
+\begin{align*}
+  \sigma_{\bar{A}} &= \frac{\sigma_A}{\sqrt{N_{\text{eff}}}},\quad N_{\text{eff}}=\frac{N}{g},\quad g=1+2\sum_t\rho(t).
+\end{align*}
+\end{frame}
+
+\begin{frame}
+\frametitle{Reportes finales}
+\begin{itemize}
+  \item Generar tablas de RMSD/RMSF/radio de giro con `simulateCharmm.py`.
+  \item Exportar CSV/HDF para facilitar el paso a PyEMMA/Deeptime.
+\end{itemize}
+\end{frame}
+
+\subsection{Resumen}
+
+\begin{frame}
+\frametitle{Resumen y siguiente paso}
+\begin{itemize}
+  \item Preprocesado sin PBC artefactual.
+  \item CVs estables y histogramas convergentes.
+  \item Reportes con errores y trayectorias documentadas.
+  \item Usar los features preparados como entrada para PyEMMA/Deeptime.
+\end{itemize}
+\end{frame}

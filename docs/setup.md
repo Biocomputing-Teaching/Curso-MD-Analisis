@@ -4,65 +4,104 @@ title: Preparación
 permalink: /setup/
 ---
 
-## Requisitos de software
+## Instalación rápida (OpenMM)
 
-- Python 3.10 o superior
-- OpenMM (con soporte CUDA si hay GPU)
-- MDAnalysis
-- PyEMMA
-- JupyterLab o Jupyter Notebook
-- Git
-- OpenFF Toolkit
-- OpenMMForceFields
-- PDBFixer
-- MDTraj
-- Plotly (con Kaleido para exportar SVG)
-- Biopython (lectura de PDB en notebooks)
-- nglview (visualización interactiva)
+OpenMM se instala con `conda` o `pip`. La guía oficial recomienda Miniconda para un entorno aislado y reproducible.
 
-## Instalación recomendada (conda)
+### Opción recomendada (conda)
 
 ```bash
 conda create -n md-openmm python=3.10
 conda activate md-openmm
-conda install -c conda-forge jupyterlab numpy scipy matplotlib   plotly python-kaleido nglview ipywidgets jupyterlab_widgets
-conda install -c conda-forge openmm 
-conda install -c conda-forge mdanalysis deeptime openff-toolkit openmmforcefields pdbfixer mdtraj biopython 
-conda install -c conda-forge pyemma
-conda install -c conda-forge openmm mdanalysis pyemma deeptime jupyterlab numpy scipy matplotlib openff-toolkit openmmforcefields pdbfixer mdtraj plotly python-kaleido biopython nglview ipywidgets jupyterlab_widgets
+conda install -c conda-forge openmm
 ```
 
-Nota: el desarrollo de pyemma se ha abandonado, con lo que su instalación es más problemática, y ahora los esfuerzos se destinan al desarollo de deeptime con una visión más amplia del análisis de datos en simulación.
-
-## Notas
-
-- Si `nglview` falla por un conflicto entre `bleach` y `tinycss2`, prueba:
+Si tienes GPU NVIDIA y quieres CUDA:
 
 ```bash
-conda install -c conda-forge "tinycss2<1.5" bleach
+conda install -c conda-forge openmm cuda-version=12
 ```
 
-## Directorio de trabajo del curso
+### Alternativa (pip)
 
-Todos los archivos generados (trayectorias, gráficos, salidas) se guardan fuera del repositorio en un directorio externo
-definido por la variable de entorno `COURSE_DIR`. Valor por defecto: `~/Concepcion26`.
+```bash
+pip install openmm
+```
+
+Si usas GPU NVIDIA con CUDA 12:
+
+```bash
+pip install "openmm[cuda12]"
+```
+
+Si usas GPU AMD (HIP):
+
+```bash
+pip install "openmm[hip6]"
+```
+
+## OpenMM-Setup (GUI)
+
+La aplicación `openmm-setup` genera scripts listos para correr y corrige problemas comunes en estructuras.
+
+```bash
+conda install -c conda-forge openmm-setup
+```
+
+Para abrirla:
+
+```bash
+openmm-setup
+```
+
+## Paquetes del curso
+
+Dentro del entorno `md-openmm`, instala los paquetes que usamos en los episodios:
+
+```bash
+conda install -c conda-forge jupyterlab mdanalysis mdtraj deeptime openff-toolkit openmmforcefields pdbfixer
+```
+
+PyEMMA es opcional (el proyecto está congelado). Si lo necesitas:
+
+```bash
+pip install pyemma
+```
+
+## Ejecutar simulaciones (scripts de OpenMM)
+
+La guía de OpenMM incluye scripts en `python-examples`:
+
+- `simulatePdb.py` (PDB directo)
+- `simulateAmber.py` (prmtop + inpcrd)
+- `simulateCharmm.py` (psf + crd)
+- `simulateGromacs.py` (top + gro)
+- `simulateTinker.py` (AMOEBA)
+
+Ejemplo genérico:
+
+```bash
+python simulatePdb.py entrada.pdb
+```
+
+## Datos del curso
+
+Usamos un directorio externo controlado por `COURSE_DIR`:
 
 ```bash
 export COURSE_DIR=~/Concepcion26
 ```
 
-Es recomendable que esta línea esté incluída en `$HOME/.zshrc` (Mac OS) o en `$HOME/.bashrc` (linux).
+Estructura esperada:
 
-Estructura esperada dentro de `COURSE_DIR`:
+- `data/` archivos de entrada
+- `results/` salidas y análisis
 
-- `data/` con todos los archivos de entrada.
-- `results/` para todos los resultados generados por los episodios.
-
-Descarga el repositorio <a href="https://github.com/Biocomputing-Teaching/Course-MD-Data">Course-MD-Data</a> (los archivos están en la raíz) y colócalo en `COURSE_DIR/data`:
+Descarga de datos:
 
 ```bash
-mkdir -p $COURSE_DIR
-cd $COURSE_DIR
+mkdir -p "$COURSE_DIR"
+cd "$COURSE_DIR"
 curl -L -o Course-MD-Data.zip https://github.com/Biocomputing-Teaching/Course-MD-Data/archive/refs/heads/main.zip
 unzip -q Course-MD-Data.zip
 rm -rf "$COURSE_DIR/data"
@@ -71,28 +110,11 @@ cp -R Course-MD-Data-main/* "$COURSE_DIR/data"
 rm -rf Course-MD-Data-main Course-MD-Data.zip
 ```
 
-Si lo prefieres, puedes clonar `Course-MD-Data` con `git` y copiar su contenido a `COURSE_DIR/data`.
-
 ## Verificación rápida
 
 ```bash
 python - <<'PY'
 import openmm
-import MDAnalysis as mda
-import deeptime
 print('openmm', openmm.__version__)
-print('MDAnalysis', mda.__version__)
-print('deeptime', deeptime.__version__)
 PY
 ```
-
-## Guía para participantes
-
-- Traer computador con acceso al clúster o GPU local.
-- Instalar el entorno indicado en la página de preparación.
-- Confirmar acceso a datos y notebooks antes del inicio.
-
-## Requisitos previos
-
-- Manejo básico de Linux.
-- Se asume un manejo básico de python. Explorar, por ejemplo, este enlace: <a href="https://emleddin.github.io/2020-06-05-py-tutorial/01-introduction/index.html">Biomolecular simulation: python basics</a>

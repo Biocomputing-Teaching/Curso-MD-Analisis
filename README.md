@@ -18,6 +18,29 @@ del repositori.
 
 ## Fluxos de manteniment
 
+### Makefile (targets)
+
+Les tasques del manteniment dels episodis es poden llançar amb `make` (o
+`make all`). Tots els objectius operen sobre els fitxers de
+<a href="https://github.com/Biocomputing-Teaching/Curso-MD-Analisis/tree/main/docs/episodes">docs/episodes/</a>
+o les seves sortides derivades.
+
+- `make` / `make all`: executa la cadena completa (`sync-code`, `sync-notebooks`,
+  `update-episode-toc`, `render-notebooks`, `check-links`).
+- `make sync-code`: sincronitza els blocs de codi dels episodis amb els scripts
+  o notebooks font.
+- `make sync-notebooks`: regenera els notebooks a partir dels scripts i
+  estandarditza l'estructura de cel·les.
+- `make standardize-notebooks`: només estandarditza l'estructura de cel·les
+  dels notebooks.
+- `make update-episode-toc`: actualitza la taula de continguts dels episodis.
+- `make render-notebooks`: renderitza els notebooks com a HTML
+  (carpeta `docs/episodes/notebooks/rendered`).
+- `make check-links`: valida els enllaços interns del lloc web.
+- `make check-sync`: comprova que els notebooks coincideixen amb els scripts.
+- `make check`: executa `sync-code`, `sync-notebooks`, `render-notebooks`,
+  `check-links` i `check-sync`.
+
 ### Estat del menú (pre/curs)
 
 ```bash

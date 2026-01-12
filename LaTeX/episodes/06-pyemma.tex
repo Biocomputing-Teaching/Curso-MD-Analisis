@@ -1,0 +1,136 @@
+\section[PyEMMA]{Episodio 6: Modelos de Markov con PyEMMA}
+
+\subsection{Preparando trayectorias}
+
+\begin{frame}
+\frametitle{Transformar datos}
+\begin{itemize}
+  \item \texttt{simulateAmber.py} y \texttt{simulateCharmm.py} producen trayectorias DCD que alimentamos a PyEMMA.
+  \item Alinear, recortar solvente y guardar en HDF5 para economía de almacenamiento.
+  \item Reportes de energía y RMSD se usan como checks previos a la discretización.
+\end{itemize}
+\end{frame}
+
+\begin{frame}
+\frametitle{Extracción de características}
+\begin{itemize}
+  \item Distancias, dihedros y contactos entre ligando y proteína forman el vector $\mathbf{x}$.
+  \item La matriz de covarianza $C=\langle (\mathbf{x}-\langle\mathbf{x}\rangle)(\mathbf{x}-\langle\mathbf{x}\rangle)^T\rangle$ se proyecta.
+  \item Todos los scripts de la guía (simulateGromacs, simulateTinker) comparten esta salida para alimentar PyEMMA.
+\end{itemize}
+\end{frame}
+
+\begin{frame}
+\frametitle{tICA y reducción temporal}
+\begin{align*}
+  C_\tau \mathbf{w} &= \lambda C_0 \mathbf{w}.
+\end{align*}
+\begin{itemize}
+  \item Seleccionamos $\tau$ comparando mesetas en los tiempos implícitos $t_i=-\frac{\tau}{\ln\lambda_i}$.
+  \item tICA captura los modos lentos que nos interesan para MSM y Deeptime.
+\end{itemize}
+\end{frame}
+
+\subsection{Discretización y clustering}
+
+\begin{frame}
+\frametitle{Clustering de microestados}
+\begin{itemize}
+  \item k-means/minibatch generan microestados; silhouette ayuda a escoger $k$.
+  \item Preferimos estados densos para evitar microestados vacíos (OpenMM User Guide §3.7).
+\end{itemize}
+\end{frame}
+
+\begin{frame}
+\frametitle{Mapa de estados}
+\begin{center}
+  \includegraphics[width=0.72\linewidth]{episodes/graph.png}
+\end{center}
+{\tiny Grafo de transiciones influenciado por los resultados del tutorial REST. \cita{img-graph}}
+\end{frame}
+
+\begin{frame}
+\frametitle{Paisaje energético y particiones}
+\begin{center}
+  \includegraphics[width=0.7\linewidth]{episodes/function_funnel.png}
+\end{center}
+{\tiny Embudo energético para visualizar macroestados. \cita{FunctionFunnelUnknown}}
+\end{frame}
+
+\begin{frame}
+\frametitle{Matriz de transición}
+\begin{align*}
+  T_{ij}(\tau) &= \frac{C_{ij}(\tau)}{\sum_k C_{ik}(\tau)}.
+\end{align*}
+\begin{itemize}
+  \item Las filas suman 1 y la matriz es estocástica reversible cuando se impone detailed balance.
+  \item Utilizamos estimadores bayesianos con pseudoconteos para evitar ceros.
+\end{itemize}
+\end{frame}
+
+\begin{frame}
+\frametitle{Propiedad de Markov}
+\begin{align*}
+  P(X_{t+\tau}\mid X_t,\dots) &= P(X_{t+\tau}\mid X_t).
+\end{align*}
+\begin{itemize}
+  \item Prueba Chapman-Kolmogorov y tests de pseudo-time (PyEMMA) validan la Markovianidad.
+\end{itemize}
+\end{frame}
+
+\subsection{MSM y validación}
+
+\begin{frame}
+\frametitle{Estacionariedad}
+\begin{align*}
+  \boldsymbol{\pi}^T T &= \boldsymbol{\pi}^T.
+\end{align*}
+\begin{itemize}
+  \item La distribución estacionaria \(\pi\) define poblaciones relativas.
+  \item Asociamos con energías libres \(F_i=-\kbt\ln\pi_i\) y comparamos con \(\Delta G\) alquímicos.
+\end{itemize}
+\end{frame}
+
+\begin{frame}
+\frametitle{Tiempos implícitos}
+\begin{align*}
+  t_i &= -\frac{\tau}{\ln\lambda_i}.
+\end{align*}
+\begin{itemize}
+  \item Los autovalores cercanos a 1 representan procesos lentos (Markovianidad).
+  \item Las diferencias grandes entre \(t_i\) respaldan la separación de escalas.
+\end{itemize}
+\end{frame}
+
+\begin{frame}
+\frametitle{Incertidumbre y regularización}
+\begin{itemize}
+  \item Remuestrear trayectorias discretizadas para intervalos confiables.
+  \item PyEMMA guarda pesos y permite reproducir con semilla distinta.
+  \item Imponemos reversibilidad para reducir ruido.
+  \item Ajustamos priors a partir de las fuerzas detectadas en \texttt{simulateAmber.py}.
+\end{itemize}
+\end{frame}
+
+\subsection{Transiciones y rutas}
+
+\begin{frame}
+\frametitle{TPT, committor y flujos}
+\begin{itemize}
+  \item Flujos \(f_{ij}=\pi_i T_{ij} q_i (1-q_j)\) identifican rutas reactivas.
+  \item El committor \(q_i = P(\text{llegar a B antes que a A}\mid X_0=i)\) define el progreso.
+  \item Grafo de transiciones coloreado por flujo destaca cuellos de botella cinéticos.
+  \item \texttt{simulateGromacs.py} proporciona las trayectorias de referencia.
+\end{itemize}
+\end{frame}
+
+\subsection{Resumen}
+
+\begin{frame}
+\frametitle{Checklist MSM}
+\begin{itemize}
+  \item Features informativos.
+  \item \(\tau\) validado y autovalores con gap claro.
+  \item Bootstrap de errores y reporte con referencias.
+\end{itemize}
+\end{frame}
