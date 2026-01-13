@@ -55,7 +55,7 @@ def extract_intro_cell(cells: list[dict]) -> dict:
     return {
         "cell_type": "markdown",
         "metadata": {},
-        "source": ["# Notebook\n", "\n", "## Parte\n", "\n", "Descripcion pendiente.\n"],
+        "source": ["# Notebook\n", "\n", "## Track\n", "\n", "Description pending.\n"],
     }
 
 
@@ -89,8 +89,8 @@ def step_title_from_code(cell: dict, index: int) -> str:
             continue
         break
     if title:
-        return f"Paso {index}: {title}"
-    return f"Paso {index}"
+        return f"Step {index}: {title}"
+    return f"Step {index}"
 
 
 def build_markdown_cell(text_lines: list[str], metadata: dict | None = None) -> dict:
@@ -103,7 +103,7 @@ def build_markdown_cell(text_lines: list[str], metadata: dict | None = None) -> 
 
 
 def build_toc(headings: list[str]) -> dict:
-    lines = ["## Tabla de contenidos", ""]
+    lines = ["## Table of contents", ""]
     for heading in headings:
         anchor = slugify(heading)
         if not anchor:
@@ -139,7 +139,7 @@ def markdown_has_h2(cells: list[dict]) -> bool:
         for line in "".join(cell.get("source", [])).splitlines():
             match = HEADING_RE.match(line.strip())
             if match and match.group(1) == "##":
-                if match.group(2).strip().lower() == "tabla de contenidos":
+                if match.group(2).strip().lower() == "table of contents":
                     continue
                 return True
     return False
@@ -156,7 +156,7 @@ def collect_h2_headings(cells: list[dict]) -> list[str]:
             match = HEADING_RE.match(line.strip())
             if match and match.group(1) == "##":
                 title = match.group(2).strip()
-                if title.lower() == "tabla de contenidos":
+                if title.lower() == "table of contents":
                     continue
                 headings.append(title)
     return headings

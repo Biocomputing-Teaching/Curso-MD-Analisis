@@ -1,14 +1,14 @@
 ---
 layout: default
-title: Preparación
+title: Setup
 permalink: /setup/
 ---
 
-## Instalación rápida (OpenMM)
+## Quick install (OpenMM)
 
-OpenMM se instala con `conda` o `pip`. La guía oficial recomienda Miniconda para un entorno aislado y reproducible.
+OpenMM can be installed with `conda` or `pip`. The [official guide](https://docs.openmm.org/latest/userguide/application/01_getting_started.html) recommends Miniconda for an isolated, reproducible environment.
 
-### Opción recomendada (conda)
+### Recommended option (conda)
 
 ```bash
 conda create -n md-openmm python=3.10
@@ -16,91 +16,82 @@ conda activate md-openmm
 conda install -c conda-forge openmm
 ```
 
-Si tienes GPU NVIDIA y quieres CUDA:
+If you have an NVIDIA GPU and want CUDA:
 
 ```bash
 conda install -c conda-forge openmm cuda-version=12
 ```
 
-### Alternativa (pip)
+### Alternative (pip)
 
 ```bash
 pip install openmm
 ```
 
-Si usas GPU NVIDIA con CUDA 12:
+If you use an NVIDIA GPU with CUDA 12:
 
 ```bash
 pip install "openmm[cuda12]"
 ```
 
-Si usas GPU AMD (HIP):
+If you use an AMD GPU (HIP):
 
 ```bash
 pip install "openmm[hip6]"
 ```
 
+### Quick check
+
+```bash
+python - <<'PY'
+import openmm
+print('openmm', openmm.__version__)
+PY
+```
 ## OpenMM-Setup (GUI)
 
-La aplicación `openmm-setup` genera scripts listos para correr y corrige problemas comunes en estructuras.
+The `openmm-setup` app generates ready-to-run scripts and fixes common structural issues.
 
 ```bash
 conda install -c conda-forge openmm-setup
 ```
 
-Para abrirla:
+To launch it:
 
 ```bash
 openmm-setup
 ```
 
-## Paquetes del curso
+## Course packages
 
-Dentro del entorno `md-openmm`, instala los paquetes que usamos en los episodios:
+Inside the `md-openmm` environment, install the packages we use in the episodes:
 
 ```bash
 conda install -c conda-forge jupyterlab mdanalysis mdtraj deeptime openff-toolkit openmmforcefields pdbfixer
 ```
 
-PyEMMA es opcional (el proyecto está congelado). Si lo necesitas:
+PyEMMA is optional (the project is frozen). If you need it:
 
 ```bash
 pip install pyemma
 ```
 
-## Ejecutar simulaciones (scripts de OpenMM)
 
-La guía de OpenMM incluye scripts en `python-examples`:
 
-- [`simulatePdb.py`](https://github.com/openmm/openmm/blob/master/examples/python-examples/simulatePdb.py) (PDB directo)
-- [`simulateAmber.py`](https://github.com/openmm/openmm/blob/master/examples/python-examples/simulateAmber.py) (prmtop + inpcrd)
-- [`simulateCharmm.py`](https://github.com/openmm/openmm/blob/master/examples/python-examples/simulateCharmm.py) (psf + crd)
-- [`simulateGromacs.py`](https://github.com/openmm/openmm/blob/master/examples/python-examples/simulateGromacs.py) (top + gro)
-- [`simulateTinker.py`](https://github.com/openmm/openmm/blob/master/examples/python-examples/simulateTinker.py) (AMOEBA)
+## Course data
 
-Ejemplo genérico:
-
-```bash
-python simulatePdb.py entrada.pdb
-```
-
-## Datos del curso
-
-Usamos un directorio externo controlado por `COURSE_DIR`:
+We use an external directory controlled by `COURSE_DIR`:
 
 ```bash
 export COURSE_DIR=~/Concepcion26
+if [ ! -d "$COURSE_DIR" ]; then
+  mkdir -p "$COURSE_DIR" 
+fi
 ```
 
-Estructura esperada:
-
-- `data/` archivos de entrada
-- `results/` salidas y análisis
-
-Descarga de datos:
+Download data:
 
 ```bash
-mkdir -p "$COURSE_DIR"
 cd "$COURSE_DIR"
 curl -L -o Course-MD-Data.zip https://github.com/Biocomputing-Teaching/Course-MD-Data/archive/refs/heads/main.zip
 unzip -q Course-MD-Data.zip
@@ -110,11 +101,36 @@ cp -R Course-MD-Data-main/* "$COURSE_DIR/data"
 rm -rf Course-MD-Data-main Course-MD-Data.zip
 ```
 
-## Verificación rápida
+Download scripts and notebooks:
 
 ```bash
-python - <<'PY'
-import openmm
-print('openmm', openmm.__version__)
-PY
+cd "$COURSE_DIR"
+curl -L -o Curso-MD-Analisis.zip https://github.com/Biocomputing-Teaching/Curso-MD-Analisis/archive/refs/heads/main.zip
+unzip -q Curso-MD-Analisis.zip
+mkdir -p "$COURSE_DIR/scripts" "$COURSE_DIR/notebooks"
+find Curso-MD-Analisis-main/docs/episodes/scripts -type f -name "*.py" -exec cp -i {} "$COURSE_DIR/scripts" \;
+find Curso-MD-Analisis-main/docs/episodes/notebooks -type f -name "*.ipynb" -exec cp -i {} "$COURSE_DIR/notebooks" \;
+rm -rf Curso-MD-Analisis-main Curso-MD-Analisis.zip
 ```
+
+Expected structure:
+
+- `data/` input files
+- `results/` outputs and analysis
+- `scripts/` course scripts
+- `notebooks/` course notebooks
+
+## Run simulations (OpenMM scripts)
+
+You can also download the official OpenMM repository to access the example scripts:
+
+```bash
+cd "$COURSE_DIR"
+git clone git@github.com:openmm/openmm.git
+cd openmm/examples/python-examples
+```
+
+<div class="episode-nav">
+  <a href="{{ site.baseurl }}/episodes/">All episodes</a>
+  <a href="{{ site.baseurl }}/episodes/01-introduccion/">Next</a>
+</div>

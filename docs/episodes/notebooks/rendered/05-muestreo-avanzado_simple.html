@@ -7517,23 +7517,34 @@ a.anchor-link {
 </div>
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
-<h1 id="Episodio-4---Muestreo-avanzado-y-ecosistema-OpenMM">Episodio 4 - Muestreo avanzado y ecosistema OpenMM<a class="anchor-link" href="#Episodio-4---Muestreo-avanzado-y-ecosistema-OpenMM">¶</a></h1><h2 id="Parte-simple:-restricci%C3%B3n-en-alanina">Parte simple: restricción en alanina<a class="anchor-link" href="#Parte-simple:-restricci%C3%B3n-en-alanina">¶</a></h2><p>En este notebook exploras muestreo avanzado con una restricción simple.
-Aplicarás la restricción en alanina y observarás el efecto.</p>
+<h1 id="Episode-4---Advanced-sampling-and-the-OpenMM-ecosystem">Episode 4 - Advanced sampling and the OpenMM ecosystem<a class="anchor-link" href="#Episode-4---Advanced-sampling-and-the-OpenMM-ecosystem">¶</a></h1><h2 id="Simple-track:-alanine-restraint">Simple track: alanine restraint<a class="anchor-link" href="#Simple-track:-alanine-restraint">¶</a></h2><p>In this notebook you explore advanced sampling with a simple restraint.
+You will apply the restraint to alanine and observe the effect.</p>
 </div>
 </div>
 </div>
 </div>
-<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=c6e6ae243964444493f9e022a12e822d">
+<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=78c646f70dc44c27b4ad919d30b5ba3c">
 <div class="jp-Cell-inputWrapper" tabindex="0">
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
-<h2 id="Tabla-de-contenidos">Tabla de contenidos<a class="anchor-link" href="#Tabla-de-contenidos">¶</a></h2><ul>
-<li><a href="#parte-simple-restriccion-en-alanina">Parte simple: restricción en alanina</a></li>
-<li><a href="#parte-simple-restriccion-en-alanina">Parte simple: restricción en alanina</a></li>
-<li><a href="#paso-1">Paso 1</a></li>
+<h2 id="Table-of-contents">Table of contents<a class="anchor-link" href="#Table-of-contents">¶</a></h2><ul>
+<li><a href="#simple-track-alanine-restraint">Simple track: alanine restraint</a></li>
+<li><a href="#simple-track-alanine-restraint">Simple track: alanine restraint</a></li>
+<li><a href="#step-1">Step 1</a></li>
 </ul>
+</div>
+</div>
+</div>
+</div>
+<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=ac44489588a64950b8753a981f23b2a4">
+<div class="jp-Cell-inputWrapper" tabindex="0">
+<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
+</div>
+<div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
+</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
+<p>Explore advanced sampling of alanine (restraints, gradients, reporting) using custom forces and energy logging.</p>
 </div>
 </div>
 </div>
@@ -7544,7 +7555,7 @@ Aplicarás la restricción en alanina y observarás el efecto.</p>
 </div>
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
-<h2 id="Paso-1">Paso 1<a class="anchor-link" href="#Paso-1">¶</a></h2>
+<h2 id="Step-1">Step 1<a class="anchor-link" href="#Step-1">¶</a></h2>
 </div>
 </div>
 </div>
@@ -7579,7 +7590,7 @@ Aplicarás la restricción en alanina y observarás el efecto.</p>
     <span class="n">constraints</span><span class="o">=</span><span class="n">app</span><span class="o">.</span><span class="n">HBonds</span><span class="p">,</span>
 <span class="p">)</span>
 
-<span class="c1"># Restringe la distancia entre dos átomos como ejemplo sencillo.</span>
+<span class="c1"># Constrain the distance between two atoms as a simple example.</span>
 <span class="n">force</span> <span class="o">=</span> <span class="n">mm</span><span class="o">.</span><span class="n">CustomBondForce</span><span class="p">(</span><span class="s2">"0.5*k*(r-r0)^2"</span><span class="p">)</span>
 <span class="n">force</span><span class="o">.</span><span class="n">addPerBondParameter</span><span class="p">(</span><span class="s2">"k"</span><span class="p">)</span>
 <span class="n">force</span><span class="o">.</span><span class="n">addPerBondParameter</span><span class="p">(</span><span class="s2">"r0"</span><span class="p">)</span>

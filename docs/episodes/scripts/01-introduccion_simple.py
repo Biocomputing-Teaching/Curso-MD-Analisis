@@ -1,54 +1,54 @@
 
-        # Exploracio rapida dels residus abans de la visualitzacio (BioPython)
-        import os
-        from pathlib import Path
+# Quick residue scan before visualization (BioPython)
+import os
+from pathlib import Path
 
-        COURSE_DIR = Path(os.environ.get("COURSE_DIR", str(Path.home() / "Concepcion26"))).expanduser()
-        PDB_PATH = COURSE_DIR / "data" / "alanine-dipeptide.pdb"
+COURSE_DIR = Path(os.environ.get("COURSE_DIR", str(Path.home() / "Concepcion26"))).expanduser()
+PDB_PATH = COURSE_DIR / "data" / "alanine-dipeptide.pdb"
 
-        try:
-            from Bio.PDB import PDBParser
-        except ImportError as exc:
-            raise SystemExit(
-                "Biopython is required for this step. Install with:"
-                "  conda install -c conda-forge biopython"
-            ) from exc
+try:
+    from Bio.PDB import PDBParser
+except ImportError as exc:
+    raise SystemExit(
+        "Biopython is required for this step. Install with:"
+        "  conda install -c conda-forge biopython"
+    ) from exc
 
-        parser = PDBParser(QUIET=True)
-        structure = parser.get_structure("alanine", str(PDB_PATH))
+parser = PDBParser(QUIET=True)
+structure = parser.get_structure("alanine", str(PDB_PATH))
 
-        residues = []
-        for model in structure:
-            for chain in model:
-                for residue in chain:
-                    if residue.id[0] != " ":
-                        continue
-                    residues.append((chain.id, residue.id[1], residue.resname))
-            break
+residues = []
+for model in structure:
+    for chain in model:
+        for residue in chain:
+            if residue.id[0] != " ":
+                continue
+            residues.append((chain.id, residue.id[1], residue.resname))
+    break
 
-        print("PDB:", PDB_PATH)
-        print("Residus:", " - ".join(f"{r[2]}({r[0]}{r[1]})" for r in residues))
+print("PDB:", PDB_PATH)
+print("Residues:", " - ".join(f"{r[2]}({r[0]}{r[1]})" for r in residues))
 
 # %%
 
 
-    # Visualizacion interactiva (requiere nglview)
-    import os
-    from pathlib import Path
+# Interactive visualization (requires nglview)
+import os
+from pathlib import Path
 
-    COURSE_DIR = Path(os.environ.get("COURSE_DIR", str(Path.home() / "Concepcion26"))).expanduser()
-    PDB_PATH = COURSE_DIR / "data" / "alanine-dipeptide.pdb"
+COURSE_DIR = Path(os.environ.get("COURSE_DIR", str(Path.home() / "Concepcion26"))).expanduser()
+PDB_PATH = COURSE_DIR / "data" / "alanine-dipeptide.pdb"
 
-    try:
-        import nglview as nv
-    except ImportError as exc:
-        raise SystemExit(
-            "nglview is required for visualization. Install with:"
-            "  conda install -c conda-forge nglview"
-        ) from exc
+try:
+    import nglview as nv
+except ImportError as exc:
+    raise SystemExit(
+        "nglview is required for visualization. Install with:"
+        "  conda install -c conda-forge nglview"
+    ) from exc
 
-    view = nv.show_file(str(PDB_PATH))
-    view
+view = nv.show_file(str(PDB_PATH))
+view
 
 # %%
 

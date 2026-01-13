@@ -1,20 +1,20 @@
 ---
 layout: default
-title: Créditos
+title: Credits
 permalink: /credits/
 ---
 
-## Créditos y referencias
+## Credits and references
 
-Esta página recopila los repositorios, recursos y referencias que se usan en el curso.
+This page gathers the repositories, resources, and references used in the course.
 
-### Repositorios
+### Repositories
 
 - <a href="https://github.com/Biocomputing-Teaching/Curso-MD-Analisis">Curso-MD-Analisis</a>
 - <a href="https://github.com/tdudgeon/simple-simulate-complex">simple-simulate-complex</a>
 - <a href="https://github.com/joanmp-uoc/TFM">TFM (Joan Mora)</a>
 
-### Referencias
+### References
 
 - <a href="https://openmm.org/">OpenMM</a>
 - <a href="https://openforcefield.org/">OpenFF Toolkit</a>

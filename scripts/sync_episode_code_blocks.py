@@ -80,9 +80,9 @@ def build_notebook_embed(notebook_path: Path, script_path: Path | None) -> str:
     view_url = notebook_url(notebook_path)
     download_nb = notebook_download_url(notebook_path)
     download_py = script_download_url(script_path) if script_path else None
-    links = [f'<a href="{download_nb}" download>Descargar notebook</a>']
+    links = [f'<a href="{download_nb}" download>Download notebook</a>']
     if download_py:
-        links.append(f'<a href="{download_py}" download>Descargar script (.py)</a>')
+        links.append(f'<a href="{download_py}" download>Download script (.py)</a>')
     links_html = " | ".join(links)
     return (
         f'<div class="notebook-embed">'
@@ -148,17 +148,17 @@ def build_resources_table(
             ]
             pages_html = "<br>".join(page_links)
         else:
-            pages_html = "No asociado"
+            pages_html = "Unassigned"
         if include_view:
-            view_link = f'<a href="{nbviewer_url(item)}">Ver (nbviewer)</a>'
-            html_link = f'<a href="{notebook_url(item)}">Ver (HTML)</a>'
-            download_link = f'<a href="{notebook_download_url(item)}" download>Descargar</a>'
+            view_link = f'<a href="{nbviewer_url(item)}">View (nbviewer)</a>'
+            html_link = f'<a href="{notebook_url(item)}">View (HTML)</a>'
+            download_link = f'<a href="{notebook_download_url(item)}" download>Download</a>'
             rows.append(
                 f"<tr><td><code>{item.name}</code></td><td>{view_link}<br>{html_link}</td>"
                 f"<td>{download_link}</td><td>{pages_html}</td></tr>"
             )
         else:
-            download_link = f'<a href="{script_download_url(item)}" download>Descargar</a>'
+            download_link = f'<a href="{script_download_url(item)}" download>Download</a>'
             rows.append(
                 f"<tr><td><code>{item.name}</code></td><td>{download_link}</td><td>{pages_html}</td></tr>"
             )
@@ -218,7 +218,7 @@ def update_resources_index(
     scripts_block = [
         RESOURCES_SCRIPTS_START,
         "<table class=\"resources-table\">",
-        "<thead><tr><th>Script</th><th>Descargar</th><th>Página</th></tr></thead>",
+        "<thead><tr><th>Script</th><th>Download</th><th>Page</th></tr></thead>",
         "<tbody>",
         *script_rows,
         "</tbody>",
@@ -228,7 +228,7 @@ def update_resources_index(
     notebooks_block = [
         RESOURCES_NOTEBOOKS_START,
         "<table class=\"resources-table\">",
-        "<thead><tr><th>Notebook</th><th>Ver</th><th>Descargar</th><th>Página</th></tr></thead>",
+        "<thead><tr><th>Notebook</th><th>View</th><th>Download</th><th>Page</th></tr></thead>",
         "<tbody>",
         *notebook_rows,
         "</tbody>",
@@ -249,7 +249,7 @@ def build_source_link(source_path: Path) -> str:
     else:
         rel = source_path.relative_to(ROOT_DIR).as_posix()
         href = f"{BASE_GH}/{rel}"
-    return f'\n\nFuente del script: <a href="{href}">{source_path.name}</a>'
+    return f'\n\nScript source: <a href="{href}">{source_path.name}</a>'
 
 
 def sync_markdown(markdown_path: Path, sources: dict[str, Path], notebooks_by_stem: dict[str, Path]) -> bool:

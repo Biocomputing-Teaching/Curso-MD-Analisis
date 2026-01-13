@@ -1,84 +1,82 @@
 ---
 layout: default
-title: Episodio 5 - Análisis de trayectorias con MDTraj
+title: Episode 5 - Trajectory analysis with MDTraj
 permalink: /episodes/04-analisis-trayectorias/
 ---
 
 <div class="episode-nav">
-  <a href="{{ site.baseurl }}/episodes/05-muestreo-avanzado/">Anterior</a>
-  <a href="{{ site.baseurl }}/episodes/">Todos los episodios</a>
-  <a href="{{ site.baseurl }}/episodes/06-pyemma/">Siguiente</a>
+  <a href="{{ site.baseurl }}/episodes/05-muestreo-avanzado/">Previous</a>
+  <a href="{{ site.baseurl }}/episodes/">All episodes</a>
+  <a href="{{ site.baseurl }}/episodes/06-pyemma/">Next</a>
 </div>
 
 <!-- toc:start -->
-## Tabla de contenidos
-- [Duración](#duracion)
-- [Objetivos](#objetivos)
-- [Contenido](#contenido)
-- [Parte simple](#parte-simple)
-- [Parte compleja](#parte-compleja)
+## Table of contents
+- [Duration](#duration)
+- [Objectives](#objectives)
+- [Content](#content)
+- [Alanine dipeptide](#alanine-dipeptide)
+- [Protein-ligand complex](#protein-ligand-complex)
 <!-- toc:end -->
 
-## Duración
+## Duration
 
-- **Sesión:** 60 min
-- **Ejercicios:** 45 min
+- **Session:** 60 min
+- **Exercises:** 45 min
 
-## Objetivos
+## Objectives
 
-- Analizar trayectorias simples y complejas.
-- Reimaginar y realinear trayectorias.
-- Generar RMSD con MDTraj.
+- Analyze simple and complex trajectories.
+- Reimage and align trajectories.
+- Generate RMSD with MDTraj.
 
-## Contenido
+## Content
 
-- Lectura de DCD con MDTraj.
-- Reimaging y superposición al frame inicial.
-- Gráficas para comparar sistemas.
+- Read DCD files with MDTraj.
+- Reimage and align to the initial frame.
+- Plots to compare systems.
 
-## Parte simple
+## Alanine dipeptide
 
-### Demo guiada
+### Guided demo
 
 <!-- sync-from: docs/episodes/scripts/04-analisis-trayectorias_simple.py -->
-<div class="notebook-embed"><iframe src="{{ site.baseurl }}/episodes/notebooks/rendered/04-analisis-trayectorias_simple.html" loading="lazy"></iframe><div class="notebook-links"><a href="{{ site.baseurl }}/episodes/notebooks/04-analisis-trayectorias_simple.ipynb" download>Descargar notebook</a> | <a href="{{ site.baseurl }}/episodes/scripts/04-analisis-trayectorias_simple.py" download>Descargar script (.py)</a></div></div>
+<div class="notebook-embed"><iframe src="{{ site.baseurl }}/episodes/notebooks/rendered/04-analisis-trayectorias_simple.html" loading="lazy"></iframe><div class="notebook-links"><a href="{{ site.baseurl }}/episodes/notebooks/04-analisis-trayectorias_simple.ipynb" download>Download notebook</a> | <a href="{{ site.baseurl }}/episodes/scripts/04-analisis-trayectorias_simple.py" download>Download script (.py)</a></div></div>
 
-### Ejercicio
+### Exercise
 
-- Ejecutar el análisis simple con <a href="{{ site.baseurl }}/data/">traj.dcd</a>.
+- Run the simple analysis with <a href="{{ site.baseurl }}/data/">traj.dcd</a>.
 
-### Puntos clave
+### Key points
 
-- Las métricas son comparables entre sistemas.
+- The metrics are comparable across systems.
 
-### Notebooks y scripts
+### Notebooks and scripts
 
-- <a href="{{ site.baseurl }}/episodes/notebooks/04-analisis-trayectorias_simple.ipynb">04-analisis-trayectorias_simple.ipynb</a> (<a href="{{ site.baseurl }}/episodes/notebooks/rendered/04-analisis-trayectorias_simple.html">HTML</a> | <a href="https://nbviewer.org/url/biocomputing-teaching.github.io/Curso-MD-Analisis/episodes/notebooks/04-analisis-trayectorias_simple.ipynb">nbviewer</a>)
-- <a href="{{ site.baseurl }}/episodes/scripts/04-analisis-trayectorias_simple.py">04-analisis-trayectorias_simple.py</a>
+- This notebook reads the alanine trajectory with MDTraj, reimages frames, and compares RMSD metrics for the simple system. (<a href="{{ site.baseurl }}/episodes/notebooks/04-analisis-trayectorias_simple.ipynb">notebook</a> | <a href="{{ site.baseurl }}/episodes/scripts/04-analisis-trayectorias_simple.py">script</a>)
 
-## Parte compleja
+## Protein-ligand complex
 
-### Demo guiada
+### Guided demo
 
 <!-- sync-from: docs/episodes/scripts/04-analisis-trayectorias.py -->
-<div class="notebook-embed"><iframe src="{{ site.baseurl }}/episodes/notebooks/rendered/04-analisis-trayectorias.html" loading="lazy"></iframe><div class="notebook-links"><a href="{{ site.baseurl }}/episodes/notebooks/04-analisis-trayectorias.ipynb" download>Descargar notebook</a> | <a href="{{ site.baseurl }}/episodes/scripts/04-analisis-trayectorias.py" download>Descargar script (.py)</a></div></div>
+<div class="notebook-embed"><iframe src="{{ site.baseurl }}/episodes/notebooks/rendered/04-analisis-trayectorias.html" loading="lazy"></iframe><div class="notebook-links"><a href="{{ site.baseurl }}/episodes/notebooks/04-analisis-trayectorias.ipynb" download>Download notebook</a> | <a href="{{ site.baseurl }}/episodes/scripts/04-analisis-trayectorias.py" download>Download script (.py)</a></div></div>
 
-### Ejercicio
+### Exercise
 
-- Ejecutar el análisis del complejo con <a href="{{ site.baseurl }}/reference/">output_traj.dcd</a>.
-- Guardar las figuras resultantes.
+- Run the complex analysis with <a href="{{ site.baseurl }}/reference/">output_traj.dcd</a>.
+- Save the resulting figures.
 
-### Puntos clave
+### Key points
 
-- MDTraj permite análisis reproducible con pocas líneas.
+- MDTraj enables reproducible analysis with a few lines.
 
-### Notebooks y scripts
+### Notebooks and scripts
 
-- <a href="{{ site.baseurl }}/episodes/notebooks/04-analisis-trayectorias.ipynb">04-analisis-trayectorias.ipynb</a> (<a href="{{ site.baseurl }}/episodes/notebooks/rendered/04-analisis-trayectorias.html">HTML</a> | <a href="https://nbviewer.org/url/biocomputing-teaching.github.io/Curso-MD-Analisis/episodes/notebooks/04-analisis-trayectorias.ipynb">nbviewer</a>)
-- <a href="{{ site.baseurl }}/episodes/scripts/04-analisis-trayectorias.py">04-analisis-trayectorias.py</a>
+- This notebook performs MDTraj analyses on the protein-ligand trajectory, re-imaging the complex and exporting RMSD plots to highlight differences. (<a href="{{ site.baseurl }}/episodes/notebooks/04-analisis-trayectorias.ipynb">notebook</a> | <a href="{{ site.baseurl }}/episodes/scripts/04-analisis-trayectorias.py">script</a>)
 
 <div class="episode-nav">
-  <a href="{{ site.baseurl }}/episodes/05-muestreo-avanzado/">Anterior</a>
-  <a href="{{ site.baseurl }}/episodes/">Todos los episodios</a>
-  <a href="{{ site.baseurl }}/episodes/06-pyemma/">Siguiente</a>
+  <a href="{{ site.baseurl }}/episodes/05-muestreo-avanzado/">Previous</a>
+  <a href="{{ site.baseurl }}/episodes/">All episodes</a>
+  <a href="{{ site.baseurl }}/episodes/06-pyemma/">Next</a>
 </div>

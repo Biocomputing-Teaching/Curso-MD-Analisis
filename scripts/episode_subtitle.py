@@ -2,13 +2,13 @@
 import sys
 
 SUBTITLES = {
-    '01-getting-started': 'Episodio 1: Introducción (entorno y datos)',
-    '02-running-simulations': 'Episodio 2: Ejecución de simulaciones',
-    '03-model-building': 'Episodio 3: Preparación y edición del sistema',
-    '04-advanced-examples': 'Episodio 4: Simulaciones avanzadas y energía libre',
-    '05-trajectory-analysis': 'Episodio 5: Análisis de trayectorias',
-    '06-pyemma': 'Episodio 6: Modelos de Markov con PyEMMA',
-    '07-deeptime': 'Episodio 7: Modelos y espectros con Deeptime',
+    '01-getting-started': 'Episode 1: Introduction (environment and data)',
+    '02-running-simulations': 'Episode 2: Running simulations',
+    '03-model-building': 'Episode 3: Preparing and editing the system',
+    '04-advanced-examples': 'Episode 4: Advanced simulations and free energy',
+    '05-trajectory-analysis': 'Episode 5: Trajectory analysis',
+    '06-pyemma': 'Episode 6: Markov models with PyEMMA',
+    '07-deeptime': 'Episode 7: Models and spectra with deeptime',
 }
 
 if len(sys.argv) != 2:

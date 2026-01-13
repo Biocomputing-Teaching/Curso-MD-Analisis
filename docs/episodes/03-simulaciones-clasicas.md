@@ -1,54 +1,54 @@
 ---
 layout: default
-title: Episodio 2 - Ejecución de simulaciones
+title: Episode 2 - Running simulations
 permalink: /episodes/03-simulaciones-clasicas/
 ---
 
 <div class="episode-nav">
-  <a href="{{ site.baseurl }}/episodes/01-introduccion/">Anterior</a>
-  <a href="{{ site.baseurl }}/episodes/">Todos los episodios</a>
-  <a href="{{ site.baseurl }}/episodes/02-preparacion-sistema/">Siguiente</a>
+  <a href="{{ site.baseurl }}/episodes/01-introduccion/">Previous</a>
+  <a href="{{ site.baseurl }}/episodes/">All episodes</a>
+  <a href="{{ site.baseurl }}/episodes/02-preparacion-sistema/">Next</a>
 </div>
 
 <!-- toc:start -->
-## Tabla de contenidos
-- [Duración](#duracion)
-- [Objetivos](#objetivos)
-- [Contenido](#contenido)
-- [Ejemplos OpenMM (guía oficial)](#ejemplos-openmm-guia-oficial)
-- [Parte simple](#parte-simple)
-- [Parte compleja](#parte-compleja)
+## Table of contents
+- [Duration](#duration)
+- [Objectives](#objectives)
+- [Content](#content)
+- [OpenMM examples (official guide)](#openmm-examples-official-guide)
+- [Alanine dipeptide](#alanine-dipeptide)
+- [Protein-ligand complex](#protein-ligand-complex)
 <!-- toc:end -->
 
-## Duración
+## Duration
 
-- **Sesión:** 60 min
-- **Ejercicios:** 45 min
+- **Session:** 60 min
+- **Exercises:** 45 min
 
-## Objetivos
+## Objectives
 
-- Replicar el flujo base de OpenMM para ejecutar simulaciones.
-- Ejecutar ejemplos con archivos PDB, AMBER, Gromacs, CHARMM y Tinker.
-- Simular alanina y un complejo proteína-ligando con el pipeline del curso.
-- Generar trayectorias DCD y reportes de energía.
+- Reproduce the base OpenMM workflow to run simulations.
+- Run examples with PDB, AMBER, Gromacs, CHARMM, and Tinker files.
+- Simulate alanine and a protein-ligand complex with the course pipeline.
+- Generate DCD trajectories and energy reports.
 
-## Contenido
+## Content
 
-- Ejemplo base de OpenMM con PDB (simulatePdb).
-- Ejemplos de entrada AMBER, Gromacs, CHARMM y Tinker.
-- Integradores, barostatos y reportes básicos.
-- Ejemplos del curso (alanina y complejo proteína-ligando).
+- OpenMM base example with PDB (simulatePdb).
+- AMBER, Gromacs, CHARMM, and Tinker input examples.
+- Integrators, barostats, and basic reporting.
+- Course examples (alanine and protein-ligand complex).
 
-## Ejemplos OpenMM (guía oficial)
+## OpenMM examples (official guide)
 
-Antes de ejecutar estos scripts, descarga los archivos de ejemplo de OpenMM a `COURSE_DIR/data/openmm-examples` (ver <a href="{{ site.baseurl }}/data/">Datos</a>).
+Before running these scripts, download the OpenMM example files to `COURSE_DIR/data/openmm-examples` (see <a href="{{ site.baseurl }}/data/">Data</a>).
 
 ### A First Example (PDB)
 
-<div class="notebook-embed"><iframe src="{{ site.baseurl }}/episodes/notebooks/rendered/03-simulaciones-clasicas_simple.html" loading="lazy"></iframe><div class="notebook-links"><a href="{{ site.baseurl }}/episodes/notebooks/03-simulaciones-clasicas_simple.ipynb" download>Descargar notebook</a> | <a href="{{ site.baseurl }}/episodes/scripts/03-simulaciones-clasicas_simple.py" download>Descargar script (.py)</a></div></div>
+<div class="notebook-embed"><iframe src="{{ site.baseurl }}/episodes/notebooks/rendered/03-simulaciones-clasicas_simple.html" loading="lazy"></iframe><div class="notebook-links"><a href="{{ site.baseurl }}/episodes/notebooks/03-simulaciones-clasicas_simple.ipynb" download>Download notebook</a> | <a href="{{ site.baseurl }}/episodes/scripts/03-simulaciones-clasicas_simple.py" download>Download script (.py)</a></div></div>
 
-Script del curso: <a href="{{ site.baseurl }}/episodes/scripts/openmm_running_pdb.py">openmm_running_pdb.py</a>
- (por defecto usa `alanine-dipeptide.pdb`).
+Course script: <a href="{{ site.baseurl }}/episodes/scripts/openmm_running_pdb.py">openmm_running_pdb.py</a>
+ (defaults to `alanine-dipeptide.pdb`).
 
 ### Using AMBER Files
 
@@ -72,7 +72,7 @@ simulation.reporters.append(StateDataReporter(stdout, 1000, step=True,
 simulation.step(10000)
 ```
 
-Script del curso: <a href="{{ site.baseurl }}/episodes/scripts/openmm_running_amber.py">openmm_running_amber.py</a>
+Course script: <a href="{{ site.baseurl }}/episodes/scripts/openmm_running_amber.py">openmm_running_amber.py</a>
 
 ### Using Gromacs Files
 
@@ -97,7 +97,7 @@ simulation.reporters.append(StateDataReporter(stdout, 1000, step=True,
 simulation.step(10000)
 ```
 
-Script del curso: <a href="{{ site.baseurl }}/episodes/scripts/openmm_running_gromacs.py">openmm_running_gromacs.py</a>
+Course script: <a href="{{ site.baseurl }}/episodes/scripts/openmm_running_gromacs.py">openmm_running_gromacs.py</a>
 
 ### Using CHARMM Files
 
@@ -122,7 +122,7 @@ simulation.reporters.append(StateDataReporter(stdout, 1000, step=True,
 simulation.step(10000)
 ```
 
-Script del curso: <a href="{{ site.baseurl }}/episodes/scripts/openmm_running_charmm.py">openmm_running_charmm.py</a>
+Course script: <a href="{{ site.baseurl }}/episodes/scripts/openmm_running_charmm.py">openmm_running_charmm.py</a>
 
 ### Using Tinker Files
 
@@ -143,62 +143,60 @@ simulation.reporters.append(StateDataReporter(stdout, 1000, step=True, potential
 simulation.step(10000)
 ```
 
-Script del curso: <a href="{{ site.baseurl }}/episodes/scripts/openmm_running_tinker.py">openmm_running_tinker.py</a>
+Course script: <a href="{{ site.baseurl }}/episodes/scripts/openmm_running_tinker.py">openmm_running_tinker.py</a>
 
-### OpenMM-Setup (generador de scripts)
+### OpenMM-Setup (script generator)
 
 ```bash
 conda install -c conda-forge openmm-setup
 openmm-setup
 ```
 
-Este asistente genera scripts equivalentes a los ejemplos anteriores y permite validar opciones sin editar código.
+This assistant generates scripts equivalent to the examples above and lets you validate options without editing code.
 
-## Parte simple
+## Alanine dipeptide
 
-### Demo guiada
+### Guided demo
 
 <!-- sync-from: docs/episodes/scripts/03-simulaciones-clasicas_simple.py -->
-<div class="notebook-embed"><iframe src="{{ site.baseurl }}/episodes/notebooks/rendered/03-simulaciones-clasicas_simple.html" loading="lazy"></iframe><div class="notebook-links"><a href="{{ site.baseurl }}/episodes/notebooks/03-simulaciones-clasicas_simple.ipynb" download>Descargar notebook</a> | <a href="{{ site.baseurl }}/episodes/scripts/03-simulaciones-clasicas_simple.py" download>Descargar script (.py)</a></div></div>
+<div class="notebook-embed"><iframe src="{{ site.baseurl }}/episodes/notebooks/rendered/03-simulaciones-clasicas_simple.html" loading="lazy"></iframe><div class="notebook-links"><a href="{{ site.baseurl }}/episodes/notebooks/03-simulaciones-clasicas_simple.ipynb" download>Download notebook</a> | <a href="{{ site.baseurl }}/episodes/scripts/03-simulaciones-clasicas_simple.py" download>Download script (.py)</a></div></div>
 
-### Ejercicio
+### Exercise
 
-- Cambiar `--steps` y `--interval` en el sistema simple.
-- Verificar los archivos de salida de alanina.
+- Change `--steps` and `--interval` in the simple system.
+- Verify alanine output files.
 
-### Puntos clave
+### Key points
 
-- Los conceptos básicos se prueban con alanina.
+- Basic concepts are tested on alanine.
 
-### Notebooks y scripts
+### Notebooks and scripts
 
-- <a href="{{ site.baseurl }}/episodes/notebooks/03-simulaciones-clasicas_simple.ipynb">03-simulaciones-clasicas_simple.ipynb</a> (<a href="{{ site.baseurl }}/episodes/notebooks/rendered/03-simulaciones-clasicas_simple.html">HTML</a> | <a href="https://nbviewer.org/url/biocomputing-teaching.github.io/Curso-MD-Analisis/episodes/notebooks/03-simulaciones-clasicas_simple.ipynb">nbviewer</a>)
-- <a href="{{ site.baseurl }}/episodes/scripts/03-simulaciones-clasicas_simple.py">03-simulaciones-clasicas_simple.py</a>
+- This notebook runs the simple alanine simulation (OpenMM PDB example) and shows how changing `--steps`/`--interval` affects the output. (<a href="{{ site.baseurl }}/episodes/notebooks/03-simulaciones-clasicas_simple.ipynb">notebook</a> | <a href="{{ site.baseurl }}/episodes/scripts/03-simulaciones-clasicas_simple.py">script</a>)
 
-## Parte compleja
+## Protein-ligand complex
 
-### Demo guiada
+### Guided demo
 
 <!-- sync-from: docs/episodes/scripts/03-simulaciones-clasicas.py -->
-<div class="notebook-embed"><iframe src="{{ site.baseurl }}/episodes/notebooks/rendered/03-simulaciones-clasicas.html" loading="lazy"></iframe><div class="notebook-links"><a href="{{ site.baseurl }}/episodes/notebooks/03-simulaciones-clasicas.ipynb" download>Descargar notebook</a> | <a href="{{ site.baseurl }}/episodes/scripts/03-simulaciones-clasicas.py" download>Descargar script (.py)</a></div></div>
+<div class="notebook-embed"><iframe src="{{ site.baseurl }}/episodes/notebooks/rendered/03-simulaciones-clasicas.html" loading="lazy"></iframe><div class="notebook-links"><a href="{{ site.baseurl }}/episodes/notebooks/03-simulaciones-clasicas.ipynb" download>Download notebook</a> | <a href="{{ site.baseurl }}/episodes/scripts/03-simulaciones-clasicas.py" download>Download script (.py)</a></div></div>
 
-### Ejercicio
+### Exercise
 
-- Cambiar `--steps` y `--interval` en el sistema complejo.
-- Verificar los archivos de salida del complejo.
-- Probar con otro `--output` base en el complejo.
+- Change `--steps` and `--interval` in the complex system.
+- Verify complex output files.
+- Try a different `--output` base for the complex.
 
-### Puntos clave
+### Key points
 
-- El complejo introduce más átomos y mayor coste.
+- The complex introduces more atoms and higher cost.
 
-### Notebooks y scripts
+### Notebooks and scripts
 
-- <a href="{{ site.baseurl }}/episodes/notebooks/03-simulaciones-clasicas.ipynb">03-simulaciones-clasicas.ipynb</a> (<a href="{{ site.baseurl }}/episodes/notebooks/rendered/03-simulaciones-clasicas.html">HTML</a> | <a href="https://nbviewer.org/url/biocomputing-teaching.github.io/Curso-MD-Analisis/episodes/notebooks/03-simulaciones-clasicas.ipynb">nbviewer</a>)
-- <a href="{{ site.baseurl }}/episodes/scripts/03-simulaciones-clasicas.py">03-simulaciones-clasicas.py</a>
+- This notebook executes the complex protein-ligand simulation (AMBER/Gromacs/CHARMM/Tinker inputs) and emphasizes file selection and reporting. (<a href="{{ site.baseurl }}/episodes/notebooks/03-simulaciones-clasicas.ipynb">notebook</a> | <a href="{{ site.baseurl }}/episodes/scripts/03-simulaciones-clasicas.py">script</a>)
 
 <div class="episode-nav">
-  <a href="{{ site.baseurl }}/episodes/01-introduccion/">Anterior</a>
-  <a href="{{ site.baseurl }}/episodes/">Todos los episodios</a>
-  <a href="{{ site.baseurl }}/episodes/02-preparacion-sistema/">Siguiente</a>
+  <a href="{{ site.baseurl }}/episodes/01-introduccion/">Previous</a>
+  <a href="{{ site.baseurl }}/episodes/">All episodes</a>
+  <a href="{{ site.baseurl }}/episodes/02-preparacion-sistema/">Next</a>
 </div>

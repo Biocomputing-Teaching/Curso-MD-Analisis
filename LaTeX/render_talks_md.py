@@ -12,13 +12,13 @@ LATEX_DIR = ROOT / "LaTeX"
 DOCS_TALKS_DIR = ROOT / "docs" / "talks"
 
 SECTIONS = [
-    ("Episodio 1: Getting Started (entorno y datos)", "01-getting-started"),
-    ("Episodio 2: Running Simulations", "02-running-simulations"),
-    ("Episodio 3: Model Building & Editing", "03-model-building"),
-    ("Episodio 4: Advanced Simulation Examples", "04-advanced-examples"),
-    ("Episodio 5: An\\'alisis de trayectorias", "05-trajectory-analysis"),
-    ("Episodio 6: MSM con PyEMMA", "06-pyemma"),
-    ("Episodio 7: MSM con deeptime", "07-deeptime"),
+    ("Episode 1: Getting Started (environment and data)", "01-getting-started"),
+    ("Episode 2: Running Simulations", "02-running-simulations"),
+    ("Episode 3: Model Building & Editing", "03-model-building"),
+    ("Episode 4: Advanced Simulation Examples", "04-advanced-examples"),
+    ("Episode 5: Trajectory analysis", "05-trajectory-analysis"),
+    ("Episode 6: MSMs with PyEMMA", "06-pyemma"),
+    ("Episode 7: MSMs with deeptime", "07-deeptime"),
 ]
 
 SECTION_RE = re.compile(r"\\section\[(.*?)\]\{([^}]*)\}")
@@ -27,7 +27,7 @@ SECTION_RE = re.compile(r"\\section\[(.*?)\]\{([^}]*)\}")
 def extract_sections(latex_text: str) -> list[tuple[str, str]]:
     sections = []
     matches = list(SECTION_RE.finditer(latex_text))
-    print(f"[render_talks_md] Secciones detectadas: {len(matches)}")
+    print(f"[render_talks_md] Detected sections: {len(matches)}")
     for idx, match in enumerate(matches):
         title = match.group(2)
         start = match.end()
@@ -118,34 +118,34 @@ def main() -> int:
 
     tex_path = LATEX_DIR / args.tex
     if not tex_path.exists():
-        print(f"[render_talks_md] ERROR: No existe el archivo LaTeX: {tex_path}")
+        print(f"[render_talks_md] ERROR: LaTeX file does not exist: {tex_path}")
         return 1
 
-    print(f"[render_talks_md] Leyendo LaTeX: {tex_path}")
+    print(f"[render_talks_md] Reading LaTeX: {tex_path}")
     latex_text = tex_path.read_text(encoding="utf-8")
     sections = extract_sections(latex_text)
     if not sections:
-        print("[render_talks_md] ERROR: No se encontraron secciones en el LaTeX.")
+        print("[render_talks_md] ERROR: No sections found in the LaTeX.")
         return 1
 
     slug_by_title = {sanitize_title(title): slug for title, slug in SECTIONS}
     DOCS_TALKS_DIR.mkdir(parents=True, exist_ok=True)
-    print(f"[render_talks_md] Salida en: {DOCS_TALKS_DIR}")
+    print(f"[render_talks_md] Output in: {DOCS_TALKS_DIR}")
 
     written = 0
     for title, body in sections:
         slug = slug_by_title.get(sanitize_title(title))
         if not slug:
-            print(f"[render_talks_md] Aviso: Seccion sin slug: {title}")
+            print(f"[render_talks_md] Warning: Section without slug: {title}")
             continue
-        print(f"[render_talks_md] Procesando: {title} -> {slug}.md")
+        print(f"[render_talks_md] Processing: {title} -> {slug}.md")
         md_body = render_markdown(body)
         if not md_body:
-            md_body = "Contenido pendiente de generacion.\n"
+            md_body = "Content pending generation.\n"
         write_markdown(title, slug, md_body)
         written += 1
 
-    print(f"[render_talks_md] OK: escritos {written} archivos.")
+    print(f"[render_talks_md] OK: wrote {written} files.")
     return 0
 
 

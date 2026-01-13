@@ -4,25 +4,25 @@ title: Notebooks
 permalink: /episodes/notebooks/
 ---
 
-## Notebooks del curso
+## Course notebooks
 
-Los notebooks se renderizan como HTML local (en la carpeta <a href="{{ site.baseurl }}/episodes/notebooks/rendered/">rendered</a>) y también se pueden descargar como .ipynb.
+The notebooks are rendered as local HTML (in the <a href="{{ site.baseurl }}/episodes/notebooks/rendered/">rendered</a> folder) and can also be downloaded as .ipynb.
 
-- <a href="{{ site.baseurl }}/episodes/notebooks/rendered/01-introduccion_simple.html">Episodio 1: Introducción (simple)</a>
-- <a href="{{ site.baseurl }}/episodes/notebooks/rendered/01-introduccion.html">Episodio 1: Introducción (complejo)</a>
-- <a href="{{ site.baseurl }}/episodes/notebooks/rendered/03-simulaciones-clasicas_simple.html">Episodio 2: Ejecución de simulaciones (simple)</a>
-- <a href="{{ site.baseurl }}/episodes/notebooks/rendered/03-simulaciones-clasicas.html">Episodio 2: Ejecución de simulaciones (complejo)</a>
-- <a href="{{ site.baseurl }}/episodes/notebooks/rendered/02-preparacion-sistema_simple.html">Episodio 3: Preparación y edición del sistema (simple)</a>
-- <a href="{{ site.baseurl }}/episodes/notebooks/rendered/02-preparacion-sistema.html">Episodio 3: Preparación y edición del sistema (complejo)</a>
-- <a href="{{ site.baseurl }}/episodes/notebooks/rendered/05-muestreo-avanzado_simple.html">Episodio 4: Muestreo avanzado (simple)</a>
-- <a href="{{ site.baseurl }}/episodes/notebooks/rendered/05-muestreo-avanzado.html">Episodio 4: Muestreo avanzado (complejo)</a>
-- <a href="{{ site.baseurl }}/episodes/notebooks/rendered/04-analisis-trayectorias_simple.html">Episodio 5: Análisis (simple)</a>
-- <a href="{{ site.baseurl }}/episodes/notebooks/rendered/04-analisis-trayectorias.html">Episodio 5: Análisis (complex)</a>
-- <a href="{{ site.baseurl }}/episodes/notebooks/rendered/06-pyemma-alanine.html">Episodio 6: PyEMMA (alanina)</a>
-- <a href="{{ site.baseurl }}/episodes/notebooks/rendered/06-pyemma-complex.html">Episodio 6: PyEMMA (complejo)</a>
-- <a href="{{ site.baseurl }}/episodes/notebooks/rendered/07-deeptime-alanine.html">Episodio 7: deeptime (alanina)</a>
-- <a href="{{ site.baseurl }}/episodes/notebooks/rendered/07-deeptime-complex.html">Episodio 7: deeptime (complejo)</a>
+- <a href="{{ site.baseurl }}/episodes/notebooks/rendered/01-introduccion_simple.html">Episode 1: Introduction (simple)</a>
+- <a href="{{ site.baseurl }}/episodes/notebooks/rendered/01-introduccion.html">Episode 1: Introduction (complex)</a>
+- <a href="{{ site.baseurl }}/episodes/notebooks/rendered/03-simulaciones-clasicas_simple.html">Episode 2: Running simulations (simple)</a>
+- <a href="{{ site.baseurl }}/episodes/notebooks/rendered/03-simulaciones-clasicas.html">Episode 2: Running simulations (complex)</a>
+- <a href="{{ site.baseurl }}/episodes/notebooks/rendered/02-preparacion-sistema_simple.html">Episode 3: Preparing and editing the system (simple)</a>
+- <a href="{{ site.baseurl }}/episodes/notebooks/rendered/02-preparacion-sistema.html">Episode 3: Preparing and editing the system (complex)</a>
+- <a href="{{ site.baseurl }}/episodes/notebooks/rendered/05-muestreo-avanzado_simple.html">Episode 4: Advanced sampling (simple)</a>
+- <a href="{{ site.baseurl }}/episodes/notebooks/rendered/05-muestreo-avanzado.html">Episode 4: Advanced sampling (complex)</a>
+- <a href="{{ site.baseurl }}/episodes/notebooks/rendered/04-analisis-trayectorias_simple.html">Episode 5: Analysis (simple)</a>
+- <a href="{{ site.baseurl }}/episodes/notebooks/rendered/04-analisis-trayectorias.html">Episode 5: Analysis (complex)</a>
+- <a href="{{ site.baseurl }}/episodes/notebooks/rendered/06-pyemma-alanine.html">Episode 6: PyEMMA (alanine)</a>
+- <a href="{{ site.baseurl }}/episodes/notebooks/rendered/06-pyemma-complex.html">Episode 6: PyEMMA (complex)</a>
+- <a href="{{ site.baseurl }}/episodes/notebooks/rendered/07-deeptime-alanine.html">Episode 7: deeptime (alanine)</a>
+- <a href="{{ site.baseurl }}/episodes/notebooks/rendered/07-deeptime-complex.html">Episode 7: deeptime (complex)</a>
 
-Si prefieres descargar los notebooks:
+If you prefer to download the notebooks:
 
-- <a href="{{ site.baseurl }}/episodes/notebooks/">Descargar episodios</a>
+- <a href="{{ site.baseurl }}/episodes/notebooks/">Download notebooks</a>

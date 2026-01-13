@@ -21,7 +21,7 @@ system = forcefield.createSystem(
     constraints=app.HBonds,
 )
 
-# Restringe la distancia entre dos átomos como ejemplo sencillo.
+# Constrain the distance between two atoms as a simple example.
 force = mm.CustomBondForce("0.5*k*(r-r0)^2")
 force.addPerBondParameter("k")
 force.addPerBondParameter("r0")

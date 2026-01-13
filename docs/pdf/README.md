@@ -1,12 +1,12 @@
-# PDFs del curso
+# Course PDFs
 
-Esta carpeta contiene los PDFs generados desde `LaTeX/`.
-Para construir el PDF principal y los PDFs por episodio:
+This folder contains the PDFs generated from `LaTeX/`.
+To build the main PDF and the per-episode PDFs:
 
 ```bash
 cd LaTeX
 make
 ```
 
-El resultado esperado es `curso-md-analisis-talk.pdf` y los ficheros
+The expected output is `curso-md-analisis-talk.pdf` and the files
 `curso-md-analisis-epXX-*.pdf`.

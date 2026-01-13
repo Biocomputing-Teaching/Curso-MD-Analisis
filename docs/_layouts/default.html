@@ -12,15 +12,15 @@
   <body>
     <nav>
       <!-- stage:nav-start -->
-      <a href="{{ site.baseurl }}/">Inicio</a>
-      <a href="{{ site.baseurl }}/setup/">Preparación</a>
-      <a href="{{ site.baseurl }}/episodes/">Episodios</a>
-      <a href="{{ site.baseurl }}/cookbook/">Libro de Cocina</a>
+      <a href="{{ site.baseurl }}/">Home</a>
+      <a href="{{ site.baseurl }}/setup/">Setup</a>
+      <a href="{{ site.baseurl }}/episodes/">Episodes</a>
+      <a href="{{ site.baseurl }}/cookbook/">Cookbook</a>
       <a href="{{ site.baseurl }}/talks/">Talks</a>
-      <a href="{{ site.baseurl }}/reference/">Referencia</a>
-      <a href="{{ site.baseurl }}/data/">Datos</a>
-      <a href="{{ site.baseurl }}/resources/">Recursos</a>
-      <a href="{{ site.baseurl }}/credits/">Créditos</a>
+      <a href="{{ site.baseurl }}/reference/">Reference</a>
+      <a href="{{ site.baseurl }}/data/">Data</a>
+      <a href="{{ site.baseurl }}/resources/">Resources</a>
+      <a href="{{ site.baseurl }}/credits/">Credits</a>
       <!-- stage:nav-end -->
     </nav>
     <h1>{{ page.title }}</h1>
@@ -28,7 +28,7 @@
       {{ content }}
     </section>
     <footer>
-      <div class="footer__logos" aria-label="Colaboradores">
+      <div class="footer__logos" aria-label="Collaborators">
         <a href="https://cozyme.eu/">
           <img src="{{ site.baseurl }}/figures/logo-cozyme-160x34.png" alt="COZYME COST Action">
         </a>
@@ -44,10 +44,43 @@
       <div class="footer__links">
         &copy; <a href="https://mon.uvic.cat/cbbl/">Computational Biochemistry and Biophysics Lab</a>
       </div>
-      <div class="footer__copy">&copy; Curso MD - UNAB / UVic</div>
+      <div class="footer__copy">&copy; MD Course - UNAB / UVic</div>
     </footer>
     <script type="text/javascript">
       (function () {
+        var copyIcon = '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M15 3H6a2 2 0 0 0-2 2v9h2V5h9V3zm3 4H10a2 2 0 0 0-2 2v10a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2V9a2 2 0 0 0-2-2zm0 12h-8V9h8v10z"/></svg>';
+        var doneIcon = '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M9.2 16.2 5.5 12.5l1.4-1.4 2.3 2.3 7.2-7.2 1.4 1.4-8.6 8.6z"/></svg>';
+        var errorIcon = '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2a10 10 0 1 0 10 10A10 10 0 0 0 12 2zm4.2 13.8-1.4 1.4L12 13.4l-2.8 2.8-1.4-1.4L10.6 12 7.8 9.2l1.4-1.4L12 10.6l2.8-2.8 1.4 1.4L13.4 12z"/></svg>';
+
+        function setCopyState(button, state, timeoutMs) {
+          if (button.copyTimeoutId) {
+            clearTimeout(button.copyTimeoutId);
+          }
+
+          if (state === 'done') {
+            button.classList.add('copy-button--done');
+            button.classList.remove('copy-button--error');
+            button.setAttribute('aria-label', 'Code copied');
+            button.innerHTML = doneIcon;
+          } else if (state === 'error') {
+            button.classList.add('copy-button--error');
+            button.classList.remove('copy-button--done');
+            button.setAttribute('aria-label', 'Copy error');
+            button.innerHTML = errorIcon;
+          } else {
+            button.classList.remove('copy-button--done');
+            button.classList.remove('copy-button--error');
+            button.setAttribute('aria-label', 'Copy code block');
+            button.innerHTML = copyIcon;
+          }
+
+          if (timeoutMs) {
+            button.copyTimeoutId = setTimeout(function () {
+              setCopyState(button, 'default');
+            }, timeoutMs);
+          }
+        }
+
         function copyText(text) {
           if (navigator.clipboard && navigator.clipboard.writeText) {
             return navigator.clipboard.writeText(text);
@@ -81,23 +114,14 @@
             var button = document.createElement('button');
             button.type = 'button';
             button.className = 'copy-button';
-            button.setAttribute('aria-label', 'Copiar bloque de código');
-            button.innerHTML = '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M15 3H6a2 2 0 0 0-2 2v9h2V5h9V3zm3 4H10a2 2 0 0 0-2 2v10a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2V9a2 2 0 0 0-2-2zm0 12h-8V9h8v10z"/></svg>';
+            setCopyState(button, 'default');
 
             button.addEventListener('click', function () {
               var text = codeBlock.innerText;
               copyText(text).then(function () {
-                button.classList.add('copy-button--done');
-                button.setAttribute('aria-label', 'Código copiado');
-                setTimeout(function () {
-                  button.classList.remove('copy-button--done');
-                  button.setAttribute('aria-label', 'Copiar bloque de código');
-                }, 1500);
+                setCopyState(button, 'done', 1500);
               }).catch(function () {
-                button.classList.add('copy-button--error');
-                setTimeout(function () {
-                  button.classList.remove('copy-button--error');
-                }, 1500);
+                setCopyState(button, 'error', 1500);
               });
             });
 

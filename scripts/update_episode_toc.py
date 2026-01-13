@@ -25,7 +25,7 @@ def slugify(text: str) -> str:
 
 
 def build_toc(lines: list[str]) -> list[str]:
-    toc_lines = [TOC_START, "## Tabla de contenidos"]
+    toc_lines = [TOC_START, "## Table of contents"]
     in_code = False
     for line in lines:
         if CODE_FENCE_RE.match(line.strip()):
@@ -37,7 +37,7 @@ def build_toc(lines: list[str]) -> list[str]:
         if not match:
             continue
         title = match.group(2).strip()
-        if title.lower() == "tabla de contenidos":
+        if title.lower() == "table of contents":
             continue
         anchor = slugify(title)
         if not anchor:

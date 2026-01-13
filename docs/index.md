@@ -4,83 +4,83 @@ layout: default
 permalink: /
 ---
 
-# Curso práctico de Dinámica Molecular y Análisis de Trayectorias
+# Practical Course on Molecular Dynamics and Trajectory Analysis
 
-## Organización
+## Organization
 
-- **Fechas:** 15, 16 y 19 de enero de 2026
-- **Lugar:** Universidad Andrés Bello, Concepción, Chile
-- **Modalidad:** Presencial, práctico (mañana y tarde)
-- **Idioma:** Español
-- **Profesor:** <a href="mailto:jordi.villa@uvic.cat">Jordi Villà i Freixa</a>, <a href="https://mon.uvic.cat/cbbl">Computational Biochemistry and Biophysics Lab</a>, <a href="https://www.uvic.cat">Universitat de Vic - Universitat Central de Catalunya</a>, <a href="https://iris-cc.cat">IRIS-CC</a>
-- **Cupo limitado:** 15-20 participantes
-- **Inscripción previa obligatoria**
-- **Contacto:** Verónica Andrea Jiménez Curihual <a href="mailto:veronica.jimenez@unab.cl">veronica.jimenez@unab.cl</a>
+- **Dates:** January 15, 16, and 19, 2026
+- **Location:** Universidad Andres Bello, Concepcion, Chile
+- **Format:** In-person, hands-on (morning and afternoon)
+- **Language:** Spanish
+- **Instructor:** <a href="mailto:jordi.villa@uvic.cat">Jordi Villa i Freixa</a>, <a href="https://mon.uvic.cat/cbbl">Computational Biochemistry and Biophysics Lab</a>, <a href="https://www.uvic.cat">Universitat de Vic - Universitat Central de Catalunya</a>, <a href="https://iris-cc.cat">IRIS-CC</a>
+- **Limited spots:** 15-20 participants
+- **Registration required in advance**
+- **Contact:** Veronica Andrea Jimenez Curihual <a href="mailto:veronica.jimenez@unab.cl">veronica.jimenez@unab.cl</a>
 
-## Requisitos previos
+## Prerequisites
 
-- Conocimientos básicos de simulaciones moleculares o química computacional
-- Familiaridad con la línea de comandos de Linux
-- Conocimientos básicos de Python
-- Acceso a un clúster o workstation con GPU, idealmente con OpenMM
+- Basic knowledge of molecular simulations or computational chemistry
+- Familiarity with the Linux command line
+- Basic Python knowledge
+- Access to a GPU cluster or workstation, ideally with OpenMM
 
-## Programa del curso
+## Course program
 
-### Día 1: Jueves 15 de enero
-**Tema central:** Fundamentos de simulaciones clásicas con OpenMM
+### Day 1: Thursday, January 15
+**Main theme:** Fundamentals of classical simulations with OpenMM
 
-**Mañana (09:00 - 13:00):**
-- Bienvenida y presentación del curso
-- Teoría mínima de dinámica molecular
-- Preparación de sistemas en OpenMM (topología, fuerza, solvente)
-- Parametrización con OpenMM y OpenFF
-- Ejecución de simulaciones cortas en GPU
+**Morning (09:00 - 13:00):**
+- Welcome and course overview
+- Minimal theory of molecular dynamics
+- System preparation in OpenMM (topology, force field, solvent)
+- Parameterization with OpenMM and OpenFF
+- Running short GPU simulations
 
-**Tarde (14:30 - 18:00):**
-- Análisis básico de trayectorias con MDAnalysis
-- Ejercicios: RMSD, RMSF, radio de giro, distancias internas
-- Buenas prácticas de control de calidad
+**Afternoon (14:30 - 18:00):**
+- Basic trajectory analysis with MDAnalysis
+- Exercises: RMSD, RMSF, radius of gyration, internal distances
+- Quality control best practices
 
-### Día 2: Viernes 16 de enero
-**Tema central:** Técnicas avanzadas y modelos de Markov
+### Day 2: Friday, January 16
+**Main theme:** Advanced techniques and Markov models
 
-**Mañana (09:00 - 13:00):**
-- Técnicas avanzadas en OpenMM:
+**Morning (09:00 - 13:00):**
+- Advanced techniques in OpenMM:
   - **Steered MD (SMD)**
   - **Umbrella Sampling**
   - **Metadynamics**
-- Configuración y ejecución de protocolos avanzados
-- Consideraciones de eficiencia y escalabilidad
+- Setup and execution of advanced protocols
+- Efficiency and scalability considerations
 
-**Tarde (14:30 - 18:00):**
-- Modelos de Markov con PyEMMA
-  - Introducción a MSM
-  - Extracción de features con MDAnalysis + PyEMMA
-  - Clustering y construcción del modelo
-  - Tiempos de relajación y estados metaestables
-- Caso aplicado: transiciones conformacionales en una proteína
+**Afternoon (14:30 - 18:00):**
+- Markov models with PyEMMA
+  - MSM introduction
+  - Feature extraction with MDAnalysis + PyEMMA
+  - Clustering and model construction
+  - Relaxation times and metastable states
+- Applied case: conformational transitions in a protein
 
-### Día 3: Lunes 19 de enero (solo mañana)
-**Tema central:** Proyectos individuales y consultoría
+### Day 3: Monday, January 19 (morning only)
+**Main theme:** Individual projects and consultation
 
-**Mañana (09:30 - 13:00):**
-- Discusión de proyectos de los participantes
-- Consultoría técnica personalizada
-- Recomendaciones de buenas prácticas en simulaciones y análisis
+**Morning (09:30 - 13:00):**
+- Participant project discussions
+- Personalized technical consultation
+- Best-practice recommendations for simulations and analysis
 
-## Charla del curso
+## Course talk
 
-Material ampliado basado en el beamer del curso, con un capítulo HTML por sesión:
+Expanded material based on the course beamer, with one HTML chapter per session:
 
-- <a href="{{ site.baseurl }}/talks/">Acceder a la charla y a los capítulos</a>
+- <a href="{{ site.baseurl }}/talks/">Access the talk and chapters</a>
 
 
-## Colaboradores
+## Collaborators
 
-Con la colaboración de [![COZYME COST ACTION: Pan-European Network on Computational Redesign of Enzymes]({{ site.baseurl }}/figures/logo-cozyme-160x34.png)](https://cozyme.eu/). Pan-European Network on Computational Redesign of Enzymes.
+With collaboration from [![COZYME COST ACTION: Pan-European Network on Computational Redesign of Enzymes]({{ site.baseurl }}/figures/logo-cozyme-160x34.png)](https://cozyme.eu/). Pan-European Network on Computational Redesign of Enzymes.
 
 ![COST-Actions]({{ site.baseurl }}/figures/COST_LOGO_white_tranparent_small-300x93.png)
 
-Con el soporte de Fondecyt Fondo Nacional de Desarrollo Científico y Tecnológico
+Supported by Fondecyt Fondo Nacional de Desarrollo Cientifico y Tecnologico
 
 ![Conicyt]({{ site.baseurl }}/figures/logo-conicyt-chile-en-marcha.png)

@@ -1,26 +1,26 @@
 ---
 layout: default
-title: Charla del curso (materiales)
+title: Course talk (materials)
 permalink: /talks/
 ---
 
-# Charla del curso
+# Course talk
 
-Esta charla sigue el hilo conductor de OpenMM (Application Layer) y está ampliada con el flujo y los ejemplos del curso.
-Los capítulos están alineados con los episodios del programa.
+This talk follows the OpenMM Application Layer thread and is expanded with the course workflow and examples.
+The chapters align with the program episodes.
 
-## PDF principal
+## Main PDF
 
-- <a href="{{ site.baseurl }}/pdf/curso-md-analisis-talk.pdf">Descargar PDF completo (beamer)</a>
+- <a href="{{ site.baseurl }}/pdf/curso-md-analisis-talk.pdf">Download full PDF (beamer)</a>
 
-## PDF por episodio
+## PDF per episode
 
-- <a href="{{ site.baseurl }}/pdf/curso-md-analisis-ep01-getting-started.pdf">Episodio 1: Introducción</a>
-- <a href="{{ site.baseurl }}/pdf/curso-md-analisis-ep02-running-simulations.pdf">Episodio 2: Ejecución de simulaciones</a>
-- <a href="{{ site.baseurl }}/pdf/curso-md-analisis-ep03-model-building.pdf">Episodio 3: Preparación y edición del sistema</a>
-- <a href="{{ site.baseurl }}/pdf/curso-md-analisis-ep04-advanced-examples.pdf">Episodio 4: Muestreo avanzado</a>
-- <a href="{{ site.baseurl }}/pdf/curso-md-analisis-ep05-trajectory-analysis.pdf">Episodio 5: Análisis de trayectorias</a>
-- <a href="{{ site.baseurl }}/pdf/curso-md-analisis-ep06-pyemma.pdf">Episodio 6: MSM con PyEMMA</a>
-- <a href="{{ site.baseurl }}/pdf/curso-md-analisis-ep07-deeptime.pdf">Episodio 7: MSM con deeptime</a>
+- <a href="{{ site.baseurl }}/pdf/curso-md-analisis-ep01-getting-started.pdf">Episode 1: Introduction</a>
+- <a href="{{ site.baseurl }}/pdf/curso-md-analisis-ep02-running-simulations.pdf">Episode 2: Running simulations</a>
+- <a href="{{ site.baseurl }}/pdf/curso-md-analisis-ep03-model-building.pdf">Episode 3: Preparing and editing the system</a>
+- <a href="{{ site.baseurl }}/pdf/curso-md-analisis-ep04-advanced-examples.pdf">Episode 4: Advanced sampling</a>
+- <a href="{{ site.baseurl }}/pdf/curso-md-analisis-ep05-trajectory-analysis.pdf">Episode 5: Trajectory analysis</a>
+- <a href="{{ site.baseurl }}/pdf/curso-md-analisis-ep06-pyemma.pdf">Episode 6: MSMs with PyEMMA</a>
+- <a href="{{ site.baseurl }}/pdf/curso-md-analisis-ep07-deeptime.pdf">Episode 7: MSMs with deeptime</a>
 
-Nota: el PDF completo y los PDFs por episodio se generan desde `LaTeX/` con el template de `ORcourse/sessions` y el logo FCTE (UVic-UCC). Consulta el `Makefile` para construirlos y copiarlos a `docs/pdf`.
+Note: the full PDF and per-episode PDFs are generated from `LaTeX/` using the `ORcourse/sessions` template and the FCTE (UVic-UCC) logo. See the `Makefile` to build them and copy them to `docs/pdf`.

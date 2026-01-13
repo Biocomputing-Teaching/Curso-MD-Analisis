@@ -1,111 +1,110 @@
-# Curso MD - Manteniment del repositori
+# MD Course - Repository maintenance
 
-El contingut públic del curs és a
+The public course content lives in
 <a href="https://github.com/Biocomputing-Teaching/Curso-MD-Analisis/blob/main/docs/index.md">docs/index.md</a>
-i es publica com a web. Aquest README recull els detalls tècnics de manteniment
-del repositori.
+and is published as a website. This README collects the technical maintenance
+notes for the repository.
 
-## Estructura
+## Structure
 
-- <a href="https://github.com/Biocomputing-Teaching/Curso-MD-Analisis/tree/main/docs">docs/</a> lloc web (Jekyll).
-- <a href="https://github.com/Biocomputing-Teaching/Curso-MD-Analisis/blob/main/docs/index.md">docs/index.md</a> índex de la web (únic contingut visible a la portada).
-- <a href="https://github.com/Biocomputing-Teaching/Curso-MD-Analisis/tree/main/docs/episodes">docs/episodes/</a> episodis del curs.
-- <a href="https://github.com/Biocomputing-Teaching/Curso-MD-Analisis/tree/main/docs/episodes/scripts">docs/episodes/scripts/</a> scripts font dels episodis.
-- <a href="https://github.com/Biocomputing-Teaching/Curso-MD-Analisis/tree/main/docs/episodes/notebooks">docs/episodes/notebooks/</a> notebooks renderitzables.
-- <a href="https://github.com/Biocomputing-Teaching/Curso-MD-Analisis/tree/main/docs/data">docs/data/</a> dades d'exemple.
+- <a href="https://github.com/Biocomputing-Teaching/Curso-MD-Analisis/tree/main/docs">docs/</a> website (Jekyll).
+- <a href="https://github.com/Biocomputing-Teaching/Curso-MD-Analisis/blob/main/docs/index.md">docs/index.md</a> website index (the only content visible on the homepage).
+- <a href="https://github.com/Biocomputing-Teaching/Curso-MD-Analisis/tree/main/docs/episodes">docs/episodes/</a> course episodes.
+- <a href="https://github.com/Biocomputing-Teaching/Curso-MD-Analisis/tree/main/docs/episodes/scripts">docs/episodes/scripts/</a> episode source scripts.
+- <a href="https://github.com/Biocomputing-Teaching/Curso-MD-Analisis/tree/main/docs/episodes/notebooks">docs/episodes/notebooks/</a> renderable notebooks.
+- <a href="https://github.com/Biocomputing-Teaching/Curso-MD-Analisis/tree/main/docs/data">docs/data/</a> sample data.
 - <a href="https://github.com/Biocomputing-Teaching/Curso-MD-Analisis/tree/main/docs/figures">docs/figures/</a> figures.
-- <a href="https://github.com/Biocomputing-Teaching/Curso-MD-Analisis/tree/main/scripts">scripts/</a> utilitats de manteniment.
+- <a href="https://github.com/Biocomputing-Teaching/Curso-MD-Analisis/tree/main/scripts">scripts/</a> maintenance utilities.
 
-## Fluxos de manteniment
+## Maintenance workflows
 
 ### Makefile (targets)
 
-Les tasques del manteniment dels episodis es poden llançar amb `make` (o
-`make all`). Tots els objectius operen sobre els fitxers de
+Episode maintenance tasks can be run with `make` (or `make all`). All targets
+operate on the files under
 <a href="https://github.com/Biocomputing-Teaching/Curso-MD-Analisis/tree/main/docs/episodes">docs/episodes/</a>
-o les seves sortides derivades.
+or their derived outputs.
 
-- `make` / `make all`: executa la cadena completa (`sync-code`, `sync-notebooks`,
+- `make` / `make all`: run the full chain (`sync-code`, `sync-notebooks`,
   `update-episode-toc`, `render-notebooks`, `check-links`).
-- `make sync-code`: sincronitza els blocs de codi dels episodis amb els scripts
-  o notebooks font.
-- `make sync-notebooks`: regenera els notebooks a partir dels scripts i
-  estandarditza l'estructura de cel·les.
-- `make standardize-notebooks`: només estandarditza l'estructura de cel·les
-  dels notebooks.
-- `make update-episode-toc`: actualitza la taula de continguts dels episodis.
-- `make render-notebooks`: renderitza els notebooks com a HTML
-  (carpeta `docs/episodes/notebooks/rendered`).
-- `make check-links`: valida els enllaços interns del lloc web.
-- `make check-sync`: comprova que els notebooks coincideixen amb els scripts.
-- `make check`: executa `sync-code`, `sync-notebooks`, `render-notebooks`,
-  `check-links` i `check-sync`.
+- `make sync-code`: sync the episode code blocks with the source scripts or
+  notebooks.
+- `make sync-notebooks`: sync scripts from notebooks and standardize notebook
+  cell structure.
+- `make standardize-notebooks`: only standardize notebook cell structure.
+- `make update-episode-toc`: update the episode table of contents.
+- `make render-notebooks`: render notebooks as HTML
+  (`docs/episodes/notebooks/rendered`).
+- `make check-links`: validate internal site links.
+- `make check-sync`: verify notebooks match scripts.
+- `make check`: run `sync-code`, `sync-notebooks`, `render-notebooks`,
+  `check-links`, and `check-sync`.
 
-### Estat del menú (pre/curs)
+### Menu state (pre/course)
 
 ```bash
 python scripts/set_stage.py pre
 python scripts/set_stage.py course
 ```
 
-Actualitza el bloc entre `<!-- stage:nav-start -->` i `<!-- stage:nav-end -->`
-a <a href="https://github.com/Biocomputing-Teaching/Curso-MD-Analisis/blob/main/docs/_layouts/default.html">docs/_layouts/default.html</a>.
+Updates the block between `<!-- stage:nav-start -->` and `<!-- stage:nav-end -->`
+in <a href="https://github.com/Biocomputing-Teaching/Curso-MD-Analisis/blob/main/docs/_layouts/default.html">docs/_layouts/default.html</a>.
 
-### Sincronitzar codi incrustat als episodis
+### Sync embedded code blocks in episodes
 
 ```bash
 python scripts/sync_episode_code_blocks.py
 ```
 
-Actualitza els blocs ```python dels fitxers markdown dins de
-<a href="https://github.com/Biocomputing-Teaching/Curso-MD-Analisis/tree/main/docs">docs/</a> i els reemplaça pel
-script o notebook de referència que tingui el mateix nom (per `stem`).
-Si cal forçar la font, afegeix al markdown:
+Updates the ```python blocks in markdown files under
+<a href="https://github.com/Biocomputing-Teaching/Curso-MD-Analisis/tree/main/docs">docs/</a> and replaces them with
+whichever script or notebook matches the same stem.
+If you need to force the source, add to the markdown:
 
 ```html
-<!-- sync-from: ruta/al/script.py -->
+<!-- sync-from: path/to/script.py -->
 ```
 
-L'script afegeix un enllaç al fitxer font sota el bloc de codi.
+The script adds a link to the source file under the code block.
 
-### Regenerar notebooks des de scripts
+### Sync scripts from notebooks
 
 ```bash
 python scripts/sync_notebooks_from_scripts.py
 ```
 
-Converteix els scripts de
-<a href="https://github.com/Biocomputing-Teaching/Curso-MD-Analisis/tree/main/docs/episodes/scripts">docs/episodes/scripts/</a>
-en els notebooks homònims a
-<a href="https://github.com/Biocomputing-Teaching/Curso-MD-Analisis/tree/main/docs/episodes/notebooks">docs/episodes/notebooks/</a>.
-Respecta les cel·les separades amb `# %%`.
+Uses the notebooks in
+<a href="https://github.com/Biocomputing-Teaching/Curso-MD-Analisis/tree/main/docs/episodes/notebooks">docs/episodes/notebooks/</a>
+as the source of truth and updates matching scripts in
+<a href="https://github.com/Biocomputing-Teaching/Curso-MD-Analisis/tree/main/docs/episodes/scripts">docs/episodes/scripts/</a>.
+Respects cells separated with `# %%`.
 
-### Verificar enllaços interns
+### Validate internal links
 
 ```bash
 python scripts/check_links.py
 ```
 
-Valida enllaços relatius dins de
-<a href="https://github.com/Biocomputing-Teaching/Curso-MD-Analisis/tree/main/docs">docs/</a> i falla si algun no existeix.
+Validates relative links inside
+<a href="https://github.com/Biocomputing-Teaching/Curso-MD-Analisis/tree/main/docs">docs/</a> and fails if any do not exist.
 
-### Generar un DCD d'exemple
+### Generate a sample DCD
 
 ```bash
 python scripts/generate_example_dcd.py
 ```
 
-Genera un DCD d'exemple a
-<a href="https://github.com/Biocomputing-Teaching/Curso-MD-Analisis/tree/main/docs/data">docs/data/</a> i requereix
-un entorn amb OpenMM.
+Generates a sample DCD under
+<a href="https://github.com/Biocomputing-Teaching/Curso-MD-Analisis/tree/main/docs/data">docs/data/</a> and requires
+an environment with OpenMM.
 
-## Visualitzar la web localment (Jekyll)
+## View the site locally (Jekyll)
 
-Aquest repositori no fixa versions de Jekyll, així que l'opció més simple és
-usar Jekyll instal·lat com a gem global. Si prefereixes versions fixades,
-crea un fitxer de dependències i usa `bundle exec` (fora de l'abast d'aquest README).
+This repository does not pin Jekyll versions, so the simplest option is
+using a globally installed Jekyll. If you prefer pinned versions, create a
+Gemfile and use `bundle exec` (out of scope for this README).
 
-### Instal·lació (Linux, Ubuntu/Debian)
+### Install (Linux, Ubuntu/Debian)
 
 ```bash
 sudo apt-get update
@@ -113,7 +112,7 @@ sudo apt-get install -y ruby-full build-essential zlib1g-dev
 gem install jekyll bundler webrick
 ```
 
-### Instal·lació (macOS, Homebrew)
+### Install (macOS, Homebrew)
 
 ```bash
 brew install ruby
@@ -122,29 +121,29 @@ source ~/.zshrc
 gem install jekyll bundler webrick
 ```
 
-### Execució local
+### Run locally
 
 ```bash
 jekyll serve --source docs --livereload --baseurl /Curso-MD-Analisis
 ```
 
-La web queda disponible a
+The site will be available at
 <a href="http://127.0.0.1:4000/Curso-MD-Analisis/">http://127.0.0.1:4000/Curso-MD-Analisis/</a>.
 
-### Problemes típics
+### Common issues
 
-- **`webrick` no trobat (Ruby 3+)**: executa `gem install webrick`.
-- **Port ocupat**: usa `--port 4001` (o el port que vulguis).
-- **Errors de permisos en gem**: instal·la Ruby via `rbenv` o `brew` i evita `sudo gem`.
+- **`webrick` not found (Ruby 3+)**: run `gem install webrick`.
+- **Port in use**: use `--port 4001` (or whatever port you want).
+- **Gem permission errors**: install Ruby via `rbenv` or `brew` and avoid `sudo gem`.
 
-## Bones pràctiques
+## Best practices
 
-- Editar el contingut públic a
-  <a href="https://github.com/Biocomputing-Teaching/Curso-MD-Analisis/tree/main/docs">docs/</a>, no a
+- Edit public content under
+  <a href="https://github.com/Biocomputing-Teaching/Curso-MD-Analisis/tree/main/docs">docs/</a>, not
   <a href="https://github.com/Biocomputing-Teaching/Curso-MD-Analisis/blob/main/README.md">README.md</a>.
-- Evitar tocar a mà els blocs de codi incrustats als episodis: usa la
-  sincronització per mantenir consistència.
-- Mantenir enllaços amb `{{ site.baseurl }}` quan apuntin a recursos de
+- Avoid manually editing embedded code blocks in episodes: use the sync
+  scripts to keep consistency.
+- Keep links with `{{ site.baseurl }}` when pointing to resources under
   <a href="https://github.com/Biocomputing-Teaching/Curso-MD-Analisis/tree/main/docs">docs/</a>.
-- Guardar els canvis de manteniment en aquest README quan el repositori
-  evolucioni amb nous scripts o fluxos.
+- Log maintenance changes in this README as the repository evolves with new
+  scripts or workflows.

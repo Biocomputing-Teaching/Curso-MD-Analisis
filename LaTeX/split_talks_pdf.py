@@ -29,7 +29,7 @@ def read_pages(pdf_path):
 def find_episode_starts(pages):
     starts = {}
     for episode, _ in EPISODES:
-        pattern = re.compile(rf"Episodio\s+{episode}[^\n]*Summary")
+        pattern = re.compile(rf"Episode\s+{episode}[^\n]*Summary")
         for i, page in enumerate(pages, start=1):
             if pattern.search(page):
                 starts[episode] = i

@@ -1,131 +1,135 @@
 ---
 layout: default
-title: Episodio 5 - Muestreo Avanzado y fundamentos matemáticos
+title: Episode 5 - Advanced sampling and mathematical foundations
 permalink: /episodes/05-muestreo-avanzado/
 ---
 
 <div class="episode-nav">
-  <a href="{{ site.baseurl }}/episodes/04-analisis-trayectorias/">Anterior</a>
-  <a href="{{ site.baseurl }}/episodes/">Todos los episodios</a>
-  <a href="{{ site.baseurl }}/episodes/06-pyemma/">Siguiente</a>
+  <a href="{{ site.baseurl }}/episodes/04-analisis-trayectorias/">Previous</a>
+  <a href="{{ site.baseurl }}/episodes/">All episodes</a>
+  <a href="{{ site.baseurl }}/episodes/06-pyemma/">Next</a>
 </div>
 
 <!-- toc:start -->
-## Tabla de contenidos
-- [Duración](#duracion)
-- [Objetivos](#objetivos)
-- [Contenido](#contenido)
-- [Fundamentos termodinámicos](#fundamentos-termodinamicos)
-- [Conexión con la guía oficial de OpenMM](#conexion-con-la-guia-oficial-de-openmm)
-- [Scripts de la guía (OpenMM Application Layer)](#scripts-de-la-guia-openmm-application-layer)
-- [Parte simple](#parte-simple)
-- [Parte compleja](#parte-compleja)
+## Table of contents
+- [Duration](#duration)
+- [Objectives](#objectives)
+- [Content](#content)
+- [Thermodynamic foundations](#thermodynamic-foundations)
+- [Connection to the official OpenMM guide](#connection-to-the-official-openmm-guide)
+- [Guide scripts (OpenMM Application Layer)](#guide-scripts-openmm-application-layer)
+- [Alanine dipeptide](#alanine-dipeptide)
+- [Protein-ligand complex](#protein-ligand-complex)
 <!-- toc:end -->
 
-## Duración
+## Duration
 
-- **Sesión:** 60 min
-- **Ejercicios:** 45 min
+- **Session:** 60 min
+- **Exercises:** 45 min
 
-## Objetivos
+## Objectives
 
-- Establecer la relación entre la estadística de Boltzmann y los algoritmos de muestreo avanzado.
-- Mostrar cómo cada script del curso representa una estrategia matemática (recocidos, fuerzas externas y reportes cuantitativos).
-- Validar la solvatación periódica en las trayectorias de alanina y del complejo proteína-ligando.
+- Connect Boltzmann statistics with advanced sampling algorithms.
+- Show how each course script represents a mathematical strategy (annealing, external forces, and quantitative reporting).
+- Validate periodic solvation in alanine and protein-ligand complex trajectories.
 
-## Contenido
+## Content
 
-- Formulación de la distribución canónica y energía libre.
-- Control de la temperatura efectiva mediante integradores adaptativos.
-- Reportes de energías y fuerzas para estimar derivadas del potencial.
-- Estrategias de solvatación y caja periódica con OpenMM.
+- Canonical distribution and free energy formulation.
+- Effective temperature control via adaptive integrators.
+- Energy and force reports to estimate potential derivatives.
+- Solvation and periodic box strategies with OpenMM.
 
-## Fundamentos termodinámicos
+## Thermodynamic foundations
 
-La distribución canónica
+The canonical distribution
 
 $$
 \rho(\mathbf{x}) = \frac{1}{Z} \exp\left(-\beta U(\mathbf{x})\right),
 $$
 
-donde $\beta = 1/(k_B T)$ fija la relación entre energía y entropía. Las estrategias de recocido simulado modifican \(T\) gradualmente para recorrer regiones de alto y bajo potencial sin saltos bruscos, y permiten estimar diferencias de energía libre mediante
+where $\beta = 1/(k_B T)$ sets the relation between energy and entropy. Simulated annealing strategies modify \(T\) gradually to explore high- and low-potential regions without abrupt jumps, and allow estimating free energy differences via
 
 $$
 \Delta G = -k_B T \ln \frac{Z_{\text{solv}}}{Z_{\text{no\ soluto}}}.
 $$
 
-Para estimar la estabilidad de las restricciones también vigila la norma del gradiente del potencial
+To estimate restraint stability, also monitor the norm of the potential gradient
 
 $$
 \mathbf{g} = \nabla U(\mathbf{x}), \qquad \langle \|\mathbf{g}\|^2 \rangle = \frac{1}{N} \sum_{i=1}^N \|\mathbf{g}_i\|^2,
 $$
 
-que se reporta periódicamente para identificar drift numérico.
+which is reported periodically to identify numerical drift.
 
-![Embudo energético y estrategias de muestreo]({{ site.baseurl }}/figures/function_funnel.png)
+![Energy funnel and sampling strategies]({{ site.baseurl }}/figures/function_funnel.png)
 
-## Conexión con la guía oficial de OpenMM
+## Connection to the official OpenMM guide
 
-Los capítulos de [OpenMM Cookbook](https://openmm.github.io/openmm-cookbook/latest/notebooks/tutorials/loading_and_reporting.html) y sus secciones relacionadas (building systems, simulation parameters, alchemical free energy) describen pasos coherentes con nuestros scripts: definir el sistema, personalizar fuerzas externas y registrar eventos. De allí adoptamos tres pilares:
+The [OpenMM Cookbook](https://openmm.github.io/openmm-cookbook/latest/notebooks/tutorials/loading_and_reporting.html) chapters and related sections (building systems, simulation parameters, alchemical free energy) describe steps consistent with our scripts: defining the system, customizing external forces, and logging events. From there we adopt three pillars:
 
-- Recocido simulado ajustando la temperatura en los integradores para favorecer saltos entre pozos.
-- Fuerzas externas `CustomExternalForce` para acotar regiones y estudiar respuestas mecánicas.
-- Reportes basados en `State` para recuperar energías potenciales y fuerzas y calibrar la convergencia.
+- Simulated annealing by adjusting temperature in integrators to favor jumps between wells.
+- `CustomExternalForce` external forces to constrain regions and study mechanical responses.
+- `State`-based reporting to retrieve potential energies and forces and calibrate convergence.
 
-Todos los scripts enlazados utilizan esta arquitectura y sirven como ejemplos guiados para cada sistema.
+All linked scripts use this architecture and serve as guided examples for each system.
 
-## Scripts de la guía (OpenMM Application Layer)
+## Guide scripts (OpenMM Application Layer)
 
-Para alimentar el análisis, apoyamos los scripts oficiales descritos en la guía de OpenMM:
+To feed the analysis, we rely on the official scripts described in the OpenMM guide:
 
-- [`simulatePdb.py`](https://github.com/openmm/openmm/blob/master/examples/python-examples/simulatePdb.py): simulaciones rápidas desde PDB, útil para pruebas de recocido.
-- [`simulateAmber.py`](https://github.com/openmm/openmm/blob/master/examples/python-examples/simulateAmber.py): entrada AMBER (prmtop/inpcrd) para comparar energías con y sin solvente.
-- [`simulateCharmm.py`](https://github.com/openmm/openmm/blob/master/examples/python-examples/simulateCharmm.py): topologías PSF/CRD para evaluar restricciones y reportes.
-- [`simulateGromacs.py`](https://github.com/openmm/openmm/blob/master/examples/python-examples/simulateGromacs.py): entrada GROMACS (top/gro), ideal para validar preprocesado.
-- [`simulateTinker.py`](https://github.com/openmm/openmm/blob/master/examples/python-examples/simulateTinker.py): AMOEBA, útil para contrastar efectos de polarización.
+- [`simulatePdb.py`](https://github.com/openmm/openmm/blob/master/examples/python-examples/simulatePdb.py): fast simulations from PDB, useful for annealing tests.
+- [`simulateAmber.py`](https://github.com/openmm/openmm/blob/master/examples/python-examples/simulateAmber.py): AMBER input (prmtop/inpcrd) to compare energies with and without solvent.
+- [`simulateCharmm.py`](https://github.com/openmm/openmm/blob/master/examples/python-examples/simulateCharmm.py): PSF/CRD topologies to evaluate restraints and reporting.
+- [`simulateGromacs.py`](https://github.com/openmm/openmm/blob/master/examples/python-examples/simulateGromacs.py): GROMACS input (top/gro), ideal for validating preprocessing.
+- [`simulateTinker.py`](https://github.com/openmm/openmm/blob/master/examples/python-examples/simulateTinker.py): AMOEBA, useful for contrasting polarization effects.
 
-En cada caso, las salidas (DCD, CSV y reportes de energía) se usan en los ejercicios de este episodio.
+In each case, the outputs (DCD, CSV, and energy reports) are used in this episode's exercises.
 
-## Parte simple
+## Alanine dipeptide
 
-### Demo guiada
+### Guided demo
 
 <!-- sync-from: docs/episodes/scripts/05-muestreo-avanzado_simple.py -->
-<div class="notebook-embed"><iframe src="{{ site.baseurl }}/episodes/notebooks/rendered/05-muestreo-avanzado_simple.html" loading="lazy"></iframe><div class="notebook-links"><a href="{{ site.baseurl }}/episodes/notebooks/05-muestreo-avanzado_simple.ipynb" download>Descargar notebook</a> | <a href="{{ site.baseurl }}/episodes/scripts/05-muestreo-avanzado_simple.py" download>Descargar script (.py)</a></div></div>
+<div class="notebook-embed"><iframe src="{{ site.baseurl }}/episodes/notebooks/rendered/05-muestreo-avanzado_simple.html" loading="lazy"></iframe><div class="notebook-links"><a href="{{ site.baseurl }}/episodes/notebooks/05-muestreo-avanzado_simple.ipynb" download>Download notebook</a> | <a href="{{ site.baseurl }}/episodes/scripts/05-muestreo-avanzado_simple.py" download>Download script (.py)</a></div></div>
 
-### Ejercicio
+### Exercise
 
-- Ejecutar el flujo simple con las restricciones esféricas y registrar el valor de $\langle \|\mathbf{g}\|^2 \rangle$ antes y después del recocido.
-- Comparar la energía potencial promedio con y sin CustomExternalForce.
+- Run the simple workflow with spherical restraints and record the value of $\langle \|\mathbf{g}\|^2 \rangle$ before and after annealing.
+- Compare the average potential energy with and without CustomExternalForce.
 
-### Puntos clave
+### Key points
 
-- Mantener los reportes cada 10 pasos para monitorizar la deriva del integrador.
-- Ajustar $\beta$ para conservar la estabilidad numérica en sistemas pequeños.
+- Keep reports every 10 steps to monitor integrator drift.
+- Adjust $\beta$ to preserve numerical stability in small systems.
 
-### Notebooks y scripts
+### Notebooks and scripts
 
-- <a href="{{ site.baseurl }}/episodes/notebooks/05-muestreo-avanzado_simple.ipynb">05-muestreo-avanzado_simple.ipynb</a> (<a href="{{ site.baseurl }}/episodes/notebooks/rendered/05-muestreo-avanzado_simple.html">HTML</a> | <a href="https://nbviewer.org/url/biocomputing-teaching.github.io/Curso-MD-Analisis/episodes/notebooks/05-muestreo-avanzado_simple.ipynb">nbviewer</a>)
-- <a href="{{ site.baseurl }}/episodes/scripts/05-muestreo-avanzado_simple.py">05-muestreo-avanzado_simple.py</a>
+- This notebook executes the advanced sampling routine for alanine (restraints, custom forces, reporting energies) and tracks gradient norms. (<a href="{{ site.baseurl }}/episodes/notebooks/05-muestreo-avanzado_simple.ipynb">notebook</a> | <a href="{{ site.baseurl }}/episodes/scripts/05-muestreo-avanzado_simple.py">script</a>)
 
-## Parte compleja
+## Protein-ligand complex
 
-### Demo guiada
+### Guided demo
 
 <!-- sync-from: docs/episodes/scripts/05-muestreo-avanzado.py -->
-<div class="notebook-embed"><iframe src="{{ site.baseurl }}/episodes/notebooks/rendered/05-muestreo-avanzado.html" loading="lazy"></iframe><div class="notebook-links"><a href="{{ site.baseurl }}/episodes/notebooks/05-muestreo-avanzado.ipynb" download>Descargar notebook</a> | <a href="{{ site.baseurl }}/episodes/scripts/05-muestreo-avanzado.py" download>Descargar script (.py)</a></div></div>
+<div class="notebook-embed"><iframe src="{{ site.baseurl }}/episodes/notebooks/rendered/05-muestreo-avanzado.html" loading="lazy"></iframe><div class="notebook-links"><a href="{{ site.baseurl }}/episodes/notebooks/05-muestreo-avanzado.ipynb" download>Download notebook</a> | <a href="{{ site.baseurl }}/episodes/scripts/05-muestreo-avanzado.py" download>Download script (.py)</a></div></div>
 
-### Ejercicio
+### Exercise
 
-- Ejecutar con `--solvate` y `--padding 12` registrando la densidad del solvente y la energía de Coulomb.
-- Probar otro modelo de agua y analizar la variación en $\Delta G$ estimado mediante la diferencia de particiones.
+- Run with `--solvate` and `--padding 12`, recording solvent density and Coulomb energy.
+- Try another water model and analyze the variation in $\Delta G$ estimated from partition differences.
 
-### Puntos clave
+### Key points
 
-- La solvatación periódica estabiliza $\Delta G$ en escalas largas y mejora la convergencia del recocido.
-- Comparar distribuciones de energía para validar el muestreo extendido.
+- Periodic solvation stabilizes $\Delta G$ on long time scales and improves annealing convergence.
+- Compare energy distributions to validate extended sampling.
 
-### Notebooks y scripts
+### Notebooks and scripts
 
-- <a href="{{ site.baseurl }}/episodes/notebooks/05-muestreo-avanzado.ipynb">05-muestreo-avanzado.ipynb</a> (<a href="{{ site.baseurl }}/episodes/notebooks/rendered/05-muestreo-avanzado.html">HTML</a> | <a href="https://nbviewer.org/url/biocomputing-teaching.github.io/Curso-MD-Analisis/episodes/notebooks/05-muestreo-avanzado.ipynb">nbviewer</a>)
-- <a href="{{ site.baseurl }}/episodes/scripts/05-muestreo-avanzado.py">05-muestreo-avanzado.py</a>
+- This notebook covers the complex system with solvation options, barostat control, and energy/force logging to validate enhanced sampling workflows. (<a href="{{ site.baseurl }}/episodes/notebooks/05-muestreo-avanzado.ipynb">notebook</a> | <a href="{{ site.baseurl }}/episodes/scripts/05-muestreo-avanzado.py">script</a>)
+
+<div class="episode-nav">
+  <a href="{{ site.baseurl }}/episodes/04-analisis-trayectorias/">Previous</a>
+  <a href="{{ site.baseurl }}/episodes/">All episodes</a>
+  <a href="{{ site.baseurl }}/episodes/06-pyemma/">Next</a>
+</div>

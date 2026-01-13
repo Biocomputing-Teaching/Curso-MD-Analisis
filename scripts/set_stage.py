@@ -10,19 +10,19 @@ NAV_END = "<!-- stage:nav-end -->"
 
 NAV_ITEMS = {
     "pre": [
-        ("Inicio", "/"),
-        ("Preparación", "/setup/"),
-        ("Referencia", "/reference/"),
-        ("Recursos", "/resources/"),
+        ("Home", "/"),
+        ("Setup", "/setup/"),
+        ("Reference", "/reference/"),
+        ("Resources", "/resources/"),
     ],
     "course": [
-        ("Inicio", "/"),
-        ("Preparación", "/setup/"),
-        ("Episodios", "/episodes/"),
-        ("Referencia", "/reference/"),
-        ("Datos", "/data/"),
-        ("Recursos", "/resources/"),
-        ("Créditos", "/credits/"),
+        ("Home", "/"),
+        ("Setup", "/setup/"),
+        ("Episodes", "/episodes/"),
+        ("Reference", "/reference/"),
+        ("Data", "/data/"),
+        ("Resources", "/resources/"),
+        ("Credits", "/credits/"),
     ],
 }
 

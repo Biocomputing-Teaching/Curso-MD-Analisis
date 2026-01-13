@@ -1,129 +1,127 @@
 ---
 layout: default
-title: Episodio 3 - Preparación y edición del sistema en OpenMM
+title: Episode 3 - Preparing and editing the system in OpenMM
 permalink: /episodes/02-preparacion-sistema/
 ---
 
 <div class="episode-nav">
-  <a href="{{ site.baseurl }}/episodes/03-simulaciones-clasicas/">Anterior</a>
-  <a href="{{ site.baseurl }}/episodes/">Todos los episodios</a>
-  <a href="{{ site.baseurl }}/episodes/05-muestreo-avanzado/">Siguiente</a>
+  <a href="{{ site.baseurl }}/episodes/03-simulaciones-clasicas/">Previous</a>
+  <a href="{{ site.baseurl }}/episodes/">All episodes</a>
+  <a href="{{ site.baseurl }}/episodes/05-muestreo-avanzado/">Next</a>
 </div>
 
 <!-- toc:start -->
-## Tabla de contenidos
-- [Duración](#duracion)
-- [Objetivos](#objetivos)
-- [Contenido](#contenido)
-- [Preparar la carpeta de trabajo](#preparar-la-carpeta-de-trabajo)
-- [Parte simple](#parte-simple)
-- [Parte compleja](#parte-compleja)
-- [Puntos clave](#puntos-clave)
-- [Modeller (guía OpenMM)](#modeller-guia-openmm)
+## Table of contents
+- [Duration](#duration)
+- [Objectives](#objectives)
+- [Content](#content)
+- [Prepare the working folder](#prepare-the-working-folder)
+- [Alanine dipeptide](#alanine-dipeptide)
+- [Protein-ligand complex](#protein-ligand-complex)
+- [Key points](#key-points)
+- [Modeller (OpenMM guide)](#modeller-openmm-guide)
 <!-- toc:end -->
 
-## Duración
+## Duration
 
-- **Sesión:** 60 min
-- **Ejercicios:** 45 min
+- **Session:** 60 min
+- **Exercises:** 45 min
 
-## Objetivos
+## Objectives
 
-- Preparar un sistema simple (alanina) y uno complejo (proteína-ligando).
-- Replicar las operaciones de Modeller de la guía OpenMM.
-- Generar estructuras listas para simulación y guardarlas de forma reproducible.
+- Prepare a simple system (alanine) and a complex system (protein-ligand).
+- Reproduce the Modeller operations from the OpenMM guide.
+- Generate simulation-ready structures and save them reproducibly.
 
-## Contenido
+## Content
 
-- Preparación simple con Modeller y solvatación ligera.
-- PDBFixer para reparar proteínas complejas.
-- Modeller: hidrógenos, solvente, membranas, partículas extra, eliminar agua.
-- Ejemplo de guardado de resultados (Saving the Results).
+- Simple preparation with Modeller and light solvation.
+- PDBFixer to repair complex proteins.
+- Modeller: hydrogens, solvent, membranes, extra particles, remove water.
+- Example of saving results (Saving the Results).
 
-## Preparar la carpeta de trabajo
+## Prepare the working folder
 
-Antes de ejecutar los scripts, crea la carpeta madre donde se guardarán todos los resultados (independientemente de dónde lances los cálculos) con <a href="{{ site.baseurl }}/episodes/scripts/course_paths.py">course_paths.py</a>:
+Before running the scripts, create the root folder where all results will be saved (regardless of where you run the jobs) with <a href="{{ site.baseurl }}/episodes/scripts/course_paths.py">course_paths.py</a>:
 
 ```bash
 python docs/episodes/scripts/course_paths.py
 ```
 
-Esto genera la carpeta principal (por defecto `~/Concepcion26`), crea `data/` y `results/`, y te muestra el `export COURSE_DIR="..."` que debes ejecutar en la terminal para que todos los scripts usen ese mismo destino.
+This creates the main folder (default `~/Concepcion26`), creates `data/` and `results/`, and shows the `export COURSE_DIR="..."` you must run in the terminal so all scripts use the same destination.
 
-Después, copia los datos dentro de `data/`:
+Then copy the data into `data/`:
 
 ```bash
 cp -R Course-MD-Data-main/* "$COURSE_DIR/data"
 ```
 
-## Parte simple
+## Alanine dipeptide
 
-### Demo guiada
+### Guided demo
 
 <!-- sync-from: docs/episodes/scripts/02-preparacion-sistema_simple.py -->
-<div class="notebook-embed"><iframe src="{{ site.baseurl }}/episodes/notebooks/rendered/02-preparacion-sistema_simple.html" loading="lazy"></iframe><div class="notebook-links"><a href="{{ site.baseurl }}/episodes/notebooks/02-preparacion-sistema_simple.ipynb" download>Descargar notebook</a> | <a href="{{ site.baseurl }}/episodes/scripts/02-preparacion-sistema_simple.py" download>Descargar script (.py)</a></div></div>
+<div class="notebook-embed"><iframe src="{{ site.baseurl }}/episodes/notebooks/rendered/02-preparacion-sistema_simple.html" loading="lazy"></iframe><div class="notebook-links"><a href="{{ site.baseurl }}/episodes/notebooks/02-preparacion-sistema_simple.ipynb" download>Download notebook</a> | <a href="{{ site.baseurl }}/episodes/scripts/02-preparacion-sistema_simple.py" download>Download script (.py)</a></div></div>
 
-### Ejercicio
+### Exercise
 
-- Ejecutar el script simple y revisar `"$COURSE_DIR/results/02-preparacion-sistema/simple/alanine_solvated.pdb"`.
+- Run the simple script and review `"$COURSE_DIR/results/02-preparacion-sistema/simple/alanine_solvated.pdb"`.
 
-### Notebooks y scripts
+### Notebooks and scripts
 
-- <a href="{{ site.baseurl }}/episodes/notebooks/02-preparacion-sistema_simple.ipynb">02-preparacion-sistema_simple.ipynb</a> (<a href="{{ site.baseurl }}/episodes/notebooks/rendered/02-preparacion-sistema_simple.html">HTML</a> | <a href="https://nbviewer.org/url/biocomputing-teaching.github.io/Curso-MD-Analisis/episodes/notebooks/02-preparacion-sistema_simple.ipynb">nbviewer</a>)
-- <a href="{{ site.baseurl }}/episodes/scripts/02-preparacion-sistema_simple.py">02-preparacion-sistema_simple.py</a>
+- This notebook prepares the alanine system with Modeller, adds solvent, and writes the simple solvated PDB ready for simulation. (<a href="{{ site.baseurl }}/episodes/notebooks/02-preparacion-sistema_simple.ipynb">notebook</a> | <a href="{{ site.baseurl }}/episodes/scripts/02-preparacion-sistema_simple.py">script</a>)
 
-## Parte compleja
+## Protein-ligand complex
 
-### Demo guiada
+### Guided demo
 
 <!-- sync-from: docs/episodes/scripts/02-preparacion-sistema.py -->
-<div class="notebook-embed"><iframe src="{{ site.baseurl }}/episodes/notebooks/rendered/02-preparacion-sistema.html" loading="lazy"></iframe><div class="notebook-links"><a href="{{ site.baseurl }}/episodes/notebooks/02-preparacion-sistema.ipynb" download>Descargar notebook</a> | <a href="{{ site.baseurl }}/episodes/scripts/02-preparacion-sistema.py" download>Descargar script (.py)</a></div></div>
+<div class="notebook-embed"><iframe src="{{ site.baseurl }}/episodes/notebooks/rendered/02-preparacion-sistema.html" loading="lazy"></iframe><div class="notebook-links"><a href="{{ site.baseurl }}/episodes/notebooks/02-preparacion-sistema.ipynb" download>Download notebook</a> | <a href="{{ site.baseurl }}/episodes/scripts/02-preparacion-sistema.py" download>Download script (.py)</a></div></div>
 
-### Ejercicio
+### Exercise
 
-- Ejecutar el script complejo con `--output-dir outputs`.
-- Probar un `--output-base` diferente.
+- Run the complex script with `--output-dir outputs`.
+- Try a different `--output-base`.
 
-### Notebooks y scripts
+### Notebooks and scripts
 
-- <a href="{{ site.baseurl }}/episodes/notebooks/02-preparacion-sistema.ipynb">02-preparacion-sistema.ipynb</a> (<a href="{{ site.baseurl }}/episodes/notebooks/rendered/02-preparacion-sistema.html">HTML</a> | <a href="https://nbviewer.org/url/biocomputing-teaching.github.io/Curso-MD-Analisis/episodes/notebooks/02-preparacion-sistema.ipynb">nbviewer</a>)
-- <a href="{{ site.baseurl }}/episodes/scripts/02-preparacion-sistema.py">02-preparacion-sistema.py</a>
+- This notebook walks through Modeller/PDBFixer to repair the protein-ligand complex, allowing you to add solvent, ions, and save preparatory files. (<a href="{{ site.baseurl }}/episodes/notebooks/02-preparacion-sistema.ipynb">notebook</a> | <a href="{{ site.baseurl }}/episodes/scripts/02-preparacion-sistema.py">script</a>)
 
-## Puntos clave
+## Key points
 
-- La preparación depende del sistema objetivo.
-- Guardar versiones preparadas facilita la trazabilidad.
+- Preparation depends on the target system.
+- Saving prepared versions improves traceability.
 
-## Modeller (guía OpenMM)
+## Modeller (OpenMM guide)
 
-### Añadir hidrógenos
+### Add hydrogens
 
-<div class="notebook-embed"><iframe src="{{ site.baseurl }}/episodes/notebooks/rendered/02-preparacion-sistema.html" loading="lazy"></iframe><div class="notebook-links"><a href="{{ site.baseurl }}/episodes/notebooks/02-preparacion-sistema.ipynb" download>Descargar notebook</a> | <a href="{{ site.baseurl }}/episodes/scripts/02-preparacion-sistema.py" download>Descargar script (.py)</a></div></div>
+<div class="notebook-embed"><iframe src="{{ site.baseurl }}/episodes/notebooks/rendered/02-preparacion-sistema.html" loading="lazy"></iframe><div class="notebook-links"><a href="{{ site.baseurl }}/episodes/notebooks/02-preparacion-sistema.ipynb" download>Download notebook</a> | <a href="{{ site.baseurl }}/episodes/scripts/02-preparacion-sistema.py" download>Download script (.py)</a></div></div>
 
-### Añadir solvente
+### Add solvent
 
-<div class="notebook-embed"><iframe src="{{ site.baseurl }}/episodes/notebooks/rendered/02-preparacion-sistema.html" loading="lazy"></iframe><div class="notebook-links"><a href="{{ site.baseurl }}/episodes/notebooks/02-preparacion-sistema.ipynb" download>Descargar notebook</a> | <a href="{{ site.baseurl }}/episodes/scripts/02-preparacion-sistema.py" download>Descargar script (.py)</a></div></div>
+<div class="notebook-embed"><iframe src="{{ site.baseurl }}/episodes/notebooks/rendered/02-preparacion-sistema.html" loading="lazy"></iframe><div class="notebook-links"><a href="{{ site.baseurl }}/episodes/notebooks/02-preparacion-sistema.ipynb" download>Download notebook</a> | <a href="{{ site.baseurl }}/episodes/scripts/02-preparacion-sistema.py" download>Download script (.py)</a></div></div>
 
-### Añadir membrana
+### Add membrane
 
-<div class="notebook-embed"><iframe src="{{ site.baseurl }}/episodes/notebooks/rendered/02-preparacion-sistema.html" loading="lazy"></iframe><div class="notebook-links"><a href="{{ site.baseurl }}/episodes/notebooks/02-preparacion-sistema.ipynb" download>Descargar notebook</a> | <a href="{{ site.baseurl }}/episodes/scripts/02-preparacion-sistema.py" download>Descargar script (.py)</a></div></div>
+<div class="notebook-embed"><iframe src="{{ site.baseurl }}/episodes/notebooks/rendered/02-preparacion-sistema.html" loading="lazy"></iframe><div class="notebook-links"><a href="{{ site.baseurl }}/episodes/notebooks/02-preparacion-sistema.ipynb" download>Download notebook</a> | <a href="{{ site.baseurl }}/episodes/scripts/02-preparacion-sistema.py" download>Download script (.py)</a></div></div>
 
-### Añadir partículas extra
+### Add extra particles
 
-<div class="notebook-embed"><iframe src="{{ site.baseurl }}/episodes/notebooks/rendered/02-preparacion-sistema.html" loading="lazy"></iframe><div class="notebook-links"><a href="{{ site.baseurl }}/episodes/notebooks/02-preparacion-sistema.ipynb" download>Descargar notebook</a> | <a href="{{ site.baseurl }}/episodes/scripts/02-preparacion-sistema.py" download>Descargar script (.py)</a></div></div>
+<div class="notebook-embed"><iframe src="{{ site.baseurl }}/episodes/notebooks/rendered/02-preparacion-sistema.html" loading="lazy"></iframe><div class="notebook-links"><a href="{{ site.baseurl }}/episodes/notebooks/02-preparacion-sistema.ipynb" download>Download notebook</a> | <a href="{{ site.baseurl }}/episodes/scripts/02-preparacion-sistema.py" download>Download script (.py)</a></div></div>
 
-### Eliminar agua
+### Remove water
 
-<div class="notebook-embed"><iframe src="{{ site.baseurl }}/episodes/notebooks/rendered/02-preparacion-sistema.html" loading="lazy"></iframe><div class="notebook-links"><a href="{{ site.baseurl }}/episodes/notebooks/02-preparacion-sistema.ipynb" download>Descargar notebook</a> | <a href="{{ site.baseurl }}/episodes/scripts/02-preparacion-sistema.py" download>Descargar script (.py)</a></div></div>
+<div class="notebook-embed"><iframe src="{{ site.baseurl }}/episodes/notebooks/rendered/02-preparacion-sistema.html" loading="lazy"></iframe><div class="notebook-links"><a href="{{ site.baseurl }}/episodes/notebooks/02-preparacion-sistema.ipynb" download>Download notebook</a> | <a href="{{ site.baseurl }}/episodes/scripts/02-preparacion-sistema.py" download>Download script (.py)</a></div></div>
 
-### Guardar resultados (Saving the Results)
+### Save results (Saving the Results)
 
-<div class="notebook-embed"><iframe src="{{ site.baseurl }}/episodes/notebooks/rendered/02-preparacion-sistema.html" loading="lazy"></iframe><div class="notebook-links"><a href="{{ site.baseurl }}/episodes/notebooks/02-preparacion-sistema.ipynb" download>Descargar notebook</a> | <a href="{{ site.baseurl }}/episodes/scripts/02-preparacion-sistema.py" download>Descargar script (.py)</a></div></div>
+<div class="notebook-embed"><iframe src="{{ site.baseurl }}/episodes/notebooks/rendered/02-preparacion-sistema.html" loading="lazy"></iframe><div class="notebook-links"><a href="{{ site.baseurl }}/episodes/notebooks/02-preparacion-sistema.ipynb" download>Download notebook</a> | <a href="{{ site.baseurl }}/episodes/scripts/02-preparacion-sistema.py" download>Download script (.py)</a></div></div>
 
-Script del curso: <a href="{{ site.baseurl }}/episodes/scripts/openmm_modeller_save.py">openmm_modeller_save.py</a>
+Course script: <a href="{{ site.baseurl }}/episodes/scripts/openmm_modeller_save.py">openmm_modeller_save.py</a>
 
 <div class="episode-nav">
-  <a href="{{ site.baseurl }}/episodes/03-simulaciones-clasicas/">Anterior</a>
-  <a href="{{ site.baseurl }}/episodes/">Todos los episodios</a>
-  <a href="{{ site.baseurl }}/episodes/05-muestreo-avanzado/">Siguiente</a>
+  <a href="{{ site.baseurl }}/episodes/03-simulaciones-clasicas/">Previous</a>
+  <a href="{{ site.baseurl }}/episodes/">All episodes</a>
+  <a href="{{ site.baseurl }}/episodes/05-muestreo-avanzado/">Next</a>
 </div>

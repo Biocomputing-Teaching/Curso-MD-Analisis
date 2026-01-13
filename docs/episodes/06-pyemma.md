@@ -1,121 +1,120 @@
 ---
 layout: default
-title: Episodio 6 - MSM con PyEMMA
+title: Episode 6 - MSMs with PyEMMA
 permalink: /episodes/06-pyemma/
 ---
 
 <div class="episode-nav">
-  <a href="{{ site.baseurl }}/episodes/05-muestreo-avanzado/">Anterior</a>
-  <a href="{{ site.baseurl }}/episodes/">Todos los episodios</a>
-  <a href="{{ site.baseurl }}/episodes/07-deeptime/">Siguiente</a>
+  <a href="{{ site.baseurl }}/episodes/05-muestreo-avanzado/">Previous</a>
+  <a href="{{ site.baseurl }}/episodes/">All episodes</a>
+  <a href="{{ site.baseurl }}/episodes/07-deeptime/">Next</a>
 </div>
 
 <!-- toc:start -->
-## Tabla de contenidos
-- [Duración](#duracion)
-- [Objetivos](#objetivos)
-- [Contenido](#contenido)
-- [Scripts de la guía para preparar datos](#scripts-de-la-guia-para-preparar-datos)
-- [Fundamentos matemáticos](#fundamentos-matematicos)
-- [Parte simple](#parte-simple)
-- [Parte compleja](#parte-compleja)
+## Table of contents
+- [Duration](#duration)
+- [Objectives](#objectives)
+- [Content](#content)
+- [Guide scripts to prepare data](#guide-scripts-to-prepare-data)
+- [Mathematical foundations](#mathematical-foundations)
+- [Alanine dipeptide](#alanine-dipeptide)
+- [Protein-ligand complex](#protein-ligand-complex)
 <!-- toc:end -->
 
-## Duración
+## Duration
 
-- **Sesión:** 70 min
-- **Ejercicios:** 50 min
+- **Session:** 70 min
+- **Exercises:** 50 min
 
-## Objetivos
+## Objectives
 
-- Formular el proceso completo de MSM (featurización, TICA, clustering y estimación).
-- Reforzar cómo las transiciones entre microestados se traducen en escalas de tiempo internacionales.
-- Comparar los resultados entre el sistema de alanina y el complejo proteína-ligando.
+- Formulate the full MSM workflow (featurization, TICA, clustering, and estimation).
+- Reinforce how transitions between microstates map to implied timescales.
+- Compare results between the alanine system and the protein-ligand complex.
 
-## Contenido
+## Content
 
-- Lectura y normalización de datos (DCD + PDB).
-- Extracción de features y reducción de dimensión con TICA.
-- Estimación de la matriz de transición y cálculo de tiempos de relajación.
-- Validación (ITS, Chapman-Kolmogorov) y análisis de macrostados (PCCA/TPT).
+- Read and normalize data (DCD + PDB).
+- Feature extraction and dimensionality reduction with TICA.
+- Estimate the transition matrix and compute relaxation times.
+- Validation (ITS, Chapman-Kolmogorov) and macrostate analysis (PCCA/TPT).
 
-## Scripts de la guía para preparar datos
+## Guide scripts to prepare data
 
-Los scripts oficiales de OpenMM generan las trayectorias que luego featurizamos con PyEMMA:
+The official OpenMM scripts generate the trajectories that we featurize with PyEMMA:
 
-- [`simulatePdb.py`](https://github.com/openmm/openmm/blob/master/examples/python-examples/simulatePdb.py): entrada mínima para validar el pipeline con alanina.
-- [`simulateAmber.py`](https://github.com/openmm/openmm/blob/master/examples/python-examples/simulateAmber.py): producción con prmtop/inpcrd para el complejo proteína-ligando.
-- [`simulateGromacs.py`](https://github.com/openmm/openmm/blob/master/examples/python-examples/simulateGromacs.py) y [`simulateCharmm.py`](https://github.com/openmm/openmm/blob/master/examples/python-examples/simulateCharmm.py): soporte multi-formato cuando el sistema viene de otros paquetes.
+- [`simulatePdb.py`](https://github.com/openmm/openmm/blob/master/examples/python-examples/simulatePdb.py): minimal input to validate the pipeline with alanine.
+- [`simulateAmber.py`](https://github.com/openmm/openmm/blob/master/examples/python-examples/simulateAmber.py): production with prmtop/inpcrd for the protein-ligand complex.
+- [`simulateGromacs.py`](https://github.com/openmm/openmm/blob/master/examples/python-examples/simulateGromacs.py) and [`simulateCharmm.py`](https://github.com/openmm/openmm/blob/master/examples/python-examples/simulateCharmm.py): multi-format support when the system comes from other packages.
 
-Todas las trayectorias se convierten a DCD y se acompañan de reportes de energía para verificar estabilidad antes de discretizar.
+All trajectories are converted to DCD and paired with energy reports to verify stability before discretization.
 
-## Fundamentos matemáticos
+## Mathematical foundations
 
-Denotamos con $C_{ij}$ el conteo de transiciones del microestado $i$ al $j$ en lag time $\tau$. La estimación de la matriz de transición normalizada
+We denote by $C_{ij}$ the count of transitions from microstate $i$ to $j$ at lag time $\tau$. The normalized transition matrix estimate
 
 $$
 T_{ij} = \frac{C_{ij}}{\sum_j C_{ij}}
 $$
 
-es el núcleo del modelo. Sus valores propios $\lambda_k$ dan escalas de tiempo mediante
+is the core of the model. Its eigenvalues $\lambda_k$ give timescales via
 
 $$
 \tau_k = -\frac{\tau}{\ln \lambda_k},
 $$
 
-y permiten interpretar las dinámicas lentas como procesos casi invariantes. La densidad de flujo se analiza sumando probabilidades estacionarias $\pi_i$ y transiciones de PCCA, mientras que los observables $(O)$ se evalúan como
+and allow interpreting slow dynamics as near-invariant processes. The flux density is analyzed by combining stationary probabilities $\pi_i$ and PCCA transitions, while observables $(O)$ are evaluated as
 
 $$
 \langle O \rangle = \sum_i \pi_i O_i.
 $$
 
-La verificación de Chapman-Kolmogorov asegura que $T(\tau)^n \approx T(n\tau)$ dentro del margen de error estadístico.
+The Chapman-Kolmogorov test ensures that $T(\tau)^n \approx T(n\tau)$ within statistical error.
 
-## Parte simple
+## Alanine dipeptide
 
-### Demo guiada
+### Guided demo
 
 <!-- sync-from: docs/episodes/scripts/06-pyemma-alanine.py -->
-<div class="notebook-embed"><iframe src="{{ site.baseurl }}/episodes/notebooks/rendered/06-pyemma-alanine.html" loading="lazy"></iframe><div class="notebook-links"><a href="{{ site.baseurl }}/episodes/notebooks/06-pyemma-alanine.ipynb" download>Descargar notebook</a> | <a href="{{ site.baseurl }}/episodes/scripts/06-pyemma-alanine.py" download>Descargar script (.py)</a></div></div>
+<div class="notebook-embed"><iframe src="{{ site.baseurl }}/episodes/notebooks/rendered/06-pyemma-alanine.html" loading="lazy"></iframe><div class="notebook-links"><a href="{{ site.baseurl }}/episodes/notebooks/06-pyemma-alanine.ipynb" download>Download notebook</a> | <a href="{{ site.baseurl }}/episodes/scripts/06-pyemma-alanine.py" download>Download script (.py)</a></div></div>
 
-### Ejercicio
+### Exercise
 
-- Ejecutar el flujo completo en alanina (featurización, TICA y clustering) y calcular los tres tiempos de relajación más lentos.
-- Validar el modelo mostrando la correspondencia de $\tau_k$ con las pendientes de ITS.
+- Run the full workflow on alanine (featurization, TICA, and clustering) and compute the three slowest relaxation times.
+- Validate the model by showing the correspondence of $\tau_k$ with the ITS slopes.
 
-### Puntos clave
+### Key points
 
-- La elección de las distancias y los ángulos influye en la matriz $C$ y, por tanto, en las escalas de tiempo.
-- La normalización de las features y la regularización del clustering evitan sobreestima de $\lambda_k$.
+- The choice of distances and angles affects matrix $C$ and therefore the timescales.
+- Feature normalization and clustering regularization prevent overestimation of $\lambda_k$.
 
-### Notebooks y scripts
+### Notebooks and scripts
 
-- <a href="{{ site.baseurl }}/episodes/notebooks/06-pyemma-alanine.ipynb">06-pyemma-alanine.ipynb</a> (<a href="{{ site.baseurl }}/episodes/notebooks/rendered/06-pyemma-alanine.html">HTML</a> | <a href="https://nbviewer.org/url/biocomputing-teaching.github.io/Curso-MD-Analisis/episodes/notebooks/06-pyemma-alanine.ipynb">nbviewer</a>)
-- <a href="{{ site.baseurl }}/episodes/scripts/06-pyemma-alanine.py">06-pyemma-alanine.py</a>
+- This notebook builds MSMs with PyEMMA for alanine, covering featurization, TICA, clustering, and implied timescales. (<a href="{{ site.baseurl }}/episodes/notebooks/06-pyemma-alanine.ipynb">notebook</a> | <a href="{{ site.baseurl }}/episodes/scripts/06-pyemma-alanine.py">script</a>)
 
-## Parte compleja
+## Protein-ligand complex
 
-### Demo guiada
+### Guided demo
 
 <!-- sync-from: docs/episodes/scripts/06-pyemma-complex.py -->
-<div class="notebook-embed"><iframe src="{{ site.baseurl }}/episodes/notebooks/rendered/06-pyemma-complex.html" loading="lazy"></iframe><div class="notebook-links"><a href="{{ site.baseurl }}/episodes/notebooks/06-pyemma-complex.ipynb" download>Descargar notebook</a> | <a href="{{ site.baseurl }}/episodes/scripts/06-pyemma-complex.py" download>Descargar script (.py)</a></div></div>
+<div class="notebook-embed"><iframe src="{{ site.baseurl }}/episodes/notebooks/rendered/06-pyemma-complex.html" loading="lazy"></iframe><div class="notebook-links"><a href="{{ site.baseurl }}/episodes/notebooks/06-pyemma-complex.ipynb" download>Download notebook</a> | <a href="{{ site.baseurl }}/episodes/scripts/06-pyemma-complex.py" download>Download script (.py)</a></div></div>
 
-### Ejercicio
+### Exercise
 
-- Aplicar MSM completo con el complejo proteico: featurización, TICA, clustering y estimación.
-- Calcular los tiempos de relajación y comparar con el sistema simple. ¿Qué estados dominan $\lambda_2$ y $\lambda_3$?
+- Apply the full MSM workflow to the protein complex: featurization, TICA, clustering, and estimation.
+- Compute relaxation times and compare with the simple system. Which states dominate $\lambda_2$ and $\lambda_3$?
 
-### Puntos clave
+### Key points
 
-- Las trayectorias de salida se validan con las TPT y la matriz de transición extendida.
-- Usar relevantes observables (distancias, energías locales) para reconstruir la densidad de estados.
+- Output trajectories are validated with TPT and the extended transition matrix.
+- Use relevant observables (distances, local energies) to reconstruct the state density.
 
-### Notebooks y scripts
+### Notebooks and scripts
 
-- <a href="{{ site.baseurl }}/episodes/notebooks/06-pyemma-complex.ipynb">06-pyemma-complex.ipynb</a> (<a href="{{ site.baseurl }}/episodes/notebooks/rendered/06-pyemma-complex.html">HTML</a> | <a href="https://nbviewer.org/url/biocomputing-teaching.github.io/Curso-MD-Analisis/episodes/notebooks/06-pyemma-complex.ipynb">nbviewer</a>)
-- <a href="{{ site.baseurl }}/episodes/scripts/06-pyemma-complex.py">06-pyemma-complex.py</a>
+- This notebook repeats the MSM workflow on the protein-ligand trajectories, highlighting longer timescales and macrostate analysis. (<a href="{{ site.baseurl }}/episodes/notebooks/06-pyemma-complex.ipynb">notebook</a> | <a href="{{ site.baseurl }}/episodes/scripts/06-pyemma-complex.py">script</a>)
+
 <div class="episode-nav">
-  <a href="{{ site.baseurl }}/episodes/05-muestreo-avanzado/">Anterior</a>
-  <a href="{{ site.baseurl }}/episodes/">Todos los episodios</a>
-  <a href="{{ site.baseurl }}/episodes/07-deeptime/">Siguiente</a>
+  <a href="{{ site.baseurl }}/episodes/05-muestreo-avanzado/">Previous</a>
+  <a href="{{ site.baseurl }}/episodes/">All episodes</a>
+  <a href="{{ site.baseurl }}/episodes/07-deeptime/">Next</a>
 </div>

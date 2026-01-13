@@ -1,85 +1,79 @@
 ---
 layout: default
-title: Episodio 1 - Introducción (entorno y datos)
+title: Episode 1 - Introduction (environment and data)
 permalink: /episodes/01-introduccion/
 ---
 
 <div class="episode-nav">
-  <a href="{{ site.baseurl }}/episodes/">Todos los episodios</a>
-  <a href="{{ site.baseurl }}/episodes/03-simulaciones-clasicas/">Siguiente</a>
+  <a href="{{ site.baseurl }}/episodes/">All episodes</a>
+  <a href="{{ site.baseurl }}/episodes/03-simulaciones-clasicas/">Next</a>
 </div>
 
 <!-- toc:start -->
-## Tabla de contenidos
-- [Duración](#duracion)
-- [Objetivos](#objetivos)
-- [Contenido](#contenido)
-- [Parte simple](#parte-simple)
-- [Parte compleja](#parte-compleja)
-- [Puntos clave](#puntos-clave)
+## Table of contents
+- [Duration](#duration)
+- [Objectives](#objectives)
+- [Content](#content)
+- [Alanine dipeptide](#alanine-dipeptide)
+- [Protein-ligand complex](#protein-ligand-complex)
+- [Key points](#key-points)
 <!-- toc:end -->
 
-## Duración
+## Duration
 
-- **Sesión:** 45 min
-- **Ejercicios:** 30 min
+- **Session:** 45 min
+- **Exercises:** 30 min
 
+## Objectives
 
+- Identify input files for alanine and the protein-ligand complex.
+- Verify OpenMM and OpenFF Toolkit work in the environment.
+- Load base data for both systems following the first-steps workflow.
 
-## Objetivos
+## Content
 
-- Identificar los archivos de entrada para alanina y complejo proteína-ligando.
-- Verificar que OpenMM y OpenFF Toolkit funcionen en el entorno.
-- Cargar datos base para ambos sistemas siguiendo el flujo de primeros pasos.
+- PDB and MOL/SDF as inputs.
+- Reading alanine with OpenMM.
+- Reading protein and ligand with OpenFF Toolkit.
+- Working path `COURSE_DIR` and environment validation.
 
-## Contenido
+## Alanine dipeptide
 
-- PDB y MOL/SDF como entradas.
-- Lectura de alanina con OpenMM.
-- Lectura de proteína y ligando con OpenFF Toolkit.
-- Ruta de trabajo `COURSE_DIR` y validación del entorno.
-
-## Parte simple
-
-### Demo guiada
+### Guided demo
 
 <!-- sync-from: docs/episodes/scripts/01-introduccion_simple.py -->
-<div class="notebook-embed"><iframe src="{{ site.baseurl }}/episodes/notebooks/rendered/01-introduccion_simple.html" loading="lazy"></iframe><div class="notebook-links"><a href="{{ site.baseurl }}/episodes/notebooks/01-introduccion_simple.ipynb" download>Descargar notebook</a> | <a href="{{ site.baseurl }}/episodes/scripts/01-introduccion_simple.py" download>Descargar script (.py)</a></div></div>
+<div class="notebook-embed"><iframe src="{{ site.baseurl }}/episodes/notebooks/rendered/01-introduccion_simple.html" loading="lazy"></iframe><div class="notebook-links"><a href="{{ site.baseurl }}/episodes/notebooks/01-introduccion_simple.ipynb" download>Download notebook</a> | <a href="{{ site.baseurl }}/episodes/scripts/01-introduccion_simple.py" download>Download script (.py)</a></div></div>
 
-### Ejercicio
+### Exercise
 
-- Ejecutar el script simple y confirmar los conteos de átomos.
+- Run the simple script and confirm atom counts.
 
-### Notebooks y scripts
+### Notebooks and scripts
 
-- <a href="{{ site.baseurl }}/episodes/notebooks/01-introduccion_simple.ipynb">01-introduccion_simple.ipynb</a> (<a href="{{ site.baseurl }}/episodes/notebooks/rendered/01-introduccion_simple.html">HTML</a> | <a href="https://nbviewer.org/url/biocomputing-teaching.github.io/Curso-MD-Analisis/episodes/notebooks/01-introduccion_simple.ipynb">nbviewer</a>)
-- <a href="{{ site.baseurl }}/episodes/scripts/01-introduccion_simple.py">01-introduccion_simple.py</a>
+- Recorrer esta versión guiada del episodio muestra la estructura del directorio `COURSE_DIR`, explica cómo leer un PDB con Biopython y prepara el sistema de alanina para el flujo de trabajo básico. (<a href="{{ site.baseurl }}/episodes/notebooks/01-introduccion_simple.ipynb">notebook</a> | <a href="{{ site.baseurl }}/episodes/scripts/01-introduccion_simple.py">script</a>)
 
-## Parte compleja
+## Protein-ligand complex
 
-### Demo guiada
+### Guided demo
 
 <!-- sync-from: docs/episodes/scripts/01-introduccion.py -->
-<div class="notebook-embed"><iframe src="{{ site.baseurl }}/episodes/notebooks/rendered/01-introduccion.html" loading="lazy"></iframe><div class="notebook-links"><a href="{{ site.baseurl }}/episodes/notebooks/01-introduccion.ipynb" download>Descargar notebook</a> | <a href="{{ site.baseurl }}/episodes/scripts/01-introduccion.py" download>Descargar script (.py)</a></div></div>
+<div class="notebook-embed"><iframe src="{{ site.baseurl }}/episodes/notebooks/rendered/01-introduccion.html" loading="lazy"></iframe><div class="notebook-links"><a href="{{ site.baseurl }}/episodes/notebooks/01-introduccion.ipynb" download>Download notebook</a> | <a href="{{ site.baseurl }}/episodes/scripts/01-introduccion.py" download>Download script (.py)</a></div></div>
 
-### Ejercicio
+### Exercise
 
-- Ejecutar el script complejo y cambiar el ligando por <a href="https://github.com/Biocomputing-Teaching/Course-MD-Data/raw/main/complex/ligand1.sdf">ligand1.sdf</a>.
-- Guardar la salida en un archivo de texto.
+- Run the complex script and swap the ligand for <a href="https://github.com/Biocomputing-Teaching/Course-MD-Data/raw/main/complex/ligand1.sdf">ligand1.sdf</a>.
+- Save the output to a text file.
 
-### Notebooks y scripts
+### Notebooks and scripts
 
-- <a href="{{ site.baseurl }}/episodes/notebooks/01-introduccion.ipynb">01-introduccion.ipynb</a> (<a href="{{ site.baseurl }}/episodes/notebooks/rendered/01-introduccion.html">HTML</a> | <a href="https://nbviewer.org/url/biocomputing-teaching.github.io/Curso-MD-Analisis/episodes/notebooks/01-introduccion.ipynb">nbviewer</a>)
-- <a href="{{ site.baseurl }}/episodes/scripts/01-introduccion.py">01-introduccion.py</a>
+- Esta versión completa repasa la preparación del complejo proteína-ligando: secuencia rápida con Biopython, visualización con nglview y escritura de archivos Amber para la simulación. (<a href="{{ site.baseurl }}/episodes/notebooks/01-introduccion.ipynb">notebook</a> | <a href="{{ site.baseurl }}/episodes/scripts/01-introduccion.py">script</a>)
 
+## Key points
 
+- The course works with a simple and a complex system in parallel.
+- OpenMM and OpenFF Toolkit cover reading PDB and MOL/SDF.
 
-## Puntos clave
-
-- El curso trabaja con un sistema simple y uno complejo en paralelo.
-- OpenMM y OpenFF Toolkit cubren la lectura de PDB y MOL/SDF.
-  
 <div class="episode-nav">
-  <a href="{{ site.baseurl }}/episodes/">Todos los episodios</a>
-  <a href="{{ site.baseurl }}/episodes/03-simulaciones-clasicas/">Siguiente</a>
+  <a href="{{ site.baseurl }}/episodes/">All episodes</a>
+  <a href="{{ site.baseurl }}/episodes/03-simulaciones-clasicas/">Next</a>
 </div>

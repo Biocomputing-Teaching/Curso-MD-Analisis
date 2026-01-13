@@ -1,114 +1,112 @@
 ---
 layout: default
-title: Episodio 7 - MSM con deeptime
+title: Episode 7 - MSMs with deeptime
 permalink: /episodes/07-deeptime/
 ---
 
 <div class="episode-nav">
-  <a href="{{ site.baseurl }}/episodes/06-pyemma/">Anterior</a>
-  <a href="{{ site.baseurl }}/episodes/">Todos los episodios</a>
+  <a href="{{ site.baseurl }}/episodes/06-pyemma/">Previous</a>
+  <a href="{{ site.baseurl }}/episodes/">All episodes</a>
 </div>
 
 <!-- toc:start -->
-## Tabla de contenidos
-- [Duración](#duracion)
-- [Objetivos](#objetivos)
-- [Contenido](#contenido)
-- [Scripts de la guía para preparar datos](#scripts-de-la-guia-para-preparar-datos)
-- [Fundamentos operatoriales](#fundamentos-operatoriales)
-- [Parte simple](#parte-simple)
-- [Parte compleja](#parte-compleja)
+## Table of contents
+- [Duration](#duration)
+- [Objectives](#objectives)
+- [Content](#content)
+- [Guide scripts to prepare data](#guide-scripts-to-prepare-data)
+- [Operator foundations](#operator-foundations)
+- [Alanine dipeptide](#alanine-dipeptide)
+- [Protein-ligand complex](#protein-ligand-complex)
 <!-- toc:end -->
 
-## Duración
+## Duration
 
-- **Sesión:** 60 min
-- **Ejercicios:** 45 min
+- **Session:** 60 min
+- **Exercises:** 45 min
 
-## Objetivos
+## Objectives
 
-- Explorar MSM y análisis espectral utilizando el paquete `deeptime`.
-- Introducir la interpretación del operador de Koopman y su relación con las dinámicas visibles.
-- Comparar los resultados con PyEMMA y reforzar la elección de features.
+- Explore MSMs and spectral analysis using the `deeptime` package.
+- Introduce the Koopman operator interpretation and its relation to observable dynamics.
+- Compare results with PyEMMA and reinforce feature selection.
 
-## Contenido
+## Content
 
-- Features basadas en distancias y torsiones.
-- Reducción con TICA y transformaciones lineales.
-- Estimación de MSM con `MaximumLikelihoodMSM` y validación.
-- Estudios espectrales con `KoopmanModel` y análisis de macrostados.
+- Features based on distances and torsions.
+- TICA reduction and linear transformations.
+- MSM estimation with `MaximumLikelihoodMSM` and validation.
+- Spectral studies with `KoopmanModel` and macrostate analysis.
 
-## Scripts de la guía para preparar datos
+## Guide scripts to prepare data
 
-En este episodio reutilizamos los scripts del Application Layer de OpenMM para construir datos homogéneos:
+In this episode we reuse OpenMM Application Layer scripts to build consistent data:
 
-- [`simulatePdb.py`](https://github.com/openmm/openmm/blob/master/examples/python-examples/simulatePdb.py): trayectorias rápidas para validación de Koopman.
-- [`simulateAmber.py`](https://github.com/openmm/openmm/blob/master/examples/python-examples/simulateAmber.py): series largas para estimar espectros y validación CK.
-- [`simulateTinker.py`](https://github.com/openmm/openmm/blob/master/examples/python-examples/simulateTinker.py): ejemplos AMOEBA para comparar con modelos clásicos.
+- [`simulatePdb.py`](https://github.com/openmm/openmm/blob/master/examples/python-examples/simulatePdb.py): fast trajectories for Koopman validation.
+- [`simulateAmber.py`](https://github.com/openmm/openmm/blob/master/examples/python-examples/simulateAmber.py): long series for spectrum estimation and CK validation.
+- [`simulateTinker.py`](https://github.com/openmm/openmm/blob/master/examples/python-examples/simulateTinker.py): AMOEBA examples to compare with classical models.
 
-Estas salidas se procesan con `deeptime` para mantener consistencia con PyEMMA.
+These outputs are processed with `deeptime` to stay consistent with PyEMMA.
 
-## Fundamentos operatoriales
+## Operator foundations
 
-El operador de Koopman actúa sobre una observación $g(\mathbf{x})$ propagándola en el tiempo
+The Koopman operator acts on an observable $g(\mathbf{x})$ by propagating it in time
 
 $$
 (\mathcal{K}_\tau g)(\mathbf{x}) = \mathbb{E}[g(\mathbf{x}_{t+\tau}) | \mathbf{x}_t = \mathbf{x}],
 $$
 
-que en la práctica se aproxima con matrices $K_{ij}$ que relacionan microestados. La diagonalización de $K$ proporciona valores propios $\lambda_k$ y funciones propias $\psi_k$, de modo que se puede reconstruir el estado estacionario
+which in practice is approximated with matrices $K_{ij}$ relating microstates. Diagonalizing $K$ yields eigenvalues $\lambda_k$ and eigenfunctions $\psi_k$, allowing reconstruction of the stationary state
 
 $$
 \rho(\mathbf{x}) \approx \sum_k \lambda_k \psi_k(\mathbf{x}).
 $$
 
-La simulación de `deeptime` complementa esta visión al permitir estimar la matriz de transferencia y calcular proyecciones espectrales para distinguir macrostados.
+`deeptime` complements this view by estimating the transfer matrix and computing spectral projections to distinguish macrostates.
 
-## Parte simple
+## Alanine dipeptide
 
-### Demo guiada
+### Guided demo
 
 <!-- sync-from: docs/episodes/scripts/07-deeptime-alanine.py -->
-<div class="notebook-embed"><iframe src="{{ site.baseurl }}/episodes/notebooks/rendered/07-deeptime-alanine.html" loading="lazy"></iframe><div class="notebook-links"><a href="{{ site.baseurl }}/episodes/notebooks/07-deeptime-alanine.ipynb" download>Descargar notebook</a> | <a href="{{ site.baseurl }}/episodes/scripts/07-deeptime-alanine.py" download>Descargar script (.py)</a></div></div>
+<div class="notebook-embed"><iframe src="{{ site.baseurl }}/episodes/notebooks/rendered/07-deeptime-alanine.html" loading="lazy"></iframe><div class="notebook-links"><a href="{{ site.baseurl }}/episodes/notebooks/07-deeptime-alanine.ipynb" download>Download notebook</a> | <a href="{{ site.baseurl }}/episodes/scripts/07-deeptime-alanine.py" download>Download script (.py)</a></div></div>
 
-### Ejercicio
+### Exercise
 
-- Ejecutar el canal simple en alanina y ajustar la descomposición SVD para TICA.
-- Comparar los primeros tres valores propios con el modelo PyEMMA: ¿coinciden los tiempos de relajación?
+- Run the simple pipeline on alanine and tune the SVD decomposition for TICA.
+- Compare the first three eigenvalues with the PyEMMA model: do the relaxation times match?
 
-### Puntos clave
+### Key points
 
-- La normalización de features garantiza que las funciones propias sean significativas.
-- El uso de `KoopmanModel` permite extraer observables que capturan la dinámica lenta.
+- Feature normalization ensures the eigenfunctions are meaningful.
+- Using `KoopmanModel` extracts observables that capture slow dynamics.
 
-### Notebooks y scripts
+### Notebooks and scripts
 
-- <a href="{{ site.baseurl }}/episodes/notebooks/07-deeptime-alanine.ipynb">07-deeptime-alanine.ipynb</a> (<a href="{{ site.baseurl }}/episodes/notebooks/rendered/07-deeptime-alanine.html">HTML</a> | <a href="https://nbviewer.org/url/biocomputing-teaching.github.io/Curso-MD-Analisis/episodes/notebooks/07-deeptime-alanine.ipynb">nbviewer</a>)
-- <a href="{{ site.baseurl }}/episodes/scripts/07-deeptime-alanine.py">07-deeptime-alanine.py</a>
+- This notebook applies Deeptime workflows to the alanine dataset, tuning the SVD/TICA decomposition and comparing eigenvalues with the PyEMMA model. (<a href="{{ site.baseurl }}/episodes/notebooks/07-deeptime-alanine.ipynb">notebook</a> | <a href="{{ site.baseurl }}/episodes/scripts/07-deeptime-alanine.py">script</a>)
 
-## Parte compleja
+## Protein-ligand complex
 
-### Demo guiada
+### Guided demo
 
 <!-- sync-from: docs/episodes/scripts/07-deeptime-complex.py -->
-<div class="notebook-embed"><iframe src="{{ site.baseurl }}/episodes/notebooks/rendered/07-deeptime-complex.html" loading="lazy"></iframe><div class="notebook-links"><a href="{{ site.baseurl }}/episodes/notebooks/07-deeptime-complex.ipynb" download>Descargar notebook</a> | <a href="{{ site.baseurl }}/episodes/scripts/07-deeptime-complex.py" download>Descargar script (.py)</a></div></div>
+<div class="notebook-embed"><iframe src="{{ site.baseurl }}/episodes/notebooks/rendered/07-deeptime-complex.html" loading="lazy"></iframe><div class="notebook-links"><a href="{{ site.baseurl }}/episodes/notebooks/07-deeptime-complex.ipynb" download>Download notebook</a> | <a href="{{ site.baseurl }}/episodes/scripts/07-deeptime-complex.py" download>Download script (.py)</a></div></div>
 
-### Ejercicio
+### Exercise
 
-- Usar el complejo proteína-ligando y construir una MSM con `MaximumLikelihoodMSM`.
-- Realizar análisis de `ChapmanKolmogorov` y comparar con los resultados de PyEMMA, enfocándose en la conservación de probabilidades.
+- Use the protein-ligand complex and build an MSM with `MaximumLikelihoodMSM`.
+- Run `ChapmanKolmogorov` analysis and compare with PyEMMA, focusing on probability conservation.
 
-### Puntos clave
+### Key points
 
-- El operador de Koopman describe cómo la observación se propaga con $\tau$ y se compara con la matriz de transición clásica.
-- Los espacios latentes permiten distinguir macrostados y estudiar flujos de transición.
+- The Koopman operator describes how the observable propagates with $\tau$ and compares with the classical transition matrix.
+- Latent spaces help distinguish macrostates and study transition fluxes.
 
-### Notebooks y scripts
+### Notebooks and scripts
 
-- <a href="{{ site.baseurl }}/episodes/notebooks/07-deeptime-complex.ipynb">07-deeptime-complex.ipynb</a> (<a href="{{ site.baseurl }}/episodes/notebooks/rendered/07-deeptime-complex.html">HTML</a> | <a href="https://nbviewer.org/url/biocomputing-teaching.github.io/Curso-MD-Analisis/episodes/notebooks/07-deeptime-complex.ipynb">nbviewer</a>)
-- <a href="{{ site.baseurl }}/episodes/scripts/07-deeptime-complex.py">07-deeptime-complex.py</a>
+- This notebook performs Deeptime spectral analysis on the protein-ligand complex, including Koopman models and Chapman-Kolmogorov validation. (<a href="{{ site.baseurl }}/episodes/notebooks/07-deeptime-complex.ipynb">notebook</a> | <a href="{{ site.baseurl }}/episodes/scripts/07-deeptime-complex.py">script</a>)
 
 <div class="episode-nav">
-  <a href="{{ site.baseurl }}/episodes/06-pyemma/">Anterior</a>
-  <a href="{{ site.baseurl }}/episodes/">Todos los episodios</a>
+  <a href="{{ site.baseurl }}/episodes/06-pyemma/">Previous</a>
+  <a href="{{ site.baseurl }}/episodes/">All episodes</a>
 </div>

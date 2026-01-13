@@ -7517,25 +7517,38 @@ a.anchor-link {
 </div>
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
-<h1 id="Episodio-1---Introducci%C3%B3n-(entorno-y-datos)">Episodio 1 - Introducción (entorno y datos)<a class="anchor-link" href="#Episodio-1---Introducci%C3%B3n-(entorno-y-datos)">¶</a></h1><h2 id="Parte-compleja:-prote%C3%ADna-ligando">Parte compleja: proteína-ligando<a class="anchor-link" href="#Parte-compleja:-prote%C3%ADna-ligando">¶</a></h2><p>En este notebook recorres la introducción del curso y los archivos de entrada.
-Trabajarás con el sistema proteína-ligando para validar el entorno y los formatos.</p>
+<h1 id="Episode-1---Introduction-(environment-and-data)">Episode 1 - Introduction (environment and data)<a class="anchor-link" href="#Episode-1---Introduction-(environment-and-data)">¶</a></h1><h2 id="Complex-track:-protein-ligand">Complex track: protein-ligand<a class="anchor-link" href="#Complex-track:-protein-ligand">¶</a></h2><p>In this notebook you walk through the course introduction and input files.
+You will work with the protein-ligand system to validate the environment and formats.</p>
 </div>
 </div>
 </div>
 </div>
-<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=8dcb058530dd4c279f316edcd2fa7fe7">
+<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=5c6538a49c3d43459a3e0af6fca0a321">
 <div class="jp-Cell-inputWrapper" tabindex="0">
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
-<h2 id="Tabla-de-contenidos">Tabla de contenidos<a class="anchor-link" href="#Tabla-de-contenidos">¶</a></h2><ul>
-<li><a href="#parte-compleja-proteina-ligando">Parte compleja: proteína-ligando</a></li>
-<li><a href="#parte-compleja-proteina-ligando">Parte compleja: proteína-ligando</a></li>
-<li><a href="#paso-1-exploracio-rapida-de-la-sequencia-abans-de-la-visualitzacio-biopython">Paso 1: Exploracio rapida de la sequencia abans de la visualitzacio (BioPython)</a></li>
-<li><a href="#paso-2-visualizacion-interactiva-requiere-nglview">Paso 2: Visualizacion interactiva (requiere nglview)</a></li>
-<li><a href="#paso-3-generacion-de-ficheros-de-parametros-y-coordenadas-iniciales-en-formato-amber">Paso 3: generación de ficheros de parámetros y coordenadas iniciales en formato AMBER</a></li>
+<h2 id="Table-of-contents">Table of contents<a class="anchor-link" href="#Table-of-contents">¶</a></h2><ul>
+<li><a href="#complex-track-protein-ligand">Complex track: protein-ligand</a></li>
+<li><a href="#complex-track-protein-ligand">Complex track: protein-ligand</a></li>
+<li><a href="#step-1-quick-sequence-scan-before-visualization-biopython">Step 1: Quick sequence scan before visualization (BioPython)</a></li>
+<li><a href="#step-2-interactive-visualization-requires-nglview">Step 2: Interactive visualization (requires nglview)</a></li>
+<li><a href="#step-3-generate-parameter-and-initial-coordinate-files-in-amber-format">Step 3: Generate parameter and initial coordinate files in AMBER format</a></li>
+<li><a href="#step-4">Step 4</a></li>
+<li><a href="#step-5">Step 5</a></li>
 </ul>
+</div>
+</div>
+</div>
+</div>
+<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=2bcffc5b56bc4015a87f1d1c32b4c74f">
+<div class="jp-Cell-inputWrapper" tabindex="0">
+<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
+</div>
+<div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
+</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
+<p>This full notebook walks through the protein-ligand prep: sequence scan, nglview visualization, and writing Amber files for simulation.</p>
 </div>
 </div>
 </div>
@@ -7546,7 +7559,7 @@ Trabajarás con el sistema proteína-ligando para validar el entorno y los forma
 </div>
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
-<h2 id="Paso-1:-Exploracio-rapida-de-la-sequencia-abans-de-la-visualitzacio-(BioPython)">Paso 1: Exploracio rapida de la sequencia abans de la visualitzacio (BioPython)<a class="anchor-link" href="#Paso-1:-Exploracio-rapida-de-la-sequencia-abans-de-la-visualitzacio-(BioPython)">¶</a></h2>
+<h2 id="Step-1:-Quick-sequence-scan-before-visualization-(BioPython)">Step 1: Quick sequence scan before visualization (BioPython)<a class="anchor-link" href="#Step-1:-Quick-sequence-scan-before-visualization-(BioPython)">¶</a></h2>
 </div>
 </div>
 </div>
@@ -7555,51 +7568,51 @@ Trabajarás con el sistema proteína-ligando para validar el entorno y los forma
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
 <div class="jp-InputArea jp-Cell-inputArea">
-<div class="jp-InputPrompt jp-InputArea-prompt">In [6]:</div>
+<div class="jp-InputPrompt jp-InputArea-prompt">In [1]:</div>
 <div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
 <div class="cm-editor cm-s-jupyter">
-<div class="highlight hl-ipython3"><pre><span></span>    <span class="c1"># Exploracio rapida de la sequencia abans de la visualitzacio (BioPython)</span>
-    <span class="kn">import</span><span class="w"> </span><span class="nn">os</span>
-    <span class="kn">from</span><span class="w"> </span><span class="nn">pathlib</span><span class="w"> </span><span class="kn">import</span> <span class="n">Path</span>
+<div class="highlight hl-ipython3"><pre><span></span><span class="c1"># Quick sequence scan before visualization (BioPython)</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">os</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">pathlib</span><span class="w"> </span><span class="kn">import</span> <span class="n">Path</span>
 
-    <span class="n">COURSE_DIR</span> <span class="o">=</span> <span class="n">Path</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">environ</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">"COURSE_DIR"</span><span class="p">,</span> <span class="nb">str</span><span class="p">(</span><span class="n">Path</span><span class="o">.</span><span class="n">home</span><span class="p">()</span> <span class="o">/</span> <span class="s2">"Concepcion26"</span><span class="p">)))</span><span class="o">.</span><span class="n">expanduser</span><span class="p">()</span>
-    <span class="n">PROTEIN_PDB</span> <span class="o">=</span> <span class="n">COURSE_DIR</span> <span class="o">/</span> <span class="s2">"data"</span> <span class="o">/</span> <span class="s2">"complex"</span> <span class="o">/</span> <span class="s2">"protein.pdb"</span>
+<span class="n">COURSE_DIR</span> <span class="o">=</span> <span class="n">Path</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">environ</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">"COURSE_DIR"</span><span class="p">,</span> <span class="nb">str</span><span class="p">(</span><span class="n">Path</span><span class="o">.</span><span class="n">home</span><span class="p">()</span> <span class="o">/</span> <span class="s2">"Concepcion26"</span><span class="p">)))</span><span class="o">.</span><span class="n">expanduser</span><span class="p">()</span>
+<span class="n">PROTEIN_PDB</span> <span class="o">=</span> <span class="n">COURSE_DIR</span> <span class="o">/</span> <span class="s2">"data"</span> <span class="o">/</span> <span class="s2">"complex"</span> <span class="o">/</span> <span class="s2">"protein.pdb"</span>
 
-    <span class="k">try</span><span class="p">:</span>
-        <span class="kn">from</span><span class="w"> </span><span class="nn">Bio.PDB</span><span class="w"> </span><span class="kn">import</span> <span class="n">PDBParser</span>
-    <span class="k">except</span> <span class="ne">ImportError</span> <span class="k">as</span> <span class="n">exc</span><span class="p">:</span>
-        <span class="k">raise</span> <span class="ne">SystemExit</span><span class="p">(</span>
-            <span class="s2">"Biopython is required for this step. Install with:"</span>
-            <span class="s2">"  conda install -c conda-forge biopython"</span>
-        <span class="p">)</span> <span class="kn">from</span><span class="w"> </span><span class="nn">exc</span>
+<span class="k">try</span><span class="p">:</span>
+    <span class="kn">from</span><span class="w"> </span><span class="nn">Bio.PDB</span><span class="w"> </span><span class="kn">import</span> <span class="n">PDBParser</span>
+<span class="k">except</span> <span class="ne">ImportError</span> <span class="k">as</span> <span class="n">exc</span><span class="p">:</span>
+    <span class="k">raise</span> <span class="ne">SystemExit</span><span class="p">(</span>
+        <span class="s2">"Biopython is required for this step. Install with:"</span>
+        <span class="s2">"  conda install -c conda-forge biopython"</span>
+    <span class="p">)</span> <span class="kn">from</span><span class="w"> </span><span class="nn">exc</span>
 
-    <span class="n">parser</span> <span class="o">=</span> <span class="n">PDBParser</span><span class="p">(</span><span class="n">QUIET</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
-    <span class="n">structure</span> <span class="o">=</span> <span class="n">parser</span><span class="o">.</span><span class="n">get_structure</span><span class="p">(</span><span class="s2">"protein"</span><span class="p">,</span> <span class="nb">str</span><span class="p">(</span><span class="n">PROTEIN_PDB</span><span class="p">))</span>
+<span class="n">parser</span> <span class="o">=</span> <span class="n">PDBParser</span><span class="p">(</span><span class="n">QUIET</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="n">structure</span> <span class="o">=</span> <span class="n">parser</span><span class="o">.</span><span class="n">get_structure</span><span class="p">(</span><span class="s2">"protein"</span><span class="p">,</span> <span class="nb">str</span><span class="p">(</span><span class="n">PROTEIN_PDB</span><span class="p">))</span>
 
-    <span class="n">three_to_one</span> <span class="o">=</span> <span class="p">{</span>
-        <span class="s2">"ALA"</span><span class="p">:</span> <span class="s2">"A"</span><span class="p">,</span> <span class="s2">"ARG"</span><span class="p">:</span> <span class="s2">"R"</span><span class="p">,</span> <span class="s2">"ASN"</span><span class="p">:</span> <span class="s2">"N"</span><span class="p">,</span> <span class="s2">"ASP"</span><span class="p">:</span> <span class="s2">"D"</span><span class="p">,</span> <span class="s2">"CYS"</span><span class="p">:</span> <span class="s2">"C"</span><span class="p">,</span>
-        <span class="s2">"GLN"</span><span class="p">:</span> <span class="s2">"Q"</span><span class="p">,</span> <span class="s2">"GLU"</span><span class="p">:</span> <span class="s2">"E"</span><span class="p">,</span> <span class="s2">"GLY"</span><span class="p">:</span> <span class="s2">"G"</span><span class="p">,</span> <span class="s2">"HIS"</span><span class="p">:</span> <span class="s2">"H"</span><span class="p">,</span> <span class="s2">"ILE"</span><span class="p">:</span> <span class="s2">"I"</span><span class="p">,</span>
-        <span class="s2">"LEU"</span><span class="p">:</span> <span class="s2">"L"</span><span class="p">,</span> <span class="s2">"LYS"</span><span class="p">:</span> <span class="s2">"K"</span><span class="p">,</span> <span class="s2">"MET"</span><span class="p">:</span> <span class="s2">"M"</span><span class="p">,</span> <span class="s2">"PHE"</span><span class="p">:</span> <span class="s2">"F"</span><span class="p">,</span> <span class="s2">"PRO"</span><span class="p">:</span> <span class="s2">"P"</span><span class="p">,</span>
-        <span class="s2">"SER"</span><span class="p">:</span> <span class="s2">"S"</span><span class="p">,</span> <span class="s2">"THR"</span><span class="p">:</span> <span class="s2">"T"</span><span class="p">,</span> <span class="s2">"TRP"</span><span class="p">:</span> <span class="s2">"W"</span><span class="p">,</span> <span class="s2">"TYR"</span><span class="p">:</span> <span class="s2">"Y"</span><span class="p">,</span> <span class="s2">"VAL"</span><span class="p">:</span> <span class="s2">"V"</span><span class="p">,</span>
-        <span class="s2">"HID"</span><span class="p">:</span> <span class="s2">"H"</span><span class="p">,</span> <span class="s2">"HIE"</span><span class="p">:</span> <span class="s2">"H"</span><span class="p">,</span> <span class="s2">"HIP"</span><span class="p">:</span> <span class="s2">"H"</span><span class="p">,</span>
-    <span class="p">}</span>
+<span class="n">three_to_one</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="s2">"ALA"</span><span class="p">:</span> <span class="s2">"A"</span><span class="p">,</span> <span class="s2">"ARG"</span><span class="p">:</span> <span class="s2">"R"</span><span class="p">,</span> <span class="s2">"ASN"</span><span class="p">:</span> <span class="s2">"N"</span><span class="p">,</span> <span class="s2">"ASP"</span><span class="p">:</span> <span class="s2">"D"</span><span class="p">,</span> <span class="s2">"CYS"</span><span class="p">:</span> <span class="s2">"C"</span><span class="p">,</span>
+    <span class="s2">"GLN"</span><span class="p">:</span> <span class="s2">"Q"</span><span class="p">,</span> <span class="s2">"GLU"</span><span class="p">:</span> <span class="s2">"E"</span><span class="p">,</span> <span class="s2">"GLY"</span><span class="p">:</span> <span class="s2">"G"</span><span class="p">,</span> <span class="s2">"HIS"</span><span class="p">:</span> <span class="s2">"H"</span><span class="p">,</span> <span class="s2">"ILE"</span><span class="p">:</span> <span class="s2">"I"</span><span class="p">,</span>
+    <span class="s2">"LEU"</span><span class="p">:</span> <span class="s2">"L"</span><span class="p">,</span> <span class="s2">"LYS"</span><span class="p">:</span> <span class="s2">"K"</span><span class="p">,</span> <span class="s2">"MET"</span><span class="p">:</span> <span class="s2">"M"</span><span class="p">,</span> <span class="s2">"PHE"</span><span class="p">:</span> <span class="s2">"F"</span><span class="p">,</span> <span class="s2">"PRO"</span><span class="p">:</span> <span class="s2">"P"</span><span class="p">,</span>
+    <span class="s2">"SER"</span><span class="p">:</span> <span class="s2">"S"</span><span class="p">,</span> <span class="s2">"THR"</span><span class="p">:</span> <span class="s2">"T"</span><span class="p">,</span> <span class="s2">"TRP"</span><span class="p">:</span> <span class="s2">"W"</span><span class="p">,</span> <span class="s2">"TYR"</span><span class="p">:</span> <span class="s2">"Y"</span><span class="p">,</span> <span class="s2">"VAL"</span><span class="p">:</span> <span class="s2">"V"</span><span class="p">,</span>
+    <span class="s2">"HID"</span><span class="p">:</span> <span class="s2">"H"</span><span class="p">,</span> <span class="s2">"HIE"</span><span class="p">:</span> <span class="s2">"H"</span><span class="p">,</span> <span class="s2">"HIP"</span><span class="p">:</span> <span class="s2">"H"</span><span class="p">,</span>
+<span class="p">}</span>
 
-    <span class="n">sequences</span> <span class="o">=</span> <span class="p">{}</span>
-    <span class="k">for</span> <span class="n">model</span> <span class="ow">in</span> <span class="n">structure</span><span class="p">:</span>
-        <span class="k">for</span> <span class="n">chain</span> <span class="ow">in</span> <span class="n">model</span><span class="p">:</span>
-            <span class="n">seq</span> <span class="o">=</span> <span class="p">[]</span>
-            <span class="k">for</span> <span class="n">residue</span> <span class="ow">in</span> <span class="n">chain</span><span class="p">:</span>
-                <span class="k">if</span> <span class="n">residue</span><span class="o">.</span><span class="n">id</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">!=</span> <span class="s2">" "</span><span class="p">:</span>
-                    <span class="k">continue</span>
-                <span class="n">seq</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">three_to_one</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">residue</span><span class="o">.</span><span class="n">resname</span><span class="p">,</span> <span class="s2">"X"</span><span class="p">))</span>
-            <span class="k">if</span> <span class="n">seq</span><span class="p">:</span>
-                <span class="n">sequences</span><span class="p">[</span><span class="n">chain</span><span class="o">.</span><span class="n">id</span><span class="p">]</span> <span class="o">=</span> <span class="s2">""</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">seq</span><span class="p">)</span>
-        <span class="k">break</span>
+<span class="n">sequences</span> <span class="o">=</span> <span class="p">{}</span>
+<span class="k">for</span> <span class="n">model</span> <span class="ow">in</span> <span class="n">structure</span><span class="p">:</span>
+    <span class="k">for</span> <span class="n">chain</span> <span class="ow">in</span> <span class="n">model</span><span class="p">:</span>
+        <span class="n">seq</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="k">for</span> <span class="n">residue</span> <span class="ow">in</span> <span class="n">chain</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">residue</span><span class="o">.</span><span class="n">id</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">!=</span> <span class="s2">" "</span><span class="p">:</span>
+                <span class="k">continue</span>
+            <span class="n">seq</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">three_to_one</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">residue</span><span class="o">.</span><span class="n">resname</span><span class="p">,</span> <span class="s2">"X"</span><span class="p">))</span>
+        <span class="k">if</span> <span class="n">seq</span><span class="p">:</span>
+            <span class="n">sequences</span><span class="p">[</span><span class="n">chain</span><span class="o">.</span><span class="n">id</span><span class="p">]</span> <span class="o">=</span> <span class="s2">""</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">seq</span><span class="p">)</span>
+    <span class="k">break</span>
 
-    <span class="nb">print</span><span class="p">(</span><span class="s2">"Protein PDB:"</span><span class="p">,</span> <span class="n">PROTEIN_PDB</span><span class="p">)</span>
-    <span class="k">for</span> <span class="n">chain</span><span class="p">,</span> <span class="n">seq</span> <span class="ow">in</span> <span class="n">sequences</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
-        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"Chain </span><span class="si">{</span><span class="n">chain</span><span class="si">}</span><span class="s2">: </span><span class="si">{</span><span class="nb">len</span><span class="p">(</span><span class="n">seq</span><span class="p">)</span><span class="si">}</span><span class="s2"> residues"</span><span class="p">)</span>
-        <span class="nb">print</span><span class="p">(</span><span class="n">seq</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">"Protein PDB:"</span><span class="p">,</span> <span class="n">PROTEIN_PDB</span><span class="p">)</span>
+<span class="k">for</span> <span class="n">chain</span><span class="p">,</span> <span class="n">seq</span> <span class="ow">in</span> <span class="n">sequences</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"Chain </span><span class="si">{</span><span class="n">chain</span><span class="si">}</span><span class="s2">: </span><span class="si">{</span><span class="nb">len</span><span class="p">(</span><span class="n">seq</span><span class="p">)</span><span class="si">}</span><span class="s2"> residues"</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="n">seq</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
@@ -7627,7 +7640,7 @@ SGFRKMAFPSGKVEGCMVQVTCGTTTLNGLWLDDVVYCPRHVICTSEDMLNPNYEDLLIRKSNHNFLVQAGNVQLRVIGH
 </div>
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
-<h2 id="Paso-2:-Visualizacion-interactiva-(requiere-nglview)">Paso 2: Visualizacion interactiva (requiere nglview)<a class="anchor-link" href="#Paso-2:-Visualizacion-interactiva-(requiere-nglview)">¶</a></h2>
+<h2 id="Step-2:-Interactive-visualization-(requires-nglview)">Step 2: Interactive visualization (requires nglview)<a class="anchor-link" href="#Step-2:-Interactive-visualization-(requires-nglview)">¶</a></h2>
 </div>
 </div>
 </div>
@@ -7636,31 +7649,31 @@ SGFRKMAFPSGKVEGCMVQVTCGTTTLNGLWLDDVVYCPRHVICTSEDMLNPNYEDLLIRKSNHNFLVQAGNVQLRVIGH
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
 <div class="jp-InputArea jp-Cell-inputArea">
-<div class="jp-InputPrompt jp-InputArea-prompt">In [8]:</div>
+<div class="jp-InputPrompt jp-InputArea-prompt">In [2]:</div>
 <div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
 <div class="cm-editor cm-s-jupyter">
-<div class="highlight hl-ipython3"><pre><span></span>    <span class="c1"># Visualizacion interactiva (requiere nglview)</span>
-    <span class="kn">import</span><span class="w"> </span><span class="nn">os</span>
-    <span class="kn">from</span><span class="w"> </span><span class="nn">pathlib</span><span class="w"> </span><span class="kn">import</span> <span class="n">Path</span>
+<div class="highlight hl-ipython3"><pre><span></span><span class="c1"># Interactive visualization (requires nglview)</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">os</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">pathlib</span><span class="w"> </span><span class="kn">import</span> <span class="n">Path</span>
 
-    <span class="n">COURSE_DIR</span> <span class="o">=</span> <span class="n">Path</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">environ</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">"COURSE_DIR"</span><span class="p">,</span> <span class="nb">str</span><span class="p">(</span><span class="n">Path</span><span class="o">.</span><span class="n">home</span><span class="p">()</span> <span class="o">/</span> <span class="s2">"Concepcion26"</span><span class="p">)))</span><span class="o">.</span><span class="n">expanduser</span><span class="p">()</span>
-    <span class="n">PROTEIN_PDB</span> <span class="o">=</span> <span class="n">COURSE_DIR</span> <span class="o">/</span> <span class="s2">"data"</span> <span class="o">/</span> <span class="s2">"complex"</span> <span class="o">/</span> <span class="s2">"protein.pdb"</span>
-    <span class="n">LIGAND_SDF</span> <span class="o">=</span> <span class="n">COURSE_DIR</span> <span class="o">/</span> <span class="s2">"data"</span> <span class="o">/</span> <span class="s2">"complex"</span> <span class="o">/</span> <span class="s2">"ligand1.sdf"</span>
+<span class="n">COURSE_DIR</span> <span class="o">=</span> <span class="n">Path</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">environ</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">"COURSE_DIR"</span><span class="p">,</span> <span class="nb">str</span><span class="p">(</span><span class="n">Path</span><span class="o">.</span><span class="n">home</span><span class="p">()</span> <span class="o">/</span> <span class="s2">"Concepcion26"</span><span class="p">)))</span><span class="o">.</span><span class="n">expanduser</span><span class="p">()</span>
+<span class="n">PROTEIN_PDB</span> <span class="o">=</span> <span class="n">COURSE_DIR</span> <span class="o">/</span> <span class="s2">"data"</span> <span class="o">/</span> <span class="s2">"complex"</span> <span class="o">/</span> <span class="s2">"protein.pdb"</span>
+<span class="n">LIGAND_SDF</span> <span class="o">=</span> <span class="n">COURSE_DIR</span> <span class="o">/</span> <span class="s2">"data"</span> <span class="o">/</span> <span class="s2">"complex"</span> <span class="o">/</span> <span class="s2">"ligand1.sdf"</span>
 
-    <span class="k">try</span><span class="p">:</span>
-        <span class="kn">import</span><span class="w"> </span><span class="nn">nglview</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">nv</span>
-    <span class="k">except</span> <span class="ne">ImportError</span> <span class="k">as</span> <span class="n">exc</span><span class="p">:</span>
-        <span class="k">raise</span> <span class="ne">SystemExit</span><span class="p">(</span>
-            <span class="s2">"nglview is required for visualization. Install with:"</span>
-            <span class="s2">"  conda install -c conda-forge nglview"</span>
-        <span class="p">)</span> <span class="kn">from</span><span class="w"> </span><span class="nn">exc</span>
+<span class="k">try</span><span class="p">:</span>
+    <span class="kn">import</span><span class="w"> </span><span class="nn">nglview</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">nv</span>
+<span class="k">except</span> <span class="ne">ImportError</span> <span class="k">as</span> <span class="n">exc</span><span class="p">:</span>
+    <span class="k">raise</span> <span class="ne">SystemExit</span><span class="p">(</span>
+        <span class="s2">"nglview is required for visualization. Install with:"</span>
+        <span class="s2">"  conda install -c conda-forge nglview"</span>
+    <span class="p">)</span> <span class="kn">from</span><span class="w"> </span><span class="nn">exc</span>
 
-    <span class="n">view</span> <span class="o">=</span> <span class="n">nv</span><span class="o">.</span><span class="n">show_file</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">PROTEIN_PDB</span><span class="p">))</span>
-    <span class="k">try</span><span class="p">:</span>
-        <span class="n">view</span><span class="o">.</span><span class="n">add_component</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">LIGAND_SDF</span><span class="p">))</span>
-    <span class="k">except</span> <span class="ne">Exception</span><span class="p">:</span>
-        <span class="k">pass</span>
-    <span class="n">view</span>
+<span class="n">view</span> <span class="o">=</span> <span class="n">nv</span><span class="o">.</span><span class="n">show_file</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">PROTEIN_PDB</span><span class="p">))</span>
+<span class="k">try</span><span class="p">:</span>
+    <span class="n">view</span><span class="o">.</span><span class="n">add_component</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">LIGAND_SDF</span><span class="p">))</span>
+<span class="k">except</span> <span class="ne">Exception</span><span class="p">:</span>
+    <span class="k">pass</span>
+<span class="n">view</span>
 </pre></div>
 </div>
 </div>
@@ -7670,6 +7683,20 @@ SGFRKMAFPSGKVEGCMVQVTCGTTTLNGLWLDDVVYCPRHVICTSEDMLNPNYEDLLIRKSNHNFLVQAGNVQLRVIGH
 <div class="jp-Collapser jp-OutputCollapser jp-Cell-outputCollapser">
 </div>
 <div class="jp-OutputArea jp-Cell-outputArea">
+<div class="jp-OutputArea-child">
+<div class="jp-OutputPrompt jp-OutputArea-prompt"></div>
+<div class="jp-RenderedText jp-OutputArea-output" data-mime-type="text/plain" tabindex="0">
+<pre></pre>
+</div>
+</div>
+<div class="jp-OutputArea-child">
+<div class="jp-OutputPrompt jp-OutputArea-prompt"></div>
+<div class="jp-RenderedText jp-OutputArea-output" data-mime-type="application/vnd.jupyter.stderr" tabindex="0">
+<pre>/opt/miniconda3/envs/md-openmm/lib/python3.10/site-packages/nglview/__init__.py:12: UserWarning: pkg_resources is deprecated as an API. See https://setuptools.pypa.io/en/latest/pkg_resources.html. The pkg_resources package is slated for removal as early as 2025-11-30. Refrain from using this package or pin to Setuptools&lt;81.
+  import pkg_resources
+</pre>
+</div>
+</div>
 <div class="jp-OutputArea-child">
 <div class="jp-OutputPrompt jp-OutputArea-prompt"></div>
 <div class="jp-RenderedText jp-OutputArea-output" data-mime-type="text/plain" tabindex="0">
@@ -7685,7 +7712,18 @@ SGFRKMAFPSGKVEGCMVQVTCGTTTLNGLWLDDVVYCPRHVICTSEDMLNPNYEDLLIRKSNHNFLVQAGNVQLRVIGH
 </div>
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
-<h2 id="Paso-3:-generaci%C3%B3n-de-ficheros-de-par%C3%A1metros-y-coordenadas-iniciales-en-formato-AMBER">Paso 3: generación de ficheros de parámetros y coordenadas iniciales en formato AMBER<a class="anchor-link" href="#Paso-3:-generaci%C3%B3n-de-ficheros-de-par%C3%A1metros-y-coordenadas-iniciales-en-formato-AMBER">¶</a></h2><p>En este paso generamos los ficheros necesarios para la simulación molecular</p>
+<h2 id="Step-3:-Generate-parameter-and-initial-coordinate-files-in-AMBER-format">Step 3: Generate parameter and initial coordinate files in AMBER format<a class="anchor-link" href="#Step-3:-Generate-parameter-and-initial-coordinate-files-in-AMBER-format">¶</a></h2><p>In this step we generate the files needed for the molecular simulation.</p>
+</div>
+</div>
+</div>
+</div>
+<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=d07602dc">
+<div class="jp-Cell-inputWrapper" tabindex="0">
+<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
+</div>
+<div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
+</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
+<h3 id="import-os">import os<a class="anchor-link" href="#import-os">¶</a></h3><p>This cell executes: import os.</p>
 </div>
 </div>
 </div>
@@ -7695,6 +7733,337 @@ SGFRKMAFPSGKVEGCMVQVTCGTTTLNGLWLDDVVYCPRHVICTSEDMLNPNYEDLLIRKSNHNFLVQAGNVQLRVIGH
 </div>
 <div class="jp-InputArea jp-Cell-inputArea">
 <div class="jp-InputPrompt jp-InputArea-prompt">In [3]:</div>
+<div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
+<div class="cm-editor cm-s-jupyter">
+<div class="highlight hl-ipython3"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">os</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">collections</span><span class="w"> </span><span class="kn">import</span> <span class="n">Counter</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">pathlib</span><span class="w"> </span><span class="kn">import</span> <span class="n">Path</span>
+
+<span class="kn">import</span><span class="w"> </span><span class="nn">openmm</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">mm</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">openmm.app</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">app</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">openff.toolkit</span><span class="w"> </span><span class="kn">import</span> <span class="n">Molecule</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">openmm.app</span><span class="w"> </span><span class="kn">import</span> <span class="n">ForceField</span><span class="p">,</span> <span class="n">Modeller</span><span class="p">,</span> <span class="n">PDBFile</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">openmmforcefields.generators</span><span class="w"> </span><span class="kn">import</span> <span class="n">SystemGenerator</span>
+
+<span class="n">COURSE_DIR</span> <span class="o">=</span> <span class="n">Path</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">environ</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">"COURSE_DIR"</span><span class="p">,</span> <span class="nb">str</span><span class="p">(</span><span class="n">Path</span><span class="o">.</span><span class="n">home</span><span class="p">()</span> <span class="o">/</span> <span class="s2">"Concepcion26"</span><span class="p">)))</span><span class="o">.</span><span class="n">expanduser</span><span class="p">()</span>
+<span class="n">DATA_DIR</span> <span class="o">=</span> <span class="n">COURSE_DIR</span> <span class="o">/</span> <span class="s2">"data"</span> <span class="o">/</span> <span class="s2">"complex"</span>
+<span class="n">PROTEIN_PDB</span> <span class="o">=</span> <span class="n">DATA_DIR</span> <span class="o">/</span> <span class="s2">"protein.pdb"</span>
+<span class="n">LIGAND_SDF</span> <span class="o">=</span> <span class="n">DATA_DIR</span> <span class="o">/</span> <span class="s2">"ligand1.sdf"</span>
+<span class="n">OUT_DIR</span> <span class="o">=</span> <span class="n">COURSE_DIR</span> <span class="o">/</span> <span class="s2">"results"</span> <span class="o">/</span> <span class="s2">"01-introduccion"</span> <span class="o">/</span> <span class="s2">"complex"</span>
+<span class="n">OUT_DIR</span><span class="o">.</span><span class="n">mkdir</span><span class="p">(</span><span class="n">parents</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">exist_ok</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+
+<span class="n">WATER_NAMES</span> <span class="o">=</span> <span class="p">{</span><span class="s2">"HOH"</span><span class="p">,</span> <span class="s2">"WAT"</span><span class="p">,</span> <span class="s2">"SOL"</span><span class="p">,</span> <span class="s2">"TIP3"</span><span class="p">,</span> <span class="s2">"TIP3P"</span><span class="p">}</span>
+
+
+<span class="k">def</span><span class="w"> </span><span class="nf">summarize_topology</span><span class="p">(</span><span class="n">label</span><span class="p">,</span> <span class="n">topology</span><span class="p">):</span>
+    <span class="n">residues</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">topology</span><span class="o">.</span><span class="n">residues</span><span class="p">())</span>
+    <span class="n">chains</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">topology</span><span class="o">.</span><span class="n">chains</span><span class="p">())</span>
+    <span class="n">residue_counts</span> <span class="o">=</span> <span class="n">Counter</span><span class="p">(</span><span class="n">res</span><span class="o">.</span><span class="n">name</span> <span class="k">for</span> <span class="n">res</span> <span class="ow">in</span> <span class="n">residues</span><span class="p">)</span>
+    <span class="n">water_count</span> <span class="o">=</span> <span class="nb">sum</span><span class="p">(</span><span class="mi">1</span> <span class="k">for</span> <span class="n">res</span> <span class="ow">in</span> <span class="n">residues</span> <span class="k">if</span> <span class="n">res</span><span class="o">.</span><span class="n">name</span> <span class="ow">in</span> <span class="n">WATER_NAMES</span><span class="p">)</span>
+
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"</span><span class="si">{</span><span class="n">label</span><span class="si">}</span><span class="s2">:"</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">"  Atoms:"</span><span class="p">,</span> <span class="n">topology</span><span class="o">.</span><span class="n">getNumAtoms</span><span class="p">())</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">"  Residues:"</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">residues</span><span class="p">))</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">"  Chains:"</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">chains</span><span class="p">))</span>
+    <span class="k">if</span> <span class="n">water_count</span><span class="p">:</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s2">"  Water residues:"</span><span class="p">,</span> <span class="n">water_count</span><span class="p">)</span>
+    <span class="k">for</span> <span class="n">name</span><span class="p">,</span> <span class="n">count</span> <span class="ow">in</span> <span class="n">residue_counts</span><span class="o">.</span><span class="n">most_common</span><span class="p">(</span><span class="mi">10</span><span class="p">):</span>
+        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"  Residue </span><span class="si">{</span><span class="n">name</span><span class="si">}</span><span class="s2">: </span><span class="si">{</span><span class="n">count</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span>
+
+
+<span class="k">def</span><span class="w"> </span><span class="nf">resolve_ff19sb</span><span class="p">():</span>
+    <span class="n">candidates</span> <span class="o">=</span> <span class="p">[</span>
+        <span class="s2">"amber/ff19SB.xml"</span><span class="p">,</span>
+        <span class="s2">"amber14/ff19SB.xml"</span><span class="p">,</span>
+        <span class="s2">"amber14/protein.ff19SB.xml"</span><span class="p">,</span>
+    <span class="p">]</span>
+    <span class="k">for</span> <span class="n">ff</span> <span class="ow">in</span> <span class="n">candidates</span><span class="p">:</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="n">ForceField</span><span class="p">(</span><span class="n">ff</span><span class="p">)</span>
+        <span class="k">except</span> <span class="ne">Exception</span><span class="p">:</span>
+            <span class="k">continue</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s2">"Using protein force field:"</span><span class="p">,</span> <span class="n">ff</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">ff</span>
+
+    <span class="n">data_dir</span> <span class="o">=</span> <span class="n">Path</span><span class="p">(</span><span class="n">app</span><span class="o">.</span><span class="vm">__file__</span><span class="p">)</span><span class="o">.</span><span class="n">resolve</span><span class="p">()</span><span class="o">.</span><span class="n">parent</span> <span class="o">/</span> <span class="s2">"data"</span>
+    <span class="n">matches</span> <span class="o">=</span> <span class="nb">sorted</span><span class="p">(</span><span class="n">p</span> <span class="k">for</span> <span class="n">p</span> <span class="ow">in</span> <span class="n">data_dir</span><span class="o">.</span><span class="n">rglob</span><span class="p">(</span><span class="s2">"*.xml"</span><span class="p">)</span> <span class="k">if</span> <span class="s2">"ff19"</span> <span class="ow">in</span> <span class="n">p</span><span class="o">.</span><span class="n">name</span><span class="o">.</span><span class="n">lower</span><span class="p">())</span>
+    <span class="k">if</span> <span class="n">matches</span><span class="p">:</span>
+        <span class="n">ff_path</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="n">matches</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s2">"Using protein force field:"</span><span class="p">,</span> <span class="n">ff_path</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">ff_path</span>
+
+    <span class="k">raise</span> <span class="ne">SystemExit</span><span class="p">(</span>
+        <span class="s2">"Could not locate ff19SB. Tried: "</span> <span class="o">+</span> <span class="s2">", "</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">candidates</span><span class="p">)</span> <span class="o">+</span> <span class="s2">"</span><span class="se">\n</span><span class="s2">"</span>
+        <span class="s2">"Install with: conda install -c conda-forge openmmforcefields ambertools"</span>
+    <span class="p">)</span>
+
+
+<span class="k">def</span><span class="w"> </span><span class="nf">write_amber_files</span><span class="p">(</span><span class="n">topology</span><span class="p">,</span> <span class="n">system</span><span class="p">,</span> <span class="n">positions</span><span class="p">,</span> <span class="n">out_dir</span><span class="p">,</span> <span class="n">base_name</span><span class="p">):</span>
+    <span class="k">try</span><span class="p">:</span>
+        <span class="kn">import</span><span class="w"> </span><span class="nn">parmed</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">pmd</span>
+    <span class="k">except</span> <span class="ne">ImportError</span> <span class="k">as</span> <span class="n">exc</span><span class="p">:</span>
+        <span class="k">raise</span> <span class="ne">SystemExit</span><span class="p">(</span>
+            <span class="s2">"Parmed is required to write Amber files. Install with:</span><span class="se">\n</span><span class="s2">"</span>
+            <span class="s2">"  conda install -c conda-forge parmed"</span>
+        <span class="p">)</span> <span class="kn">from</span><span class="w"> </span><span class="nn">exc</span>
+
+    <span class="n">structure</span> <span class="o">=</span> <span class="n">pmd</span><span class="o">.</span><span class="n">openmm</span><span class="o">.</span><span class="n">load_topology</span><span class="p">(</span><span class="n">topology</span><span class="p">,</span> <span class="n">system</span><span class="p">,</span> <span class="n">positions</span><span class="p">)</span>
+    <span class="n">prmtop_path</span> <span class="o">=</span> <span class="n">out_dir</span> <span class="o">/</span> <span class="sa">f</span><span class="s2">"</span><span class="si">{</span><span class="n">base_name</span><span class="si">}</span><span class="s2">.prmtop"</span>
+    <span class="n">inpcrd_path</span> <span class="o">=</span> <span class="n">out_dir</span> <span class="o">/</span> <span class="sa">f</span><span class="s2">"</span><span class="si">{</span><span class="n">base_name</span><span class="si">}</span><span class="s2">.inpcrd"</span>
+    <span class="n">structure</span><span class="o">.</span><span class="n">save</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">prmtop_path</span><span class="p">),</span> <span class="n">overwrite</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+    <span class="n">structure</span><span class="o">.</span><span class="n">save</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">inpcrd_path</span><span class="p">),</span> <span class="n">overwrite</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">"Written:"</span><span class="p">,</span> <span class="n">prmtop_path</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">"Written:"</span><span class="p">,</span> <span class="n">inpcrd_path</span><span class="p">)</span>
+
+
+<span class="nb">print</span><span class="p">(</span><span class="s2">"OpenMM"</span><span class="p">,</span> <span class="n">mm</span><span class="o">.</span><span class="n">__version__</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">"Protein PDB:"</span><span class="p">,</span> <span class="n">PROTEIN_PDB</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">"Ligand SDF:"</span><span class="p">,</span> <span class="n">LIGAND_SDF</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">"Output dir:"</span><span class="p">,</span> <span class="n">OUT_DIR</span><span class="p">)</span>
+
+<span class="n">protein</span> <span class="o">=</span> <span class="n">PDBFile</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">PROTEIN_PDB</span><span class="p">))</span>
+<span class="n">ligand</span> <span class="o">=</span> <span class="n">Molecule</span><span class="o">.</span><span class="n">from_file</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">LIGAND_SDF</span><span class="p">))</span>
+
+<span class="n">summarize_topology</span><span class="p">(</span><span class="s2">"Protein (input PDB)"</span><span class="p">,</span> <span class="n">protein</span><span class="o">.</span><span class="n">topology</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">"Ligand atoms:"</span><span class="p">,</span> <span class="n">ligand</span><span class="o">.</span><span class="n">n_atoms</span><span class="p">)</span>
+
+<span class="n">protein_ff</span> <span class="o">=</span> <span class="n">resolve_ff19sb</span><span class="p">()</span>
+<span class="n">protein_forcefield</span> <span class="o">=</span> <span class="n">ForceField</span><span class="p">(</span><span class="n">protein_ff</span><span class="p">)</span>
+
+<span class="n">protein_modeller</span> <span class="o">=</span> <span class="n">Modeller</span><span class="p">(</span><span class="n">protein</span><span class="o">.</span><span class="n">topology</span><span class="p">,</span> <span class="n">protein</span><span class="o">.</span><span class="n">positions</span><span class="p">)</span>
+<span class="n">protein_modeller</span><span class="o">.</span><span class="n">addHydrogens</span><span class="p">(</span><span class="n">protein_forcefield</span><span class="p">)</span>
+<span class="n">summarize_topology</span><span class="p">(</span><span class="s2">"Protein (with H)"</span><span class="p">,</span> <span class="n">protein_modeller</span><span class="o">.</span><span class="n">topology</span><span class="p">)</span>
+
+<span class="n">ligand_top</span> <span class="o">=</span> <span class="n">ligand</span><span class="o">.</span><span class="n">to_topology</span><span class="p">()</span>
+<span class="n">modeller</span> <span class="o">=</span> <span class="n">Modeller</span><span class="p">(</span><span class="n">protein_modeller</span><span class="o">.</span><span class="n">topology</span><span class="p">,</span> <span class="n">protein_modeller</span><span class="o">.</span><span class="n">positions</span><span class="p">)</span>
+<span class="n">modeller</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">ligand_top</span><span class="o">.</span><span class="n">to_openmm</span><span class="p">(),</span> <span class="n">ligand_top</span><span class="o">.</span><span class="n">get_positions</span><span class="p">()</span><span class="o">.</span><span class="n">to_openmm</span><span class="p">())</span>
+
+<span class="n">summarize_topology</span><span class="p">(</span><span class="s2">"Protein + ligand (combined)"</span><span class="p">,</span> <span class="n">modeller</span><span class="o">.</span><span class="n">topology</span><span class="p">)</span>
+
+<span class="n">system_generator</span> <span class="o">=</span> <span class="n">SystemGenerator</span><span class="p">(</span>
+    <span class="n">forcefields</span><span class="o">=</span><span class="p">[</span><span class="n">protein_ff</span><span class="p">],</span>
+    <span class="n">small_molecule_forcefield</span><span class="o">=</span><span class="s2">"gaff-2.11"</span><span class="p">,</span>
+    <span class="n">molecules</span><span class="o">=</span><span class="p">[</span><span class="n">ligand</span><span class="p">],</span>
+<span class="p">)</span>
+<span class="n">system</span> <span class="o">=</span> <span class="n">system_generator</span><span class="o">.</span><span class="n">create_system</span><span class="p">(</span><span class="n">modeller</span><span class="o">.</span><span class="n">topology</span><span class="p">,</span> <span class="n">molecules</span><span class="o">=</span><span class="n">ligand</span><span class="p">)</span>
+
+<span class="n">write_amber_files</span><span class="p">(</span><span class="n">modeller</span><span class="o">.</span><span class="n">topology</span><span class="p">,</span> <span class="n">system</span><span class="p">,</span> <span class="n">modeller</span><span class="o">.</span><span class="n">positions</span><span class="p">,</span> <span class="n">OUT_DIR</span><span class="p">,</span> <span class="s2">"protein_ligand"</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+<div class="jp-Cell-outputWrapper">
+<div class="jp-Collapser jp-OutputCollapser jp-Cell-outputCollapser">
+</div>
+<div class="jp-OutputArea jp-Cell-outputArea">
+<div class="jp-OutputArea-child">
+<div class="jp-OutputPrompt jp-OutputArea-prompt"></div>
+<div class="jp-RenderedText jp-OutputArea-output" data-mime-type="text/plain" tabindex="0">
+<pre>OpenMM 8.4
+Protein PDB: /Users/jordivilla/Concepcion26/data/complex/protein.pdb
+Ligand SDF: /Users/jordivilla/Concepcion26/data/complex/ligand1.sdf
+Output dir: /Users/jordivilla/Concepcion26/results/01-introduccion/complex
+Protein (input PDB):
+  Atoms: 4645
+  Residues: 304
+  Chains: 1
+  Residue LEU: 29
+  Residue VAL: 27
+  Residue GLY: 26
+  Residue THR: 24
+  Residue ASN: 21
+  Residue ALA: 17
+  Residue ASP: 17
+  Residue SER: 16
+  Residue PHE: 16
+  Residue PRO: 13
+Ligand atoms: 21
+Using protein force field: /opt/miniconda3/envs/md-openmm/lib/python3.10/site-packages/openmm/app/data/amber19/protein.ff19SB.xml
+Protein (with H):
+  Atoms: 4645
+  Residues: 304
+  Chains: 1
+  Residue LEU: 29
+  Residue VAL: 27
+  Residue GLY: 26
+  Residue THR: 24
+  Residue ASN: 21
+  Residue ALA: 17
+  Residue ASP: 17
+  Residue SER: 16
+  Residue PHE: 16
+  Residue PRO: 13
+Protein + ligand (combined):
+  Atoms: 4666
+  Residues: 305
+  Chains: 2
+  Residue LEU: 29
+  Residue VAL: 27
+  Residue GLY: 26
+  Residue THR: 24
+  Residue ASN: 21
+  Residue ALA: 17
+  Residue ASP: 17
+  Residue SER: 16
+  Residue PHE: 16
+  Residue PRO: 13
+Written: /Users/jordivilla/Concepcion26/results/01-introduccion/complex/protein_ligand.prmtop
+Written: /Users/jordivilla/Concepcion26/results/01-introduccion/complex/protein_ligand.inpcrd
+</pre>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=9c90abd4cfca453ba69f0652ecfde36e">
+<div class="jp-Cell-inputWrapper" tabindex="0">
+<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
+</div>
+<div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
+</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
+<h2 id="Step-4">Step 4<a class="anchor-link" href="#Step-4">¶</a></h2>
+</div>
+</div>
+</div>
+</div>
+<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=73663c5f">
+<div class="jp-Cell-inputWrapper" tabindex="0">
+<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
+</div>
+<div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
+</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
+<h3 id="import-os">import os<a class="anchor-link" href="#import-os">¶</a></h3><p>This cell executes: import os.</p>
+</div>
+</div>
+</div>
+</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell jp-mod-noOutputs" id="cell-id=a7bcabc7">
+<div class="jp-Cell-inputWrapper" tabindex="0">
+<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
+</div>
+<div class="jp-InputArea jp-Cell-inputArea">
+<div class="jp-InputPrompt jp-InputArea-prompt">In [ ]:</div>
+<div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
+<div class="cm-editor cm-s-jupyter">
+<div class="highlight hl-ipython3"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">os</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">pathlib</span><span class="w"> </span><span class="kn">import</span> <span class="n">Path</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">requests</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">Bio.Data</span><span class="w"> </span><span class="kn">import</span> <span class="n">IUPACData</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">Bio.PDB</span><span class="w"> </span><span class="kn">import</span> <span class="n">PDBParser</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">rdkit</span><span class="w"> </span><span class="kn">import</span> <span class="n">Chem</span>
+
+<span class="n">COURSE_DIR</span> <span class="o">=</span> <span class="n">Path</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">environ</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">"COURSE_DIR"</span><span class="p">,</span> <span class="nb">str</span><span class="p">(</span><span class="n">Path</span><span class="o">.</span><span class="n">home</span><span class="p">()</span> <span class="o">/</span> <span class="s2">"Concepcion26"</span><span class="p">)))</span><span class="o">.</span><span class="n">expanduser</span><span class="p">()</span>
+<span class="n">PROTEIN_PDB</span> <span class="o">=</span> <span class="n">COURSE_DIR</span> <span class="o">/</span> <span class="s2">"data"</span> <span class="o">/</span> <span class="s2">"complex"</span> <span class="o">/</span> <span class="s2">"protein.pdb"</span>
+<span class="n">LIGAND_SDF</span> <span class="o">=</span> <span class="n">COURSE_DIR</span> <span class="o">/</span> <span class="s2">"data"</span> <span class="o">/</span> <span class="s2">"complex"</span> <span class="o">/</span> <span class="s2">"ligand1.sdf"</span>
+
+<span class="n">parser</span> <span class="o">=</span> <span class="n">PDBParser</span><span class="p">(</span><span class="n">QUIET</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="n">structure</span> <span class="o">=</span> <span class="n">parser</span><span class="o">.</span><span class="n">get_structure</span><span class="p">(</span><span class="s2">"complex"</span><span class="p">,</span> <span class="nb">str</span><span class="p">(</span><span class="n">PROTEIN_PDB</span><span class="p">))</span>
+<span class="n">chain_sequences</span> <span class="o">=</span> <span class="p">{}</span>
+<span class="k">for</span> <span class="n">model</span> <span class="ow">in</span> <span class="n">structure</span><span class="p">:</span>
+    <span class="k">for</span> <span class="n">chain</span> <span class="ow">in</span> <span class="n">model</span><span class="p">:</span>
+        <span class="n">seq</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="k">for</span> <span class="n">residue</span> <span class="ow">in</span> <span class="n">chain</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">residue</span><span class="o">.</span><span class="n">id</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">!=</span> <span class="s2">" "</span><span class="p">:</span>
+                <span class="k">continue</span>
+            <span class="n">seq</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">IUPACData</span><span class="o">.</span><span class="n">protein_letters_3to1</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">residue</span><span class="o">.</span><span class="n">resname</span><span class="p">,</span> <span class="s2">"X"</span><span class="p">))</span>
+        <span class="n">chain_sequences</span><span class="p">[</span><span class="n">chain</span><span class="o">.</span><span class="n">id</span><span class="p">]</span> <span class="o">=</span> <span class="s2">""</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">seq</span><span class="p">)</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="s2">"Chains found:"</span><span class="p">,</span> <span class="nb">list</span><span class="p">(</span><span class="n">chain_sequences</span><span class="o">.</span><span class="n">keys</span><span class="p">()))</span>
+
+<span class="n">SEQ</span> <span class="o">=</span> <span class="nb">next</span><span class="p">(</span><span class="nb">iter</span><span class="p">(</span><span class="n">chain_sequences</span><span class="o">.</span><span class="n">values</span><span class="p">()),</span> <span class="s2">""</span><span class="p">)</span>
+<span class="k">if</span> <span class="ow">not</span> <span class="n">SEQ</span><span class="p">:</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">"No sequence available for the protein chains."</span><span class="p">)</span>
+<span class="k">else</span><span class="p">:</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">query_uniprot</span><span class="p">(</span><span class="n">sequence</span><span class="p">):</span>
+        <span class="n">url</span> <span class="o">=</span> <span class="s2">"https://rest.uniprot.org/uniprotkb/search"</span>
+        <span class="n">params</span> <span class="o">=</span> <span class="p">{</span><span class="s2">"query"</span><span class="p">:</span> <span class="sa">f</span><span class="s2">"sequence:</span><span class="si">{</span><span class="n">sequence</span><span class="si">}</span><span class="s2">"</span><span class="p">,</span> <span class="s2">"format"</span><span class="p">:</span> <span class="s2">"json"</span><span class="p">,</span> <span class="s2">"size"</span><span class="p">:</span> <span class="mi">1</span><span class="p">}</span>
+        <span class="n">resp</span> <span class="o">=</span> <span class="n">requests</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">url</span><span class="p">,</span> <span class="n">params</span><span class="o">=</span><span class="n">params</span><span class="p">,</span> <span class="n">timeout</span><span class="o">=</span><span class="mi">10</span><span class="p">)</span>
+        <span class="n">resp</span><span class="o">.</span><span class="n">raise_for_status</span><span class="p">()</span>
+        <span class="n">hits</span> <span class="o">=</span> <span class="n">resp</span><span class="o">.</span><span class="n">json</span><span class="p">()</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">"results"</span><span class="p">,</span> <span class="p">[])</span>
+        <span class="k">return</span> <span class="n">hits</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="k">if</span> <span class="n">hits</span> <span class="k">else</span> <span class="kc">None</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">search_pdb</span><span class="p">(</span><span class="n">sequence</span><span class="p">):</span>
+        <span class="n">url</span> <span class="o">=</span> <span class="s2">"https://search.rcsb.org/rcsbsearch/v2/query"</span>
+        <span class="n">query</span> <span class="o">=</span> <span class="p">{</span>
+            <span class="s2">"query"</span><span class="p">:</span> <span class="p">{</span>
+                <span class="s2">"type"</span><span class="p">:</span> <span class="s2">"terminal"</span><span class="p">,</span>
+                <span class="s2">"service"</span><span class="p">:</span> <span class="s2">"sequence"</span><span class="p">,</span>
+                <span class="s2">"parameters"</span><span class="p">:</span> <span class="p">{</span>
+                    <span class="s2">"value"</span><span class="p">:</span> <span class="n">sequence</span><span class="p">,</span>
+                    <span class="s2">"identityCutoff"</span><span class="p">:</span> <span class="mf">0.9</span><span class="p">,</span>
+                    <span class="s2">"evalueCutoff"</span><span class="p">:</span> <span class="mf">1e-5</span><span class="p">,</span>
+                    <span class="s2">"sequenceType"</span><span class="p">:</span> <span class="s2">"protein"</span><span class="p">,</span>
+                    <span class="s2">"matrix"</span><span class="p">:</span> <span class="s2">"BLOSUM62"</span><span class="p">,</span>
+                    <span class="s2">"gapsAllowed"</span><span class="p">:</span> <span class="kc">True</span><span class="p">,</span>
+                    <span class="s2">"target"</span><span class="p">:</span> <span class="s2">"pdb_protein_sequence"</span>
+                <span class="p">}</span>
+            <span class="p">},</span>
+            <span class="s2">"return_type"</span><span class="p">:</span> <span class="s2">"entry"</span>
+        <span class="p">}</span>
+        <span class="n">resp</span> <span class="o">=</span> <span class="n">requests</span><span class="o">.</span><span class="n">post</span><span class="p">(</span><span class="n">url</span><span class="p">,</span> <span class="n">json</span><span class="o">=</span><span class="n">query</span><span class="p">,</span> <span class="n">timeout</span><span class="o">=</span><span class="mi">10</span><span class="p">)</span>
+        <span class="n">resp</span><span class="o">.</span><span class="n">raise_for_status</span><span class="p">()</span>
+        <span class="n">result_set</span> <span class="o">=</span> <span class="n">resp</span><span class="o">.</span><span class="n">json</span><span class="p">()</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">"result_set"</span><span class="p">,</span> <span class="p">[])</span>
+        <span class="k">return</span> <span class="n">result_set</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="s2">"identifier"</span><span class="p">]</span> <span class="k">if</span> <span class="n">result_set</span> <span class="k">else</span> <span class="kc">None</span>
+
+    <span class="n">uniprot_hit</span> <span class="o">=</span> <span class="kc">None</span>
+    <span class="n">pdb_hit</span> <span class="o">=</span> <span class="kc">None</span>
+    <span class="k">try</span><span class="p">:</span>
+        <span class="n">uniprot_hit</span> <span class="o">=</span> <span class="n">query_uniprot</span><span class="p">(</span><span class="n">SEQ</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">uniprot_hit</span><span class="p">:</span>
+            <span class="n">name</span> <span class="o">=</span> <span class="n">uniprot_hit</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">"proteinDescription"</span><span class="p">,</span> <span class="p">{})</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">"recommendedName"</span><span class="p">,</span> <span class="p">{})</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">"fullName"</span><span class="p">,</span> <span class="p">{})</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">"value"</span><span class="p">)</span>
+            <span class="n">acc</span> <span class="o">=</span> <span class="n">uniprot_hit</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">"primaryAccession"</span><span class="p">)</span>
+            <span class="nb">print</span><span class="p">(</span><span class="s2">"UniProt match:"</span><span class="p">,</span> <span class="n">acc</span><span class="p">,</span> <span class="n">name</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="nb">print</span><span class="p">(</span><span class="s2">"No UniProt match for the sequence."</span><span class="p">)</span>
+    <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">exc</span><span class="p">:</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s2">"UniProt query failed:"</span><span class="p">,</span> <span class="n">exc</span><span class="p">)</span>
+    <span class="k">try</span><span class="p">:</span>
+        <span class="n">pdb_hit</span> <span class="o">=</span> <span class="n">search_pdb</span><span class="p">(</span><span class="n">SEQ</span><span class="p">)</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s2">"Closest PDB:"</span><span class="p">,</span> <span class="n">pdb_hit</span> <span class="ow">or</span> <span class="s2">"none"</span><span class="p">)</span>
+    <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">exc</span><span class="p">:</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s2">"PDB lookup failed:"</span><span class="p">,</span> <span class="n">exc</span><span class="p">)</span>
+
+<span class="n">supplier</span> <span class="o">=</span> <span class="n">Chem</span><span class="o">.</span><span class="n">SDMolSupplier</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">LIGAND_SDF</span><span class="p">),</span> <span class="n">removeHs</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+<span class="n">ligand</span> <span class="o">=</span> <span class="nb">next</span><span class="p">((</span><span class="n">mol</span> <span class="k">for</span> <span class="n">mol</span> <span class="ow">in</span> <span class="n">supplier</span> <span class="k">if</span> <span class="n">mol</span><span class="p">),</span> <span class="kc">None</span><span class="p">)</span>
+<span class="k">if</span> <span class="n">ligand</span><span class="p">:</span>
+    <span class="n">smiles</span> <span class="o">=</span> <span class="n">Chem</span><span class="o">.</span><span class="n">MolToSmiles</span><span class="p">(</span><span class="n">ligand</span><span class="p">)</span>
+    <span class="n">name</span> <span class="o">=</span> <span class="n">ligand</span><span class="o">.</span><span class="n">GetProp</span><span class="p">(</span><span class="s2">"_Name"</span><span class="p">)</span> <span class="k">if</span> <span class="n">ligand</span><span class="o">.</span><span class="n">HasProp</span><span class="p">(</span><span class="s2">"_Name"</span><span class="p">)</span> <span class="k">else</span> <span class="s2">"(unnamed)"</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">"Ligand:"</span><span class="p">,</span> <span class="n">name</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">"SMILES:"</span><span class="p">,</span> <span class="n">smiles</span><span class="p">)</span>
+<span class="k">else</span><span class="p">:</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">"Could not load ligand file."</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=5039a10281d14108847391c083a6e6e2">
+<div class="jp-Cell-inputWrapper" tabindex="0">
+<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
+</div>
+<div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
+</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
+<h2 id="Step-5">Step 5<a class="anchor-link" href="#Step-5">¶</a></h2>
+</div>
+</div>
+</div>
+</div>
+<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=c7c08861">
+<div class="jp-Cell-inputWrapper" tabindex="0">
+<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
+</div>
+<div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
+</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
+</div>
+</div>
+</div>
+</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell" id="cell-id=e89aa9b4">
+<div class="jp-Cell-inputWrapper" tabindex="0">
+<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
+</div>
+<div class="jp-InputArea jp-Cell-inputArea">
+<div class="jp-InputPrompt jp-InputArea-prompt">In [4]:</div>
 <div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
 <div class="cm-editor cm-s-jupyter">
 <div class="highlight hl-ipython3"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">os</span>

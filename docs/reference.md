@@ -1,61 +1,61 @@
 ---
 layout: default
-title: Referencia
+title: Reference
 permalink: /reference/
 ---
 
-## Referencia rápida
+## Quick reference
 
-### Comandos útiles
+### Useful commands
 
 ```bash
-# Activar entorno
+# Activate environment
 conda activate md-openmm
 
-# Abrir JupyterLab
+# Launch JupyterLab
 jupyter lab
 ```
 
-### Estructura sugerida del curso
+### Suggested course structure
 
-- `docs/episodes/` episodios Carpentries
-- `docs/data/` datos de ejemplo
-- `docs/figures/` figuras
+- `docs/episodes/` Carpentries episodes
+- `docs/data/` sample data
+- `docs/figures/` figures
 
-## Guía para instructores
+## Instructor guide
 
-- Revisar que OpenMM y dependencias funcionen en el aula.
-- Preparar un conjunto mínimo de datos de práctica.
-- Validar que los notebooks se ejecuten en GPU y en CPU.
+- Check that OpenMM and dependencies work in the classroom.
+- Prepare a minimal set of practice data.
+- Validate that the notebooks run on GPU and CPU.
 
-## Materiales
+## Materials
 
-- Notebooks de ejemplo en `docs/episodes/`.
-- Figuras en `docs/figures/`.
+- Example notebooks in `docs/episodes/`.
+- Figures in `docs/figures/`.
 
-### Notas
+### Notes
 
-- Usa semillas reproducibles cuando el ejercicio lo permita.
-- Guarda parámetros de simulación junto con los resultados.
+- Use reproducible seeds when the exercise allows it.
+- Save simulation parameters alongside the results.
 
-### Verificación de enlaces
+### Link check
 
 ```bash
 python scripts/check_links.py
 ```
 
-## Generar trayectoria DCD
+## Generate a DCD trajectory
 
-Para crear un DCD corto con OpenMM:
+To create a short DCD with OpenMM:
 
 ```bash
 python scripts/generate_example_dcd.py
 ```
 
-Esto genera <a href="https://github.com/Biocomputing-Teaching/Course-MD-Data/raw/main/alanine-dipeptide.dcd">alanine-dipeptide.dcd</a>.
+This generates <a href="https://github.com/Biocomputing-Teaching/Course-MD-Data/raw/main/alanine-dipeptide.dcd">alanine-dipeptide.dcd</a>.
 
-## Documentación técnica del repositorio
+## Repository technical documentation
 
-Para detalles de mantenimiento y documentación técnica, consulta el README en GitHub:
+For maintenance details and technical documentation, see the README on GitHub:
 
-- <a href="https://github.com/Biocomputing-Teaching/Curso-MD-Analisis/blob/main/README.md">README.md a GitHub</a>
+- <a href="https://github.com/Biocomputing-Teaching/Curso-MD-Analisis/blob/main/README.md">README.md on GitHub</a>
