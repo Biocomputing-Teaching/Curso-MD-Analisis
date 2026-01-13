@@ -1,202 +1,202 @@
-\section[Introduccion]{Episodio 1: Introducci\'on (entorno y datos)}
+\section[Introduction]{Episode 1: Introduction (environment and data)}
 
-\subsection{Capa de aplicaci\'on de OpenMM}
+\subsection{OpenMM application layer}
 
 \begin{frame}
-\frametitle{Flujo general de OpenMM}
+\frametitle{OpenMM general workflow}
 \begin{itemize}
-  \item Cargar estructuras PDB/GROMACS/AMBER/CHARMM/TINKER desde los scripts oficiales (p.ej., \href{https://github.com/openmm/openmm/blob/master/examples/python-examples/simulatePdb.py}{\texttt{simulatePdb.py}}, \href{https://github.com/openmm/openmm/blob/master/examples/python-examples/simulateGromacs.py}{\texttt{simulateGromacs.py}}, \href{https://github.com/openmm/openmm/blob/master/examples/python-examples/simulateAmber.py}{\texttt{simulateAmber.py}} y \href{https://github.com/openmm/openmm/blob/master/examples/python-examples/simulateCharmm.py}{\texttt{simulateCharmm.py}}).
-  \item Generar objetos `Topology`, `System` e `Integrator` y sincronizar `StateReporter`/`TrajectoryReporter` para registrar energ\'ias, fuerzas y coordenadas.
-  \item Ejecutar integraciones con pasos definidos desde la capa de aplicaci\'on y guardar checkpoints con la rutina de OpenMM-Setup (User Guide §3.5-3.15).
+  \item Load PDB/GROMACS/AMBER/CHARMM/TINKER structures with the official scripts (e.g., \href{https://github.com/openmm/openmm/blob/master/examples/python-examples/simulatePdb.py}{\texttt{simulatePdb.py}}, \href{https://github.com/openmm/openmm/blob/master/examples/python-examples/simulateGromacs.py}{\texttt{simulateGromacs.py}}, \href{https://github.com/openmm/openmm/blob/master/examples/python-examples/simulateAmber.py}{\texttt{simulateAmber.py}}, and \href{https://github.com/openmm/openmm/blob/master/examples/python-examples/simulateCharmm.py}{\texttt{simulateCharmm.py}}).
+  \item Create the \texttt{Topology}, \texttt{System}, and \texttt{Integrator} objects and wire \texttt{StateReporter}/\texttt{TrajectoryReporter} to capture energies, forces, and coordinates.
+  \item Execute integration steps defined by the application layer and save checkpoints with the OpenMM-Setup routines (User Guide §3.5–3.15).
 \end{itemize}
 \end{frame}
 
 \begin{frame}
-\frametitle{Entradas externas}
+\frametitle{External inputs}
 \begin{itemize}
-  \item \href{https://github.com/openmm/openmm/blob/master/examples/python-examples/simulateAmber.py}{\texttt{simulateAmber.py}} acepta `.prmtop` + `.inpcrd`, mientras que \href{https://github.com/openmm/openmm/blob/master/examples/python-examples/simulateCharmm.py}{\texttt{simulateCharmm.py}} y \href{https://github.com/openmm/openmm/blob/master/examples/python-examples/simulateGromacs.py}{\texttt{simulateGromacs.py}} respetan sus formatos nativos.
-  \item \href{https://github.com/openmm/openmm/blob/master/examples/python-examples/simulatePdb.py}{\texttt{simulatePdb.py}} es el punto de partida tradicional para dip\u00e9ptido de alanina o prote\'inas-ligando sin parametrizar.
-  \item Todos incluyen funciones para modificar `reporters` y acomodar formatos de salida que luego procesaremos con scripts Python de an\'alisis.
+  \item \href{https://github.com/openmm/openmm/blob/master/examples/python-examples/simulateAmber.py}{\texttt{simulateAmber.py}} accepts `.prmtop` + `.inpcrd`, while \href{https://github.com/openmm/openmm/blob/master/examples/python-examples/simulateCharmm.py}{\texttt{simulateCharmm.py}} and \href{https://github.com/openmm/openmm/blob/master/examples/python-examples/simulateGromacs.py}{\texttt{simulateGromacs.py}} respect their native formats.
+  \item \href{https://github.com/openmm/openmm/blob/master/examples/python-examples/simulatePdb.py}{\texttt{simulatePdb.py}} is the traditional starting point for alanine dipeptide or unparameterized protein–ligand systems.
+  \item All scripts expose hooks to tweak \texttt{reporters} and shape output formats that we then process with Python analysis scripts.
 \end{itemize}
 \end{frame}
 
-\subsection{Panorama y escalas}
+\subsection{Overview and scales}
 
 \begin{frame}
-\frametitle{Objetivos del episodio}
+\frametitle{Episode objectives}
 \begin{itemize}
-  \item Conectar termodin\'amica, mec\'anica estad\'istica y simulaci\'on.
-  \item Definir variables, funciones de estado y observables.
-  \item Establecer el flujo de datos y el entorno de trabajo.
+  \item Link thermodynamics, statistical mechanics, and simulation.
+  \item Define variables, state functions, and observables.
+  \item Establish the data flow and working environment.
 \end{itemize}
 \end{frame}
 
 \begin{frame}
-\frametitle{Escalas de tiempo y longitud}
+\frametitle{Time and length scales}
 \begin{align*}
-  \Delta t_{\text{vibraciones}} &\sim 10^{-15}\,\mathrm{s},\\
-  \Delta t_{\text{conformaciones}} &\sim 10^{-9}\,\mathrm{s}\ \text{a}\ 10^{-3}\,\mathrm{s},\\
-  L_{\text{atomos}} &\sim 10^{-10}\,\mathrm{m},\quad L_{\text{proteinas}} \sim 10^{-8}\,\mathrm{m}.
+  \Delta t_{\text{vibrations}} &\sim 10^{-15}\,\mathrm{s},\\
+  \Delta t_{\text{conformations}} &\sim 10^{-9}\,\mathrm{s}\ \text{to}\ 10^{-3}\,\mathrm{s},\\
+  L_{\text{atoms}} &\sim 10^{-10}\,\mathrm{m},\quad L_{\text{proteins}} \sim 10^{-8}\,\mathrm{m}.
 \end{align*}
 \begin{itemize}
-  \item La simulaci\'on at\'omica resuelve escalas ultrarr\'apidas.
-  \item La estad\'istica conecta microestados con promedios macrosc\'opicos.
+  \item Atomic simulation resolves ultra-fast scales.
+  \item Statistics link microstates to macroscopic averages.
 \end{itemize}
 \end{frame}
 
 \begin{frame}
-\frametitle{Modelo microsc\'opico}
+\frametitle{Microscopic model}
 \begin{align*}
-  \text{Estado} &= (\mathbf{r}_1,\dots,\mathbf{r}_N,\mathbf{p}_1,\dots,\mathbf{p}_N),\\
+  \text{State} &= (\mathbf{r}_1,\dots,\mathbf{r}_N,\mathbf{p}_1,\dots,\mathbf{p}_N),\\
   \mathbf{p}_i &= m_i \dot{\mathbf{r}}_i.
 \end{align*}
 \begin{itemize}
-  \item El sistema est\'a definido por $6N$ coordenadas en el espacio de fases.
-  \item La energ\'ia potencial codifica la interacci\'on entre part\'iculas.
+  \item The system is defined by $6N$ phase-space coordinates.
+  \item Potential energy captures the interactions between particles.
 \end{itemize}
 \end{frame}
 
 \begin{frame}
-\frametitle{Del micro al macro}
+\frametitle{From micro to macro}
 \begin{align*}
   \langle A \rangle &= \int A(\mathbf{r},\mathbf{p})\,\rho(\mathbf{r},\mathbf{p})\,d\mathbf{r}\,d\mathbf{p},\\
   \bar{A} &= \lim_{T\to\infty}\frac{1}{T}\int_0^T A(t)\,dt.
 \end{align*}
 \begin{itemize}
-  \item La ergodicidad conecta promedios temporales y de conjunto.
+  \item Ergodicity links time averages with ensemble averages.
 \end{itemize}
 \end{frame}
 
 \begin{frame}
-\frametitle{Pipeline de simulaci\'on}
+\frametitle{Simulation pipeline}
 \begin{enumerate}
-  \item Preparaci\'on del sistema (topolog\'ia, coordenadas, par\'ametros).
-  \item Definici\'on del Hamiltoniano y condiciones de contorno.
-  \item Integraci\'on temporal y generaci\'on de trayectoria.
-  \item An\'alisis estad\'istico de observables.
+  \item System preparation (topology, coordinates, parameters).
+  \item Define the Hamiltonian and boundary conditions.
+  \item Time integration and trajectory generation.
+  \item Statistical analysis of observables.
 \end{enumerate}
 \end{frame}
 
-\subsection{Variables y estados}
+\subsection{State variables and states}
 
 \begin{frame}
-\frametitle{Variables de estado}
+\frametitle{State variables}
 \begin{align*}
   P,\;V,\;T,\;U,\;H=U+PV,\;G=H-TS,\;A=U-TS.
 \end{align*}
 \begin{itemize}
-  \item Funciones de estado: dependen solo del estado macrosc\'opico.
-  \item Funciones de trayectoria: trabajo $W$ y calor $Q$.
+  \item State functions depend only on the macroscopic state.
+  \item Path functions include work $W$ and heat $Q$.
 \end{itemize}
 \end{frame}
 
 \begin{frame}
-\frametitle{Primera ley y trabajo}
+\frametitle{First law and work}
 \begin{align*}
   dU &= \delta Q + \delta W,\\
   \delta W &= -P\,dV + \sum_i f_i\,dx_i.
 \end{align*}
 \begin{itemize}
-  \item La energ\'ia interna cambia por intercambio de calor o trabajo.
-  \item En simulaci\'on, $\delta W$ proviene de fuerzas sobre part\'iculas.
+  \item Internal energy changes through heat or work exchange.
+  \item In simulation, $\delta W$ arises from forces on particles.
 \end{itemize}
 \end{frame}
 
 \begin{frame}
-\frametitle{Segunda ley y entrop\'ia}
+\frametitle{Second law and entropy}
 \begin{align*}
   dS &\ge \frac{\delta Q}{T},\\
   S &= \kb\ln \Omega.
 \end{align*}
 \begin{itemize}
-  \item $\Omega$ es el n\'umero de microestados compatibles con el macroestado.
+  \item $\Omega$ is the number of microstates compatible with the macrostate.
 \end{itemize}
 \end{frame}
 
 \begin{frame}
-\frametitle{Potenciales termodin\'amicos}
+\frametitle{Thermodynamic potentials}
 \begin{align*}
   G &= U + PV - TS,\\
   A &= U - TS.
 \end{align*}
 \begin{itemize}
-  \item $G$ minimiza a $T,P$ constantes; $A$ minimiza a $T,V$ constantes.
+  \item $G$ minimizes at constant $T,P$; $A$ minimizes at constant $T,V$.
 \end{itemize}
 \end{frame}
 
 \begin{frame}
-\frametitle{Relaciones diferenciales}
+\frametitle{Differential relations}
 \begin{align*}
   dG &= -S\,dT + V\,dP + \sum_i \mu_i\,dN_i,\\
   dA &= -S\,dT - P\,dV + \sum_i \mu_i\,dN_i.
 \end{align*}
 \begin{itemize}
-  \item Las derivadas parciales dan observables medibles.
+  \item Partial derivatives give measurable observables.
 \end{itemize}
 \end{frame}
 
-\subsection{Entrop\'ia y energ\'ia libre}
+\subsection{Entropy and free energy}
 
 \begin{frame}
-\frametitle{Microestados y macroestados}
+\frametitle{Microstates and macrostates}
 \begin{align*}
   S &= \kb\ln \Omega,\quad \Omega = \sum_{\text{micro}} 1.
 \end{align*}
 \begin{itemize}
-  \item Incrementos de entrop\'ia favorecen estados con m\'as configuraciones.
+  \item Entropy increases favor states with more configurations.
 \end{itemize}
 \end{frame}
 
 \begin{frame}
-\frametitle{Energ\'ia libre y equilibrio}
+\frametitle{Free energy and equilibrium}
 \begin{align*}
   \Delta G &= \Delta H - T\Delta S,\\
   \Delta A &= \Delta U - T\Delta S.
 \end{align*}
 \begin{itemize}
-  \item En equilibrio, $\Delta G=0$ para procesos a $T,P$ fijos.
+  \item At equilibrium, $\Delta G=0$ for processes at fixed $T,P$.
 \end{itemize}
 \end{frame}
 
 \begin{frame}
-\frametitle{Potencial qu\'imico}
+\frametitle{Chemical potential}
 \begin{align*}
   \mu_i &= \left(\frac{\partial G}{\partial N_i}\right)_{T,P,N_{j\ne i}}.
 \end{align*}
 \begin{itemize}
-  \item Controla intercambios de materia y equilibrio de fases.
+  \item Controls matter exchange and phase equilibrium.
 \end{itemize}
 \end{frame}
 
 \begin{frame}
-\frametitle{Relaci\'on con probabilidades}
+\frametitle{Relation to probabilities}
 \begin{align*}
   P(\text{estado}) &\propto e^{-\beta G},\quad \beta=1/(\kb T).
 \end{align*}
 \begin{itemize}
-  \item La energ\'ia libre gobierna el peso estad\'istico de macroestados.
+  \item Free energy governs the statistical weight of macrostates.
 \end{itemize}
 \end{frame}
 
 \begin{frame}
-\frametitle{Ejemplo: equilibrio A $\rightleftharpoons$ B}
+\frametitle{Example: equilibrium A $\rightleftharpoons$ B}
 \begin{align*}
   K &= e^{-\beta\Delta G},\\
   \Delta G &= -\kb T\ln K.
 \end{align*}
 \begin{itemize}
-  \item La estabilidad relativa se expresa en t\'erminos de $\Delta G$.
+  \item Relative stability is expressed in terms of $\Delta G$.
 \end{itemize}
 \end{frame}
 
-\subsection{Ensembles y partici\'on}
+\subsection{Ensembles and partitioning}
 
 \begin{frame}
-\frametitle{Ensembles cl\'asicos}
+\frametitle{Classical ensembles}
 \begin{itemize}
-  \item Microcan\'onico (NVE): $N,V,E$ fijos.
-  \item Can\'onico (NVT): $N,V,T$ fijos.
-  \item Isotermo-isob\'arico (NPT): $N,P,T$ fijos.
+  \item Microcanonical (NVE): $N,V,E$ fixed.
+  \item Canonical (NVT): $N,V,T$ fixed.
+  \item Isothermal-isobaric (NPT): $N,P,T$ fixed.
 \end{itemize}
 \end{frame}
 
@@ -594,47 +594,47 @@
 \end{itemize}
 \end{frame}
 
-\subsection{Entorno y datos}
+\subsection{Environment and data}
 
 \begin{frame}
-\frametitle{Directorio de trabajo}
+\frametitle{Working directory}
 \begin{itemize}
-  \item Variable de entorno \texttt{COURSE\_DIR}.
-  \item Estructura: \texttt{data/} (entradas) y \texttt{results/} (salidas).
+  \item Environment variable \texttt{COURSE\_DIR}.
+  \item Structure: \texttt{data/} (inputs) and \texttt{results/} (outputs).
 \end{itemize}
 \end{frame}
 
 \begin{frame}
-\frametitle{Sistemas del curso}
+\frametitle{Course systems}
 \begin{itemize}
-  \item Sistema simple: alanina.
-  \item Sistema complejo: prote\'ina + ligando.
+  \item Simple system: alanine.
+  \item Complex system: protein + ligand.
 \end{itemize}
 \end{frame}
 
 \begin{frame}
-\frametitle{Flujo de datos}
+\frametitle{Data flow}
 \begin{enumerate}
-  \item Descarga de datos base.
-  \item Preparaci\'on de topolog\'ia y coordenadas.
-  \item Validaci\'on del entorno de c\'alculo.
+  \item Download base data.
+  \item Prepare topologies and coordinates.
+  \item Validate the computing environment.
 \end{enumerate}
 \end{frame}
 
 \begin{frame}
-\frametitle{Reproducibilidad}
+\frametitle{Reproducibility}
 \begin{itemize}
-  \item Controlar versiones de librer\'ias y semillas aleatorias.
-  \item Guardar archivos de entrada y scripts.
+  \item Track library versions and random seeds.
+  \item Save input files and scripts.
 \end{itemize}
 \end{frame}
 
 \begin{frame}
-\frametitle{Resumen del episodio}
+\frametitle{Episode summary}
 \begin{itemize}
-  \item La base termodin\'amica se conecta con el muestreo estad\'istico.
-  \item El potencial define fuerzas y probabilidades.
-  \item El entorno de trabajo garantiza reproducibilidad.
+  \item The thermodynamic groundwork connects to statistical sampling.
+  \item The potential defines forces and probabilities.
+  \item The working environment ensures reproducibility.
 \end{itemize}
 \end{frame}
 

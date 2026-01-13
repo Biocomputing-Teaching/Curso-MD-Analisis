@@ -1,162 +1,162 @@
-\section[Análisis]{Episodio 5: Análisis de trayectorias}
+\section[Analysis]{Episode 5: Trajectory analysis}
 
-\subsection{Preprocesado y limpieza}
+\subsection{Preprocessing and cleanup}
 
 \begin{frame}
-\frametitle{Pipeline previo al análisis}
+\frametitle{Pre-analysis pipeline}
 \begin{enumerate}
-  \item Convertir y limpiar trayectorias con \href{https://github.com/openmm/openmm/blob/master/examples/python-examples/simulatePdb.py}{\texttt{simulatePdb.py}} o \href{https://github.com/openmm/openmm/blob/master/examples/python-examples/simulateGromacs.py}{\texttt{simulateGromacs.py}}.
-  \item Alinear estructuras y eliminar solvente irrelevante.
-  \item Definir subconjuntos de átomos y escribir DCD/NetCDF para análisis posteriores.
+  \item Convert and clean trajectories with \href{https://github.com/openmm/openmm/blob/master/examples/python-examples/simulatePdb.py}{\texttt{simulatePdb.py}} or \href{https://github.com/openmm/openmm/blob/master/examples/python-examples/simulateGromacs.py}{\texttt{simulateGromacs.py}}.
+  \item Align structures and strip irrelevant solvent.
+  \item Define atom subsets and write DCD/NetCDF for downstream analysis.
 \end{enumerate}
-{\tiny Scripts del Application Layer de OpenMM. \cita{OpenMMUserguide2024}}
+{\tiny Scripts from the OpenMM Application Layer. \cita{OpenMMUserguide2024}}
 \end{frame}
 
 \begin{frame}
-\frametitle{Velocidades y distribuciones}
+\frametitle{Velocities and distributions}
 \begin{itemize}
-  \item `StateDataReporter` y `DCDReporter` construyen histogramas de $v_i$ y energías.
-  \item Por el teorema de equipartición: $\langle K \rangle = \frac{3N}{2}\kbt$ para sistemas clásicos.
-  \item Controlar $C(t)=\langle A(0)A(t)\rangle$ arroja las escalas relevantes.
+  \item `StateDataReporter` and `DCDReporter` build histograms of $v_i$ and energies.
+  \item By the equipartition theorem: $\langle K \rangle = \frac{3N}{2}\kbt$ for classical systems.
+  \item Monitoring $C(t)=\langle A(0)A(t)\rangle$ reveals the relevant timescales.
 \end{itemize}
 \end{frame}
 
 \begin{frame}
-\frametitle{RMSD y alineamientos}
+\frametitle{RMSD and alignments}
 \begin{align*}
   \text{RMSD}(t) &= \sqrt{\frac{1}{N}\sum_{i=1}^N\lVert\mathbf{r}_i(t)-\mathbf{r}_i^{\text{ref}}\rVert^2}.
 \end{align*}
 \begin{itemize}
-  \item Usamos el algoritmo de Kabsch para rotaciones óptimas.
-  \item Documentamos con \href{https://github.com/openmm/openmm/blob/master/examples/python-examples/simulateAmber.py}{\texttt{simulateAmber.py}} y la salida en CSV para cada réplica.
+  \item Use the Kabsch algorithm for optimal rotations.
+  \item Document with \href{https://github.com/openmm/openmm/blob/master/examples/python-examples/simulateAmber.py}{\texttt{simulateAmber.py}} and per-replica CSV output.
 \end{itemize}
 \end{frame}
 
-\subsection{Velocidades e inercia}
+\subsection{Velocities and inertia}
 
 \begin{frame}
-\frametitle{Radio de giro y tensor de inercia}
+\frametitle{Radius of gyration and inertia tensor}
 \begin{align*}
   I_{ab} &= \sum_i m_i\left(r_i^2\delta_{ab}-r_{ia}r_{ib}\right).
 \end{align*}
 \begin{itemize}
-  \item Autovalores de $I$ describen la anisotropía global.
-  \item Monitorear $R_g^2=\frac{1}{N}\sum_i m_i\lVert \mathbf{r}_i-\mathbf{r}_{\text{CM}}\rVert^2$ por réplica.
+  \item Eigenvalues of $I$ describe global anisotropy.
+  \item Monitor $R_g^2=\frac{1}{N}\sum_i m_i\lVert \mathbf{r}_i-\mathbf{r}_{\text{CM}}\rVert^2$ per replica.
 \end{itemize}
 \end{frame}
 
 \begin{frame}
-\frametitle{Extremos y contactos}
+\frametitle{Extremes and contacts}
 \begin{itemize}
-  \item Mapas binarios con umbral de 0.45 nm generan matrices de contacto.
-  \item Las columnas representan cambios de dominios detectados por \href{https://github.com/openmm/openmm/blob/master/examples/python-examples/simulateCharmm.py}{\texttt{simulateCharmm.py}}.
+  \item Binary maps with a 0.45 nm cutoff generate contact matrices.
+  \item Columns represent domain changes detected by \href{https://github.com/openmm/openmm/blob/master/examples/python-examples/simulateCharmm.py}{\texttt{simulateCharmm.py}}.
 \end{itemize}
 \end{frame}
 
-\subsection{Reducción y clustering}
+\subsection{Reduction and clustering}
 
 \begin{frame}
-\frametitle{Covarianza y PCA}
+\frametitle{Covariance and PCA}
 \begin{align*}
   C &= \langle (\mathbf{x}-\langle \mathbf{x}\rangle)(\mathbf{x}-\langle \mathbf{x}\rangle)^T\rangle.
 \end{align*}
 \begin{itemize}
-  \item Proyectamos sobre los primeros autovectores y definimos ejes de evento.
-  \item Relacionamos con \href{https://openmm.github.io/openmm-cookbook/latest/notebooks/tutorials/coarse_grained_polymer.html}{\texttt{coarse\_grained\_polymer.py}} para comparar modos lentos de polímeros y proteínas.
+  \item Project onto the leading eigenvectors and define event axes.
+  \item Relate to \href{https://openmm.github.io/openmm-cookbook/latest/notebooks/tutorials/coarse_grained_polymer.html}{\texttt{coarse\_grained\_polymer.py}} to compare slow modes of polymers and proteins.
 \end{itemize}
 \end{frame}
 
 \begin{frame}
-\frametitle{Agrupamiento jerárquico}
+\frametitle{Hierarchical clustering}
 \begin{itemize}
-  \item Usamos enlaces promedio e índice silhouette para decidir $k$.
-  \item Una mala elección produce microestados vacíos; preferimos ensayos progresivos.
+  \item Use average linkage and silhouette index to decide $k$.
+  \item Poor choices yield empty microstates; prefer progressive trials.
 \end{itemize}
 \end{frame}
 
 \begin{frame}
-\frametitle{Transiciones y grafos}
+\frametitle{Transitions and graphs}
 \begin{itemize}
-  \item Grafos de estados (ver `graph.png`) representan canales cinéticos.
-  \item Los bordes anotados reflejan flujos medidos por scripts de OpenMMTools.
+  \item State graphs (see `graph.png`) represent kinetic channels.
+  \item Annotated edges reflect fluxes measured by OpenMMTools scripts.
 \end{itemize}
 \end{frame}
 
 \begin{frame}
-\frametitle{Autovalores y modos}
+\frametitle{Eigenvalues and modes}
 \begin{align*}
   C\mathbf{w} &= \lambda \mathbf{w},\quad \lambda \in \mathbb{R}_+.
 \end{align*}
 \begin{itemize}
-  \item Los modos dominantes identifican movimientos colectivos.
-  \item Guardamos proyecciones para alimentar modelos de Markov.
+  \item Dominant modes identify collective motions.
+  \item Save projections to feed Markov models.
 \end{itemize}
 \end{frame}
 
-\subsection{Energías libres y superficies}
+\subsection{Free energies and surfaces}
 
 \begin{frame}
-\frametitle{Funciones de densidad}
+\frametitle{Density functions}
 \begin{align*}
   g(r) &= \frac{1}{4\pi r^2\rho}\left\langle \sum_{i\ne j}\delta(r-r_{ij})\right\rangle.
 \end{align*}
 \begin{itemize}
-  \item Comparar con \href{https://github.com/openmm/openmm/blob/master/examples/python-examples/argon-chemical-potential.py}{\texttt{argon-chemical-potential.py}} para validar.
-  \item Usa histogramas reponderados para estimar $F(r)=-\kbt\ln g(r)$.
+  \item Compare with \href{https://github.com/openmm/openmm/blob/master/examples/python-examples/argon-chemical-potential.py}{\texttt{argon-chemical-potential.py}} for validation.
+  \item Use reweighted histograms to estimate $F(r)=-\kbt\ln g(r)$.
 \end{itemize}
 \end{frame}
 
 \begin{frame}
-\frametitle{Superficies de energía libre y barreras}
+\frametitle{Free energy surfaces and barriers}
 \begin{itemize}
-  \item La proyección $F(s)=-\kbt\ln P(s)$ requiere CVs robustos.
-  \item Integrar con ventanas de `umbrella sampling` y combinar con MBAR.
-  \item Comparar perfiles unidimensionales con \href{https://github.com/openmm/openmm/blob/master/examples/python-examples/simulateAmber.py}{\texttt{simulateAmber.py}}.
-  \item Validar con histogramas solapados manualmente.
+  \item Projection $F(s)=-\kbt\ln P(s)$ requires robust CVs.
+  \item Integrate with `umbrella sampling` windows and combine with MBAR.
+  \item Compare 1D profiles with \href{https://github.com/openmm/openmm/blob/master/examples/python-examples/simulateAmber.py}{\texttt{simulateAmber.py}}.
+  \item Validate using manually overlapping histograms.
 \end{itemize}
 \end{frame}
 
-\subsection{Estadística y confianza}
+\subsection{Statistics and confidence}
 
 \begin{frame}
-\frametitle{Bootstrap y bloqueos}
+\frametitle{Bootstrap and blocking}
 \begin{itemize}
-  \item Re-muestrear bloques para estimar varianzas.
-  \item Las autocorrelaciones (ver \texttt{bs\_autocorrelation.pdf}) determinan el tamaño del bloque.
+  \item Resample blocks to estimate variances.
+  \item Autocorrelations (see \texttt{bs\_autocorrelation.pdf}) determine the block size.
 \end{itemize}
 \end{frame}
 
 \begin{frame}
-\frametitle{Autocorrelaciones de bloques}
+\frametitle{Block autocorrelations}
 \begin{center}
   \includegraphics[width=0.78\linewidth]{episodes/bs_autocorrelation.pdf}
 \end{center}
-{\tiny Fuente: OpenMM Cookbook (simulation parameters). \cita{img-bs-autocorrelation}}
+{\tiny Source: OpenMM Cookbook (simulation parameters). \cita{img-bs-autocorrelation}}
 \end{frame}
 
 \begin{frame}
-\frametitle{Serie de errores}
+\frametitle{Error series}
 \begin{align*}
   \sigma_{\bar{A}} &= \frac{\sigma_A}{\sqrt{N_{\text{eff}}}},\quad N_{\text{eff}}=\frac{N}{g},\quad g=1+2\sum_t\rho(t).
 \end{align*}
 \end{frame}
 
 \begin{frame}
-\frametitle{Reportes finales}
+\frametitle{Final reports}
 \begin{itemize}
-  \item Generar tablas de RMSD/RMSF/radio de giro con \href{https://github.com/openmm/openmm/blob/master/examples/python-examples/simulateCharmm.py}{\texttt{simulateCharmm.py}}.
-  \item Exportar CSV/HDF para facilitar el paso a PyEMMA/Deeptime.
+  \item Generate RMSD/RMSF/radius of gyration tables with \href{https://github.com/openmm/openmm/blob/master/examples/python-examples/simulateCharmm.py}{\texttt{simulateCharmm.py}}.
+  \item Export CSV/HDF for easy handoff to PyEMMA/Deeptime.
 \end{itemize}
 \end{frame}
 
-\subsection{Resumen}
+\subsection{Summary}
 
 \begin{frame}
-\frametitle{Resumen y siguiente paso}
+\frametitle{Summary and next step}
 \begin{itemize}
-  \item Preprocesado sin PBC artefactual.
-  \item CVs estables y histogramas convergentes.
-  \item Reportes con errores y trayectorias documentadas.
-  \item Usar los features preparados como entrada para PyEMMA/Deeptime.
+  \item Preprocess without artifactual PBC.
+  \item Stable CVs and converged histograms.
+  \item Reports with errors and documented trajectories.
+  \item Use the prepared features as input for PyEMMA/Deeptime.
 \end{itemize}
 \end{frame}

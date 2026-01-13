@@ -1,127 +1,127 @@
-\section[Simulaciones]{Episodio 2: Ejecuci\'on de simulaciones}
+\section[Simulations]{Episode 2: Running simulations}
 
-\subsection{Par\'ametros clave (OpenMM User Guide §3.7)}
+\subsection{Key parameters (OpenMM User Guide §3.7)}
 
 \begin{frame}
-\frametitle{Compromisos velocidad vs. exactitud}
+\frametitle{Speed vs. accuracy trade-offs}
 \begin{itemize}
-  \item Velocidad: pasos grandes y menos reporting.
-  \item Exactitud num\'erica: integradores simp\'ecticos, restricciones, timestep pequeño.
-  \item OpenMM ofrece sliders para \texttt{dt}, \texttt{constraints}, \texttt{hydrogenMass} y termostatos (§3.7.6-3.7.8).
+  \item Speed: large time steps and reduced reporting.
+  \item Numerical accuracy: symplectic integrators, constraints, and a small timestep.
+  \item OpenMM exposes knobs for \texttt{dt}, \texttt{constraints}, \texttt{hydrogenMass}, and thermostats (§3.7.6–3.7.8).
 \end{itemize}
 \end{frame}
 
 \begin{frame}
-\frametitle{Paso y restricciones}
+\frametitle{Time step and constraints}
 \begin{align*}
   \Delta t &\approx \frac{1}{10\,\omega_{\text{max}}},\quad \omega_{\text{max}}\sim\sqrt{\frac{k}{\mu}}.
 \end{align*}
 \begin{itemize}
-  \item Con \texttt{constraints=HBonds}, se duplica el timestep.
-  \item \texttt{constraints=AllBonds/HAngles} permiten más salto pero reducen flexibilidad.
+  \item With \texttt{constraints=HBonds}, the timestep doubles.
+  \item \texttt{constraints=AllBonds/HAngles} allow bigger jumps but reduce flexibility.
 \end{itemize}
 \end{frame}
 
 \begin{frame}
-\frametitle{Hidrógenos pesados}
+\frametitle{Heavy hydrogens}
 \begin{align*}
   m_H^{\text{new}} &= \alpha\,m_H,\quad m_{heavy}^{\text{new}} = m_{heavy} - (\alpha-1)m_H.
 \end{align*}
 \begin{itemize}
-  \item \texttt{hydrogenMass=1.5*amu} ralentiza oscilaciones sin perder masa total.
-  \item Utilizado en scripts de integración, p.ej. el ejemplo \href{https://github.com/openmm/openmm/blob/master/examples/python-examples/argon-chemical-potential.py}{\texttt{argon-chemical-potential.py}} adapta este truco.
+  \item \texttt{hydrogenMass=1.5*amu} slows oscillations without changing the total mass.
+  \item Used in integration scripts, e.g., \href{https://github.com/openmm/openmm/blob/master/examples/python-examples/argon-chemical-potential.py}{\texttt{argon-chemical-potential.py}} adopts this trick.
 \end{itemize}
 \end{frame}
 
 \begin{frame}
-\frametitle{Acoplamientos térmicos y de presión}
+\frametitle{Thermal and pressure coupling}
 \begin{itemize}
-  \item \texttt{LangevinIntegrator} simula un baño de calor con fricción $\gamma$.
-  \item Nosé-Hoover (cadena) controla distribución canónica manteniendo el momento.
-  \item Barostato de Monte Carlo o Parrinello-Rahman aparece en los scripts de \href{https://github.com/openmm/openmm/blob/master/examples/python-examples/simulateAmber.py}{\texttt{simulateAmber.py}}.
+  \item \texttt{LangevinIntegrator} simulates a heat bath with friction $\gamma$.
+  \item Nosé-Hoover (chain) controls the canonical distribution while preserving momentum.
+  \item Monte Carlo or Parrinello-Rahman barostats appear in the \href{https://github.com/openmm/openmm/blob/master/examples/python-examples/simulateAmber.py}{\texttt{simulateAmber.py}} scripts.
 \end{itemize}
 \end{frame}
 
 \begin{frame}
-\frametitle{Reportes y checkpoints}
+\frametitle{Reporting and checkpoints}
 \begin{itemize}
-  \item `StateDataReporter` controla energía, temperatura, volumen y RMSD.
-  \item `DCDReporter` / `NetCDFReporter` guardan trayectorias (OpenMM App §3.13-3.14).
-  \item Usa `CheckpointReporter` para reiniciar simulaciones largas (OpenMM §3.15).
+  \item `StateDataReporter` tracks energy, temperature, volume, and RMSD.
+  \item `DCDReporter` / `NetCDFReporter` save trajectories (OpenMM App §3.13–3.14).
+  \item Use `CheckpointReporter` to resume long simulations (OpenMM §3.15).
 \end{itemize}
 \end{frame}
 
-\subsection{Discretizaci\'on temporal}
+\subsection{Time discretization}
 
 \begin{frame}
-\frametitle{Ecuaciones continuas y discretas}
+\frametitle{Continuous and discrete equations}
 \begin{align*}
   \dot{\mathbf{r}}(t) &= \mathbf{v}(t),\quad \dot{\mathbf{v}}(t) = \frac{\mathbf{F}(t)}{m}.
 \end{align*}
 \begin{itemize}
-  \item La simulaci\'on sustituye derivadas por incrementos finitos.
+  \item Simulation replaces derivatives with finite increments.
 \end{itemize}
 \end{frame}
 
 \begin{frame}
-\frametitle{Paso de tiempo}
+\frametitle{Time step}
 \begin{align*}
   \mathbf{r}(t+\Delta t) &= \mathbf{r}(t) + \mathbf{v}(t)\Delta t + \mathcal{O}(\Delta t^2).
 \end{align*}
 \begin{itemize}
-  \item $\Delta t$ debe resolver las vibraciones m\'as r\'apidas.
+  \item $\Delta t$ must resolve the fastest vibrations.
 \end{itemize}
 \end{frame}
 
 \begin{frame}
-\frametitle{Error local y global}
+\frametitle{Local and global error}
 \begin{align*}
   \text{error local} &= \mathcal{O}(\Delta t^{p+1}),\\
   \text{error global} &= \mathcal{O}(\Delta t^{p}).
 \end{align*}
 \begin{itemize}
-  \item Los integradores de orden $p$ controlan la acumulaci\'on de error.
+  \item Order-$p$ integrators control the accumulation of error.
 \end{itemize}
 \end{frame}
 
 \begin{frame}
-\frametitle{Escala de estabilidad}
+\frametitle{Stability scale}
 \begin{align*}
   \Delta t &\lesssim \frac{1}{10\,\omega_{\text{max}}}.
 \end{align*}
 \begin{itemize}
-  \item $\omega_{\text{max}}$ proviene de los modos vibracionales m\'as r\'apidos.
+  \item $\omega_{\text{max}}$ comes from the fastest vibrational modes.
 \end{itemize}
 \end{frame}
 
 \begin{frame}
-\frametitle{Criterio pr\'actico}
+\frametitle{Practical guideline}
 \begin{itemize}
-  \item Sin restricciones: $\Delta t \approx 1$ fs.
-  \item Con SHAKE/RATTLE: $\Delta t \approx 2$ fs.
+  \item Without constraints: $\Delta t \approx 1$ fs.
+  \item With SHAKE/RATTLE: $\Delta t \approx 2$ fs.
 \end{itemize}
 \end{frame}
 
-\subsection{Integradores cl\'asicos}
+\subsection{Classical integrators}
 
 \begin{frame}
-\frametitle{Euler expl\'icito}
+\frametitle{Explicit Euler}
 \begin{align*}
   \mathbf{v}_{t+\Delta t} &= \mathbf{v}_t + \frac{\mathbf{F}_t}{m}\Delta t,\\
   \mathbf{r}_{t+\Delta t} &= \mathbf{r}_t + \mathbf{v}_t\Delta t.
 \end{align*}
 \begin{itemize}
-  \item Simple pero inestable para din\'amica molecular.
+  \item Simple but unstable for molecular dynamics.
 \end{itemize}
 \end{frame}
 
 \begin{frame}
-\frametitle{Verlet cl\'asico}
+\frametitle{Classical Verlet}
 \begin{align*}
   \mathbf{r}_{t+\Delta t} &= 2\mathbf{r}_t - \mathbf{r}_{t-\Delta t} + \frac{\mathbf{F}_t}{m}\Delta t^2.
 \end{align*}
 \begin{itemize}
-  \item Sim\'etrico y reversible en el tiempo.
+  \item Symmetric and time-reversible.
 \end{itemize}
 \end{frame}
 
@@ -132,27 +132,27 @@
   \mathbf{v}_{t+\Delta t} &= \mathbf{v}_t + \frac{\mathbf{F}_t+\mathbf{F}_{t+\Delta t}}{2m}\Delta t.
 \end{align*}
 \begin{itemize}
-  \item Combina estabilidad y acceso directo a velocidades.
+  \item Combines stability with direct access to velocities.
 \end{itemize}
 \end{frame}
 
 \begin{frame}
-\frametitle{Simetr\'ia y estabilidad}
+\frametitle{Symmetry and stability}
 \begin{itemize}
-  \item Integradores simp\'ecticos conservan volumen en el espacio de fases.
-  \item Evitan deriva energ\'etica en NVE.
+  \item Symplectic integrators conserve volume in phase space.
+  \item They prevent energy drift in NVE.
 \end{itemize}
 \end{frame}
 
 \begin{frame}
-\frametitle{Elecci\'on pr\'actica}
+\frametitle{Practical choice}
 \begin{itemize}
-  \item OpenMM usa integradores tipo Verlet o Langevin.
-  \item La elecci\'on depende del ensemble deseado.
+  \item OpenMM uses Verlet- or Langevin-type integrators.
+  \item The choice depends on the desired ensemble.
 \end{itemize}
 \end{frame}
 
-\subsection{Esquema leapfrog}
+\subsection{Leapfrog scheme}
 
 \begin{frame}
 \frametitle{Leapfrog}
@@ -161,40 +161,40 @@
   \mathbf{r}_{t+\Delta t} &= \mathbf{r}_t + \mathbf{v}_{t+\Delta t/2}\Delta t.
 \end{align*}
 \begin{itemize}
-  \item Velocidades y posiciones ``se alternan'' en el tiempo.
+  \item Velocities and positions ``leapfrog'' through time.
 \end{itemize}
 \end{frame}
 
 \begin{frame}
-\frametitle{Interpretaci\'on gr\'afica}
+\frametitle{Graphical interpretation}
 \begin{center}
   \includegraphics[width=0.72\linewidth]{episodes/leapfrog_method_argument.png}
 \end{center}
 \vspace{-0.1cm}
-{\tiny Fuente: Wikimedia Commons (CC BY-SA 4.0). \cita{img-leapfrog}}
+{\tiny Source: Wikimedia Commons (CC BY-SA 4.0). \cita{img-leapfrog}}
 \end{frame}
 
 \begin{frame}
-\frametitle{Ventajas}
+\frametitle{Advantages}
 \begin{itemize}
-  \item Sim\'etrico, reversible y de bajo coste.
-  \item Conserva mejor la energ\'ia que Euler.
+  \item Symmetric, reversible, and inexpensive.
+  \item Preserves energy better than Euler.
 \end{itemize}
 \end{frame}
 
 \begin{frame}
-\frametitle{Relaci\'on con Verlet}
+\frametitle{Relation to Verlet}
 \begin{itemize}
-  \item Leapfrog y velocity Verlet son algebraicamente equivalentes.
-  \item Diferencias en el almacenamiento de velocidades.
+  \item Leapfrog and velocity Verlet are algebraically equivalent.
+  \item Differences appear in how velocities are stored.
 \end{itemize}
 \end{frame}
 
 \begin{frame}
-\frametitle{Elecci\'on de integrador}
+\frametitle{Integrator choice}
 \begin{itemize}
-  \item NVE: Verlet/Leapfrog.
-  \item NVT: Langevin o Nos\'e-Hoover.
+  \item NVE: Verlet or Leapfrog.
+  \item NVT: Langevin or Nos\'e-Hoover.
 \end{itemize}
 \end{frame}
 
@@ -565,29 +565,29 @@
   \langle A \rangle &\approx \frac{1}{M}\sum_{k=1}^M A_k.
 \end{align*}
 \begin{itemize}
-  \item La autocorrelaci\'on determina el n\'umero efectivo de muestras.
+  \item Autocorrelation determines the effective number of samples.
 \end{itemize}
 \end{frame}
 
 \begin{frame}
-\frametitle{Semillas aleatorias}
+\frametitle{Random seeds}
 \begin{itemize}
-  \item Documentar seeds para reproducir termostatos estoc\'asticos.
+  \item Document seeds to reproduce stochastic thermostats.
 \end{itemize}
 \end{frame}
 
 \begin{frame}
 \frametitle{Checkpoints}
 \begin{itemize}
-  \item Guardar estados para reiniciar simulaciones largas.
+  \item Save states to restart long simulations.
 \end{itemize}
 \end{frame}
 
 \begin{frame}
-\frametitle{Resumen del episodio}
+\frametitle{Episode summary}
 \begin{itemize}
-  \item La integraci\'on num\'erica controla estabilidad y fidelidad.
-  \item Termostatos y barostatos definen el ensemble.
-  \item PBC y electrost\'atica de largo alcance son cr\'iticos en biomol\'eculas.
+  \item Numerical integration controls stability and accuracy.
+  \item Thermostats and barostats set the ensemble.
+  \item PBC and long-range electrostatics are critical in biomolecules.
 \end{itemize}
 \end{frame}

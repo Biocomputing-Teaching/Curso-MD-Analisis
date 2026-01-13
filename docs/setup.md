@@ -70,11 +70,25 @@ Inside the `md-openmm` environment, install the packages we use in the episodes:
 conda install -c conda-forge jupyterlab mdanalysis mdtraj deeptime openff-toolkit openmmforcefields pdbfixer
 ```
 
-PyEMMA is optional (the project is frozen). If you need it:
+PyEMMA is optional (the project is frozen). If you need it, install from PyPI:
 
 ```bash
 pip install pyemma
 ```
+
+### Advanced PyEMMA build
+
+To follow the episode 06 workflow you can also build PyEMMA from source inside `md-openmm` (after pinning to Python 3.9) or inside a dedicated `pyemma` environment. With the environment activated, run:
+
+```bash
+git clone https://github.com/markovmodel/PyEMMA.git
+cd PyEMMA
+conda install python=3.9
+conda install pybind11 cython setuptools numpy scipy matplotlib
+python setup.py develop
+```
+
+The `python setup.py develop` step installs PyEMMA in editable mode, so the episodes can import it without reinstalling. If you keep working in `md-openmm`, rerun `conda install python=3.9` before the remaining commands so the interpreter matches PyEMMA’s expectations.
 
 
 

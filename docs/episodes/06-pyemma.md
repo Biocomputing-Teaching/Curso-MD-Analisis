@@ -17,6 +17,8 @@ permalink: /episodes/06-pyemma/
 - [Content](#content)
 - [Guide scripts to prepare data](#guide-scripts-to-prepare-data)
 - [Mathematical foundations](#mathematical-foundations)
+- [PyEMMA configuration and API primers](#pyemma-configuration-and-api-primers)
+- [Tutorial pillars from the official PyEMMA guide](#tutorial-pillars-from-the-official-pyemma-guide)
 - [Alanine dipeptide](#alanine-dipeptide)
 - [Protein-ligand complex](#protein-ligand-complex)
 <!-- toc:end -->
@@ -71,6 +73,47 @@ $$
 
 The Chapman-Kolmogorov test ensures that $T(\tau)^n \approx T(n\tau)$ within statistical error.
 
+## PyEMMA configuration and API primers
+
+### Adjust runtime values step by step
+
+PyEMMA exposes a `config` object that controls logging, progress bars, trajectory caching, parallelism, and even automatic version checks. Use it interactively (see [runtime configuration](http://www.emma-project.org/latest/Configuration.html)) to peek at the defaults and tweak them:
+
+<div class="notebook-embed"><iframe src="{{ site.baseurl }}/episodes/notebooks/rendered/06-pyemma-alanine.html" loading="lazy"></iframe><div class="notebook-links"><a href="{{ site.baseurl }}/episodes/notebooks/06-pyemma-alanine.ipynb" download>Download notebook</a> | <a href="{{ site.baseurl }}/episodes/scripts/06-pyemma-alanine.py" download>Download script (.py)</a></div></div>
+
+Every attribute listed under `pyemma.util._config.Config` in the [API index](http://www.emma-project.org/latest/api/index.html) can be inspected (e.g., `.mute`, `.traj_info_max_entries`, `.use_trajectory_lengths_cache`) and saved for reproduction.
+
+### Persisting tweaks and logging
+
+Save your tuned configuration with `config.save("/path/to/pyemma.cfg")`, then point `PYEMMA_CFG_DIR` at the directory that contains the file so every import reads the same settings. The configuration loader searches:
+
+1. `./pyemma.cfg`
+2. `$HOME/.pyemma/pyemma.cfg`
+3. `~/pyemma.cfg`
+4. `$PYTHONPATH/pyemma/pyemma.cfg` (always the default)
+
+This lets you version-control different logging settings (the `.logging_config` attribute points to the `logging.yml` file) and reuse them across the simple and complex notebooks.
+
+### Parallelism and resources
+
+PyEMMA honors `PYEMMA_NJOBS` and `OMP_NUM_THREADS` (along with `SLURM_CPUS_ON_NODE` when available) to cap cluster usage. The tutorials for MSM estimation and clustering spawn both threads and processes, so set `PYEMMA_NJOBS` before launching Jupyter if you need to limit the total worker count.
+
+### API highlights
+
+- `pyemma.coordinates`: handles trajectory loading, caching, and transformation pipelines (see [`pyemma.coordinates.api`](http://www.emma-project.org/latest/api/coordinates/api.html)). Always feed it the same normalized data used in the notebooks so the coordinate cache is coherent.
+- `pyemma.msm`: powers the transition matrix, MSM, and PCCA/TPT routines. The methods there (`estimate_markov_model`, `.timescales`, `.pcca`) are referenced in both scripts, so compare their docstrings with the API page to understand additional arguments (lag time, reversible, etc.).
+- `pyemma.analysis` and `pyemma.plots`: supply helpers for implied timescale plotting, ITS, and Chapman-Kolmogorov validation; follow the API links when you extend the example workflows.
+
+## Tutorial pillars from the official PyEMMA guide
+
+### Tutorial 1 – simple MSM pipeline
+
+The [official tutorial](http://www.emma-project.org/latest/tutorial.html#simple_msm) demonstrates the same featurization → tICA → clustering → MSM steps that the alanine notebook covers. Pay attention to the explanation of `pyemma.coordinates.source` (for loading DCD/PDB pairs) and the bootstrap/ITS sections so you can mirror the same plots without errors.
+
+### Tutorial 2 – protein complex workflow
+
+The advanced tutorial ([“Protein-ligand transitions”](http://www.emma-project.org/latest/tutorial.html#protein_ligand_complex)) walks through building MSMs on larger datasets with `pyemma.msm.markov_model` and `pyemma.plots.plot_cktest`. Use it to validate the complex notebook’s clustering parameters and to create the same diagnostic figures with the stored transition matrix.
+
 ## Alanine dipeptide
 
 ### Guided demo
@@ -82,6 +125,8 @@ The Chapman-Kolmogorov test ensures that $T(\tau)^n \approx T(n\tau)$ within sta
 
 - Run the full workflow on alanine (featurization, TICA, and clustering) and compute the three slowest relaxation times.
 - Validate the model by showing the correspondence of $\tau_k$ with the ITS slopes.
+### Tutorial check
+Follow [Tutorial 1: simple MSM workflow](http://www.emma-project.org/latest/tutorial.html#simple_msm) to confirm you reuse the same coordinate pipelines and clustering diagnostics before moving on to the protein complex.
 
 ### Key points
 
@@ -108,6 +153,8 @@ The Chapman-Kolmogorov test ensures that $T(\tau)^n \approx T(n\tau)$ within sta
 
 - Output trajectories are validated with TPT and the extended transition matrix.
 - Use relevant observables (distances, local energies) to reconstruct the state density.
+### Tutorial check
+Use [Tutorial 2: protein-ligand complex](http://www.emma-project.org/latest/tutorial.html#protein_ligand_complex) to ensure the extended transition matrix and CK test match the notebook examples.
 
 ### Notebooks and scripts
 

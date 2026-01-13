@@ -1,136 +1,136 @@
-\section[PyEMMA]{Episodio 6: Modelos de Markov con PyEMMA}
+\section[PyEMMA]{Episode 6: Markov models with PyEMMA}
 
-\subsection{Preparando trayectorias}
+\subsection{Preparing trajectories}
 
 \begin{frame}
-\frametitle{Transformar datos}
+\frametitle{Transform data}
 \begin{itemize}
-  \item \href{https://github.com/openmm/openmm/blob/master/examples/python-examples/simulateAmber.py}{simulateAmber.py} y \href{https://github.com/openmm/openmm/blob/master/examples/python-examples/simulateCharmm.py}{simulateCharmm.py} producen trayectorias DCD que alimentamos a PyEMMA\@.
-  \item Alinear, recortar solvente y guardar en HDF5 para economía de almacenamiento.
-  \item Reportes de energía y RMSD se usan como checks previos a la discretización.
+  \item \href{https://github.com/openmm/openmm/blob/master/examples/python-examples/simulateAmber.py}{simulateAmber.py} and \href{https://github.com/openmm/openmm/blob/master/examples/python-examples/simulateCharmm.py}{simulateCharmm.py} produce DCD trajectories that feed into PyEMMA.
+  \item Align, trim solvent, and save to HDF5 for storage efficiency.
+  \item Energy and RMSD reports serve as checks before discretization.
 \end{itemize}
 \end{frame}
 
 \begin{frame}
-\frametitle{Extracción de características}
+\frametitle{Feature extraction}
 \begin{itemize}
-  \item Distancias, dihedros y contactos entre ligando y proteína forman el vector $\mathbf{x}$.
-  \item La matriz de covarianza $C=\langle (\mathbf{x}-\bar{\mathbf{x}})(\mathbf{x}-\bar{\mathbf{x}})^T\rangle$ se proyecta.
-  \item Todos los scripts de la guía (simulateGromacs, simulateTinker) comparten esta salida para alimentar PyEMMA.
+  \item Distances, dihedrals, and ligand–protein contacts form the vector $\mathbf{x}$.
+  \item The covariance matrix $C=\langle (\mathbf{x}-\bar{\mathbf{x}})(\mathbf{x}-\bar{\mathbf{x}})^T\rangle$ gets projected.
+  \item All guide scripts (simulateGromacs, simulateTinker) share this output to feed PyEMMA.
 \end{itemize}
 \end{frame}
 
 \begin{frame}
-\frametitle{tICA y reducción temporal}
+\frametitle{tICA and time-lagged reduction}
 \begin{align*}
   C_\tau \mathbf{w} &= \lambda C_0 \mathbf{w}.
 \end{align*}
 \begin{itemize}
-  \item Seleccionamos $\tau$ comparando mesetas en los tiempos implícitos $t_i=-\frac{\tau}{\ln\lambda_i}$.
-  \item tICA captura los modos lentos que nos interesan para MSM y Deeptime.
+  \item Choose $\tau$ by comparing plateaus in implicit times $t_i=-\frac{\tau}{\ln\lambda_i}$.
+  \item tICA captures the slow modes relevant for MSM and Deeptime.
 \end{itemize}
 \end{frame}
 
-\subsection{Discretización y clustering}
+\subsection{Discretization and clustering}
 
 \begin{frame}
-\frametitle{Clustering de microestados}
+\frametitle{Microstate clustering}
 \begin{itemize}
-  \item k-means/minibatch generan microestados; silhouette ayuda a escoger $k$.
-  \item Preferimos estados densos para evitar microestados vacíos (OpenMM User Guide §3.7).
+  \item k-means/minibatch create microstates; silhouette helps choose $k$.
+  \item Favor dense states to avoid empty microstates (OpenMM User Guide §3.7).
 \end{itemize}
 \end{frame}
 
 \begin{frame}
-\frametitle{Mapa de estados}
+\frametitle{State map}
 \begin{center}
   \includegraphics[width=0.72\linewidth]{episodes/graph.png}
 \end{center}
-{\tiny Grafo de transiciones influenciado por los resultados del tutorial REST. \cita{img-graph}}
+{\tiny Transition graph influenced by the REST tutorial results. \cita{img-graph}}
 \end{frame}
 
 \begin{frame}
-\frametitle{Paisaje energético y particiones}
+\frametitle{Energy landscape and partitions}
 \begin{center}
   \includegraphics[width=0.7\linewidth]{episodes/function_funnel.png}
 \end{center}
-{\tiny Embudo energético para visualizar macroestados. \cita{FunctionFunnelUnknown}}
+{\tiny Energy funnel to visualize macrostates. \cita{FunctionFunnelUnknown}}
 \end{frame}
 
 \begin{frame}
-\frametitle{Matriz de transición}
+\frametitle{Transition matrix}
 \begin{align*}
   T_{ij}(\tau) &= \frac{C_{ij}(\tau)}{\sum_k C_{ik}(\tau)}.
 \end{align*}
 \begin{itemize}
-  \item Las filas suman 1 y la matriz es estocástica reversible cuando se impone detailed balance.
-  \item Utilizamos estimadores bayesianos con pseudoconteos para evitar ceros.
+  \item Rows sum to 1 and the matrix becomes reversible stochastic when detailed balance is enforced.
+  \item Use Bayesian estimators with pseudocounts to avoid zeros.
 \end{itemize}
 \end{frame}
 
 \begin{frame}
-\frametitle{Propiedad de Markov}
+\frametitle{Markov property}
 \begin{align*}
   P(X_{t+\tau}\mid X_t,\dots) &= P(X_{t+\tau}\mid X_t).
 \end{align*}
 \begin{itemize}
-  \item Prueba Chapman-Kolmogorov y tests de pseudo-time (PyEMMA) validan la Markovianidad.
+  \item Chapman-Kolmogorov tests and pseudo-time diagnostics (PyEMMA) validate Markovianity.
 \end{itemize}
 \end{frame}
 
-\subsection{MSM y validación}
+\subsection{MSM and validation}
 
 \begin{frame}
-\frametitle{Estacionariedad}
+\frametitle{Stationarity}
 \begin{align*}
   \boldsymbol{\pi}^T T &= \boldsymbol{\pi}^T.
 \end{align*}
 \begin{itemize}
-  \item La distribución estacionaria \(\pi\) define poblaciones relativas.
-  \item Asociamos con energías libres \(F_i=-\kbt\ln\pi_i\) y comparamos con \(\Delta G\) alquímicos.
+  \item The stationary distribution \(\pi\) defines relative populations.
+  \item Relate to free energies \(F_i=-\kbt\ln\pi_i\) and compare with alchemical \(\Delta G\).
 \end{itemize}
 \end{frame}
 
 \begin{frame}
-\frametitle{Tiempos implícitos}
+\frametitle{Implied times}
 \begin{align*}
   t_i &= -\frac{\tau}{\ln\lambda_i}.
 \end{align*}
 \begin{itemize}
-  \item Los autovalores cercanos a 1 representan procesos lentos (Markovianidad).
-  \item Las diferencias grandes entre \(t_i\) respaldan la separación de escalas.
+  \item Eigenvalues near 1 represent slow processes (Markovianity).
+  \item Large gaps between \(t_i\) support scale separation.
 \end{itemize}
 \end{frame}
 
 \begin{frame}
-\frametitle{Incertidumbre y regularización}
+\frametitle{Uncertainty and regularization}
 \begin{itemize}
-  \item Remuestrear trayectorias discretizadas para intervalos confiables.
-  \item PyEMMA guarda pesos y permite reproducir con semilla distinta.
-  \item Imponemos reversibilidad para reducir ruido.
-  \item Ajustamos priors a partir de las fuerzas detectadas en \href{https://github.com/openmm/openmm/blob/master/examples/python-examples/simulateAmber.py}{\texttt{simulateAmber.py}}.
+  \item Resample discretized trajectories to obtain reliable intervals.
+  \item PyEMMA stores weights and allows reruns with a different seed.
+  \item Enforce reversibility to reduce noise.
+  \item Tune priors using forces detected in \href{https://github.com/openmm/openmm/blob/master/examples/python-examples/simulateAmber.py}{\texttt{simulateAmber.py}}.
 \end{itemize}
 \end{frame}
 
-\subsection{Transiciones y rutas}
+\subsection{Transitions and pathways}
 
 \begin{frame}
-\frametitle{TPT, committor y flujos}
+\frametitle{TPT, committor, and fluxes}
 \begin{itemize}
-  \item Flujos \(f_{ij}=\pi_i T_{ij} q_i (1-q_j)\) identifican rutas reactivas.
-  \item El committor \(q_i = P(\text{llegar a B antes que a A}\mid X_0=i)\) define el progreso.
-  \item Grafo de transiciones coloreado por flujo destaca cuellos de botella cinéticos.
-  \item \href{https://github.com/openmm/openmm/blob/master/examples/python-examples/simulateGromacs.py}{\texttt{simulateGromacs.py}} proporciona las trayectorias de referencia.
+  \item Flows \(f_{ij}=\pi_i T_{ij} q_i (1-q_j)\) identify reactive pathways.
+  \item The committor \(q_i = P(\text{reaching B before A}\mid X_0=i)\) gauges progress.
+  \item A transition graph colored by flux highlights kinetic bottlenecks.
+  \item \href{https://github.com/openmm/openmm/blob/master/examples/python-examples/simulateGromacs.py}{\texttt{simulateGromacs.py}} provides the reference trajectories.
 \end{itemize}
 \end{frame}
 
-\subsection{Resumen}
+\subsection{Summary}
 
 \begin{frame}
-\frametitle{Checklist MSM}
+\frametitle{MSM checklist}
 \begin{itemize}
-  \item Features informativos.
-  \item \(\tau\) validado y autovalores con gap claro.
-  \item Bootstrap de errores y reporte con referencias.
+  \item Informative features.
+  \item Validated \(\tau\) and eigenvalues with a clear gap.
+  \item Error bootstrap and referenced reporting.
 \end{itemize}
 \end{frame}
