@@ -36,6 +36,58 @@ svg_to_pdf() {
   fi
 }
 
+generate_hmm_trellis() {
+  local out="$1"
+  python - <<PY
+import matplotlib.pyplot as plt
+from matplotlib.patches import Circle
+
+fig, ax = plt.subplots(figsize=(4.5, 2.5))
+ax.set_xlim(-0.1, 3.1)
+ax.set_ylim(-1.1, 1.1)
+levels = [0.7, -0.7]
+for t in range(4):
+    for y in levels:
+        circle = Circle((t, y), 0.2, edgecolor="black", facecolor="#e3f2fd", linewidth=1.2)
+        ax.add_patch(circle)
+        ax.text(t, y, f"S{t}", ha="center", va="center", fontsize=10)
+for t in range(3):
+    for y in levels:
+        ax.annotate("", xy=(t + 0.75, y), xytext=(t + 0.25, y), arrowprops=dict(arrowstyle="->", lw=1.2))
+ax.set_axis_off()
+fig.tight_layout()
+out = r"""$out"""
+fig.savefig(out, format="svg")
+PY
+}
+
+generate_transfer_operator() {
+  local out="$1"
+  python - <<PY
+import matplotlib.pyplot as plt
+from matplotlib.patches import FancyArrowPatch, Rectangle
+
+fig, ax = plt.subplots(figsize=(4, 3))
+rect1 = Rectangle((0.08, 0.25), 0.34, 0.5, facecolor="#c8e6c9", edgecolor="black", linewidth=1.2)
+rect2 = Rectangle((0.58, 0.25), 0.34, 0.5, facecolor="#bbdefb", edgecolor="black", linewidth=1.2)
+ax.add_patch(rect1)
+ax.add_patch(rect2)
+ax.text(0.25, 0.5, "Density\nspace", ha="center", va="center", fontsize=10)
+ax.text(0.75, 0.5, "Observable\nspace", ha="center", va="center", fontsize=10)
+arrow = FancyArrowPatch((0.42, 0.5), (0.58, 0.5), arrowstyle="->", mutation_scale=20, lw=2)
+ax.add_patch(arrow)
+ax.text(0.5, 0.65, r"\(\mathcal{T}_\tau\)", ha="center", va="bottom", fontsize=11)
+ax.plot([0.4, 0.6], [0.35, 0.35], color="black", lw=1.2)
+ax.text(0.5, 0.3, "propagates ensembles", ha="center", va="top", fontsize=9)
+ax.set_xlim(0, 1)
+ax.set_ylim(0, 1)
+ax.set_axis_off()
+fig.tight_layout()
+out = r"""$out"""
+fig.savefig(out, dpi=150)
+PY
+}
+
 # ----------------------------
 # Define figures
 # - Use Wikimedia "Special:FilePath/<Filename>" for stable direct downloads
@@ -104,6 +156,21 @@ for entry in "${FIGS[@]}"; do
     fi
   fi
 
+  if [[ "$download_status" == "failed" ]]; then
+    case "$base" in
+      hmm_trellis)
+        echo "Generating fallback for $base"
+        generate_hmm_trellis "$out"
+        download_status="generated"
+        ;;
+      transfer_operator)
+        echo "Generating fallback for $base"
+        generate_transfer_operator "$out"
+        download_status="generated"
+        ;;
+    esac
+  fi
+
   # If SVG, also create a PDF alongside it (recommended for LaTeX)
   if [[ "$ext" == "svg" && "$download_status" != "failed" ]]; then
     pdf="$OUTDIR/${base}.pdf"
@@ -121,6 +188,9 @@ for entry in "${FIGS[@]}"; do
       echo "- Download result: FAILED (see script output)"
       echo ""
       continue
+    fi
+    if [[ "$download_status" == "generated" ]]; then
+      echo "- Download result: GENERATED (local fallback figure)"
     fi
     echo "- Source page: ${src}"
     echo ""
