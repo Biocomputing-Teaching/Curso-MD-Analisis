@@ -492,6 +492,27 @@
 \end{frame}
 
 \begin{frame}
+\frametitle{Molecular mechanics potential}
+\begin{center}
+  \includegraphics[width=0.8\linewidth]{mm_potential_energy.png}
+\end{center}
+\vspace{-0.2cm}
+{\tiny Visualizing the typical multi-basined MM surface for a small system.}
+\end{frame}
+
+\begin{frame}
+\frametitle{Enzymes and reactive Hamiltonians}
+\begin{itemize}
+  \item Enzymatic catalysis reshuffles bonds, so the Hamiltonian must describe bond breaking/forming events beyond fixed-topology potentials.
+  \item Reactive force fields or QM/MM fragments introduce extra terms that depend on electronic reorganization.
+\end{itemize}
+\begin{center}
+  \includegraphics[width=0.7\linewidth]{tss.png}
+\end{center}
+{\tiny Transition-state surface highlighting why the potential energy landscape is richer near activated complexes.}
+\end{frame}
+
+\begin{frame}
 \frametitle{Reaction coordinates}
 \begin{align*}
   \xi &= \xi(\mathbf{r}),\quad F(\xi) = -\kb T\ln P(\xi).
