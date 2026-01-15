@@ -1,0 +1,162 @@
+\section[Analysis]{Episode 5: Trajectory analysis}
+
+\subsection{Preprocessing and cleanup}
+
+\begin{frame}
+\frametitle{Pre-analysis pipeline}
+\begin{enumerate}
+  \item Convert and clean trajectories with \href{https://github.com/openmm/openmm/blob/master/examples/python-examples/simulatePdb.py}{\texttt{simulatePdb.py}} or \href{https://github.com/openmm/openmm/blob/master/examples/python-examples/simulateGromacs.py}{\texttt{simulateGromacs.py}}.
+  \item Align structures and strip irrelevant solvent.
+  \item Define atom subsets and write DCD/NetCDF for downstream analysis.
+\end{enumerate}
+{\tiny Scripts from the OpenMM Application Layer. \cita{OpenMMUserguide2024}}
+\end{frame}
+
+\begin{frame}
+\frametitle{Velocities and distributions}
+\begin{itemize}
+  \item `StateDataReporter` and `DCDReporter` build histograms of $v_i$ and energies.
+  \item By the equipartition theorem: $\langle K \rangle = \frac{3N}{2}\kbt$ for classical systems.
+  \item Monitoring $C(t)=\langle A(0)A(t)\rangle$ reveals the relevant timescales.
+\end{itemize}
+\end{frame}
+
+\begin{frame}
+\frametitle{RMSD and alignments}
+\begin{align*}
+  \text{RMSD}(t) &= \sqrt{\frac{1}{N}\sum_{i=1}^N\lVert\mathbf{r}_i(t)-\mathbf{r}_i^{\text{ref}}\rVert^2}.
+\end{align*}
+\begin{itemize}
+  \item Use the Kabsch algorithm for optimal rotations.
+  \item Document with \href{https://github.com/openmm/openmm/blob/master/examples/python-examples/simulateAmber.py}{\texttt{simulateAmber.py}} and per-replica CSV output.
+\end{itemize}
+\end{frame}
+
+\subsection{Velocities and inertia}
+
+\begin{frame}
+\frametitle{Radius of gyration and inertia tensor}
+\begin{align*}
+  I_{ab} &= \sum_i m_i\left(r_i^2\delta_{ab}-r_{ia}r_{ib}\right).
+\end{align*}
+\begin{itemize}
+  \item Eigenvalues of $I$ describe global anisotropy.
+  \item Monitor $R_g^2=\frac{1}{N}\sum_i m_i\lVert \mathbf{r}_i-\mathbf{r}_{\text{CM}}\rVert^2$ per replica.
+\end{itemize}
+\end{frame}
+
+\begin{frame}
+\frametitle{Extremes and contacts}
+\begin{itemize}
+  \item Binary maps with a 0.45 nm cutoff generate contact matrices.
+  \item Columns represent domain changes detected by \href{https://github.com/openmm/openmm/blob/master/examples/python-examples/simulateCharmm.py}{\texttt{simulateCharmm.py}}.
+\end{itemize}
+\end{frame}
+
+\subsection{Reduction and clustering}
+
+\begin{frame}
+\frametitle{Covariance and PCA}
+\begin{align*}
+  C &= \langle (\mathbf{x}-\langle \mathbf{x}\rangle)(\mathbf{x}-\langle \mathbf{x}\rangle)^T\rangle.
+\end{align*}
+\begin{itemize}
+  \item Project onto the leading eigenvectors and define event axes.
+  \item Relate to \href{https://openmm.github.io/openmm-cookbook/latest/notebooks/tutorials/coarse_grained_polymer.html}{\texttt{coarse\_grained\_polymer.py}} to compare slow modes of polymers and proteins.
+\end{itemize}
+\end{frame}
+
+\begin{frame}
+\frametitle{Hierarchical clustering}
+\begin{itemize}
+  \item Use average linkage and silhouette index to decide $k$.
+  \item Poor choices yield empty microstates; prefer progressive trials.
+\end{itemize}
+\end{frame}
+
+\begin{frame}
+\frametitle{Transitions and graphs}
+\begin{itemize}
+  \item State graphs (see `graph.png`) represent kinetic channels.
+  \item Annotated edges reflect fluxes measured by OpenMMTools scripts.
+\end{itemize}
+\end{frame}
+
+\begin{frame}
+\frametitle{Eigenvalues and modes}
+\begin{align*}
+  C\mathbf{w} &= \lambda \mathbf{w},\quad \lambda \in \mathbb{R}_+.
+\end{align*}
+\begin{itemize}
+  \item Dominant modes identify collective motions.
+  \item Save projections to feed Markov models.
+\end{itemize}
+\end{frame}
+
+\subsection{Free energies and surfaces}
+
+\begin{frame}
+\frametitle{Density functions}
+\begin{align*}
+  g(r) &= \frac{1}{4\pi r^2\rho}\left\langle \sum_{i\ne j}\delta(r-r_{ij})\right\rangle.
+\end{align*}
+\begin{itemize}
+  \item Compare with \href{https://github.com/openmm/openmm/blob/master/examples/python-examples/argon-chemical-potential.py}{\texttt{argon-chemical-potential.py}} for validation.
+  \item Use reweighted histograms to estimate $F(r)=-\kbt\ln g(r)$.
+\end{itemize}
+\end{frame}
+
+\begin{frame}
+\frametitle{Free energy surfaces and barriers}
+\begin{itemize}
+  \item Projection $F(s)=-\kbt\ln P(s)$ requires robust CVs.
+  \item Integrate with `umbrella sampling` windows and combine with MBAR.
+  \item Compare 1D profiles with \href{https://github.com/openmm/openmm/blob/master/examples/python-examples/simulateAmber.py}{\texttt{simulateAmber.py}}.
+  \item Validate using manually overlapping histograms.
+\end{itemize}
+\end{frame}
+
+\subsection{Statistics and confidence}
+
+\begin{frame}
+\frametitle{Bootstrap and blocking}
+\begin{itemize}
+  \item Resample blocks to estimate variances.
+  \item Autocorrelations (see \texttt{bs\_autocorrelation.pdf}) determine the block size.
+\end{itemize}
+\end{frame}
+
+\begin{frame}
+\frametitle{Block autocorrelations}
+\begin{center}
+  \includegraphics[width=0.78\linewidth]{bs_autocorrelation.pdf}
+\end{center}
+{\tiny Source: OpenMM Cookbook (simulation parameters). \cita{img-bs-autocorrelation}}
+\end{frame}
+
+\begin{frame}
+\frametitle{Error series}
+\begin{align*}
+  \sigma_{\bar{A}} &= \frac{\sigma_A}{\sqrt{N_{\text{eff}}}},\quad N_{\text{eff}}=\frac{N}{g},\quad g=1+2\sum_t\rho(t).
+\end{align*}
+\end{frame}
+
+\begin{frame}
+\frametitle{Final reports}
+\begin{itemize}
+  \item Generate RMSD/RMSF/radius of gyration tables with \href{https://github.com/openmm/openmm/blob/master/examples/python-examples/simulateCharmm.py}{\texttt{simulateCharmm.py}}.
+  \item Export CSV/HDF for easy handoff to PyEMMA/Deeptime.
+\end{itemize}
+\end{frame}
+
+\subsection{Summary}
+
+\begin{frame}
+\frametitle{Summary and next step}
+\begin{itemize}
+  \item Preprocess without artifactual PBC.
+  \item Stable CVs and converged histograms.
+  \item Reports with errors and documented trajectories.
+  \item Use the prepared features as input for PyEMMA/Deeptime.
+\end{itemize}
+\end{frame}

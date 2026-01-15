@@ -1,0 +1,572 @@
+\section[Preparation]{Episode 3: System preparation and editing}
+
+\subsection{Objectives and workflow}
+
+\begin{frame}
+\frametitle{Episode objectives}
+\begin{itemize}
+  \item Prepare systems ready for simulation in OpenMM.
+  \item Standardize topologies and coordinates.
+  \item Produce reproducible, verifiable inputs.
+\end{itemize}
+\end{frame}
+
+\begin{frame}
+\frametitle{Preparation workflow}
+\begin{enumerate}
+  \item Read the structure (PDB/MOL2/SDF).
+  \item Repair and complete missing residues.
+  \item Protonate and assign charges.
+  \item Solvate, add ions, and define the box.
+  \item Minimize and validate.
+\end{enumerate}
+\end{frame}
+
+\begin{frame}
+\frametitle{Input files}
+\begin{itemize}
+  \item PDB: coordinates and experimental metadata.
+  \item MOL2/SDF: ligands and small molecules.
+  \item Topology and parameters are assigned after loading.
+\end{itemize}
+\end{frame}
+
+\begin{frame}
+\frametitle{Essential identifiers}
+\begin{align*}
+  \text{Residue} &= (\text{chain},\text{number},\text{name}),\\
+  \text{Atom} &= (\text{type},\text{element},\text{charge}).
+\end{align*}
+\begin{itemize}
+  \item Consistent identifiers prevent errors in the force field.
+\end{itemize}
+\end{frame}
+
+\begin{frame}
+\frametitle{Reproducibility}
+\begin{itemize}
+  \item Save preparation scripts.
+  \item Document library versions and parameters.
+  \item Avoid non-traceable manual steps.
+\end{itemize}
+\end{frame}
+
+\subsection{Guided modeling}
+
+\begin{frame}
+\frametitle{Official modeling workflow}
+\begin{itemize}
+  \item The OpenMM User Guide (§4.1-4.6) recommends reconnecting hydrogens, adding solvent, and membranes before parameterization.
+  \item The examples repo includes \href{https://github.com/openmm/openmm/blob/master/examples/python-examples/simulateAmber.py}{\texttt{simulateAmber.py}} + \href{https://github.com/openmm/openmm/blob/master/examples/python-examples/simulateCharmm.py}{\texttt{simulateCharmm.py}}, and \href{https://github.com/openmm/openmm/blob/master/examples/python-examples/argon-chemical-potential.py}{\texttt{argon-chemical-potential.py}} to validate free energies in simple liquids.
+  \item We reuse that infrastructure for alanine dipeptide and the protein–ligand complex, extending scripts with membrane variables or coarse-grained polymers.
+\end{itemize}
+\end{frame}
+
+\begin{frame}
+\frametitle{Additional systems}
+\begin{itemize}
+  \item \href{https://openmm.github.io/openmm-cookbook/latest/notebooks/tutorials/coarse_grained_polymer.html}{\texttt{coarse\_grained\_polymer.py}} (OpenMM Cookbook) builds bead-spring topologies that show how to define masses and bonds manually.
+  \item The same approach links to \href{https://github.com/openmm/openmm/blob/master/examples/python-examples/argon-chemical-potential.py}{\texttt{argon-chemical-potential.py}}, where Lennard-Jones forces are parameterized and insertion free energy is measured.
+  \item Biomolecular models benefit from combining these lightweight examples with Amber-style solvation and heavy ligand handling.
+\end{itemize}
+\end{frame}
+
+\begin{frame}
+\frametitle{Membranes and solvents}
+\begin{itemize}
+  \item Add solvent with `Modeller.addSolvent` and choose OPC/TIP3P (User Guide §4.2).
+  \item For membranes, use `Modeller.addMembrane` and then the \href{https://github.com/openmm/openmm/blob/master/examples/python-examples/simulateAmber.py}{\texttt{simulateAmber.py}} script with an anisotropic barostat.
+  \item Save the final topology to reproduce the system exactly (OpenMM App §4.6).
+\end{itemize}
+\end{frame}
+
+\subsection{Structure quality}
+
+\begin{frame}
+\frametitle{PDB quality}
+\begin{itemize}
+  \item Resolution and B-factors indicate uncertainty.
+  \item Flexible regions often show gaps or low occupancy.
+\end{itemize}
+\end{frame}
+
+\begin{frame}
+\frametitle{Missing residues}
+\begin{itemize}
+  \item PDB files may lack entire segments.
+  \item Reconstruction requires inferring geometry and stereochemistry.
+\end{itemize}
+\end{frame}
+
+\begin{frame}
+\frametitle{AltLocs and occupancy}
+\begin{align*}
+  \sum_k \text{occ}_k &\le 1.
+\end{align*}
+\begin{itemize}
+  \item Choose the dominant conformation or average according to the goal.
+\end{itemize}
+\end{frame}
+
+\begin{frame}
+\frametitle{Active site in PDB}
+\begin{center}
+  \includegraphics[width=0.78\linewidth]{pdb_reaction_site.png}
+\end{center}
+\end{frame}
+
+\begin{frame}
+\frametitle{Superposition and RMSD}
+\begin{align*}
+  \text{RMSD} &= \sqrt{\frac{1}{N}\sum_{i=1}^N \lVert \mathbf{r}_i-\mathbf{r}_i^{\,\text{ref}} \rVert^2 }.
+\end{align*}
+\begin{itemize}
+  \item Verify consistency with reference structures.
+\end{itemize}
+\end{frame}
+
+\subsection{Repair and completion}
+
+\begin{frame}
+\frametitle{PDBFixer/Modeller}
+\begin{itemize}
+  \item Fills residues, corrects names, and removes unwanted ligands.
+  \item Prepares the system for force field assignment.
+\end{itemize}
+\end{frame}
+
+\begin{frame}
+\frametitle{Residue insertion}
+\begin{itemize}
+  \item Uses geometric and stereochemical information.
+  \item Local minimization relieves clashes.
+\end{itemize}
+\end{frame}
+
+\begin{frame}
+\frametitle{Protonation and pH}
+\begin{align*}
+  \frac{[A^-]}{[HA]} &= 10^{\mathrm{pH}-\mathrm{p}K_a}.
+\end{align*}
+\begin{itemize}
+  \item Determines charge states of titratable residues.
+\end{itemize}
+\end{frame}
+
+\begin{frame}
+\frametitle{Charge states}
+\begin{itemize}
+  \item Tune histidines (HID/HIE/HIP), ASP/GLU, LYS/ARG.
+  \item Maintain consistency with the active site environment.
+\end{itemize}
+\end{frame}
+
+\begin{frame}
+\frametitle{Structural growth}
+\begin{center}
+  \includegraphics[width=0.72\linewidth]{pdb_growth.png}
+\end{center}
+\end{frame}
+
+\subsection{Force fields}
+
+\begin{frame}
+\frametitle{Potential decomposition}
+\begin{align*}
+  U &= U_{\text{bond}} + U_{\text{angle}} + U_{\text{dihedral}} + U_{\text{nonbonded}}.
+\end{align*}
+\begin{itemize}
+  \item Basis for computing forces and energies.
+\end{itemize}
+\end{frame}
+
+\begin{frame}
+\frametitle{Bonds and angles}
+\begin{align*}
+  U_{\text{bond}} &= \sum_b k_b (r_b-r_b^0)^2,\\
+  U_{\text{angle}} &= \sum_a k_a (\theta_a-\theta_a^0)^2.
+\end{align*}
+\begin{itemize}
+  \item Harmonic approximation around the equilibrium.
+\end{itemize}
+\end{frame}
+
+\begin{frame}
+\frametitle{Dihedrals}
+\begin{align*}
+  U_{\text{dihedro}} &= \sum_d \frac{V_d}{2}\left[1+\cos(n_d\phi_d-\gamma_d)\right].
+\end{align*}
+\begin{itemize}
+  \item Control rotational barriers and conformations.
+\end{itemize}
+\end{frame}
+
+\begin{frame}
+\frametitle{Nonbonded terms}
+\begin{align*}
+  U_{\text{LJ}} &= 4\epsilon\left[\left(\frac{\sigma}{r}\right)^{12}-\left(\frac{\sigma}{r}\right)^6\right],\\
+  U_{\text{C}} &= \frac{1}{4\pi\varepsilon_0}\frac{q_i q_j}{r_{ij}}.
+\end{align*}
+\begin{itemize}
+  \item LJ and Coulomb dominate long-range interactions.
+\end{itemize}
+\end{frame}
+
+\begin{frame}
+\frametitle{Force field selection}
+\begin{itemize}
+  \item Proteins: AMBER/CHARMM/OPLS.
+  \item Ligands: OpenFF or other parameterizers.
+  \item Validate compatibility with the rest of the system.
+\end{itemize}
+\end{frame}
+
+\begin{frame}
+\frametitle{Parameter consistency}
+\begin{itemize}
+  \item Avoid mixing force fields without clear rules.
+  \item Check units and energy scales.
+\end{itemize}
+\end{frame}
+
+\subsection{Ligands and charges}
+
+\begin{frame}
+\frametitle{Partial charges}
+\begin{align*}
+  \sum_i q_i &= Q_{\text{total}}.
+\end{align*}
+\begin{itemize}
+  \item The total must match the protonation state.
+\end{itemize}
+\end{frame}
+
+\begin{frame}
+\frametitle{Electrostatic fitting}
+\begin{itemize}
+  \item RESP and AM1-BCC derive charges from electrostatic potentials.
+  \item The charge distribution affects binding energies.
+\end{itemize}
+\end{frame}
+
+\begin{frame}
+\frametitle{Dihedral scans}
+\begin{align*}
+  E(\phi) &= E_0 + \sum_k V_k \cos(k\phi-\gamma_k).
+\end{align*}
+\begin{itemize}
+  \item Fit rotational profiles on ligands.
+\end{itemize}
+\end{frame}
+
+\begin{frame}
+\frametitle{Type assignment}
+\begin{itemize}
+  \item Atomic types determine LJ and bond parameters.
+  \item Inconsistencies yield unphysical energies.
+\end{itemize}
+\end{frame}
+
+\begin{frame}
+\frametitle{Ligand validation}
+\begin{itemize}
+  \item Check geometry, chirality, and net charges.
+  \item Compare with experimental or QM references.
+\end{itemize}
+\end{frame}
+
+\subsection{Solvation}
+
+\begin{frame}
+\frametitle{Box choice}
+\begin{itemize}
+  \item Cubic, orthorhombic, or dodecahedral.
+  \item Trade-off between cost and distance to the periodic image.
+\end{itemize}
+\end{frame}
+
+\begin{frame}
+\frametitle{Number of water molecules}
+\begin{align*}
+  N_{\text{H2O}} &\approx \rho\,V\,\frac{N_A}{M_{\text{H2O}}}.
+\end{align*}
+\begin{itemize}
+  \item Estimate the box size according to the target density.
+\end{itemize}
+\end{frame}
+
+\begin{frame}
+\frametitle{Ionic concentration}
+\begin{align*}
+  N_{\text{ion}} &= C\,V\,N_A.
+\end{align*}
+\begin{itemize}
+  \item Adjust molarity for physiological conditions.
+\end{itemize}
+\end{frame}
+
+\begin{frame}
+\frametitle{Solvated box}
+\begin{center}
+  \includegraphics[width=0.7\linewidth]{1i45_wat_box.png}
+\end{center}
+\end{frame}
+
+\begin{frame}
+\frametitle{Water models}
+\begin{itemize}
+  \item TIP3P, SPC/E, TIP4P: different densities and dynamics.
+  \item Choose the model compatible with the force field.
+\end{itemize}
+\end{frame}
+
+\begin{frame}
+\frametitle{Solvent trimming}
+\begin{itemize}
+  \item Keep a minimum buffer around the solute.
+  \item Prevent artificial interactions with the periodic image.
+\end{itemize}
+\end{frame}
+
+\begin{frame}
+\frametitle{Density check}
+\begin{itemize}
+  \item Verify density after NPT equilibration.
+  \item Adjust the size if the density drifts.
+\end{itemize}
+\end{frame}
+
+\subsection{Ions and electrostatics}
+
+\begin{frame}
+\frametitle{Neutralization}
+\begin{itemize}
+  \item Neutralizing the net charge improves numerical stability.
+\end{itemize}
+\end{frame}
+
+\begin{frame}
+\frametitle{Ionic strength}
+\begin{align*}
+  I &= \frac{1}{2}\sum_i c_i z_i^2.
+\end{align*}
+\begin{itemize}
+  \item Controls electrostatic screening.
+\end{itemize}
+\end{frame}
+
+\begin{frame}
+\frametitle{Debye length}
+\begin{align*}
+  \lambda_D &= \sqrt{\frac{\varepsilon \kb T}{2N_A e^2 I}}.
+\end{align*}
+\begin{itemize}
+  \item Sets the range of electrostatic interactions in solution.
+\end{itemize}
+\end{frame}
+
+\begin{frame}
+\frametitle{PME and cutoff}
+\begin{itemize}
+  \item PME handles long-range Coulomb interactions efficiently.
+  \item Choose a cutoff consistent with the box.
+\end{itemize}
+\end{frame}
+
+\begin{frame}
+\frametitle{Charge/solvent balance}
+\begin{itemize}
+  \item Check that the system is not overloaded with ions.
+\end{itemize}
+\end{frame}
+
+\subsection{Membranes}
+
+\begin{frame}
+\frametitle{Membrane models}
+\begin{itemize}
+  \item Lipid bilayers require anisotropic boxes.
+  \item The orientation must align with the protein.
+\end{itemize}
+\end{frame}
+
+\begin{frame}
+\frametitle{Lipid bilayer}
+\begin{center}
+  \includegraphics[width=0.72\linewidth]{lipids_bilayer.pdf}
+\end{center}
+\end{frame}
+
+\begin{frame}
+\frametitle{Area per lipid}
+\begin{align*}
+  A_{\text{lip}} &= \frac{A_{\text{caja}}}{N_{\text{lip}}/2}.
+\end{align*}
+\begin{itemize}
+  \item Key metric for membrane stability.
+\end{itemize}
+\end{frame}
+
+\begin{frame}
+\frametitle{Membrane thickness}
+\begin{itemize}
+  \item Controls the exposure of hydrophobic domains.
+  \item Adjust with minimization and equilibration.
+\end{itemize}
+\end{frame}
+
+\begin{frame}
+\frametitle{Initial restraints}
+\begin{itemize}
+  \item Restraining the protein prevents collapse during equilibration.
+\end{itemize}
+\end{frame}
+
+\subsection{Minimization}
+
+\begin{frame}
+\frametitle{Objective function}
+\begin{align*}
+  \min_{\mathbf{r}}\; U(\mathbf{r}).
+\end{align*}
+\begin{itemize}
+  \item Reduces clashes and improves initial stability.
+\end{itemize}
+\end{frame}
+
+\begin{frame}
+\frametitle{Gradient descent}
+\begin{align*}
+  \mathbf{r}_{k+1} &= \mathbf{r}_k - \alpha_k \nabla U(\mathbf{r}_k).
+\end{align*}
+\begin{itemize}
+  \item Robust method for minimizing high energies.
+\end{itemize}
+\end{frame}
+
+\begin{frame}
+\frametitle{Conjugate gradient}
+\begin{itemize}
+  \item More efficient near the minimum.
+  \item Reduces the number of force evaluations.
+\end{itemize}
+\end{frame}
+
+\begin{frame}
+\frametitle{Harmonic restraints}
+\begin{align*}
+  U_{\text{rest}} &= \frac{k}{2}\sum_i \lVert \mathbf{r}_i-\mathbf{r}_i^0 \rVert^2.
+\end{align*}
+\begin{itemize}
+  \item Keep the structure while the solvent relaxes.
+\end{itemize}
+\end{frame}
+
+\begin{frame}
+\frametitle{Convergence criteria}
+\begin{itemize}
+  \item Gradient norms and energy drop.
+  \item Stop when forces are small.
+\end{itemize}
+\end{frame}
+
+\subsection{Validation}
+
+\begin{frame}
+\frametitle{Geometric check}
+\begin{itemize}
+  \item Reasonable bond lengths and angles.
+  \item No steric clashes.
+\end{itemize}
+\end{frame}
+
+\begin{frame}
+\frametitle{Energy by component}
+\begin{itemize}
+  \item Review LJ, Coulomb, and bond contributions.
+  \item Identify outliers.
+\end{itemize}
+\end{frame}
+
+\begin{frame}
+\frametitle{Comparison with reference}
+\begin{align*}
+  \Delta U &= U_{\text{nuevo}}-U_{\text{ref}}.
+\end{align*}
+\begin{itemize}
+  \item Large differences signal parameterization issues.
+\end{itemize}
+\end{frame}
+
+\begin{frame}
+\frametitle{Stability check}
+\begin{itemize}
+  \item Run a short NVT to catch numerical explosions.
+  \item Inspect potential energy and temperature.
+\end{itemize}
+\end{frame}
+
+\begin{frame}
+\frametitle{Stable solvent}
+\begin{itemize}
+  \item Ensure there are no voids or overlaps.
+\end{itemize}
+\end{frame}
+
+\begin{frame}
+\frametitle{Checklist}
+\begin{itemize}
+  \item Clean PDB, correct protonation, neutralized system.
+  \item Topology file saved.
+\end{itemize}
+\end{frame}
+
+\subsection{Export}
+
+\begin{frame}
+\frametitle{Save the system}
+\begin{itemize}
+  \item Export PDB and topology with parameters.
+  \item Save the minimized state.
+\end{itemize}
+\end{frame}
+
+\begin{frame}
+\frametitle{Output formats}
+\begin{itemize}
+  \item PDB, Amber prmtop/inpcrd, OpenMM XML.
+\end{itemize}
+\end{frame}
+
+\begin{frame}
+\frametitle{Traceability}
+\begin{itemize}
+  \item Log scripts and configurations used.
+  \item Version the parameters.
+\end{itemize}
+\end{frame}
+
+\begin{frame}
+\frametitle{Seeds and reproducibility}
+\begin{itemize}
+  \item Save random generator seeds.
+  \item Document initial conditions.
+\end{itemize}
+\end{frame}
+
+\begin{frame}
+\frametitle{Folder structure}
+\begin{itemize}
+  \item Separate inputs, results, and temporary files.
+  \item Simplifies auditing and system reuse.
+\end{itemize}
+\end{frame}
+
+\begin{frame}
+\frametitle{Episode summary}
+\begin{itemize}
+  \item Preparing the system is key for reliable results.
+  \item Protonation and solvation decisions impact the dynamics.
+  \item Thorough validation avoids costly mistakes.
+\end{itemize}
+\end{frame}

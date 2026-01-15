@@ -1,0 +1,561 @@
+\section[Advanced]{Episode 4: Advanced simulations and free energy}
+
+\subsection{Objectives and roadmap}
+
+\begin{frame}
+\frametitle{Episode objectives}
+\begin{itemize}
+  \item Apply advanced sampling and free energy techniques.
+  \item Design robust protocols for complex systems.
+  \item Evaluate convergence and reproducibility.
+\end{itemize}
+\end{frame}
+
+\begin{frame}
+\frametitle{Advanced techniques map}
+\begin{itemize}
+  \item Highly stable thermostats and barostats.
+  \item Multiscale integration and constraints.
+  \item Enhanced sampling: umbrella, metadynamics, REMD.
+  \item Free energies: FEP, TI, BAR/MBAR.
+\end{itemize}
+\end{frame}
+
+\begin{frame}
+\frametitle{Control variables}
+\begin{align*}
+  \beta &= \frac{1}{\kbt}, & \lambda &\in [0,1].
+\end{align*}
+\begin{itemize}
+  \item The variable \(\lambda\) bridges the initial and final states.
+  \item \(\beta\) defines the statistical weight in the ensemble.
+\end{itemize}
+\end{frame}
+
+\begin{frame}
+\frametitle{Data requirements}
+\begin{itemize}
+  \item Trajectories long enough for each window.
+  \item Independent sampling across windows or replicas.
+  \item Energy reports and collective variables.
+\end{itemize}
+\end{frame}
+
+\begin{frame}
+\frametitle{General workflow}
+\begin{enumerate}
+  \item Strict preparation and equilibration.
+  \item Define CVs and windows.
+  \item Production and convergence checks.
+  \item Post-process with robust estimators.
+\end{enumerate}
+\end{frame}
+
+\subsection{Thermodynamic control}
+
+\begin{frame}
+\frametitle{Advanced ensembles}
+\begin{itemize}
+  \item NVT for temperature control.
+  \item NPT for realistic pressure and density.
+  \item NP\(\gamma\)T for surface tension in membranes.
+\end{itemize}
+\end{frame}
+
+\begin{frame}
+\frametitle{Langevin equation}
+\begin{align*}
+  m\ddot{\mathbf{r}} &= -\nabla U(\mathbf{r}) - \gamma m \dot{\mathbf{r}} + \sqrt{2\gamma m \kbt}\, \mathbf{R}(t).
+\end{align*}
+\begin{itemize}
+  \item Controls temperature via friction and noise.
+\end{itemize}
+\end{frame}
+
+\begin{frame}
+\frametitle{Nos\'e-Hoover chain}
+\begin{align*}
+  \dot{\eta} &= \frac{1}{Q}\left(\sum_i \frac{p_i^2}{m_i} - N_f \kbt\right).
+\end{align*}
+\begin{itemize}
+  \item Allows canonical sampling with less noise.
+\end{itemize}
+\end{frame}
+
+\begin{frame}
+\frametitle{Energy equipartition}
+\begin{align*}
+  \langle K \rangle &= \frac{N_f}{2} \kbt.
+\end{align*}
+\begin{itemize}
+  \item Check temperatures per subgroup (water, solute).
+\end{itemize}
+\end{frame}
+
+\begin{frame}
+\frametitle{Temperature diagnostics}
+\begin{itemize}
+  \item Speed histogram vs Maxwell-Boltzmann.
+  \item Drift monitor for non-equilibrated systems.
+  \item Watch for jumps when parameters change.
+\end{itemize}
+\end{frame}
+
+\subsection{Pressure and barostats}
+
+\begin{frame}
+\frametitle{Types of barostat}
+\begin{itemize}
+  \item Isotropic: box scales equally in all directions.
+  \item Anisotropic: allows independent scaling.
+  \item Monte Carlo barostat: discrete volume changes.
+\end{itemize}
+\end{frame}
+
+\begin{frame}
+\frametitle{Volume fluctuations}
+\begin{align*}
+  \kappa_T &= \frac{\langle V^2 \rangle - \langle V \rangle^2}{\kbt\,\langle V \rangle}.
+\end{align*}
+\begin{itemize}
+  \item Compare with experimental values if available.
+\end{itemize}
+\end{frame}
+
+\begin{frame}
+\frametitle{Compressibility and stability}
+\begin{itemize}
+  \item Excessive values signal poor convergence.
+  \item Adjust barostat frequency and damping.
+\end{itemize}
+\end{frame}
+
+\begin{frame}
+\frametitle{Surface tension}
+\begin{align*}
+  \gamma &= \frac{L_z}{2}\left(P_{zz} - \frac{P_{xx}+P_{yy}}{2}\right).
+\end{align*}
+\begin{itemize}
+  \item Relevant for membranes and lipid bilayers.
+\end{itemize}
+\end{frame}
+
+\begin{frame}
+\frametitle{Pressure control}
+\begin{itemize}
+  \item Log volume and density per window.
+  \item Avoid overly aggressive couplings.
+  \item Stabilize before long sampling runs.
+\end{itemize}
+\end{frame}
+
+\subsection{Constraints and integration}
+
+\begin{frame}
+\frametitle{Geometric constraints}
+\begin{itemize}
+  \item SHAKE/LINCS fix fast bonds.
+  \item Allow larger integration steps.
+\end{itemize}
+\end{frame}
+
+\begin{frame}
+\frametitle{Verlet integrator}
+\begin{align*}
+  \mathbf{r}_{t+\Delta t} &= \mathbf{r}_t + \mathbf{v}_t\Delta t + \frac{1}{2}\mathbf{a}_t\Delta t^2.
+\end{align*}
+\begin{itemize}
+  \item Conserves energy in short integrations.
+\end{itemize}
+\end{frame}
+
+\begin{frame}
+\frametitle{Scale separation (RESPA)}
+\begin{align*}
+  U &= U_{\text{fast}} + U_{\text{slow}}.
+\end{align*}
+\begin{itemize}
+  \item Integrate slow forces with larger steps.
+\end{itemize}
+\end{frame}
+
+\begin{frame}
+ \frametitle{Mass repartitioning}
+\begin{itemize}
+  \item HMR: increases hydrogen mass for stability.
+  \item Enables \(\Delta t\) of 4--5 fs in well-constrained systems.
+\end{itemize}
+\end{frame}
+
+\begin{frame}
+\frametitle{Numerical stability}
+\begin{itemize}
+  \item Monitor total energy drift.
+  \item Adjust \(\Delta t\) according to stiffness and temperature.
+\end{itemize}
+\end{frame}
+
+\subsection{Complex systems}
+
+\begin{frame}
+\frametitle{Membranes and anisotropic systems}
+\begin{itemize}
+  \item Independent pressure scaling per axis.
+  \item Control thickness and area per lipid.
+\end{itemize}
+\end{frame}
+
+\begin{frame}
+\frametitle{Lipid bilayer}
+\begin{center}
+  \includegraphics[width=0.78\linewidth]{lipids_bilayer.pdf}
+\end{center}
+\end{frame}
+
+\begin{frame}
+\frametitle{Explicit vs implicit solvation}
+\begin{align*}
+  \Delta G_{\text{solv}} &= \Delta G_{\text{elec}} + \Delta G_{\text{np}}.
+\end{align*}
+\begin{itemize}
+  \item Implicit models reduce computational cost.
+\end{itemize}
+\end{frame}
+
+\begin{frame}
+\frametitle{Ionic screening}
+\begin{align*}
+  \kappa^{-1} &= \sqrt{\frac{\varepsilon \kbt}{2 N_A e^2 I}}.
+\end{align*}
+\begin{itemize}
+  \item The ionic strength \(I\) controls the screening.
+\end{itemize}
+\end{frame}
+
+\begin{frame}
+\frametitle{Desolvation energy}
+\begin{center}
+  \includegraphics[width=0.7\linewidth]{gsd_desolvation.png}
+\end{center}
+\end{frame}
+
+\subsection{Enhanced sampling}
+
+\begin{frame}
+\frametitle{Barriers and rare events}
+\begin{itemize}
+  \item Transitions with high \(\Delta G^{\ddagger}\) are rare.
+  \item A bias potential accelerates sampling.
+\end{itemize}
+\end{frame}
+
+\begin{frame}
+\frametitle{Window sampling (umbrella)}
+\begin{align*}
+  U_{\text{sesgo}}(\xi) &= \frac{k}{2}(\xi-\xi_0)^2.
+\end{align*}
+\begin{itemize}
+  \item Controls sampling in windows of the CV \(\xi\).
+\end{itemize}
+\end{frame}
+
+\begin{frame}
+\frametitle{PMF from distributions}
+\begin{align*}
+  F(\xi) &= -\kbt \ln P(\xi) + C.
+\end{align*}
+\begin{itemize}
+  \item WHAM combines histograms from multiple windows.
+\end{itemize}
+\end{frame}
+
+\begin{frame}
+\frametitle{Replica exchange}
+\begin{align*}
+  P_{\text{acc}} &= \min\left(1, \exp\left[(\beta_i-\beta_j)(U_j-U_i)\right]\right).
+\end{align*}
+\begin{itemize}
+  \item Temperature swaps to overcome barriers.
+\end{itemize}
+\end{frame}
+
+\begin{frame}
+\frametitle{Adaptive sampling}
+\begin{itemize}
+  \item Select new seeds based on uncertainty.
+  \item Combine short simulations with iterative analysis.
+\end{itemize}
+\end{frame}
+
+\subsection{Metadynamics}
+
+\begin{frame}
+\frametitle{Collective variables}
+\begin{itemize}
+  \item Reduced coordinates that describe the transition.
+  \item Must separate metastable states.
+\end{itemize}
+\end{frame}
+
+\begin{frame}
+\frametitle{Bias via Gaussian hills}
+\begin{align*}
+  V(s,t) &= \sum_{i} w\exp\left[-\frac{(s-s_i)^2}{2\sigma^2}\right].
+\end{align*}
+\end{frame}
+
+\begin{frame}
+\frametitle{Well-tempered metadynamics}
+\begin{align*}
+  w(t) &= w_0\exp\left(-\frac{V(s,t)}{\kbt\,\Delta T}\right).
+\end{align*}
+\begin{itemize}
+  \item Smooths the growth of the bias over time.
+\end{itemize}
+\end{frame}
+
+\begin{frame}
+\frametitle{Free energy reconstruction}
+\begin{align*}
+  F(s) &\approx -\frac{T+\Delta T}{\Delta T} V(s,t\to\infty).
+\end{align*}
+\end{frame}
+
+\begin{frame}
+\frametitle{Common pitfalls}
+\begin{itemize}
+  \item Poorly chosen CVs create artifacts.
+  \item Deposition interval too short.
+  \item Lack of sampling in key regions.
+\end{itemize}
+\end{frame}
+
+\subsection{FEP and TI}
+
+\begin{frame}
+\frametitle{Free energy perturbation}
+\begin{align*}
+  \Delta G &= -\kbt \ln \left\langle \exp\left[-\beta\Delta U\right]\right\rangle_0.
+\end{align*}
+\end{frame}
+
+\begin{frame}
+\frametitle{Thermodynamic integration}
+\begin{align*}
+  \Delta G &= \int_0^1 \left\langle \frac{\partial U(\lambda)}{\partial \lambda} \right\rangle_{\lambda} d\lambda.
+\end{align*}
+\end{frame}
+
+\begin{frame}
+\frametitle{FEP scheme}
+\begin{center}
+  \includegraphics[width=0.7\linewidth]{fep.png}
+\end{center}
+\end{frame}
+
+\begin{frame}
+\frametitle{Soft-core potentials}
+\begin{itemize}
+  \item Prevent singularities when turning off interactions.
+  \item Ensure overlap of neighboring distributions.
+\end{itemize}
+\end{frame}
+
+\begin{frame}
+\frametitle{\(\lambda\) convergence}
+\begin{itemize}
+  \item Increase window density where changes are rapid.
+  \item Monitor histograms of \(\partial U/\partial \lambda\).
+\end{itemize}
+\end{frame}
+
+\subsection{Thermodynamic cycles}
+
+\begin{frame}
+\frametitle{Double decoupling}
+\begin{itemize}
+  \item Turn off ligand interactions in solvent and complex.
+  \item The difference yields the binding \(\Delta G\).
+\end{itemize}
+\end{frame}
+
+\begin{frame}
+\frametitle{Thermodynamic cycle}
+\begin{center}
+  \includegraphics[width=0.72\linewidth]{thermodynamiccycle.pdf}
+\end{center}
+\end{frame}
+
+\begin{frame}
+\frametitle{Relation to affinity}
+\begin{align*}
+  \Delta G_{\text{bind}} &= \kbt \ln K_d.
+\end{align*}
+\begin{itemize}
+  \item Apply standard-state corrections when appropriate.
+\end{itemize}
+\end{frame}
+
+\begin{frame}
+\frametitle{Cycle closure}
+\begin{align*}
+  \sum_{\text{ciclo}} \Delta G_i &= 0.
+\end{align*}
+\begin{itemize}
+  \item A deviation indicates systematic errors.
+\end{itemize}
+\end{frame}
+
+\begin{frame}
+\frametitle{Error propagation}
+\begin{itemize}
+  \item Window errors add in quadrature.
+  \item Report confidence intervals.
+\end{itemize}
+\end{frame}
+
+\subsection{Non-equilibrium}
+
+\begin{frame}
+\frametitle{Jarzynski equality}
+\begin{align*}
+  \Delta G &= -\kbt \ln \langle e^{-\beta W} \rangle.
+\end{align*}
+\end{frame}
+
+\begin{frame}
+\frametitle{Crooks relation}
+\begin{align*}
+  \frac{P_F(W)}{P_R(-W)} &= e^{\beta(W-\Delta G)}.
+\end{align*}
+\end{frame}
+
+\begin{frame}
+\frametitle{Steered MD}
+\begin{align*}
+  W &= \int_0^{\tau} \mathbf{F}_{\text{pull}}(t)\cdot d\mathbf{x}.
+\end{align*}
+\begin{itemize}
+  \item Work depends on the pulling speed.
+\end{itemize}
+\end{frame}
+
+\begin{frame}
+\frametitle{Reaction coordinate}
+\begin{center}
+  \includegraphics[width=0.7\linewidth]{gs_ts.png}
+\end{center}
+\end{frame}
+
+\subsection{Official advanced sampling}
+
+\begin{frame}
+\frametitle{Replica Exchange Solute Tempering (REST)}
+\begin{itemize}
+  \item REST uses `OpenMMTools` to scale energies on a subset of atoms (OpenMM Cookbook REST).
+  \item Define modified `CustomBondForce`, `CustomAngleForce`, `CustomTorsionForce`, and `NonbondedForce`, and swap replicas with `ReplicaExchangeSampler`.
+  \item Useful for the protein–ligand complex where only the ligand is heated while the environment stays stable.
+\end{itemize}
+\end{frame}
+
+\begin{frame}
+\frametitle{Guided umbrella sampling}
+\begin{itemize}
+  \item Apply a `HarmonicBias` on a collective variable $x(r)$ and collect histograms per window (OpenMM Cookbook Umbrella Sampling).
+  \item From \(\Delta F(x) = -\kbt \log P(x)\), reconstruct the free energy profile and identify barriers.
+  \item Combine with \href{https://github.com/openmm/openmm/blob/master/examples/python-examples/argon-chemical-potential.py}{\texttt{argon-chemical-potential.py}} to validate over simple LJ potentials before applying it to real proteins.
+\end{itemize}
+\end{frame}
+
+\begin{frame}
+\frametitle{Pulling speed}
+\begin{itemize}
+  \item Slow pulls approximate quasi-equilibrium.
+  \item Fast pulls require many repeats.
+\end{itemize}
+\end{frame}
+
+\subsection{Convergence and statistics}
+
+\begin{frame}
+\frametitle{Block averages}
+\begin{itemize}
+  \item Split the time series into equal blocks.
+  \item Estimate mean and error from independent blocks.
+\end{itemize}
+\end{frame}
+
+\begin{frame}
+\frametitle{Statistical inefficiency}
+\begin{align*}
+  g &= 1 + 2\sum_{t=1}^{\infty} \rho(t).
+\end{align*}
+\begin{itemize}
+  \item Reduces the effective number of samples.
+\end{itemize}
+\end{frame}
+
+\begin{frame}
+\frametitle{BAR/MBAR}
+\begin{itemize}
+  \item BAR minimizes variance between two states.
+  \item MBAR generalizes to multiple windows.
+\end{itemize}
+\end{frame}
+
+\begin{frame}
+\frametitle{Free energy profile}
+\begin{center}
+  \includegraphics[width=0.72\linewidth]{betacorrectedfel.pdf}
+\end{center}
+\end{frame}
+
+\begin{frame}
+\frametitle{Convergence checklist}
+\begin{itemize}
+  \item Overlapping histograms between windows.
+  \item Stable errors over time.
+  \item Repeats yielding consistent results.
+\end{itemize}
+\end{frame}
+
+\subsection{Summary}
+
+\begin{frame}
+\frametitle{Episode summary}
+\begin{itemize}
+  \item Reviewed advanced protocols and free energies.
+  \item Emphasized convergence and statistical control.
+\end{itemize}
+\end{frame}
+
+\begin{frame}
+\frametitle{Best practices}
+\begin{itemize}
+  \item Document versions, seeds, and parameters.
+  \item Automate analyses and checks.
+\end{itemize}
+\end{frame}
+
+\begin{frame}
+\frametitle{Common mistakes}
+\begin{itemize}
+  \item Insufficient windows during rapid changes.
+  \item Lack of overlap between \(\lambda\).
+\end{itemize}
+\end{frame}
+
+\begin{frame}
+\frametitle{Reproducibility}
+\begin{itemize}
+  \item Save scripts and seeding.
+  \item Report uncertainty and initial conditions.
+\end{itemize}
+\end{frame}
+
+\begin{frame}
+\frametitle{Next step}
+\begin{itemize}
+  \item Dive into detailed trajectory analysis.
+\end{itemize}
+\end{frame}

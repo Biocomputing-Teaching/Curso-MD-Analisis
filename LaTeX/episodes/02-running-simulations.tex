@@ -1,0 +1,593 @@
+\section[Simulations]{Episode 2: Running simulations}
+
+\subsection{Key parameters (OpenMM User Guide §3.7)}
+
+\begin{frame}
+\frametitle{Speed vs. accuracy trade-offs}
+\begin{itemize}
+  \item Speed: large time steps and reduced reporting.
+  \item Numerical accuracy: symplectic integrators, constraints, and a small timestep.
+  \item OpenMM exposes knobs for \texttt{dt}, \texttt{constraints}, \texttt{hydrogenMass}, and thermostats (§3.7.6–3.7.8).
+\end{itemize}
+\end{frame}
+
+\begin{frame}
+\frametitle{Time step and constraints}
+\begin{align*}
+  \Delta t &\approx \frac{1}{10\,\omega_{\text{max}}},\quad \omega_{\text{max}}\sim\sqrt{\frac{k}{\mu}}.
+\end{align*}
+\begin{itemize}
+  \item With \texttt{constraints=HBonds}, the timestep doubles.
+  \item \texttt{constraints=AllBonds/HAngles} allow bigger jumps but reduce flexibility.
+\end{itemize}
+\end{frame}
+
+\begin{frame}
+\frametitle{Heavy hydrogens}
+\begin{align*}
+  m_H^{\text{new}} &= \alpha\,m_H,\quad m_{heavy}^{\text{new}} = m_{heavy} - (\alpha-1)m_H.
+\end{align*}
+\begin{itemize}
+  \item \texttt{hydrogenMass=1.5*amu} slows oscillations without changing the total mass.
+  \item Used in integration scripts, e.g., \href{https://github.com/openmm/openmm/blob/master/examples/python-examples/argon-chemical-potential.py}{\texttt{argon-chemical-potential.py}} adopts this trick.
+\end{itemize}
+\end{frame}
+
+\begin{frame}
+\frametitle{Thermal and pressure coupling}
+\begin{itemize}
+  \item \texttt{LangevinIntegrator} simulates a heat bath with friction $\gamma$.
+  \item Nosé-Hoover (chain) controls the canonical distribution while preserving momentum.
+  \item Monte Carlo or Parrinello-Rahman barostats appear in the \href{https://github.com/openmm/openmm/blob/master/examples/python-examples/simulateAmber.py}{\texttt{simulateAmber.py}} scripts.
+\end{itemize}
+\end{frame}
+
+\begin{frame}
+\frametitle{Reporting and checkpoints}
+\begin{itemize}
+  \item `StateDataReporter` tracks energy, temperature, volume, and RMSD.
+  \item `DCDReporter` / `NetCDFReporter` save trajectories (OpenMM App §3.13–3.14).
+  \item Use `CheckpointReporter` to resume long simulations (OpenMM §3.15).
+\end{itemize}
+\end{frame}
+
+\subsection{Time discretization}
+
+\begin{frame}
+\frametitle{Continuous and discrete equations}
+\begin{align*}
+  \dot{\mathbf{r}}(t) &= \mathbf{v}(t),\quad \dot{\mathbf{v}}(t) = \frac{\mathbf{F}(t)}{m}.
+\end{align*}
+\begin{itemize}
+  \item Simulation replaces derivatives with finite increments.
+\end{itemize}
+\end{frame}
+
+\begin{frame}
+\frametitle{Time step}
+\begin{align*}
+  \mathbf{r}(t+\Delta t) &= \mathbf{r}(t) + \mathbf{v}(t)\Delta t + \mathcal{O}(\Delta t^2).
+\end{align*}
+\begin{itemize}
+  \item $\Delta t$ must resolve the fastest vibrations.
+\end{itemize}
+\end{frame}
+
+\begin{frame}
+\frametitle{Local and global error}
+\begin{align*}
+  \text{error local} &= \mathcal{O}(\Delta t^{p+1}),\\
+  \text{error global} &= \mathcal{O}(\Delta t^{p}).
+\end{align*}
+\begin{itemize}
+  \item Order-$p$ integrators control the accumulation of error.
+\end{itemize}
+\end{frame}
+
+\begin{frame}
+\frametitle{Stability scale}
+\begin{align*}
+  \Delta t &\lesssim \frac{1}{10\,\omega_{\text{max}}}.
+\end{align*}
+\begin{itemize}
+  \item $\omega_{\text{max}}$ comes from the fastest vibrational modes.
+\end{itemize}
+\end{frame}
+
+\begin{frame}
+\frametitle{Practical guideline}
+\begin{itemize}
+  \item Without constraints: $\Delta t \approx 1$ fs.
+  \item With SHAKE/RATTLE: $\Delta t \approx 2$ fs.
+\end{itemize}
+\end{frame}
+
+\subsection{Classical integrators}
+
+\begin{frame}
+\frametitle{Explicit Euler}
+\begin{align*}
+  \mathbf{v}_{t+\Delta t} &= \mathbf{v}_t + \frac{\mathbf{F}_t}{m}\Delta t,\\
+  \mathbf{r}_{t+\Delta t} &= \mathbf{r}_t + \mathbf{v}_t\Delta t.
+\end{align*}
+\begin{itemize}
+  \item Simple but unstable for molecular dynamics.
+\end{itemize}
+\end{frame}
+
+\begin{frame}
+\frametitle{Classical Verlet}
+\begin{align*}
+  \mathbf{r}_{t+\Delta t} &= 2\mathbf{r}_t - \mathbf{r}_{t-\Delta t} + \frac{\mathbf{F}_t}{m}\Delta t^2.
+\end{align*}
+\begin{itemize}
+  \item Symmetric and time-reversible.
+\end{itemize}
+\end{frame}
+
+\begin{frame}
+\frametitle{Velocity Verlet}
+\begin{align*}
+  \mathbf{r}_{t+\Delta t} &= \mathbf{r}_t + \mathbf{v}_t\Delta t + \frac{\mathbf{F}_t}{2m}\Delta t^2,\\
+  \mathbf{v}_{t+\Delta t} &= \mathbf{v}_t + \frac{\mathbf{F}_t+\mathbf{F}_{t+\Delta t}}{2m}\Delta t.
+\end{align*}
+\begin{itemize}
+  \item Combines stability with direct access to velocities.
+\end{itemize}
+\end{frame}
+
+\begin{frame}
+\frametitle{Symmetry and stability}
+\begin{itemize}
+  \item Symplectic integrators conserve volume in phase space.
+  \item They prevent energy drift in NVE.
+\end{itemize}
+\end{frame}
+
+\begin{frame}
+\frametitle{Practical choice}
+\begin{itemize}
+  \item OpenMM uses Verlet- or Langevin-type integrators.
+  \item The choice depends on the desired ensemble.
+\end{itemize}
+\end{frame}
+
+\subsection{Leapfrog scheme}
+
+\begin{frame}
+\frametitle{Leapfrog}
+\begin{align*}
+  \mathbf{v}_{t+\Delta t/2} &= \mathbf{v}_{t-\Delta t/2} + \frac{\mathbf{F}_t}{m}\Delta t,\\
+  \mathbf{r}_{t+\Delta t} &= \mathbf{r}_t + \mathbf{v}_{t+\Delta t/2}\Delta t.
+\end{align*}
+\begin{itemize}
+  \item Velocities and positions ``leapfrog'' through time.
+\end{itemize}
+\end{frame}
+
+\begin{frame}
+\frametitle{Graphical interpretation}
+\begin{center}
+  \includegraphics[width=0.72\linewidth]{leapfrog_method_argument.png}
+\end{center}
+\vspace{-0.1cm}
+{\tiny Source: Wikimedia Commons (CC BY-SA 4.0). \cita{img-leapfrog}}
+\end{frame}
+
+\begin{frame}
+\frametitle{Advantages}
+\begin{itemize}
+  \item Symmetric, reversible, and inexpensive.
+  \item Preserves energy better than Euler.
+\end{itemize}
+\end{frame}
+
+\begin{frame}
+\frametitle{Relation to Verlet}
+\begin{itemize}
+  \item Leapfrog and velocity Verlet are algebraically equivalent.
+  \item Differences appear in how velocities are stored.
+\end{itemize}
+\end{frame}
+
+\begin{frame}
+\frametitle{Integrator choice}
+\begin{itemize}
+  \item NVE: Verlet or Leapfrog.
+  \item NVT: Langevin or Nos\'e-Hoover.
+\end{itemize}
+\end{frame}
+
+\subsection{Conservaci\'on y NVE}
+
+\begin{frame}
+\frametitle{Energ\'ia total}
+\begin{align*}
+  E(t) &= K(t) + U(t).
+\end{align*}
+\begin{itemize}
+  \item En NVE ideal, $E(t)$ es constante.
+\end{itemize}
+\end{frame}
+
+\begin{frame}
+\frametitle{Deriva energ\'etica}
+\begin{itemize}
+  \item Errores num\'ericos producen deriva secular.
+  \item Se controla reduciendo $\Delta t$.
+\end{itemize}
+\end{frame}
+
+\begin{frame}
+\frametitle{Temperatura instant\'anea}
+\begin{align*}
+  T &= \frac{2\langle K \rangle}{3N\kb}.
+\end{align*}
+\begin{itemize}
+  \item En NVE, $T$ fluct\'ua alrededor de un valor medio.
+\end{itemize}
+\end{frame}
+
+\begin{frame}
+\frametitle{Comprobaciones r\'apidas}
+\begin{itemize}
+  \item Estabilidad de $E(t)$ y distribuci\'on de velocidades.
+  \item Comparar $\langle K \rangle$ con el valor te\'orico.
+\end{itemize}
+\end{frame}
+
+\begin{frame}
+\frametitle{Tiempo de equilibraci\'on}
+\begin{itemize}
+  \item Un pre-equilibrado estabiliza la energ\'ia antes de producir datos.
+\end{itemize}
+\end{frame}
+
+\subsection{Termostatos}
+
+\begin{frame}
+\frametitle{Objetivo del termostato}
+\begin{itemize}
+  \item Imponer una distribuci\'on can\'onica a temperatura $T$.
+  \item Extraer o inyectar energ\'ia de forma controlada.
+\end{itemize}
+\end{frame}
+
+\begin{frame}
+\frametitle{Din\'amica de Langevin}
+\begin{align*}
+  m\ddot{\mathbf{r}} &= -\nabla U - \gamma m \dot{\mathbf{r}} + \mathbf{R}(t),\\
+  \langle \mathbf{R}(t) \mathbf{R}(t') \rangle &= 2\gamma m\kb T\,\delta(t-t').
+\end{align*}
+\begin{itemize}
+  \item Termostato estoc\'astico con fricci\'on y ruido.
+\end{itemize}
+\end{frame}
+
+\begin{frame}
+\frametitle{Andersen}
+\begin{itemize}
+  \item Reasigna velocidades aleatoriamente con frecuencia $\nu$.
+  \item Bueno para muestreo, menos realista din\'amicamente.
+\end{itemize}
+\end{frame}
+
+\begin{frame}
+\frametitle{Nos\'e-Hoover}
+\begin{align*}
+  \dot{\mathbf{p}}_i &= \mathbf{F}_i - \xi\mathbf{p}_i,\quad \dot{\xi} = \frac{1}{Q}\left(\sum_i \frac{\mathbf{p}_i^2}{m_i} - 3N\kb T\right).
+\end{align*}
+\begin{itemize}
+  \item Termostato determinista con variable extendida.
+\end{itemize}
+\end{frame}
+
+\begin{frame}
+\frametitle{Elecci\'on del termostato}
+\begin{itemize}
+  \item Langevin: robusto y estable.
+  \item Nos\'e-Hoover: din\'amica m\'as realista si est\'a bien parametrizado.
+\end{itemize}
+\end{frame}
+
+\subsection{Barostatos}
+
+\begin{frame}
+\frametitle{Presi\'on microsc\'opica}
+\begin{align*}
+  P &= \frac{Nk_B T}{V} + \frac{1}{3V}\sum_{i<j}\mathbf{r}_{ij}\cdot\mathbf{F}_{ij}.
+\end{align*}
+\begin{itemize}
+  \item La presi\'on depende de energ\'ia cin\'etica y fuerzas internas.
+\end{itemize}
+\end{frame}
+
+\begin{frame}
+\frametitle{Barostato de Berendsen}
+\begin{align*}
+  \frac{dV}{dt} &= \frac{1}{\tau_P}(P_0-P)V.
+\end{align*}
+\begin{itemize}
+  \item R\'apido para equilibrar, no reproduce fluctuaciones exactas.
+\end{itemize}
+\end{frame}
+
+\begin{frame}
+\frametitle{Parrinello-Rahman}
+\begin{itemize}
+  \item Escala la celda de simulaci\'on con variables din\'amicas.
+  \item Permite cambios anisotr\'opicos del volumen.
+\end{itemize}
+\end{frame}
+
+\begin{frame}
+\frametitle{NPT}
+\begin{itemize}
+  \item Ensemble realista para condiciones experimentales.
+  \item Combina termostato y barostato.
+\end{itemize}
+\end{frame}
+
+\begin{frame}
+\frametitle{Elecci\'on pr\'actica}
+\begin{itemize}
+  \item Equilibraci\'on: Berendsen + Langevin.
+  \item Producci\'on: barostato m\'as riguroso (Monte Carlo barostat).
+\end{itemize}
+\end{frame}
+
+\subsection{Restricciones}
+
+\begin{frame}
+\frametitle{Motivaci\'on}
+\begin{itemize}
+  \item Eliminar vibraciones r\'apidas permite aumentar $\Delta t$.
+\end{itemize}
+\end{frame}
+
+\begin{frame}
+\frametitle{Restricciones hol\'onomas}
+\begin{align*}
+  g_k(\mathbf{r}) &= 0,\quad k=1,\dots,M.
+\end{align*}
+\begin{itemize}
+  \item Fijan distancias o \`angulos internos.
+\end{itemize}
+\end{frame}
+
+\begin{frame}
+\frametitle{SHAKE/RATTLE}
+\begin{itemize}
+  \item SHAKE corrige posiciones; RATTLE corrige posiciones y velocidades.
+\end{itemize}
+\end{frame}
+
+\begin{frame}
+\frametitle{Impacto num\'erico}
+\begin{itemize}
+  \item Aumenta estabilidad y reduce coste de simulaci\'on.
+  \item Puede alterar modos de alta frecuencia.
+\end{itemize}
+\end{frame}
+
+\begin{frame}
+\frametitle{Recomendaci\'on}
+\begin{itemize}
+  \item Usar restricciones en enlaces con H para biomol\'eculas.
+\end{itemize}
+\end{frame}
+
+\subsection{Condiciones peri\'odicas}
+
+\begin{frame}
+\frametitle{Motivaci\'on de PBC}
+\begin{itemize}
+  \item Evita efectos de superficie en sistemas finitos.
+  \item Emula un sistema infinito por replicaci\'on de la celda.
+\end{itemize}
+\end{frame}
+
+\begin{frame}
+\frametitle{Celda peri\'odica}
+\begin{align*}
+  \mathbf{r} &\to \mathbf{r} + n_x\mathbf{a} + n_y\mathbf{b} + n_z\mathbf{c}.
+\end{align*}
+\begin{itemize}
+  \item $\mathbf{a},\mathbf{b},\mathbf{c}$ definen la caja de simulaci\'on.
+\end{itemize}
+\end{frame}
+
+\begin{frame}
+\frametitle{Ejemplo 2D}
+\begin{center}
+  \includegraphics[width=0.72\linewidth]{pbc_2d.png}
+\end{center}
+\vspace{-0.1cm}
+{\tiny Fuente: Wikimedia Commons (CC BY-SA 4.0). \cita{img-pbc-2d}}
+\end{frame}
+
+\begin{frame}
+\frametitle{Implicaciones en din\'amica}
+\begin{itemize}
+  \item Las part\'iculas que salen reingresan por la cara opuesta.
+  \item Se preserva la densidad en el volumen simulado.
+\end{itemize}
+\end{frame}
+
+\begin{frame}
+\frametitle{Cajas no ortogonales}
+\begin{itemize}
+  \item Celdas tricl\'inicas para cristales o membranas inclinadas.
+\end{itemize}
+\end{frame}
+
+\subsection{Minimum image}
+
+\begin{frame}
+\frametitle{Convenci\'on de imagen m\'inima}
+\begin{align*}
+  r_{ij} &= \min_{\mathbf{n}} \lVert \mathbf{r}_i-\mathbf{r}_j+\mathbf{n} \rVert.
+\end{align*}
+\begin{itemize}
+  \item Usa la imagen peri\'odica m\'as cercana para calcular interacciones.
+\end{itemize}
+\end{frame}
+
+\begin{frame}
+\frametitle{Ejemplo visual}
+\begin{center}
+  \includegraphics[width=0.7\linewidth]{minimum_image_convention.png}
+\end{center}
+\vspace{-0.1cm}
+{\tiny Fuente: Wikimedia Commons (CC BY-SA 4.0). \cita{img-min-image}}
+\end{frame}
+
+\begin{frame}
+\frametitle{Radio de corte}
+\begin{itemize}
+  \item La imagen m\'inima requiere $r_c < L/2$ para evitar dobles conteos.
+\end{itemize}
+\end{frame}
+
+\begin{frame}
+\frametitle{Impacto en energ\'ia}
+\begin{itemize}
+  \item Errores si el corte es grande o la densidad baja.
+\end{itemize}
+\end{frame}
+
+\begin{frame}
+\frametitle{Buenas pr\'acticas}
+\begin{itemize}
+  \item Ajustar $r_c$ y tama\~no de caja seg\'un la densidad del sistema.
+\end{itemize}
+\end{frame}
+
+\subsection{Cutoffs y suavizado}
+
+\begin{frame}
+\frametitle{Interacciones de corto alcance}
+\begin{itemize}
+  \item LJ se trunca a $r_c$ con o sin funci\'on de suavizado.
+\end{itemize}
+\end{frame}
+
+\begin{frame}
+\frametitle{Funci\'on switch}
+\begin{align*}
+  u_{\text{switch}}(r) &= s(r)\,u(r),\quad s(r)\in[0,1].
+\end{align*}
+\begin{itemize}
+  \item Evita discontinuidades en fuerzas.
+\end{itemize}
+\end{frame}
+
+\begin{frame}
+\frametitle{Correcci\'on de cola}
+\begin{align*}
+  U_{\text{tail}} &\approx 2\pi\rho \int_{r_c}^{\infty} r^2 u(r)\,dr.
+\end{align*}
+\begin{itemize}
+  \item Corrige energ\'ia y presi\'on al truncar LJ.
+\end{itemize}
+\end{frame}
+
+\begin{frame}
+\frametitle{Escogiendo $r_c$}
+\begin{itemize}
+  \item Mayor $r_c$ mejora precisi\'on, pero aumenta coste.
+\end{itemize}
+\end{frame}
+
+\begin{frame}
+\frametitle{Implicaciones en estabilidad}
+\begin{itemize}
+  \item Un corte abrupto puede introducir ruido en la din\'amica.
+\end{itemize}
+\end{frame}
+
+\subsection{Electrost\'atica de largo alcance}
+
+\begin{frame}
+\frametitle{Problema de Coulomb}
+\begin{align*}
+  u_{\text{C}}(r) &\propto \frac{1}{r} \quad \text{(largo alcance)}.
+\end{align*}
+\begin{itemize}
+  \item El truncamiento directo produce grandes errores.
+\end{itemize}
+\end{frame}
+
+\begin{frame}
+\frametitle{Ewald}
+\begin{align*}
+  U &= U_{\text{real}} + U_{\text{rec}} + U_{\text{self}}.
+\end{align*}
+\begin{itemize}
+  \item Divide Coulomb en suma real y rec\'iproca.
+\end{itemize}
+\end{frame}
+
+\begin{frame}
+\frametitle{PME}
+\begin{itemize}
+  \item Particle Mesh Ewald usa FFT para acelerar el c\'alculo.
+\end{itemize}
+\end{frame}
+
+\begin{frame}
+\frametitle{Precisi\'on}
+\begin{itemize}
+  \item Controla el error con par\'ametros de malla y \`alfa de Ewald.
+\end{itemize}
+\end{frame}
+
+\begin{frame}
+\frametitle{Elecci\'on pr\'actica}
+\begin{itemize}
+  \item Para biomol\'eculas en solvente, PME es el est\'andar.
+\end{itemize}
+\end{frame}
+
+\subsection{Salida y reproducibilidad}
+
+\begin{frame}
+\frametitle{Trayectorias}
+\begin{itemize}
+  \item Guardar coordenadas y velocidades en intervalos regulares.
+  \item Balance entre almacenamiento y resoluci\'on temporal.
+\end{itemize}
+\end{frame}
+
+\begin{frame}
+\frametitle{Observables}
+\begin{align*}
+  \langle A \rangle &\approx \frac{1}{M}\sum_{k=1}^M A_k.
+\end{align*}
+\begin{itemize}
+  \item Autocorrelation determines the effective number of samples.
+\end{itemize}
+\end{frame}
+
+\begin{frame}
+\frametitle{Random seeds}
+\begin{itemize}
+  \item Document seeds to reproduce stochastic thermostats.
+\end{itemize}
+\end{frame}
+
+\begin{frame}
+\frametitle{Checkpoints}
+\begin{itemize}
+  \item Save states to restart long simulations.
+\end{itemize}
+\end{frame}
+
+\begin{frame}
+\frametitle{Episode summary}
+\begin{itemize}
+  \item Numerical integration controls stability and accuracy.
+  \item Thermostats and barostats set the ensemble.
+  \item PBC and long-range electrostatics are critical in biomolecules.
+\end{itemize}
+\end{frame}

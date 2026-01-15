@@ -11,11 +11,19 @@ permalink: /episodes/01-introduccion/
 
 <!-- toc:start -->
 ## Table of contents
+- [Table of contents](#table-of-contents)
 - [Duration](#duration)
 - [Objectives](#objectives)
 - [Content](#content)
+- [Preliminary sequence and ligand checks](#preliminary-sequence-and-ligand-checks)
 - [Alanine dipeptide](#alanine-dipeptide)
+  - [Guided demo](#guided-demo)
+  - [Exercise](#exercise)
+  - [Notebooks and scripts](#notebooks-and-scripts)
 - [Protein-ligand complex](#protein-ligand-complex)
+  - [Guided demo](#guided-demo-1)
+  - [Exercise](#exercise-1)
+  - [Notebooks and scripts](#notebooks-and-scripts-1)
 - [Key points](#key-points)
 <!-- toc:end -->
 
@@ -36,6 +44,14 @@ permalink: /episodes/01-introduccion/
 - Reading alanine with OpenMM.
 - Reading protein and ligand with OpenFF Toolkit.
 - Working path `COURSE_DIR` and environment validation.
+
+## Preliminary sequence and ligand checks
+
+Before we launch the OpenMM demos, review two focused notebooks to explore the inputs.
+
+- Sequence exploration: `<a href="{{ site.baseurl }}/episodes/notebooks/01-introduction-sequence-check.ipynb">01-introduction-sequence-check.ipynb</a>` walks through parsing the PDB sequence, running UniProt and PDB BLAST queries, and collecting database summaries without touching OpenMM.
+- Ligand exploration: `<a href="{{ site.baseurl }}/episodes/notebooks/01-introduction-ligand-check.ipynb">01-introduction-ligand-check.ipynb</a>` inspects the `$COURSE_DIR/data/complex/ligand1.sdf` molecule with RDKit to report formula, properties, and a quick sketch before any molecular dynamics setup.
+
 
 ## Alanine dipeptide
 
