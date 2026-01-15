@@ -9,6 +9,8 @@ permalink: /episodes/07-deeptime/
   <a href="{{ site.baseurl }}/episodes/">All episodes</a>
 </div>
 
+> **System focus** Deeptime sessions use the canonical `protein2-ligand2.pdb` complex; keep `$COURSE_DIR/data/complex` synchronized by re-running `bash docs/episodes/scripts/01-split-protein2-ligand2.sh` so the protein and ligand inputs share the same origin.
+
 <!-- toc:start -->
 ## Table of contents
 - [Duration](#duration)

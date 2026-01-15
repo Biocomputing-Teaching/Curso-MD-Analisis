@@ -82,30 +82,30 @@
 %\renewcommand{\thefpcounter}{\thesection.\arabic{fpcounter}}
 \renewcommand{\theexcounter}{\arabic{excounter}}
 
-%\newtheorem{exercici}{Ejercicio}
-% \newenvironment{exercici}[1]{%
+\newtheorem{exercise}{Exercise}[section]
+% \newenvironment{exercise}[1]{%
 % \refstepcounter{excounter}%
 % \label{#1}%
-% \noindent\textbf{Ejercicio~\theexcounter}%
+% \noindent\textbf{Exercise~\theexcounter}%
 % \setbeamercolor{block title example}{fg=blue,bg=red!75!black}%
 % \begin{example}#2[#1]}{\end{example}
 % \vspace{\baselineskip}
 % }%
 % {}%
 
-\newenvironment{exercici}[1]{%
+\newenvironment{exercise}[1]{%
 \refstepcounter{excounter}%
 \label{#1}%
-\noindent\textbf{Ejercicio~\theexcounter}%
+\noindent\textbf{Exercise~\theexcounter}%
 }%
 {}%
 
-\newtheorem{teorema}{Teorema}[section]
-\newtheorem{definicion}{Definición}[section]
+\newtheorem{theorem}{Theorem}[section]
+\newtheorem{definition}{Definition}[section]
 
 \usepackage[T1]{fontenc}
 %\usepackage[utf8]{inputenc}
-\usepackage[spanish]{babel}
+\usepackage[english]{babel}
 %\usepackage{lmodern}
 
 

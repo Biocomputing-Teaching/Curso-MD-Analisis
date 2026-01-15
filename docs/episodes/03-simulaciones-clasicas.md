@@ -10,6 +10,8 @@ permalink: /episodes/03-simulaciones-clasicas/
   <a href="{{ site.baseurl }}/episodes/02-preparacion-sistema/">Next</a>
 </div>
 
+> **System focus** This running-simulations episode now targets `protein2-ligand2.pdb` (`$COURSE_DIR/data/complex`). If you update the data bundle, rerun `bash docs/episodes/scripts/01-split-protein2-ligand2.sh` to keep `protein2.pdb` and `ligand2.pdb` in sync before executing the demos below.
+
 <!-- toc:start -->
 ## Table of contents
 - [Duration](#duration)
@@ -166,6 +168,14 @@ This assistant generates scripts equivalent to the examples above and lets you v
 - Change `--steps` and `--interval` in the simple system.
 - Verify alanine output files.
 
+### Simple system trajectory notebooks
+
+- `<a href="{{ site.baseurl }}/episodes/notebooks/02-trajectory-rmsd.ipynb">Alanine RMSD</a>` — backbone RMSD plotted against the first frame.
+- `<a href="{{ site.baseurl }}/episodes/notebooks/02-trajectory-rmsf.ipynb">Alanine RMSF</a>` — per-residue Cα fluctuations computed from the `traj.dcd`.
+- `<a href="{{ site.baseurl }}/episodes/notebooks/02-trajectory-rg.ipynb">Alanine radius of gyration</a>` — radius of gyration vs time for the simple trajectory.
+
+Run `docs/episodes/scripts/03-simulaciones-clasicas_simple.py` before opening these notebooks so `$COURSE_DIR/results/03-simulaciones-clasicas/simple/traj.dcd` exists.
+
 ### Key points
 
 - Basic concepts are tested on alanine.
@@ -194,6 +204,16 @@ This assistant generates scripts equivalent to the examples above and lets you v
 ### Notebooks and scripts
 
 - This notebook executes the complex protein-ligand simulation (AMBER/Gromacs/CHARMM/Tinker inputs) and emphasizes file selection and reporting. (<a href="{{ site.baseurl }}/episodes/notebooks/03-simulaciones-clasicas.ipynb">notebook</a> | <a href="{{ site.baseurl }}/episodes/scripts/03-simulaciones-clasicas.py">script</a>)
+
+## Extended trajectory analysis
+
+The MDAnalysis-based notebooks below compute RMSD, RMSF, and radius of gyration for the `protein2` system using the `output_traj.dcd` trajectory produced by `docs/episodes/scripts/03-simulaciones-clasicas.py`. Each notebook mirrors the `Pau_TFG_DAO/analysis` workflow (`https://github.com/JordiVillaFreixa/Pau_TFG_DAO/tree/main/analysis`) while loading the canonical `protein2.pdb`/`ligand2.pdb` pair.
+
+- `<a href="{{ site.baseurl }}/episodes/notebooks/03-trajectory-rmsd.ipynb">RMSD vs time</a>` — backbone RMSD against the first frame.
+- `<a href="{{ site.baseurl }}/episodes/notebooks/03-trajectory-rmsf.ipynb">Residue RMSF</a>` — per-residue fluctuations (Cα selection).
+- `<a href="{{ site.baseurl }}/episodes/notebooks/03-trajectory-rg.ipynb">Radius of gyration</a>` — `R_g` vs time for the complex.
+
+Run the Episode 3 simulation before opening these notebooks so the expected trajectory (`$COURSE_DIR/results/03-simulaciones-clasicas/complex/output_traj.dcd`) exists.
 
 <div class="episode-nav">
   <a href="{{ site.baseurl }}/episodes/01-introduccion/">Previous</a>

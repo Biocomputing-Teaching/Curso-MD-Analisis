@@ -1,24 +1,6 @@
 \section[Introduction]{Episode 1: Introduction (environment and data)}
 
-\subsection{OpenMM application layer}
 
-\begin{frame}
-\frametitle{OpenMM general workflow}
-\begin{itemize}
-  \item Load PDB/GROMACS/AMBER/CHARMM/TINKER structures with the official scripts (e.g., \href{https://github.com/openmm/openmm/blob/master/examples/python-examples/simulatePdb.py}{\texttt{simulatePdb.py}}, \href{https://github.com/openmm/openmm/blob/master/examples/python-examples/simulateGromacs.py}{\texttt{simulateGromacs.py}}, \href{https://github.com/openmm/openmm/blob/master/examples/python-examples/simulateAmber.py}{\texttt{simulateAmber.py}}, and \href{https://github.com/openmm/openmm/blob/master/examples/python-examples/simulateCharmm.py}{\texttt{simulateCharmm.py}}).
-  \item Create the \texttt{Topology}, \texttt{System}, and \texttt{Integrator} objects and wire \texttt{StateReporter}/\texttt{TrajectoryReporter} to capture energies, forces, and coordinates.
-  \item Execute integration steps defined by the application layer and save checkpoints with the OpenMM-Setup routines (User Guide §3.5–3.15).
-\end{itemize}
-\end{frame}
-
-\begin{frame}
-\frametitle{External inputs}
-\begin{itemize}
-  \item \href{https://github.com/openmm/openmm/blob/master/examples/python-examples/simulateAmber.py}{\texttt{simulateAmber.py}} accepts `.prmtop` + `.inpcrd`, while \href{https://github.com/openmm/openmm/blob/master/examples/python-examples/simulateCharmm.py}{\texttt{simulateCharmm.py}} and \href{https://github.com/openmm/openmm/blob/master/examples/python-examples/simulateGromacs.py}{\texttt{simulateGromacs.py}} respect their native formats.
-  \item \href{https://github.com/openmm/openmm/blob/master/examples/python-examples/simulatePdb.py}{\texttt{simulatePdb.py}} is the traditional starting point for alanine dipeptide or unparameterized protein–ligand systems.
-  \item All scripts expose hooks to tweak \texttt{reporters} and shape output formats that we then process with Python analysis scripts.
-\end{itemize}
-\end{frame}
 
 \subsection{Overview and scales}
 
@@ -135,7 +117,7 @@
 \end{itemize}
 \end{frame}
 
-\subsection{Entropy and free energy}
+\subsubsection{Entropy and free energy}
 
 \begin{frame}
 \frametitle{Microstates and macrostates}
@@ -189,7 +171,7 @@
 \end{itemize}
 \end{frame}
 
-\subsection{Ensembles and partitioning}
+\subsubsection{Ensembles and partitioning}
 
 \begin{frame}
 \frametitle{Classical ensembles}
@@ -201,396 +183,396 @@
 \end{frame}
 
 \begin{frame}
-\frametitle{Funci\'on de partici\'on can\'onica}
+\frametitle{Canonical partition function}
 \begin{align*}
   Z &= \frac{1}{h^{3N}N!}\int e^{-\beta H(\mathbf{r},\mathbf{p})}\,d\mathbf{r}\,d\mathbf{p}.
 \end{align*}
 \begin{itemize}
-  \item Central para derivar energ\'ias libres y promedios.
+  \item Central to deriving free energies and averages.
 \end{itemize}
 \end{frame}
 
 \begin{frame}
-\frametitle{Observables en NVT}
+\frametitle{Observables in NVT}
 \begin{align*}
   \langle A \rangle &= \frac{1}{Z}\int A\,e^{-\beta H}\,d\mathbf{r}\,d\mathbf{p}.
 \end{align*}
 \begin{itemize}
-  \item En simulaci\'on, se estiman con promedios temporales.
+  \item In simulation, they are estimated via time averages.
 \end{itemize}
 \end{frame}
 
 \begin{frame}
-\frametitle{Ensemble NPT}
+\frametitle{NPT ensemble}
 \begin{align*}
   \Delta &= \int dV\,e^{-\beta PV}\,Z(N,V,T),\\
   G &= -\kb T\ln \Delta.
 \end{align*}
 \begin{itemize}
-  \item Incluye fluctuaciones de volumen controladas por el barostato.
+  \item Includes volume fluctuations controlled by the barostat.
 \end{itemize}
 \end{frame}
 
 \begin{frame}
-\frametitle{Fluctuaciones termodin\'amicas}
+\frametitle{Thermodynamic fluctuations}
 \begin{align*}
   C_V &= \frac{\langle E^2 \rangle-\langle E \rangle^2}{\kb T^2},\\
   \kappa_T &= \frac{\langle V^2 \rangle-\langle V \rangle^2}{\kb T\langle V \rangle}.
 \end{align*}
 \begin{itemize}
-  \item Las fluctuaciones conectan estad\'istica y respuesta macrosc\'opica.
+  \item Fluctuations connect statistics with macroscopic response.
 \end{itemize}
 \end{frame}
 
-\subsection{Hamiltoniano y din\'amica}
+\subsection{Hamiltonian and dynamics}
 
 \begin{frame}
-\frametitle{Hamiltoniano cl\'asico}
+\frametitle{Classical Hamiltonian}
 \begin{align*}
   H(\mathbf{r},\mathbf{p}) &= \sum_{i=1}^N \frac{\mathbf{p}_i^2}{2m_i} + U(\mathbf{r}).
 \end{align*}
 \begin{itemize}
-  \item Se separa en energ\'ia cin\'etica y potencial.
+  \item Split into kinetic and potential energy.
 \end{itemize}
 \end{frame}
 
 \begin{frame}
-\frametitle{Ecuaciones de Hamilton}
+\frametitle{Hamilton's equations}
 \begin{align*}
   \dot{\mathbf{r}}_i &= \frac{\partial H}{\partial \mathbf{p}_i},\\
   \dot{\mathbf{p}}_i &= -\frac{\partial H}{\partial \mathbf{r}_i}.
 \end{align*}
 \begin{itemize}
-  \item Equivalentes a la segunda ley de Newton.
+  \item Equivalent to Newton's second law.
 \end{itemize}
 \end{frame}
 
 \begin{frame}
-\frametitle{Ecuaciones de Newton}
+\frametitle{Newton's equations}
 \begin{align*}
   m_i\ddot{\mathbf{r}}_i &= -\nabla_i U(\mathbf{r}).
 \end{align*}
 \begin{itemize}
-  \item La fuerza es el gradiente negativo del potencial.
+  \item Force equals the negative gradient of the potential.
 \end{itemize}
 \end{frame}
 
 \begin{frame}
-\frametitle{Conservaci\'on de energ\'ia}
+\frametitle{Energy conservation}
 \begin{align*}
-  \frac{dH}{dt} &= 0 \quad \text{(NVE ideal)}.
+  \frac{dH}{dt} &= 0 \quad \text{(ideal NVE)}.
 \end{align*}
 \begin{itemize}
-  \item La integraci\'on num\'erica introduce errores controlables.
+  \item Numerical integration introduces controllable errors.
 \end{itemize}
 \end{frame}
 
 \begin{frame}
-\frametitle{Flujo en el espacio de fases}
+\frametitle{Phase-space flow}
 \begin{align*}
-  \frac{d\rho}{dt} &= \{\rho,H\} = 0 \quad \text{(ecuaci\'on de Liouville)}.
+  \frac{d\rho}{dt} &= \{\rho,H\} = 0 \quad \text{(Liouville equation)}.
 \end{align*}
 \begin{itemize}
-  \item La densidad de probabilidad se conserva en el flujo hamiltoniano.
+  \item Probability density is conserved by the Hamiltonian flow.
 \end{itemize}
 \end{frame}
 
-\subsection{Fuerzas y gradientes}
+\subsubsection{Forces and gradients}
 
 \begin{frame}
-\frametitle{Fuerzas a partir del potencial}
+\frametitle{Forces from the potential}
 \begin{align*}
   \mathbf{F}_i &= -\nabla_i U(\mathbf{r}).
 \end{align*}
 \begin{itemize}
-  \item En MD, el coste dominante es evaluar $U$ y $\mathbf{F}_i$.
+  \item In MD, the dominant cost is evaluating $U$ and $\mathbf{F}_i$.
 \end{itemize}
 \end{frame}
 
 \begin{frame}
-\frametitle{Potenciales de pares}
+\frametitle{Pair potentials}
 \begin{align*}
   U &= \sum_{i<j} u(r_{ij}),\quad r_{ij}=\lVert \mathbf{r}_i-\mathbf{r}_j \rVert.
 \end{align*}
 \begin{itemize}
-  \item Simplifican la energ\'ia total con interacciones binarias.
+  \item Simplify the total energy using pairwise interactions.
 \end{itemize}
 \end{frame}
 
 \begin{frame}
-\frametitle{Ejemplo: Lennard-Jones}
+\frametitle{Example: Lennard-Jones}
 \begin{align*}
   u_{\text{LJ}}(r) &= 4\epsilon\left[\left(\frac{\sigma}{r}\right)^{12}-\left(\frac{\sigma}{r}\right)^6\right].
 \end{align*}
 \begin{itemize}
-  \item Repulsi\'on a corta distancia, atracci\'on a media distancia.
+  \item Short-range repulsion, medium-range attraction.
 \end{itemize}
 \end{frame}
 
 \begin{frame}
-\frametitle{Energ\'ia electrost\'atica}
+\frametitle{Electrostatic energy}
 \begin{align*}
   u_{\text{C}}(r) &= \frac{1}{4\pi\epsilon_0}\frac{q_i q_j}{r_{ij}}.
 \end{align*}
 \begin{itemize}
-  \item Dominante en sistemas biomoleculares.
+  \item Dominant in biomolecular systems.
 \end{itemize}
 \end{frame}
 
 \begin{frame}
-\frametitle{Gradientes y Hessiano}
+\frametitle{Gradients and Hessian}
 \begin{align*}
   \nabla U &\equiv \left(\frac{\partial U}{\partial r_1},\dots,\frac{\partial U}{\partial r_{3N}}\right),\\
   \Hessian &= \nabla\nabla U.
 \end{align*}
 \begin{itemize}
-  \item El Hessiano describe curvaturas locales (modos normales).
+  \item The Hessian describes local curvatures (normal modes).
 \end{itemize}
 \end{frame}
 
-\subsection{Partici\'on y probabilidades}
+\subsubsection{Partitioning and probabilities}
 
 \begin{frame}
-\frametitle{Separaci\'on cin\'etica/potencial}
+\frametitle{Kinetic/potential separation}
 \begin{align*}
   Z &= Z_{\text{kin}}\,Z_{\text{conf}},\\
   Z_{\text{kin}} &= \prod_i \left(\frac{2\pi m_i}{\beta h^2}\right)^{3/2}.
 \end{align*}
 \begin{itemize}
-  \item $Z_{\text{conf}}$ depende solo de $U(\mathbf{r})$.
+  \item $Z_{\text{conf}}$ depends only on $U(\mathbf{r})$.
 \end{itemize}
 \end{frame}
 
 \begin{frame}
-\frametitle{Distribuci\'on de configuraciones}
+\frametitle{Configuration distribution}
 \begin{align*}
   P(\mathbf{r}) &= \frac{e^{-\beta U(\mathbf{r})}}{Z_{\text{conf}}}.
 \end{align*}
 \begin{itemize}
-  \item Base del muestreo Monte Carlo y MD con termostato.
+  \item Basis for Monte Carlo and thermostatted MD sampling.
 \end{itemize}
 \end{frame}
 
 \begin{frame}
-\frametitle{Energ\'ia libre configuracional}
+\frametitle{Configurational free energy}
 \begin{align*}
   A &= -\kb T\ln Z_{\text{conf}} + \text{const}.
 \end{align*}
 \begin{itemize}
-  \item Relaciona el muestreo con $\Delta A$ entre estados.
+  \item Links sampling to $\Delta A$ between states.
 \end{itemize}
 \end{frame}
 
 \begin{frame}
-\frametitle{Distribuci\'on de velocidades}
+\frametitle{Velocity distribution}
 \begin{align*}
   P(\mathbf{v}) &\propto e^{-\beta \sum_i \frac{1}{2}m_i v_i^2}.
 \end{align*}
 \begin{itemize}
-  \item Permite inicializar velocidades a temperatura $T$.
+  \item Allows initializing velocities at temperature $T$.
 \end{itemize}
 \end{frame}
 
 \begin{frame}
-\frametitle{Teorema de equipartici\'on}
+\frametitle{Equipartition theorem}
 \begin{align*}
   \langle K \rangle &= \frac{3N}{2}\kb T.
 \end{align*}
 \begin{itemize}
-  \item Cada grado de libertad cuadr\'atico aporta $\frac{1}{2}\kb T$.
+  \item Each quadratic degree of freedom contributes $\frac{1}{2}\kb T$.
 \end{itemize}
 \end{frame}
 
-\subsection{Distribuci\'on de Boltzmann}
+\subsubsection{Boltzmann distribution}
 
 \begin{frame}
-\frametitle{Forma general}
+\frametitle{General form}
 \begin{align*}
   P(E) &= \frac{1}{Z}e^{-\beta E}.
 \end{align*}
 \begin{itemize}
-  \item El peso exponencial penaliza estados de alta energ\'ia.
+  \item The exponential weight penalizes high-energy states.
 \end{itemize}
 \end{frame}
 
 \begin{frame}
-\frametitle{Distribuci\'on de Maxwell-Boltzmann}
+\frametitle{Maxwell-Boltzmann distribution}
 \begin{align*}
   f(v) &= 4\pi\left(\frac{m}{2\pi\kb T}\right)^{3/2} v^2 e^{-\frac{mv^2}{2\kb T}}.
 \end{align*}
 \begin{itemize}
-  \item Caracteriza la distribuci\'on de velocidades en equilibrio.
+  \item Characterizes the equilibrium velocity distribution.
 \end{itemize}
 \end{frame}
 
 \begin{frame}
-\frametitle{Interpretaci\'on estad\'istica}
+\frametitle{Statistical interpretation}
 \begin{itemize}
-  \item La mayor\'ia de part\'iculas se agrupan alrededor de $v_{\text{m}}$.
-  \item El ensanchamiento crece con $T$.
+  \item Most particles cluster around $v_{\text{m}}$.
+  \item The width grows with $T$.
 \end{itemize}
 \end{frame}
 
 \begin{frame}
-\frametitle{Ejemplo gr\'afico}
+\frametitle{Graphic example}
 \begin{center}
   \includegraphics[width=0.7\linewidth]{mb_distribution_helium_5500K.png}
 \end{center}
 \vspace{-0.1cm}
-{\tiny Fuente: Wikimedia Commons (CC BY-SA 3.0). \cita{img-mb-5500k}}
+{\tiny Source: Wikimedia Commons (CC BY-SA 3.0). \cita{img-mb-5500k}}
 \end{frame}
 
 \begin{frame}
-\frametitle{Aplicaci\'on en simulaci\'on}
+\frametitle{Simulation application}
 \begin{itemize}
-  \item Inicializar velocidades seg\'un $f(v)$ evita sesgos t\'ermicos.
-  \item Permite comprobar que el termostato reproduce el equilibrio.
+  \item Initializing velocities according to $f(v)$ prevents thermal bias.
+  \item Lets us check that the thermostat reproduces equilibrium.
 \end{itemize}
 \end{frame}
 
-\subsection{Espacio de fases y ergodicidad}
+\subsubsection{Phase space and ergodicity}
 
 \begin{frame}
-\frametitle{Espacio de fases}
+\frametitle{Phase space}
 \begin{align*}
   \Gamma &= (\mathbf{r},\mathbf{p}) \in \mathbb{R}^{6N}.
 \end{align*}
 \begin{itemize}
-  \item Cada punto representa un microestado completo.
+  \item Each point represents a full microstate.
 \end{itemize}
 \end{frame}
 
 \begin{frame}
-\frametitle{Ecuaci\'on de Liouville}
+\frametitle{Liouville equation}
 \begin{align*}
   \frac{\partial \rho}{\partial t} + \{\rho,H\} = 0.
 \end{align*}
 \begin{itemize}
-  \item El volumen en $\Gamma$ se conserva (teorema de Liouville).
+  \item Volume in $\Gamma$ is conserved (Liouville theorem).
 \end{itemize}
 \end{frame}
 
 \begin{frame}
-\frametitle{Ergodicidad}
+\frametitle{Ergodicity}
 \begin{align*}
   \lim_{T\to\infty}\frac{1}{T}\int_0^T A(t)\,dt &= \langle A \rangle_{\text{ensemble}}.
 \end{align*}
 \begin{itemize}
-  \item Supuesto clave para sustituir promedios de conjunto por tiempo.
+  \item Key assumption for replacing ensemble averages with time averages.
 \end{itemize}
 \end{frame}
 
 \begin{frame}
-\frametitle{Trayectorias en $\Gamma$}
+\frametitle{Trajectories in $\Gamma$}
 \begin{center}
   \includegraphics[width=0.62\linewidth]{pendulum_phase_portrait.png}
 \end{center}
 \vspace{-0.1cm}
-{\tiny Fuente: Wikimedia Commons (CC BY-SA 4.0). \cita{img-pendulum-phase}}
+{\tiny Source: Wikimedia Commons (CC BY-SA 4.0). \cita{img-pendulum-phase}}
 \end{frame}
 
 \begin{frame}
-\frametitle{Interpretaci\'on f\'isica}
+\frametitle{Physical interpretation}
 \begin{itemize}
-  \item \`Orbitas cerradas: movimiento peri\'odico.
-  \item \`Orbitas abiertas: difusi\'on en regiones de alta energ\'ia.
+  \item Closed orbits: periodic motion.
+  \item Open orbits: diffusion in high-energy regions.
 \end{itemize}
 \end{frame}
 
-\subsection{Superficie de energ\'ia potencial}
+\subsubsection{Potential energy surface}
 
 \begin{frame}
-\frametitle{Definici\'on}
+\frametitle{Definition}
 \begin{align*}
   U(\mathbf{r}) &: \mathbb{R}^{3N} \to \mathbb{R}.
 \end{align*}
 \begin{itemize}
-  \item Describe el paisaje energ\'etico donde se mueve el sistema.
+  \item Describes the energy landscape where the system evolves.
 \end{itemize}
 \end{frame}
 
 \begin{frame}
-\frametitle{Coordenadas de reacci\'on}
+\frametitle{Reaction coordinates}
 \begin{align*}
   \xi &= \xi(\mathbf{r}),\quad F(\xi) = -\kb T\ln P(\xi).
 \end{align*}
 \begin{itemize}
-  \item Proyecci\'on que resume la din\'amica en una coordenada clave.
+  \item Projection that summarizes the dynamics in a key coordinate.
 \end{itemize}
 \end{frame}
 
 \begin{frame}
-\frametitle{Barreras y estados metaestables}
+\frametitle{Barriers and metastable states}
 \begin{itemize}
-  \item M\'inimos locales: conformaciones metaestables.
-  \item Barreras: controlan las escalas de transici\'on.
+  \item Local minima: metastable conformations.
+  \item Barriers control transition scales.
 \end{itemize}
 \end{frame}
 
 \begin{frame}
-\frametitle{Ejemplo de superficie}
+\frametitle{Surface example}
 \begin{center}
   \includegraphics[width=0.7\linewidth]{pes_sn1.png}
 \end{center}
 \vspace{-0.1cm}
-{\tiny Fuente: Wikimedia Commons (CC BY-SA 4.0). \cita{img-pes-sn1}}
+{\tiny Source: Wikimedia Commons (CC BY-SA 4.0). \cita{img-pes-sn1}}
 \end{frame}
 
 \begin{frame}
-\frametitle{Din\'amica sobre la superficie}
+\frametitle{Dynamics on the surface}
 \begin{itemize}
-  \item Integraci\'on cl\'asica produce trayectorias en $U(\mathbf{r})$.
-  \item Los termostatos aseguran muestreo can\'onico.
+  \item Classical integration produces trajectories on $U(\mathbf{r})$.
+  \item Thermostats ensure canonical sampling.
 \end{itemize}
 \end{frame}
 
-\subsection{Campos de fuerza}
+\subsubsection{Force fields}
 
 \begin{frame}
-\frametitle{Descomposici\'on del potencial}
+\frametitle{Potential decomposition}
 \begin{align*}
   U &= U_{\text{bond}} + U_{\text{angle}} + U_{\text{dihedral}} + U_{\text{nonbond}}.
 \end{align*}
 \begin{itemize}
-  \item Separaci\'on entre t\'erminos enlazados y no enlazados.
+  \item Separation between bonded and non-bonded terms.
 \end{itemize}
 \end{frame}
 
 \begin{frame}
-\frametitle{T\'erminos enlazados}
+\frametitle{Bonded terms}
 \begin{align*}
   U_{\text{bond}} &= \sum_b k_b (r_b-r_b^0)^2,\\
   U_{\text{angle}} &= \sum_a k_a (\theta_a-\theta_a^0)^2.
 \end{align*}
 \begin{itemize}
-  \item Aproximaci\'on arm\'onica alrededor de geometr\'ias de equilibrio.
+  \item Harmonic approximation around equilibrium geometries.
 \end{itemize}
 \end{frame}
 
 \begin{frame}
-\frametitle{Dihedros y rotaci\'on}
+\frametitle{Dihedrals and rotation}
 \begin{align*}
   U_{\text{dihedral}} &= \sum_d \frac{V_d}{2}\left[1+\cos(n_d\phi_d-\gamma_d)\right].
 \end{align*}
 \begin{itemize}
-  \item Controlan barreras rotacionales y preferencias conformacionales.
+  \item Control rotational barriers and conformational preferences.
 \end{itemize}
 \end{frame}
 
 \begin{frame}
-\frametitle{Ejemplo LJ}
+\frametitle{LJ example}
 \begin{center}
   \includegraphics[width=0.68\linewidth]{lennard_jones_potential.png}
 \end{center}
 \vspace{-0.1cm}
-{\tiny Fuente: Wikimedia Commons (CC BY-SA 4.0). \cita{img-lj-potential}}
+{\tiny Source: Wikimedia Commons (CC BY-SA 4.0). \cita{img-lj-potential}}
 \end{frame}
 
 \begin{frame}
-\frametitle{Par\'ametros y validaci\'on}
+\frametitle{Parameters and validation}
 \begin{itemize}
-  \item Los campos de fuerza se ajustan a datos cu\'anticos y experimentales.
-  \item La validaci\'on incluye densidades, energ\'ias y conformaciones.
+  \item Force fields are fitted to quantum and experimental data.
+  \item Validation includes densities, energies, and conformations.
 \end{itemize}
 \end{frame}
 
@@ -626,6 +608,23 @@
 \begin{itemize}
   \item Track library versions and random seeds.
   \item Save input files and scripts.
+\end{itemize}
+\end{frame}
+
+\subsubsection{OpenMM application layer}
+
+\begin{frame}
+\frametitle{OpenMM general workflow}
+\begin{itemize}
+  \item Load PDB/GROMACS/AMBER/CHARMM/TINKER structures with the official scripts (e.g., \href{https://github.com/openmm/openmm/blob/master/examples/python-examples/simulatePdb.py}{\texttt{simulatePdb.py}}, \href{https://github.com/openmm/openmm/blob/master/examples/python-examples/simulateGromacs.py}{\texttt{simulateGromacs.py}}, \href{https://github.com/openmm/openmm/blob/master/examples/python-examples/simulateAmber.py}{\texttt{simulateAmber.py}}, and \href{https://github.com/openmm/openmm/blob/master/examples/python-examples/simulateCharmm.py}{\texttt{simulateCharmm.py}}).
+  \item Create the \texttt{Topology}, \texttt{System}, and \texttt{Integrator} objects and wire \texttt{StateReporter}/\texttt{TrajectoryReporter} to capture energies, forces, and coordinates.
+  \item Execute integration steps defined by the application layer and save checkpoints with the OpenMM-Setup routines (User Guide §3.5–3.15).
+\end{itemize}
+
+\begin{itemize}
+  \item \href{https://github.com/openmm/openmm/blob/master/examples/python-examples/simulateAmber.py}{\texttt{simulateAmber.py}} accepts `.prmtop` + `.inpcrd`, while \href{https://github.com/openmm/openmm/blob/master/examples/python-examples/simulateCharmm.py}{\texttt{simulateCharmm.py}} and \href{https://github.com/openmm/openmm/blob/master/examples/python-examples/simulateGromacs.py}{\texttt{simulateGromacs.py}} respect their native formats.
+  \item \href{https://github.com/openmm/openmm/blob/master/examples/python-examples/simulatePdb.py}{\texttt{simulatePdb.py}} is the traditional starting point for alanine dipeptide or unparameterized protein–ligand systems.
+  \item All scripts expose hooks to tweak \texttt{reporters} and shape output formats that we then process with Python analysis scripts.
 \end{itemize}
 \end{frame}
 

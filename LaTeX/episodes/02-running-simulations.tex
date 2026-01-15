@@ -198,77 +198,77 @@
 \end{itemize}
 \end{frame}
 
-\subsection{Conservaci\'on y NVE}
+\subsection{Conservation and NVE}
 
 \begin{frame}
-\frametitle{Energ\'ia total}
+\frametitle{Total energy}
 \begin{align*}
   E(t) &= K(t) + U(t).
 \end{align*}
 \begin{itemize}
-  \item En NVE ideal, $E(t)$ es constante.
+  \item In ideal NVE, $E(t)$ is constant.
 \end{itemize}
 \end{frame}
 
 \begin{frame}
-\frametitle{Deriva energ\'etica}
+\frametitle{Energy drift}
 \begin{itemize}
-  \item Errores num\'ericos producen deriva secular.
-  \item Se controla reduciendo $\Delta t$.
+  \item Numerical errors produce secular drift.
+  \item Controlled by reducing $\Delta t$.
 \end{itemize}
 \end{frame}
 
 \begin{frame}
-\frametitle{Temperatura instant\'anea}
+\frametitle{Instantaneous temperature}
 \begin{align*}
   T &= \frac{2\langle K \rangle}{3N\kb}.
 \end{align*}
 \begin{itemize}
-  \item En NVE, $T$ fluct\'ua alrededor de un valor medio.
+  \item In NVE, $T$ fluctuates around a mean value.
 \end{itemize}
 \end{frame}
 
 \begin{frame}
-\frametitle{Comprobaciones r\'apidas}
+\frametitle{Quick checks}
 \begin{itemize}
-  \item Estabilidad de $E(t)$ y distribuci\'on de velocidades.
-  \item Comparar $\langle K \rangle$ con el valor te\'orico.
+  \item Check stability of $E(t)$ and the velocity distribution.
+  \item Compare $\langle K \rangle$ with the theoretical value.
 \end{itemize}
 \end{frame}
 
 \begin{frame}
-\frametitle{Tiempo de equilibraci\'on}
+\frametitle{Equilibration time}
 \begin{itemize}
-  \item Un pre-equilibrado estabiliza la energ\'ia antes de producir datos.
+  \item A pre-equilibration stabilizes the energy before collecting data.
 \end{itemize}
 \end{frame}
 
-\subsection{Termostatos}
+\subsection{Thermostats}
 
 \begin{frame}
-\frametitle{Objetivo del termostato}
+\frametitle{Thermostat goal}
 \begin{itemize}
-  \item Imponer una distribuci\'on can\'onica a temperatura $T$.
-  \item Extraer o inyectar energ\'ia de forma controlada.
+  \item Impose a canonical distribution at temperature $T$.
+  \item Extract or inject energy in a controlled way.
 \end{itemize}
 \end{frame}
 
 \begin{frame}
-\frametitle{Din\'amica de Langevin}
+\frametitle{Langevin dynamics}
 \begin{align*}
   m\ddot{\mathbf{r}} &= -\nabla U - \gamma m \dot{\mathbf{r}} + \mathbf{R}(t),\\
   \langle \mathbf{R}(t) \mathbf{R}(t') \rangle &= 2\gamma m\kb T\,\delta(t-t').
 \end{align*}
 \begin{itemize}
-  \item Termostato estoc\'astico con fricci\'on y ruido.
+  \item Stochastic thermostat with friction and noise.
 \end{itemize}
 \end{frame}
 
 \begin{frame}
 \frametitle{Andersen}
 \begin{itemize}
-  \item Reasigna velocidades aleatoriamente con frecuencia $\nu$.
-  \item Bueno para muestreo, menos realista din\'amicamente.
+  \item Reassigns velocities randomly with frequency $\nu$.
+  \item Good for sampling, less realistic dynamically.
 \end{itemize}
 \end{frame}
 
@@ -278,243 +278,243 @@
   \dot{\mathbf{p}}_i &= \mathbf{F}_i - \xi\mathbf{p}_i,\quad \dot{\xi} = \frac{1}{Q}\left(\sum_i \frac{\mathbf{p}_i^2}{m_i} - 3N\kb T\right).
 \end{align*}
 \begin{itemize}
-  \item Termostato determinista con variable extendida.
+  \item Deterministic thermostat with an extended variable.
 \end{itemize}
 \end{frame}
 
 \begin{frame}
-\frametitle{Elecci\'on del termostato}
+\frametitle{Thermostat choice}
 \begin{itemize}
-  \item Langevin: robusto y estable.
-  \item Nos\'e-Hoover: din\'amica m\'as realista si est\'a bien parametrizado.
+  \item Langevin: robust and stable.
+  \item Nos\'e-Hoover: more realistic dynamics if well tuned.
 \end{itemize}
 \end{frame}
 
-\subsection{Barostatos}
+\subsection{Barostats}
 
 \begin{frame}
-\frametitle{Presi\'on microsc\'opica}
+\frametitle{Microscopic pressure}
 \begin{align*}
   P &= \frac{Nk_B T}{V} + \frac{1}{3V}\sum_{i<j}\mathbf{r}_{ij}\cdot\mathbf{F}_{ij}.
 \end{align*}
 \begin{itemize}
-  \item La presi\'on depende de energ\'ia cin\'etica y fuerzas internas.
+  \item Pressure depends on kinetic energy and internal forces.
 \end{itemize}
 \end{frame}
 
 \begin{frame}
-\frametitle{Barostato de Berendsen}
+\frametitle{Berendsen barostat}
 \begin{align*}
   \frac{dV}{dt} &= \frac{1}{\tau_P}(P_0-P)V.
 \end{align*}
 \begin{itemize}
-  \item R\'apido para equilibrar, no reproduce fluctuaciones exactas.
+  \item Fast to equilibrate, does not reproduce exact fluctuations.
 \end{itemize}
 \end{frame}
 
 \begin{frame}
 \frametitle{Parrinello-Rahman}
 \begin{itemize}
-  \item Escala la celda de simulaci\'on con variables din\'amicas.
-  \item Permite cambios anisotr\'opicos del volumen.
+  \item Scales the simulation cell with dynamic variables.
+  \item Allows anisotropic volume changes.
 \end{itemize}
 \end{frame}
 
 \begin{frame}
 \frametitle{NPT}
 \begin{itemize}
-  \item Ensemble realista para condiciones experimentales.
-  \item Combina termostato y barostato.
+  \item Realistic ensemble for experimental conditions.
+  \item Combines thermostat and barostat.
 \end{itemize}
 \end{frame}
 
 \begin{frame}
-\frametitle{Elecci\'on pr\'actica}
+\frametitle{Practical choice}
 \begin{itemize}
-  \item Equilibraci\'on: Berendsen + Langevin.
-  \item Producci\'on: barostato m\'as riguroso (Monte Carlo barostat).
+  \item Equilibration: Berendsen + Langevin.
+  \item Production: more rigorous barostat (Monte Carlo barostat).
 \end{itemize}
 \end{frame}
 
-\subsection{Restricciones}
+\subsection{Constraints}
 
 \begin{frame}
-\frametitle{Motivaci\'on}
+\frametitle{Motivation}
 \begin{itemize}
-  \item Eliminar vibraciones r\'apidas permite aumentar $\Delta t$.
+  \item Eliminating fast vibrations allows increasing $\Delta t$.
 \end{itemize}
 \end{frame}
 
 \begin{frame}
-\frametitle{Restricciones hol\'onomas}
+\frametitle{Holonomic constraints}
 \begin{align*}
   g_k(\mathbf{r}) &= 0,\quad k=1,\dots,M.
 \end{align*}
 \begin{itemize}
-  \item Fijan distancias o \`angulos internos.
+  \item Fix distances or internal angles.
 \end{itemize}
 \end{frame}
 
 \begin{frame}
 \frametitle{SHAKE/RATTLE}
 \begin{itemize}
-  \item SHAKE corrige posiciones; RATTLE corrige posiciones y velocidades.
+  \item SHAKE corrects positions; RATTLE corrects positions and velocities.
 \end{itemize}
 \end{frame}
 
 \begin{frame}
-\frametitle{Impacto num\'erico}
+\frametitle{Numerical impact}
 \begin{itemize}
-  \item Aumenta estabilidad y reduce coste de simulaci\'on.
-  \item Puede alterar modos de alta frecuencia.
+  \item Increases stability and reduces simulation cost.
+  \item May alter high-frequency modes.
 \end{itemize}
 \end{frame}
 
 \begin{frame}
-\frametitle{Recomendaci\'on}
+\frametitle{Recommendation}
 \begin{itemize}
-  \item Usar restricciones en enlaces con H para biomol\'eculas.
+  \item Use constraints on H bonds for biomolecules.
 \end{itemize}
 \end{frame}
 
-\subsection{Condiciones peri\'odicas}
+\subsection{Periodic boundary conditions}
 
 \begin{frame}
-\frametitle{Motivaci\'on de PBC}
+\frametitle{Motivation for PBC}
 \begin{itemize}
-  \item Evita efectos de superficie en sistemas finitos.
-  \item Emula un sistema infinito por replicaci\'on de la celda.
+  \item Avoids surface effects in finite systems.
+  \item Mimics an infinite system by replicating the cell.
 \end{itemize}
 \end{frame}
 
 \begin{frame}
-\frametitle{Celda peri\'odica}
+\frametitle{Periodic cell}
 \begin{align*}
   \mathbf{r} &\to \mathbf{r} + n_x\mathbf{a} + n_y\mathbf{b} + n_z\mathbf{c}.
 \end{align*}
 \begin{itemize}
-  \item $\mathbf{a},\mathbf{b},\mathbf{c}$ definen la caja de simulaci\'on.
+  \item $\mathbf{a},\mathbf{b},\mathbf{c}$ define the simulation box.
 \end{itemize}
 \end{frame}
 
 \begin{frame}
-\frametitle{Ejemplo 2D}
+\frametitle{2D example}
 \begin{center}
   \includegraphics[width=0.72\linewidth]{pbc_2d.png}
 \end{center}
 \vspace{-0.1cm}
-{\tiny Fuente: Wikimedia Commons (CC BY-SA 4.0). \cita{img-pbc-2d}}
+{\tiny Source: Wikimedia Commons (CC BY-SA 4.0). \cita{img-pbc-2d}}
 \end{frame}
 
 \begin{frame}
-\frametitle{Implicaciones en din\'amica}
+\frametitle{Implications for dynamics}
 \begin{itemize}
-  \item Las part\'iculas que salen reingresan por la cara opuesta.
-  \item Se preserva la densidad en el volumen simulado.
+  \item Particles leaving re-enter through the opposite face.
+  \item The density in the simulated volume stays constant.
 \end{itemize}
 \end{frame}
 
 \begin{frame}
-\frametitle{Cajas no ortogonales}
+\frametitle{Non-orthogonal boxes}
 \begin{itemize}
-  \item Celdas tricl\'inicas para cristales o membranas inclinadas.
+  \item Triclinic cells for crystals or tilted membranes.
 \end{itemize}
 \end{frame}
 
 \subsection{Minimum image}
 
 \begin{frame}
-\frametitle{Convenci\'on de imagen m\'inima}
+\frametitle{Minimum image convention}
 \begin{align*}
   r_{ij} &= \min_{\mathbf{n}} \lVert \mathbf{r}_i-\mathbf{r}_j+\mathbf{n} \rVert.
 \end{align*}
 \begin{itemize}
-  \item Usa la imagen peri\'odica m\'as cercana para calcular interacciones.
+  \item Use the nearest periodic image to compute interactions.
 \end{itemize}
 \end{frame}
 
 \begin{frame}
-\frametitle{Ejemplo visual}
+\frametitle{Visual example}
 \begin{center}
   \includegraphics[width=0.7\linewidth]{minimum_image_convention.png}
 \end{center}
 \vspace{-0.1cm}
-{\tiny Fuente: Wikimedia Commons (CC BY-SA 4.0). \cita{img-min-image}}
+{\tiny Source: Wikimedia Commons (CC BY-SA 4.0). \cita{img-min-image}}
 \end{frame}
 
 \begin{frame}
-\frametitle{Radio de corte}
+\frametitle{Cutoff radius}
 \begin{itemize}
-  \item La imagen m\'inima requiere $r_c < L/2$ para evitar dobles conteos.
+  \item The minimum image requires $r_c < L/2$ to avoid double counting.
 \end{itemize}
 \end{frame}
 
 \begin{frame}
-\frametitle{Impacto en energ\'ia}
+\frametitle{Energy impact}
 \begin{itemize}
-  \item Errores si el corte es grande o la densidad baja.
+  \item Errors arise if the cutoff is large or the density is low.
 \end{itemize}
 \end{frame}
 
 \begin{frame}
-\frametitle{Buenas pr\'acticas}
+\frametitle{Best practices}
 \begin{itemize}
-  \item Ajustar $r_c$ y tama\~no de caja seg\'un la densidad del sistema.
+  \item Adjust $r_c$ and box size according to the system density.
 \end{itemize}
 \end{frame}
 
-\subsection{Cutoffs y suavizado}
+\subsection{Cutoffs and smoothing}
 
 \begin{frame}
-\frametitle{Interacciones de corto alcance}
+\frametitle{Short-range interactions}
 \begin{itemize}
-  \item LJ se trunca a $r_c$ con o sin funci\'on de suavizado.
+  \item LJ is truncated at $r_c$ with or without a smoothing function.
 \end{itemize}
 \end{frame}
 
 \begin{frame}
-\frametitle{Funci\'on switch}
+\frametitle{Switch function}
 \begin{align*}
   u_{\text{switch}}(r) &= s(r)\,u(r),\quad s(r)\in[0,1].
 \end{align*}
 \begin{itemize}
-  \item Evita discontinuidades en fuerzas.
+  \item Avoids discontinuities in forces.
 \end{itemize}
 \end{frame}
 
 \begin{frame}
-\frametitle{Correcci\'on de cola}
+\frametitle{Tail correction}
 \begin{align*}
   U_{\text{tail}} &\approx 2\pi\rho \int_{r_c}^{\infty} r^2 u(r)\,dr.
 \end{align*}
 \begin{itemize}
-  \item Corrige energ\'ia y presi\'on al truncar LJ.
+  \item Corrects energy and pressure when truncating LJ.
 \end{itemize}
 \end{frame}
 
 \begin{frame}
-\frametitle{Escogiendo $r_c$}
+\frametitle{Choosing $r_c$}
 \begin{itemize}
-  \item Mayor $r_c$ mejora precisi\'on, pero aumenta coste.
+  \item Larger $r_c$ improves accuracy but increases cost.
 \end{itemize}
 \end{frame}
 
 \begin{frame}
-\frametitle{Implicaciones en estabilidad}
+\frametitle{Stability implications}
 \begin{itemize}
-  \item Un corte abrupto puede introducir ruido en la din\'amica.
+  \item An abrupt cutoff can introduce noise in the dynamics.
 \end{itemize}
 \end{frame}
 
-\subsection{Electrost\'atica de largo alcance}
+\subsection{Long-range electrostatics}
 
 \begin{frame}
-\frametitle{Problema de Coulomb}
+\frametitle{Coulomb problem}
 \begin{align*}
-  u_{\text{C}}(r) &\propto \frac{1}{r} \quad \text{(largo alcance)}.
+  u_{\text{C}}(r) &\propto \frac{1}{r} \quad \text{(long range)}.
 \end{align*}
 \begin{itemize}
-  \item El truncamiento directo produce grandes errores.
+  \item Direct truncation produces large errors.
 \end{itemize}
 \end{frame}
 
@@ -524,38 +524,38 @@
   U &= U_{\text{real}} + U_{\text{rec}} + U_{\text{self}}.
 \end{align*}
 \begin{itemize}
-  \item Divide Coulomb en suma real y rec\'iproca.
+  \item Split Coulomb into real and reciprocal sums.
 \end{itemize}
 \end{frame}
 
 \begin{frame}
 \frametitle{PME}
 \begin{itemize}
-  \item Particle Mesh Ewald usa FFT para acelerar el c\'alculo.
+  \item Particle Mesh Ewald uses FFT to speed up the calculation.
 \end{itemize}
 \end{frame}
 
 \begin{frame}
-\frametitle{Precisi\'on}
+\frametitle{Accuracy}
 \begin{itemize}
-  \item Controla el error con par\'ametros de malla y \`alfa de Ewald.
+  \item Control the error with mesh parameters and the Ewald alpha.
 \end{itemize}
 \end{frame}
 
 \begin{frame}
-\frametitle{Elecci\'on pr\'actica}
+\frametitle{Practical choice}
 \begin{itemize}
-  \item Para biomol\'eculas en solvente, PME es el est\'andar.
+  \item For solvated biomolecules, PME is the standard.
 \end{itemize}
 \end{frame}
 
-\subsection{Salida y reproducibilidad}
+\subsection{Outputs and reproducibility}
 
 \begin{frame}
-\frametitle{Trayectorias}
+\frametitle{Trajectories}
 \begin{itemize}
-  \item Guardar coordenadas y velocidades en intervalos regulares.
-  \item Balance entre almacenamiento y resoluci\'on temporal.
+  \item Save coordinates and velocities at regular intervals.
+  \item Balance between storage and temporal resolution.
 \end{itemize}
 \end{frame}
 

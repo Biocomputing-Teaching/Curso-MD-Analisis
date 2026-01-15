@@ -10,6 +10,8 @@ permalink: /episodes/02-preparacion-sistema/
   <a href="{{ site.baseurl }}/episodes/05-muestreo-avanzado/">Next</a>
 </div>
 
+> **System focus** Episode 3 works with the canonical `protein2-ligand2.pdb` complex (`$COURSE_DIR/data/complex`). Re-run `bash docs/episodes/scripts/01-split-protein2-ligand2.sh` whenever the data directory is refreshed to regenerate `protein2.pdb` and `ligand2.pdb` for every script below.
+
 <!-- toc:start -->
 ## Table of contents
 - [Duration](#duration)

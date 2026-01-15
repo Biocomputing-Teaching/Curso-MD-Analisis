@@ -127,6 +127,19 @@ find Curso-MD-Analisis-main/docs/episodes/notebooks -type f -name "*.ipynb" -exe
 rm -rf Curso-MD-Analisis-main Curso-MD-Analisis.zip
 ```
 
+### Additional Amber archive
+
+Download the Amber dataset archive referenced by the course and keep it alongside the other inputs:
+
+```bash
+cd "$COURSE_DIR/data"
+curl -L -o 1.AOM_amber.tar.gz https://www.dropbox.com/scl/fi/vltio5d6l3ghg3n5gb7tu/1.AOM_amber.tar.gz?rlkey=nv7fi1lp6k27u0iccdnlv22ms&st=kt8d35xd&dl=0
+tar -xzf 1.AOM_amber.tar.gz
+rm 1.AOM_amber.tar.gz
+```
+
+The extracted files remain in `$COURSE_DIR/data`, ready for the Amber routines that come later in the syllabus.
+
 Expected structure:
 
 - `data/` input files

@@ -10,6 +10,8 @@ permalink: /episodes/05-muestreo-avanzado/
   <a href="{{ site.baseurl }}/episodes/06-pyemma/">Next</a>
 </div>
 
+> **System focus** The advanced sampling episode keeps using the `protein2-ligand2.pdb` pair. Run `bash docs/episodes/scripts/01-split-protein2-ligand2.sh` after refreshing `$COURSE_DIR/data/complex` to regenerate the canonical `protein2.pdb` and `ligand2.pdb` before launching any sampling notebooks.
+
 <!-- toc:start -->
 ## Table of contents
 - [Duration](#duration)

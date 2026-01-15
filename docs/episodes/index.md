@@ -13,6 +13,8 @@ List of course episodes:
 - <a href="{{ site.baseurl }}/episodes/02-preparacion-sistema/">Episode 3: Preparing and editing the system</a>
 - <a href="{{ site.baseurl }}/episodes/05-muestreo-avanzado/">Episode 4: Advanced sampling and the OpenMM ecosystem</a>
 
+> **System focus** Every episode now centers on the `protein2-ligand2.pdb` complex (`$COURSE_DIR/data/complex`). Use `bash docs/episodes/scripts/01-split-protein2-ligand2.sh` to regenerate `protein2.pdb` and `ligand2.pdb` after refreshing the data bundle.
+
 ### Part II: Analysis and Markov models
 
 - <a href="{{ site.baseurl }}/episodes/04-analisis-trayectorias/">Episode 5: Trajectory analysis with MDTraj</a>

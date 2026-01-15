@@ -10,6 +10,8 @@ permalink: /episodes/06-pyemma/
   <a href="{{ site.baseurl }}/episodes/07-deeptime/">Next</a>
 </div>
 
+> **System focus** The PyEMMA episode works with the files derived from `protein2-ligand2.pdb`. Whenever `$COURSE_DIR/data/complex` is refreshed, re-run `bash docs/episodes/scripts/01-split-protein2-ligand2.sh` so `protein2.pdb` and `ligand2.pdb` match the source used in all MSM builders.
+
 <!-- toc:start -->
 ## Table of contents
 - [Duration](#duration)

@@ -10,6 +10,8 @@ permalink: /episodes/04-analisis-trayectorias/
   <a href="{{ site.baseurl }}/episodes/06-pyemma/">Next</a>
 </div>
 
+> **System focus** Trajectory analysis uses the `protein2-ligand2.pdb` complex. Keep `$COURSE_DIR/data/complex` in sync by re-running `bash docs/episodes/scripts/01-split-protein2-ligand2.sh` before executing the MDTraj notebooks so both the protein and ligand come from the same canonical source.
+
 <!-- toc:start -->
 ## Table of contents
 - [Duration](#duration)
@@ -74,6 +76,20 @@ permalink: /episodes/04-analisis-trayectorias/
 ### Notebooks and scripts
 
 - This notebook performs MDTraj analyses on the protein-ligand trajectory, re-imaging the complex and exporting RMSD plots to highlight differences. (<a href="{{ site.baseurl }}/episodes/notebooks/04-analisis-trayectorias.ipynb">notebook</a> | <a href="{{ site.baseurl }}/episodes/scripts/04-analisis-trayectorias.py">script</a>)
+
+## VMD command-line analysis
+
+We also provide a lightweight VMD Tcl helper that runs from the terminal to compute RMSD, RMSF, specific distances, and even export the movie frames for the complex trajectory. The script lives at `docs/episodes/scripts/04-vmd-analysis.tcl` and requires `$COURSE_DIR/results/03-simulaciones-clasicas/complex/output_traj.dcd`.
+
+Execute it with:
+
+```
+COURSE_DIR=~/Concepcion26 vmd -dispdev text -e docs/episodes/scripts/04-vmd-analysis.tcl
+```
+
+The run writes CSV summaries into `$COURSE_DIR/results/04-analisis-trayectorias/complex/vmd` and emits a PNG sequence under `movie/` (Tachyon renders each frame). The distance file tracks the anchor residue/ligand separation frame by frame, giving a quick consistency check.
+
+If you’d like a guided introduction before using the script, review the VMD “Analysis of MD Trajectories” tutorial at https://www.ks.uiuc.edu/Training/Tutorials/vmd/analysis/ — the commands there are the same ones wrapped inside our Tcl helper, and the pages explain how to instrument RMSD/RMSF/distance traces interactively.
 
 <div class="episode-nav">
   <a href="{{ site.baseurl }}/episodes/05-muestreo-avanzado/">Previous</a>
