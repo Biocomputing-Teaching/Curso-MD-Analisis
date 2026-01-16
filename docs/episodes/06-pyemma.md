@@ -23,6 +23,7 @@ permalink: /episodes/06-pyemma/
 - [Tutorial pillars from the official PyEMMA guide](#tutorial-pillars-from-the-official-pyemma-guide)
 - [Pentapeptide showcase](#pentapeptide-showcase)
 - [Project](#project)
+- [References](#references)
 <!-- toc:end -->
 
 ## Duration
@@ -156,6 +157,8 @@ Time-lagged independent component analysis compresses the torsion data into a fe
 
 ##### TICA
 
+Time-lagged Independent Component Analysis (TICA) pulls out the kinetically slow degrees of freedom by searching for linear combinations of features with maximum time-lagged autocorrelation; the resulting ICs (``IC1``, ``IC2``…) form the low-dimensional space where MSM transitions are best resolved.
+
 The torsion-based data are projected with `pyemma.coordinates.tica(..., lag=5)` (0.5 ns) using the default kinetic map scaling and enough components to capture 95% of the kinetic variance. Histograms and densities on the first four ICs show well-separated metastable basins, and one trajectory is plotted over time to illustrate discrete jumps.
 
 ##### Discretization
@@ -166,6 +169,8 @@ k-means clustering is applied to the TICA coordinates. A VAMP2 scan over `[5, 10
 
 Implied timescales are computed with `pyemma.msm.its(cluster.dtrajs, lags=50, nits=10, errors='bayes')` and plotted in ns. The timescales converge above 0.5 ns, which justifies a lag time of 5 steps for `pyemma.msm.bayesian_markov_model(cluster.dtrajs, lag=5, dt_traj='0.1 ns')`. Active-state and active-count fractions are printed, and a Chapman–Kolmogorov test with `mlags=6` over five metastable sets confirms Markovian consistency.
 
+The Chapman–Kolmogorov (CK) test checks whether the transition probabilities propagate consistently across multiples of the lag time. By comparing estimates obtained at `kτ` directly to the k-step propagation of the original lag-τ transition matrix, we verify the Markov assumption: a passing CK test indicates the kinetics remain invariant under coarse-graining, lending confidence to the MSM's lag choice.
+
 #### MSM spectral analysis
 
 The sample mean/std of the first 15 timescales are plotted together with their separations, showing the gap between the 4th and 5th process. Stationary distributions, free energies, and the first four right eigenvectors are visualized as contour plots on the first two TICA coordinates, revealing how slow processes connect the dense clusters.
@@ -173,6 +178,8 @@ The sample mean/std of the first 15 timescales are plotted together with their s
 #### PCCA & TPT
 
 `msm.pcca(5)` produces fuzzy memberships that are contoured across IC1/IC2, and the argument-wise `argmax` provides crisp metastable assignments. Sample structures are saved via `pyemma.coordinates.save_traj` and visualized with `nglview`, while the tutorial also prints state free energies, MFPT tables, and direction-specific MFPTs, showing metastable state 1’s short lifetime. Transition path theory between states 2 and 4 uses `pyemma.msm.tpt`, and the committor is plotted as a contour map.
+
+The committor gives the probability that a configuration will reach a specified final macrostate before returning to the initial macrostate, so contour maps of the committor reveal the transition pathways’ location, while the reactive fluxes computed by TPT count the net probability current between states. Examining both the committor surface and the fluxes ensures we understand the preferred transition routes in addition to the equilibrium populations[^noe_tpt].
 
 #### Expectations and observables
 
@@ -220,6 +227,10 @@ Deliverables:
 - If the data is hosted online, include the exact download steps so we can reproduce your simulation.
 
 The goal is to get comfortable with the full simulation‑to‑MSM pipeline and produce evidence (scripts + plots) you can share by this afternoon.
+
+## References
+
+- [^noe_tpt]: Noé, F.; Schütte, C.; Vanden-Eijnden, E.; Reich, L.; Weikl, T. R. (2009). *Constructing the equilibrium ensemble of folding pathways from short off-equilibrium simulations*. Proc. Natl. Acad. Sci. U.S.A., 106, 19011–19016.
 
 <div class="episode-nav">
   <a href="{{ site.baseurl }}/episodes/05-muestreo-avanzado/">Previous</a>

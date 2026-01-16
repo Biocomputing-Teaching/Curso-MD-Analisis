@@ -92,6 +92,7 @@
 \begin{itemize}
   \item Measures correlations persisting over lag time $\tau$.
   \item Slow processes correspond to large time-lagged correlations.
+  \item This procedure is known as time-lagged independent component analysis (TICA): the eigenvectors of $C_\tau$ define the slow collective coordinates (tICs).
 \end{itemize}
 \end{frame}
 
@@ -218,6 +219,7 @@
     T(n\tau) \approx T(\tau)^n.
   \]
   \item Agreement validates chosen lag time.
+  \item Passing CK ensures that the implied kinetics remain invariant when propagation is computed at multiples of the base lag, confirming the MSM describes the same slow modes.
 \end{itemize}
 \end{frame}
 
@@ -235,6 +237,18 @@
     q_i=0 \ (i\in A),\;
     q_i=1 \ (i\in B).
   \]
+  \item The committor is the probability to reach $B$ before returning to $A$ and defines reactive surfaces.
+\end{itemize}
+\end{frame}
+
+\begin{frame}
+\frametitle{Reactive fluxes}
+\begin{itemize}
+  \item TPT flux:
+  \[
+    f_{ij} = \pi_i T_{ij} q_i (1-q_j)
+  \]
+  \item Measures net current along transition tubes and highlights dominant pathways.
 \end{itemize}
 \end{frame}
 
