@@ -97,4 +97,10 @@ Script source: <a href="https://github.com/Biocomputing-Teaching/Curso-MD-Analis
 
 Script source: <a href="https://github.com/Biocomputing-Teaching/Curso-MD-Analisis/blob/main/scripts/generate_example_dcd.py">generate_example_dcd.py</a>
 
+Script source: <a href="https://github.com/Biocomputing-Teaching/Curso-MD-Analisis/blob/main/scripts/generate_example_dcd.py">generate_example_dcd.py</a>
+
+Script source: <a href="https://github.com/Biocomputing-Teaching/Curso-MD-Analisis/blob/main/scripts/generate_example_dcd.py">generate_example_dcd.py</a>
+
+Script source: <a href="https://github.com/Biocomputing-Teaching/Curso-MD-Analisis/blob/main/scripts/generate_example_dcd.py">generate_example_dcd.py</a>
+
 Note: the command to generate the DCD is in <a href="{{ site.baseurl }}/reference/">Reference</a>.

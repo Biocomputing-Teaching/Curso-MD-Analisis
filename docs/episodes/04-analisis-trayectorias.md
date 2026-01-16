@@ -10,8 +10,6 @@ permalink: /episodes/04-analisis-trayectorias/
   <a href="{{ site.baseurl }}/episodes/06-pyemma/">Next</a>
 </div>
 
-> **System focus** Trajectory analysis uses the `protein2-ligand2.pdb` complex. Keep `$COURSE_DIR/data/complex` in sync by re-running `bash docs/episodes/scripts/01-split-protein2-ligand2.sh` before executing the MDTraj notebooks so both the protein and ligand come from the same canonical source.
-
 <!-- toc:start -->
 ## Table of contents
 - [Duration](#duration)

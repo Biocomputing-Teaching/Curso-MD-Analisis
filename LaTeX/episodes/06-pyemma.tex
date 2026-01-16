@@ -224,6 +224,38 @@
 \end{frame}
 
 %====================================================
+\begin{frame}
+\frametitle{Transition Path Theory overview}
+\begin{itemize}
+  \item TPT builds on the MSM coarse graining to identify dominant pathways between user-defined reactant and product macrostates.
+  \item It solves for the committor (probability of reaching the product before returning to the reactant) and computes reactive fluxes that quantify the net probability current supporting those transitions.
+  \item Together the committor and flux highlight where the slow dynamics concentrate and which state-to-state hops carry the most weight in the MSM.
+\end{itemize}
+\end{frame}
+
+%====================================================
+\subsection{Metastable coarse graining with PCCA++}
+
+\begin{frame}
+\frametitle{PCCA++ metastable clustering}
+\begin{itemize}
+  \item Perron cluster cluster analysis (PCCA++) exploits the slow eigenvectors of the MSM transition matrix to define fuzzy memberships to macrostates.
+  \item Each microstate carries a vector of probabilities, leading to metastable sets that preserve the kinetics encoded in the slow modes.
+  \item Coarse-grained states are therefore suited for human interpretation and downstream analysis (MFPTs, representative structures, etc.).
+  \item Selecting a small number of macrostates keeps the essential long-timescale behavior and prepares reactant/product sets for TPT.
+\end{itemize}
+\end{frame}
+
+\begin{frame}
+\frametitle{Metastable set assignments}
+\begin{itemize}
+  \item A crisp assignment can be obtained by taking the argmax of the membership vector for each microstate.
+  \item The resulting macrostates label dense basins or transition regions in the slow collective coordinates.
+  \item These macrostates control the initial/final sets in TPT computations, ensuring that committors and fluxes are defined between physically meaningful ensembles.
+\end{itemize}
+\end{frame}
+
+%====================================================
 \subsection{Transition Path Theory}
 
 \begin{frame}

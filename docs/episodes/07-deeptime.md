@@ -9,8 +9,6 @@ permalink: /episodes/07-deeptime/
   <a href="{{ site.baseurl }}/episodes/">All episodes</a>
 </div>
 
-> **System focus** Deeptime sessions now follow the Alanine dipeptide example from `deeptime` (see https://deeptime-ml.github.io/latest/notebooks/examples/ala2-example.html); all required hydra data is fetched from `mdshare`, so no additional preprocessing is needed.
-
 <!-- toc:start -->
 ## Table of contents
 - [Duration](#duration)

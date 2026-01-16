@@ -10,8 +10,6 @@ permalink: /episodes/06-pyemma/
   <a href="{{ site.baseurl }}/episodes/07-deeptime/">Next</a>
 </div>
 
-> **System focus** The PyEMMA episode works with the files derived from `protein2-ligand2.pdb`. Whenever `$COURSE_DIR/data/complex` is refreshed, re-run `bash docs/episodes/scripts/01-split-protein2-ligand2.sh` so `protein2.pdb` and `ligand2.pdb` match the source used in all MSM builders.
-
 <!-- toc:start -->
 ## Table of contents
 - [Duration](#duration)
@@ -178,6 +176,8 @@ The sample mean/std of the first 15 timescales are plotted together with their s
 #### PCCA & TPT
 
 `msm.pcca(5)` produces fuzzy memberships that are contoured across IC1/IC2, and the argument-wise `argmax` provides crisp metastable assignments. Sample structures are saved via `pyemma.coordinates.save_traj` and visualized with `nglview`, while the tutorial also prints state free energies, MFPT tables, and direction-specific MFPTs, showing metastable state 1’s short lifetime. Transition path theory between states 2 and 4 uses `pyemma.msm.tpt`, and the committor is plotted as a contour map.
+
+Transition Path Theory (TPT) is the mathematical framework that uses these metastable sets to define reactive pathways, generate committor probabilities, and compute net fluxes between states. The committor tells us the chance that a trajectory starting in a configuration reaches the designated product set before returning to the reactant set, while the reactive flux highlights which microstate transitions actually carry probability current under equilibrium assumptions[^noe_tpt]. Together they transform the MSM into a pathway-level picture of the slow dynamics and guide which states to sample for experimental observables.
 
 The committor gives the probability that a configuration will reach a specified final macrostate before returning to the initial macrostate, so contour maps of the committor reveal the transition pathways’ location, while the reactive fluxes computed by TPT count the net probability current between states. Examining both the committor surface and the fluxes ensures we understand the preferred transition routes in addition to the equilibrium populations[^noe_tpt].
 

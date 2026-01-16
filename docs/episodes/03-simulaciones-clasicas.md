@@ -10,8 +10,6 @@ permalink: /episodes/03-simulaciones-clasicas/
   <a href="{{ site.baseurl }}/episodes/02-preparacion-sistema/">Next</a>
 </div>
 
-> **System focus** This running-simulations episode now targets `protein2-ligand2.pdb` (`$COURSE_DIR/data/complex`). If you update the data bundle, rerun `bash docs/episodes/scripts/01-split-protein2-ligand2.sh` to keep `protein2.pdb` and `ligand2.pdb` in sync before executing the demos below.
-
 <!-- toc:start -->
 ## Table of contents
 - [Duration](#duration)
