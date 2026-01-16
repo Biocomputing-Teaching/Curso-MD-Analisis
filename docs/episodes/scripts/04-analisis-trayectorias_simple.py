@@ -5,6 +5,7 @@ from pathlib import Path
 
 import mdtraj as md
 import matplotlib.pyplot as plt
+COURSE_DIR = Path(os.environ.get("COURSE_DIR", str(Path.home() / "Concepcion26"))).expanduser()
 
 
 def main() -> None:

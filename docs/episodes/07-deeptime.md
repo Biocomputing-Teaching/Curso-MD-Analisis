@@ -9,7 +9,7 @@ permalink: /episodes/07-deeptime/
   <a href="{{ site.baseurl }}/episodes/">All episodes</a>
 </div>
 
-> **System focus** Deeptime sessions use the canonical `protein2-ligand2.pdb` complex; keep `$COURSE_DIR/data/complex` synchronized by re-running `bash docs/episodes/scripts/01-split-protein2-ligand2.sh` so the protein and ligand inputs share the same origin.
+> **System focus** Deeptime sessions now follow the Alanine dipeptide example from `deeptime` (see https://deeptime-ml.github.io/latest/notebooks/examples/ala2-example.html); all required hydra data is fetched from `mdshare`, so no additional preprocessing is needed.
 
 <!-- toc:start -->
 ## Table of contents
@@ -18,8 +18,7 @@ permalink: /episodes/07-deeptime/
 - [Content](#content)
 - [Guide scripts to prepare data](#guide-scripts-to-prepare-data)
 - [Operator foundations](#operator-foundations)
-- [Alanine dipeptide](#alanine-dipeptide)
-- [Protein-ligand complex](#protein-ligand-complex)
+- [Deeptime showcase](#deeptime-showcase)
 <!-- toc:end -->
 
 ## Duration
@@ -66,47 +65,27 @@ $$
 
 `deeptime` complements this view by estimating the transfer matrix and computing spectral projections to distinguish macrostates.
 
-## Alanine dipeptide
+## Deeptime showcase
 
 ### Guided demo
 
-<!-- sync-from: docs/episodes/scripts/07-deeptime-alanine.py -->
-<div class="notebook-embed"><iframe src="{{ site.baseurl }}/episodes/notebooks/rendered/07-deeptime-alanine.html" loading="lazy"></iframe><div class="notebook-links"><a href="{{ site.baseurl }}/episodes/notebooks/07-deeptime-alanine.ipynb" download>Download notebook</a> | <a href="{{ site.baseurl }}/episodes/scripts/07-deeptime-alanine.py" download>Download script (.py)</a></div></div>
+This episode now follows the Deeptime-managed Alanine dipeptide example (`Ala2 Example <https://deeptime-ml.github.io/latest/notebooks/examples/ala2-example.html>`__). We imported that notebook into the repository (see the iframe below) so you can open it locally in the same environment we use for the course. It fetches the heavy-atom positions and backbone dihedrals from `mdshare`, runs the same Torch-let Koopman/TICA flow, and highlights how the spectral models compare with PyEMMA’s timelines.
+
+<div class="notebook-embed"><iframe src="{{ site.baseurl }}/episodes/notebooks/rendered/07-deeptime-ala2.html" loading="lazy"></iframe><div class="notebook-links"><a href="{{ site.baseurl }}/episodes/notebooks/07-deeptime-ala2.ipynb" download>Download notebook</a></div></div>
 
 ### Exercise
 
-- Run the simple pipeline on alanine and tune the SVD decomposition for TICA.
-- Compare the first three eigenvalues with the PyEMMA model: do the relaxation times match?
+- Re-run the deeptime example and experiment with different projector sizes (SVD truncation) in the TICA step.  
+- Compare the first three Koopman eigenvalues with the PyEMMA model discussed in Episode 6—are the slow-time scales in agreement?
 
 ### Key points
 
-- Feature normalization ensures the eigenfunctions are meaningful.
-- Using `KoopmanModel` extracts observables that capture slow dynamics.
+- `mdshare` provides the alanine datasets (`alanine-dipeptide-3x250ns-*`) used by the official example, so no extra downloads are needed.
+- The notebook blends Torch-based Koopman models with deeptime’s `KoopmanModel`/`MaximumLikelihoodMSM` estimators for the same relaxation timescales you saw in the PyEMMA workflow.
 
 ### Notebooks and scripts
 
-- This notebook applies Deeptime workflows to the alanine dataset, tuning the SVD/TICA decomposition and comparing eigenvalues with the PyEMMA model. (<a href="{{ site.baseurl }}/episodes/notebooks/07-deeptime-alanine.ipynb">notebook</a> | <a href="{{ site.baseurl }}/episodes/scripts/07-deeptime-alanine.py">script</a>)
-
-## Protein-ligand complex
-
-### Guided demo
-
-<!-- sync-from: docs/episodes/scripts/07-deeptime-complex.py -->
-<div class="notebook-embed"><iframe src="{{ site.baseurl }}/episodes/notebooks/rendered/07-deeptime-complex.html" loading="lazy"></iframe><div class="notebook-links"><a href="{{ site.baseurl }}/episodes/notebooks/07-deeptime-complex.ipynb" download>Download notebook</a> | <a href="{{ site.baseurl }}/episodes/scripts/07-deeptime-complex.py" download>Download script (.py)</a></div></div>
-
-### Exercise
-
-- Use the protein-ligand complex and build an MSM with `MaximumLikelihoodMSM`.
-- Run `ChapmanKolmogorov` analysis and compare with PyEMMA, focusing on probability conservation.
-
-### Key points
-
-- The Koopman operator describes how the observable propagates with $\tau$ and compares with the classical transition matrix.
-- Latent spaces help distinguish macrostates and study transition fluxes.
-
-### Notebooks and scripts
-
-- This notebook performs Deeptime spectral analysis on the protein-ligand complex, including Koopman models and Chapman-Kolmogorov validation. (<a href="{{ site.baseurl }}/episodes/notebooks/07-deeptime-complex.ipynb">notebook</a> | <a href="{{ site.baseurl }}/episodes/scripts/07-deeptime-complex.py">script</a>)
+- The episode now ships a single Deeptime notebook that mirrors the upstream `Ala2 Example` (see the iframe and download link above).
 
 <div class="episode-nav">
   <a href="{{ site.baseurl }}/episodes/06-pyemma/">Previous</a>

@@ -21,8 +21,8 @@ permalink: /episodes/06-pyemma/
 - [Mathematical foundations](#mathematical-foundations)
 - [PyEMMA configuration and API primers](#pyemma-configuration-and-api-primers)
 - [Tutorial pillars from the official PyEMMA guide](#tutorial-pillars-from-the-official-pyemma-guide)
-- [Alanine dipeptide](#alanine-dipeptide)
-- [Protein-ligand complex](#protein-ligand-complex)
+- [Pentapeptide showcase](#pentapeptide-showcase)
+- [Project](#project)
 <!-- toc:end -->
 
 ## Duration
@@ -34,7 +34,7 @@ permalink: /episodes/06-pyemma/
 
 - Formulate the full MSM workflow (featurization, TICA, clustering, and estimation).
 - Reinforce how transitions between microstates map to implied timescales.
-- Compare results between the alanine system and the protein-ligand complex.
+- Compare results between the pentapeptide showcase and the protein-ligand complex.
 
 ## Content
 
@@ -47,7 +47,7 @@ permalink: /episodes/06-pyemma/
 
 The official OpenMM scripts generate the trajectories that we featurize with PyEMMA:
 
-- [`simulatePdb.py`](https://github.com/openmm/openmm/blob/master/examples/python-examples/simulatePdb.py): minimal input to validate the pipeline with alanine.
+- [`simulatePdb.py`](https://github.com/openmm/openmm/blob/master/examples/python-examples/simulatePdb.py): minimal input to validate the pipeline with a pentapeptide demo.
 - [`simulateAmber.py`](https://github.com/openmm/openmm/blob/master/examples/python-examples/simulateAmber.py): production with prmtop/inpcrd for the protein-ligand complex.
 - [`simulateGromacs.py`](https://github.com/openmm/openmm/blob/master/examples/python-examples/simulateGromacs.py) and [`simulateCharmm.py`](https://github.com/openmm/openmm/blob/master/examples/python-examples/simulateCharmm.py): multi-format support when the system comes from other packages.
 
@@ -81,7 +81,7 @@ The Chapman-Kolmogorov test ensures that $T(\tau)^n \approx T(n\tau)$ within sta
 
 PyEMMA exposes a `config` object that controls logging, progress bars, trajectory caching, parallelism, and even automatic version checks. Use it interactively (see [runtime configuration](http://www.emma-project.org/latest/Configuration.html)) to peek at the defaults and tweak them:
 
-<div class="notebook-embed"><iframe src="{{ site.baseurl }}/episodes/notebooks/rendered/06-pyemma-alanine.html" loading="lazy"></iframe><div class="notebook-links"><a href="{{ site.baseurl }}/episodes/notebooks/06-pyemma-alanine.ipynb" download>Download notebook</a> | <a href="{{ site.baseurl }}/episodes/scripts/06-pyemma-alanine.py" download>Download script (.py)</a></div></div>
+<div class="notebook-embed"><iframe src="{{ site.baseurl }}/episodes/notebooks/rendered/06-pyemma-pentapeptide.html" loading="lazy"></iframe><div class="notebook-links"><a href="{{ site.baseurl }}/episodes/notebooks/06-pyemma-pentapeptide.ipynb" download>Download notebook</a> | <a href="{{ site.baseurl }}/episodes/scripts/06-pyemma-pentapeptide.py" download>Download script (.py)</a></div></div>
 
 Every attribute listed under `pyemma.util._config.Config` in the [API index](http://www.emma-project.org/latest/api/index.html) can be inspected (e.g., `.mute`, `.traj_info_max_entries`, `.use_trajectory_lengths_cache`) and saved for reproduction.
 
@@ -110,57 +110,116 @@ PyEMMA honors `PYEMMA_NJOBS` and `OMP_NUM_THREADS` (along with `SLURM_CPUS_ON_NO
 
 ### Tutorial 1 – simple MSM pipeline
 
-The [official tutorial](http://www.emma-project.org/latest/tutorial.html#simple_msm) demonstrates the same featurization → tICA → clustering → MSM steps that the alanine notebook covers. Pay attention to the explanation of `pyemma.coordinates.source` (for loading DCD/PDB pairs) and the bootstrap/ITS sections so you can mirror the same plots without errors.
+The [official tutorial](http://www.emma-project.org/latest/tutorial.html#simple_msm) demonstrates the same featurization → tICA → clustering → MSM steps that the pentapeptide example covers. Pay attention to the explanation of `pyemma.coordinates.source` (for loading DCD/PDB pairs) and the bootstrap/ITS sections so you can mirror the same plots without errors.
+
+For supplementary recipes and worked examples on MSM construction and visualization, see the `msmhelper tutorials <https://moldyn.github.io/msmhelper/tutorials/>`__ provided by MolDyn; they revisit the same ideas (featurization, dimension reduction, clustering, observables) and occasionally feature alternative observables you can compare against the PyEMMA output.
 
 ### Tutorial 2 – protein complex workflow
 
 The advanced tutorial ([“Protein-ligand transitions”](http://www.emma-project.org/latest/tutorial.html#protein_ligand_complex)) walks through building MSMs on larger datasets with `pyemma.msm.markov_model` and `pyemma.plots.plot_cktest`. Use it to validate the complex notebook’s clustering parameters and to create the same diagnostic figures with the stored transition matrix.
 
-## Alanine dipeptide
+## Pentapeptide showcase
 
 ### Guided demo
 
-<!-- sync-from: docs/episodes/scripts/06-pyemma-alanine.py -->
-<div class="notebook-embed"><iframe src="{{ site.baseurl }}/episodes/notebooks/rendered/06-pyemma-alanine.html" loading="lazy"></iframe><div class="notebook-links"><a href="{{ site.baseurl }}/episodes/notebooks/06-pyemma-alanine.ipynb" download>Download notebook</a> | <a href="{{ site.baseurl }}/episodes/scripts/06-pyemma-alanine.py" download>Download script (.py)</a></div></div>
+We now follow the official PyEMMA **00 – Showcase pentapeptide: a PyEMMA walkthrough** (PyEMMA 2.5.5+9.ge9257b9.dirty) as our guided notebook. The walkthrough loads the pentapeptide dataset from `mdshare`, adds backbone torsions/positions/distances, scores the feature sets with VAMP2, applies TICA, clusters the projected data, builds a Bayesian MSM, validates it, and finally inspects PCCA/TPT, observables, and manuscript-quality figures.
+
+#### Data input and featurization
+
+PyEMMA internally inspects `mdtraj.version.version`. When you install MDTraj 1.9+ the `mdtraj` module does not expose a `version` attribute, which triggers `AttributeError`. The first cell in the notebook (and our helper script) patches the module so PyEMMA can access the already-installed `version` module:
+
+```python
+import importlib
+import mdtraj
+
+if not hasattr(mdtraj, 'version'):
+    mdtraj.version = importlib.import_module('mdtraj.version')
+```
+
+```python
+import mdshare
+import pyemma
+
+pdb = mdshare.fetch('pentapeptide-impl-solv.pdb', working_directory='data')
+files = mdshare.fetch('pentapeptide-*-500ns-impl-solv.xtc', working_directory='data')
+```
+
+Three feature groups are built with `pyemma.coordinates.featurizer`: backbone torsions (with cossin expansion), backbone heavy atom positions, and backbone-heavy atom distances, all computed with `periodic=False` after a global alignment that removes the simulation box.
+
+#### Feature selection
+
+Each feature list is ranked with a cross-validated VAMP2 score that splits the 25 trajectories into training/validation, fits `pyemma.coordinates.vamp`, and scores the held-out half. Across lags of 0.1–0.5 ns the backbone torsions consistently return the highest kinetic variance, so the notebook continues with that featurization.
+
+#### Coordinate transform and discretization
+
+Time-lagged independent component analysis compresses the torsion data into a few kinetic components, and k-means discretizes that low-dimensional projection into microstates.
+
+##### TICA
+
+The torsion-based data are projected with `pyemma.coordinates.tica(..., lag=5)` (0.5 ns) using the default kinetic map scaling and enough components to capture 95% of the kinetic variance. Histograms and densities on the first four ICs show well-separated metastable basins, and one trajectory is plotted over time to illustrate discrete jumps.
+
+##### Discretization
+
+k-means clustering is applied to the TICA coordinates. A VAMP2 scan over `[5, 10, 30, 75, 200, 450]` cluster centers reveals saturation near `k=75`, which is therefore fixed for the remainder of the tutorial (`fixed_seed=1` for reproducibility). The centers and discrete trajectories are shown against the first two TICA dimensions.
+
+#### MSM estimation and validation
+
+Implied timescales are computed with `pyemma.msm.its(cluster.dtrajs, lags=50, nits=10, errors='bayes')` and plotted in ns. The timescales converge above 0.5 ns, which justifies a lag time of 5 steps for `pyemma.msm.bayesian_markov_model(cluster.dtrajs, lag=5, dt_traj='0.1 ns')`. Active-state and active-count fractions are printed, and a Chapman–Kolmogorov test with `mlags=6` over five metastable sets confirms Markovian consistency.
+
+#### MSM spectral analysis
+
+The sample mean/std of the first 15 timescales are plotted together with their separations, showing the gap between the 4th and 5th process. Stationary distributions, free energies, and the first four right eigenvectors are visualized as contour plots on the first two TICA coordinates, revealing how slow processes connect the dense clusters.
+
+#### PCCA & TPT
+
+`msm.pcca(5)` produces fuzzy memberships that are contoured across IC1/IC2, and the argument-wise `argmax` provides crisp metastable assignments. Sample structures are saved via `pyemma.coordinates.save_traj` and visualized with `nglview`, while the tutorial also prints state free energies, MFPT tables, and direction-specific MFPTs, showing metastable state 1’s short lifetime. Transition path theory between states 2 and 4 uses `pyemma.msm.tpt`, and the committor is plotted as a contour map.
+
+#### Expectations and observables
+
+Samples of 20 frames per Markov state are converted to MDTraj objects for SASA (`shrake_rupley`) and radius of gyration (`compute_rg`). The Bayesian MSM evaluates ensemble expectations, standard deviations, and confidence intervals for the radius of gyration, while Trp-1 SASA is projected on the TICA plane to produce contour plots, autocorrelation functions, and relaxation curves for ML and Bayesian MSMs. Comparing metastable state expectations against the global average highlights state 1 as the most distinct ensemble.
+
+#### Hidden Markov models
+
+The notebook notes that hidden Markov models, initialized from the PCCA macrostates, further reduce discretization error and provide a compact kinetic description; readers are directed to Notebook 07 for hands-on HMM exercises.
+
+#### Assembling manuscript figures & wrapping up
+
+The final chapters reconfigure Matplotlib defaults and reproduce Figures 2–6 from the Showcase notebook, including the system overview, ITS + CK panels, free-energy and state maps, flux sketches, and Trp-1 autocorrelation/relaxation plots. Saved PDFs live in `data/figure_[2-6].pdf`. A Wrapping up section gestures to the remaining notebooks for deeper theory, TPT, HMMs, observables, and debugging tips.
 
 ### Exercise
 
-- Run the full workflow on alanine (featurization, TICA, and clustering) and compute the three slowest relaxation times.
-- Validate the model by showing the correspondence of $\tau_k$ with the ITS slopes.
+- Reproduce the full PyEMMA 00 – Showcase pentapeptide workflow: featurization, VAMP2 scoring, TICA, clustering, MSM estimation, ITS/CK validation, PCCA/TPT, and observables.
+- Confirm that the three slowest implied timescales are stable across MSM re-estimations and that backbone torsions remain the best feature set.
+
 ### Tutorial check
-Follow [Tutorial 1: simple MSM workflow](http://www.emma-project.org/latest/tutorial.html#simple_msm) to confirm you reuse the same coordinate pipelines and clustering diagnostics before moving on to the protein complex.
+
+Use [PyEMMA Tutorial 1: simple MSM workflow](http://www.emma-project.org/latest/tutorial.html#simple_msm) to cross-check the coordinate pipelines and diagnostics before moving on to the protein complex.
 
 ### Key points
 
-- The choice of distances and angles affects matrix $C$ and therefore the timescales.
-- Feature normalization and clustering regularization prevent overestimation of $\lambda_k$.
+- Cross-validated VAMP2 scores guard against premature feature selection.
+- TICA lag, clustering size, and MSM lag should be tuned by ITS convergence and Chapman–Kolmogorov tests.
+- Observables, PCCA/TPT, and HMM post-processing translate MSMs into experimentally accessible quantities.
 
 ### Notebooks and scripts
 
-- This notebook builds MSMs with PyEMMA for alanine, covering featurization, TICA, clustering, and implied timescales. (<a href="{{ site.baseurl }}/episodes/notebooks/06-pyemma-alanine.ipynb">notebook</a> | <a href="{{ site.baseurl }}/episodes/scripts/06-pyemma-alanine.py">script</a>)
+- This episode now follows the PyEMMA 00 – Showcase pentapeptide notebook (PyEMMA 2.5.5+9.ge9257b9.dirty). View it at <https://pyemma.org/latest/tutorial.html#showcase> and rerun it locally using `mdshare`’s pentapeptide dataset.
 
-## Protein-ligand complex
+## Project
 
-### Guided demo
+Before the session ends, launch a project that covers the entire PyEMMA workflow and submit a ZIP archive containing the script/notebook you ran, any required trajectory/topology files (or download instructions), and the key plots that demonstrate your MSM analysis. Choose one of the following:
 
-<!-- sync-from: docs/episodes/scripts/06-pyemma-complex.py -->
-<div class="notebook-embed"><iframe src="{{ site.baseurl }}/episodes/notebooks/rendered/06-pyemma-complex.html" loading="lazy"></iframe><div class="notebook-links"><a href="{{ site.baseurl }}/episodes/notebooks/06-pyemma-complex.ipynb" download>Download notebook</a> | <a href="{{ site.baseurl }}/episodes/scripts/06-pyemma-complex.py" download>Download script (.py)</a></div></div>
+1. **Small custom system** – pick a peptide or fragment that runs within a few hours on your machine, generate trajectories (aggregated ≥50 ns), featurize with torsions/positions, then build and validate an MSM with at least three timescales plotted.
+2. **Stanford Alanine decapeptide** – recreate the published Ala2 example, compute PCCA memberships, and display how the slowest implied timescales compare with the PyEMMA showcase.
+3. **Your existing large simulation** – take any dataset you already have, subsample it as needed, apply PyEMMA/TICA/clustering, and show that the implied timescales/VAMP2 scores converge with the lag and cluster choices you pick.
 
-### Exercise
+Deliverables:
 
-- Apply the full MSM workflow to the protein complex: featurization, TICA, clustering, and estimation.
-- Compute relaxation times and compare with the simple system. Which states dominate $\lambda_2$ and $\lambda_3$?
+- A zipped folder containing your runnable script (or notebook), supporting data (or commands to pull it), and the MSM plots (timescales, state maps, etc.).
+- A short README describing which path you chose, simulation length, MSM lag/cluster parameters, and the takeaways from the plots.
+- If the data is hosted online, include the exact download steps so we can reproduce your simulation.
 
-### Key points
-
-- Output trajectories are validated with TPT and the extended transition matrix.
-- Use relevant observables (distances, local energies) to reconstruct the state density.
-### Tutorial check
-Use [Tutorial 2: protein-ligand complex](http://www.emma-project.org/latest/tutorial.html#protein_ligand_complex) to ensure the extended transition matrix and CK test match the notebook examples.
-
-### Notebooks and scripts
-
-- This notebook repeats the MSM workflow on the protein-ligand trajectories, highlighting longer timescales and macrostate analysis. (<a href="{{ site.baseurl }}/episodes/notebooks/06-pyemma-complex.ipynb">notebook</a> | <a href="{{ site.baseurl }}/episodes/scripts/06-pyemma-complex.py">script</a>)
+The goal is to get comfortable with the full simulation‑to‑MSM pipeline and produce evidence (scripts + plots) you can share by this afternoon.
 
 <div class="episode-nav">
   <a href="{{ site.baseurl }}/episodes/05-muestreo-avanzado/">Previous</a>

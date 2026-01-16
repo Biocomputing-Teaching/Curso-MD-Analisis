@@ -7523,7 +7523,7 @@ You will use alanine dipeptide trajectories to train and validate the model.</p>
 </div>
 </div>
 </div>
-<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=14f95ecaa8f54ce5beabdb02aaac4118">
+<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=d7e0f37d941b48a0b1ea815e3ef76339">
 <div class="jp-Cell-inputWrapper" tabindex="0">
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
@@ -7578,6 +7578,7 @@ You will use alanine dipeptide trajectories to train and validate the model.</p>
 <span class="kn">from</span><span class="w"> </span><span class="nn">sklearn.decomposition</span><span class="w"> </span><span class="kn">import</span> <span class="n">PCA</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">deeptime.clustering</span><span class="w"> </span><span class="kn">import</span> <span class="n">KMeans</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">deeptime.markov.msm</span><span class="w"> </span><span class="kn">import</span> <span class="n">MaximumLikelihoodMSM</span>
+<span class="n">COURSE_DIR</span> <span class="o">=</span> <span class="n">Path</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">environ</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">"COURSE_DIR"</span><span class="p">,</span> <span class="nb">str</span><span class="p">(</span><span class="n">Path</span><span class="o">.</span><span class="n">home</span><span class="p">()</span> <span class="o">/</span> <span class="s2">"Concepcion26"</span><span class="p">)))</span><span class="o">.</span><span class="n">expanduser</span><span class="p">()</span>
 
 <span class="k">def</span><span class="w"> </span><span class="nf">compute_features</span><span class="p">(</span><span class="n">topology</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">trajectories</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="nb">str</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">:</span>
     <span class="n">traj</span> <span class="o">=</span> <span class="n">md</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="n">trajectories</span><span class="p">,</span> <span class="n">top</span><span class="o">=</span><span class="n">topology</span><span class="p">)</span>
@@ -7602,7 +7603,17 @@ You will use alanine dipeptide trajectories to train and validate the model.</p>
 
     <span class="n">out_dir</span> <span class="o">=</span> <span class="n">COURSE_DIR</span> <span class="o">/</span> <span class="s2">"results"</span> <span class="o">/</span> <span class="s2">"07-deeptime"</span> <span class="o">/</span> <span class="s2">"simple"</span>
     <span class="n">out_dir</span><span class="o">.</span><span class="n">mkdir</span><span class="p">(</span><span class="n">parents</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">exist_ok</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
-    <span class="n">features</span> <span class="o">=</span> <span class="n">compute_features</span><span class="p">(</span><span class="n">topology</span><span class="p">,</span> <span class="n">traj_files</span><span class="p">)</span>
+    <span class="k">try</span><span class="p">:</span>
+        <span class="n">features</span> <span class="o">=</span> <span class="n">compute_features</span><span class="p">(</span><span class="n">topology</span><span class="p">,</span> <span class="n">traj_files</span><span class="p">)</span>
+    <span class="k">except</span> <span class="ne">ValueError</span> <span class="k">as</span> <span class="n">exc</span><span class="p">:</span>
+        <span class="n">alt_traj</span> <span class="o">=</span> <span class="n">data_dir</span> <span class="o">/</span> <span class="s2">"alanine-dipeptide-multi.pdb"</span>
+        <span class="k">if</span> <span class="n">alt_traj</span><span class="o">.</span><span class="n">exists</span><span class="p">()</span> <span class="ow">and</span> <span class="n">args</span><span class="o">.</span><span class="n">traj</span> <span class="ow">is</span> <span class="kc">None</span> <span class="ow">and</span> <span class="n">args</span><span class="o">.</span><span class="n">top</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="nb">print</span><span class="p">(</span><span class="s2">"Topology/trajectory mismatch; using multi-model PDB:"</span><span class="p">,</span> <span class="n">alt_traj</span><span class="p">)</span>
+            <span class="n">traj_files</span> <span class="o">=</span> <span class="p">[</span><span class="nb">str</span><span class="p">(</span><span class="n">alt_traj</span><span class="p">)]</span>
+            <span class="n">topology</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="n">alt_traj</span><span class="p">)</span>
+            <span class="n">features</span> <span class="o">=</span> <span class="n">compute_features</span><span class="p">(</span><span class="n">topology</span><span class="p">,</span> <span class="n">traj_files</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">raise</span>
     <span class="n">pca</span> <span class="o">=</span> <span class="n">PCA</span><span class="p">(</span><span class="n">n_components</span><span class="o">=</span><span class="n">args</span><span class="o">.</span><span class="n">pca</span><span class="p">)</span>
     <span class="n">pca_coords</span> <span class="o">=</span> <span class="n">pca</span><span class="o">.</span><span class="n">fit_transform</span><span class="p">(</span><span class="n">features</span><span class="p">)</span>
 

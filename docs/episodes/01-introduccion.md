@@ -9,24 +9,14 @@ permalink: /episodes/01-introduccion/
   <a href="{{ site.baseurl }}/episodes/03-simulaciones-clasicas/">Next</a>
 </div>
 
-
 <!-- toc:start -->
 ## Table of contents
-- [Table of contents](#table-of-contents)
 - [Duration](#duration)
 - [Objectives](#objectives)
 - [Content](#content)
 - [Preliminary sequence and ligand checks](#preliminary-sequence-and-ligand-checks)
 - [Alanine dipeptide](#alanine-dipeptide)
-  - [Guided demo](#guided-demo)
-  - [Exercise](#exercise)
-  - [Notebooks and scripts](#notebooks-and-scripts)
 - [Protein-ligand complex](#protein-ligand-complex)
-  - [Visual sanity checks](#visual-sanity-checks)
-  - [Splitting the complex](#splitting-the-complex)
-  - [Guided demo](#guided-demo-1)
-  - [Exercise](#exercise-1)
-  - [Notebooks and scripts](#notebooks-and-scripts-1)
 - [Key points](#key-points)
 <!-- toc:end -->
 

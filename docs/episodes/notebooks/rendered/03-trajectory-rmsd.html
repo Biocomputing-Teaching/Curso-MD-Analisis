@@ -7511,45 +7511,33 @@ a.anchor-link {
 <!-- End of mermaid configuration --></head>
 <body class="jp-Notebook" data-jp-theme-light="true" data-jp-theme-name="JupyterLab Light">
 <main>
-<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=8c681499b6814a7ebd74d32c03d90035">
+<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=f9ddc54c">
 <div class="jp-Cell-inputWrapper" tabindex="0">
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
-<h1 id="Episode-6---MSMs-with-PyEMMA">Episode 6 - MSMs with PyEMMA<a class="anchor-link" href="#Episode-6---MSMs-with-PyEMMA">¶</a></h1><h2 id="Complex-track:-protein-ligand">Complex track: protein-ligand<a class="anchor-link" href="#Complex-track:-protein-ligand">¶</a></h2><p>In this notebook you build MSMs with PyEMMA step by step.
-You will use protein-ligand complex trajectories to train and validate the model.</p>
+<h2 id="RMSD-analysis-for-protein2-ligand2">RMSD analysis for protein2-ligand2<a class="anchor-link" href="#RMSD-analysis-for-protein2-ligand2">¶</a></h2><p>Uses MDAnalysis to compute the metric for <code>protein2</code>. The workflow mirrors the analysis scripts at <a href="https://github.com/JordiVillaFreixa/Pau_TFG_DAO/tree/main/analysis">https://github.com/JordiVillaFreixa/Pau_TFG_DAO/tree/main/analysis</a>.</p>
 </div>
 </div>
 </div>
 </div>
-<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=dcc60db431e94f8ca6f2118645bbbff5">
+<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=5a7bf5f8cdac4481b9959af89b3482cb">
 <div class="jp-Cell-inputWrapper" tabindex="0">
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
 <h2 id="Table-of-contents">Table of contents<a class="anchor-link" href="#Table-of-contents">¶</a></h2><ul>
-<li><a href="#complex-track-protein-ligand">Complex track: protein-ligand</a></li>
-<li><a href="#complex-track-protein-ligand">Complex track: protein-ligand</a></li>
+<li><a href="#rmsd-analysis-for-protein2-ligand2">RMSD analysis for protein2-ligand2</a></li>
+<li><a href="#rmsd-analysis-for-protein2-ligand2">RMSD analysis for protein2-ligand2</a></li>
 <li><a href="#step-1">Step 1</a></li>
 </ul>
 </div>
 </div>
 </div>
 </div>
-<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=89848cf03a2f4a0e94572f5d0ad71c00">
-<div class="jp-Cell-inputWrapper" tabindex="0">
-<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
-</div>
-<div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
-</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
-<p>Repeat the PyEMMA workflow on the protein-ligand complex to see how long timescales and macrostates emerge.</p>
-</div>
-</div>
-</div>
-</div>
-<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=888dcbca9e904f9785dbfb8ba289eca5">
+<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=c3f23157d3284e1c8c4db934429147d1">
 <div class="jp-Cell-inputWrapper" tabindex="0">
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
@@ -7559,7 +7547,7 @@ You will use protein-ligand complex trajectories to train and validate the model
 </div>
 </div>
 </div>
-</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell jp-mod-noOutputs" id="cell-id=47c6f1ee57bd476db0cde55cae326ed7">
+</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell jp-mod-noOutputs" id="cell-id=f1d398e5">
 <div class="jp-Cell-inputWrapper" tabindex="0">
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
@@ -7567,103 +7555,33 @@ You will use protein-ligand complex trajectories to train and validate the model
 <div class="jp-InputPrompt jp-InputArea-prompt">In [ ]:</div>
 <div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
 <div class="cm-editor cm-s-jupyter">
-<div class="highlight hl-ipython3"><pre><span></span><span class="ch">#!/usr/bin/env python3</span>
-<span class="kn">import</span><span class="w"> </span><span class="nn">argparse</span>
+<div class="highlight hl-ipython3"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">pathlib</span><span class="w"> </span><span class="kn">import</span> <span class="n">Path</span>
 <span class="kn">import</span><span class="w"> </span><span class="nn">os</span>
-<span class="kn">from</span><span class="w"> </span><span class="nn">pathlib</span><span class="w"> </span><span class="kn">import</span> <span class="n">Path</span>
-<span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
-<span class="kn">import</span><span class="w"> </span><span class="nn">pyemma</span>
 <span class="kn">import</span><span class="w"> </span><span class="nn">matplotlib.pyplot</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">plt</span>
-<span class="kn">import</span><span class="w"> </span><span class="nn">pyemma.plots</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">MDAnalysis</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">mda</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">MDAnalysis.analysis</span><span class="w"> </span><span class="kn">import</span> <span class="n">rms</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">pandas</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">pd</span>
 
+<span class="n">COURSE_DIR</span> <span class="o">=</span> <span class="n">Path</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">environ</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">'COURSE_DIR'</span><span class="p">,</span><span class="s1">'~/Concepcion26'</span><span class="p">))</span><span class="o">.</span><span class="n">expanduser</span><span class="p">()</span>
+<span class="n">topo</span> <span class="o">=</span> <span class="n">COURSE_DIR</span> <span class="o">/</span> <span class="s1">'data'</span> <span class="o">/</span> <span class="s1">'complex'</span> <span class="o">/</span> <span class="s1">'protein2.pdb'</span>
+<span class="n">traj</span> <span class="o">=</span> <span class="n">COURSE_DIR</span> <span class="o">/</span> <span class="s1">'results'</span> <span class="o">/</span> <span class="s1">'03-simulaciones-clasicas'</span> <span class="o">/</span> <span class="s1">'complex'</span> <span class="o">/</span> <span class="s1">'output_traj.dcd'</span>
+<span class="k">if</span> <span class="ow">not</span> <span class="n">topo</span><span class="o">.</span><span class="n">exists</span><span class="p">()</span> <span class="ow">or</span> <span class="ow">not</span> <span class="n">traj</span><span class="o">.</span><span class="n">exists</span><span class="p">():</span>
+    <span class="k">raise</span> <span class="ne">FileNotFoundError</span><span class="p">(</span><span class="sa">f</span><span class="s1">'Run Episode 3 scripts so </span><span class="si">{</span><span class="n">traj</span><span class="si">!s}</span><span class="s1"> exists'</span><span class="p">)</span>
 
-<span class="k">def</span><span class="w"> </span><span class="nf">load_features</span><span class="p">(</span><span class="n">topology</span><span class="p">:</span> <span class="nb">str</span><span class="p">):</span>
-    <span class="n">feat</span> <span class="o">=</span> <span class="n">pyemma</span><span class="o">.</span><span class="n">coordinates</span><span class="o">.</span><span class="n">featurizer</span><span class="p">(</span><span class="n">topology</span><span class="p">)</span>
-    <span class="n">feat</span><span class="o">.</span><span class="n">add_backbone_torsions</span><span class="p">(</span><span class="n">periodic</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
-
-    <span class="n">lig</span> <span class="o">=</span> <span class="n">feat</span><span class="o">.</span><span class="n">select</span><span class="p">(</span><span class="s2">"resname LIG"</span><span class="p">)</span>
-    <span class="n">backbone</span> <span class="o">=</span> <span class="n">feat</span><span class="o">.</span><span class="n">select</span><span class="p">(</span><span class="s2">"backbone"</span><span class="p">)</span>
-    <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">lig</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">0</span> <span class="ow">and</span> <span class="nb">len</span><span class="p">(</span><span class="n">backbone</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
-        <span class="n">feat</span><span class="o">.</span><span class="n">add_distances</span><span class="p">(</span><span class="n">lig</span><span class="p">,</span> <span class="n">backbone</span><span class="p">,</span> <span class="n">periodic</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
-    <span class="k">return</span> <span class="n">feat</span>
-
-
-<span class="k">def</span><span class="w"> </span><span class="nf">run_pipeline</span><span class="p">(</span><span class="n">traj_files</span><span class="p">,</span> <span class="n">topology</span><span class="p">,</span> <span class="n">lag</span><span class="p">,</span> <span class="n">k</span><span class="p">):</span>
-    <span class="n">feat</span> <span class="o">=</span> <span class="n">load_features</span><span class="p">(</span><span class="n">topology</span><span class="p">)</span>
-    <span class="n">data</span> <span class="o">=</span> <span class="n">pyemma</span><span class="o">.</span><span class="n">coordinates</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="n">traj_files</span><span class="p">,</span> <span class="n">features</span><span class="o">=</span><span class="n">feat</span><span class="p">)</span>
-
-    <span class="n">tica</span> <span class="o">=</span> <span class="n">pyemma</span><span class="o">.</span><span class="n">coordinates</span><span class="o">.</span><span class="n">tica</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">lag</span><span class="o">=</span><span class="n">lag</span><span class="p">)</span>
-    <span class="n">tica_output</span> <span class="o">=</span> <span class="n">tica</span><span class="o">.</span><span class="n">get_output</span><span class="p">()</span>
-
-    <span class="n">cluster</span> <span class="o">=</span> <span class="n">pyemma</span><span class="o">.</span><span class="n">coordinates</span><span class="o">.</span><span class="n">cluster_kmeans</span><span class="p">(</span><span class="n">tica_output</span><span class="p">,</span> <span class="n">k</span><span class="o">=</span><span class="n">k</span><span class="p">,</span> <span class="n">max_iter</span><span class="o">=</span><span class="mi">50</span><span class="p">)</span>
-    <span class="n">msm</span> <span class="o">=</span> <span class="n">pyemma</span><span class="o">.</span><span class="n">msm</span><span class="o">.</span><span class="n">estimate_markov_model</span><span class="p">(</span><span class="n">cluster</span><span class="o">.</span><span class="n">dtrajs</span><span class="p">,</span> <span class="n">lag</span><span class="o">=</span><span class="n">lag</span><span class="p">)</span>
-
-    <span class="k">return</span> <span class="n">data</span><span class="p">,</span> <span class="n">tica</span><span class="p">,</span> <span class="n">cluster</span><span class="p">,</span> <span class="n">msm</span>
-
-
-<span class="k">def</span><span class="w"> </span><span class="nf">main</span><span class="p">()</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
-    <span class="n">parser</span> <span class="o">=</span> <span class="n">argparse</span><span class="o">.</span><span class="n">ArgumentParser</span><span class="p">(</span><span class="n">description</span><span class="o">=</span><span class="s2">"PyEMMA tutorials on protein-ligand complex"</span><span class="p">)</span>
-    <span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span><span class="s2">"-t"</span><span class="p">,</span> <span class="s2">"--traj"</span><span class="p">,</span> <span class="n">nargs</span><span class="o">=</span><span class="s2">"+"</span><span class="p">,</span> <span class="n">default</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">help</span><span class="o">=</span><span class="s2">"Trajectory files"</span><span class="p">)</span>
-    <span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span><span class="s2">"-p"</span><span class="p">,</span> <span class="s2">"--top"</span><span class="p">,</span> <span class="n">default</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">help</span><span class="o">=</span><span class="s2">"Topology PDB"</span><span class="p">)</span>
-    <span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span><span class="s2">"--lag"</span><span class="p">,</span> <span class="nb">type</span><span class="o">=</span><span class="nb">int</span><span class="p">,</span> <span class="n">default</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span> <span class="n">help</span><span class="o">=</span><span class="s2">"Lag time"</span><span class="p">)</span>
-    <span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span><span class="s2">"-k"</span><span class="p">,</span> <span class="nb">type</span><span class="o">=</span><span class="nb">int</span><span class="p">,</span> <span class="n">default</span><span class="o">=</span><span class="mi">50</span><span class="p">,</span> <span class="n">help</span><span class="o">=</span><span class="s2">"Number of clusters"</span><span class="p">)</span>
-    <span class="n">args</span> <span class="o">=</span> <span class="n">parser</span><span class="o">.</span><span class="n">parse_args</span><span class="p">()</span>
-
-    <span class="n">data_dir</span> <span class="o">=</span> <span class="n">COURSE_DIR</span> <span class="o">/</span> <span class="s2">"data"</span> <span class="o">/</span> <span class="s2">"complex"</span>
-    <span class="n">traj_files</span> <span class="o">=</span> <span class="n">args</span><span class="o">.</span><span class="n">traj</span> <span class="ow">or</span> <span class="p">[</span><span class="nb">str</span><span class="p">(</span><span class="n">data_dir</span> <span class="o">/</span> <span class="s2">"output_traj.dcd"</span><span class="p">)</span> <span class="p">]</span>
-    <span class="n">topology</span> <span class="o">=</span> <span class="n">args</span><span class="o">.</span><span class="n">top</span> <span class="ow">or</span> <span class="nb">str</span><span class="p">(</span><span class="n">data_dir</span> <span class="o">/</span> <span class="s2">"output_minimised.pdb"</span><span class="p">)</span>
-
-    <span class="n">out_dir</span> <span class="o">=</span> <span class="n">COURSE_DIR</span> <span class="o">/</span> <span class="s2">"results"</span> <span class="o">/</span> <span class="s2">"06-pyemma"</span> <span class="o">/</span> <span class="s2">"complex"</span>
-    <span class="n">out_dir</span><span class="o">.</span><span class="n">mkdir</span><span class="p">(</span><span class="n">parents</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">exist_ok</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
-    <span class="n">data</span><span class="p">,</span> <span class="n">tica</span><span class="p">,</span> <span class="n">cluster</span><span class="p">,</span> <span class="n">msm</span> <span class="o">=</span> <span class="n">run_pipeline</span><span class="p">(</span><span class="n">traj_files</span><span class="p">,</span> <span class="n">topology</span><span class="p">,</span> <span class="n">args</span><span class="o">.</span><span class="n">lag</span><span class="p">,</span> <span class="n">args</span><span class="o">.</span><span class="n">k</span><span class="p">)</span>
-
-    <span class="nb">print</span><span class="p">(</span><span class="s2">"Tutorial 01 - Data IO &amp; featurization: OK"</span><span class="p">)</span>
-    <span class="nb">print</span><span class="p">(</span><span class="s2">"Feature dimension:"</span><span class="p">,</span> <span class="n">tica</span><span class="o">.</span><span class="n">dimension</span><span class="p">())</span>
-
-    <span class="nb">print</span><span class="p">(</span><span class="s2">"Tutorial 02 - TICA &amp; clustering: OK"</span><span class="p">)</span>
-    <span class="nb">print</span><span class="p">(</span><span class="s2">"TICA lag:"</span><span class="p">,</span> <span class="n">tica</span><span class="o">.</span><span class="n">lag</span><span class="p">)</span>
-
-    <span class="nb">print</span><span class="p">(</span><span class="s2">"Tutorial 03 - MSM estimation &amp; validation"</span><span class="p">)</span>
-    <span class="n">its</span> <span class="o">=</span> <span class="n">pyemma</span><span class="o">.</span><span class="n">msm</span><span class="o">.</span><span class="n">its</span><span class="p">(</span><span class="n">cluster</span><span class="o">.</span><span class="n">dtrajs</span><span class="p">,</span> <span class="n">lags</span><span class="o">=</span><span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">10</span><span class="p">])</span>
-    <span class="nb">print</span><span class="p">(</span><span class="s2">"ITS computed for"</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">its</span><span class="o">.</span><span class="n">lags</span><span class="p">),</span> <span class="s2">"lags"</span><span class="p">)</span>
-    <span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">()</span>
-    <span class="n">pyemma</span><span class="o">.</span><span class="n">plots</span><span class="o">.</span><span class="n">plot_implied_timescales</span><span class="p">(</span><span class="n">its</span><span class="p">)</span>
-    <span class="n">plt</span><span class="o">.</span><span class="n">savefig</span><span class="p">(</span><span class="n">out_dir</span> <span class="o">/</span> <span class="s2">"its.png"</span><span class="p">,</span> <span class="n">dpi</span><span class="o">=</span><span class="mi">150</span><span class="p">)</span>
-
-    <span class="nb">print</span><span class="p">(</span><span class="s2">"Tutorial 04 - MSM analysis"</span><span class="p">)</span>
-    <span class="n">timescales</span> <span class="o">=</span> <span class="n">msm</span><span class="o">.</span><span class="n">timescales</span><span class="p">()[:</span><span class="mi">5</span><span class="p">]</span>
-    <span class="nb">print</span><span class="p">(</span><span class="s2">"Timescales:"</span><span class="p">,</span> <span class="n">timescales</span><span class="p">)</span>
-    <span class="p">(</span><span class="n">out_dir</span> <span class="o">/</span> <span class="s2">"timescales.txt"</span><span class="p">)</span><span class="o">.</span><span class="n">write_text</span><span class="p">(</span><span class="s2">"</span><span class="se">\\</span><span class="s2">n"</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">t</span><span class="p">)</span> <span class="k">for</span> <span class="n">t</span> <span class="ow">in</span> <span class="n">timescales</span><span class="p">))</span>
-
-    <span class="nb">print</span><span class="p">(</span><span class="s2">"Tutorial 05 - PCCA &amp; TPT"</span><span class="p">)</span>
-    <span class="k">try</span><span class="p">:</span>
-        <span class="n">msm</span><span class="o">.</span><span class="n">pcca</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span>
-        <span class="n">tpt</span> <span class="o">=</span> <span class="n">pyemma</span><span class="o">.</span><span class="n">msm</span><span class="o">.</span><span class="n">tpt</span><span class="p">(</span><span class="n">msm</span><span class="p">,</span> <span class="n">msm</span><span class="o">.</span><span class="n">active_set</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">msm</span><span class="o">.</span><span class="n">active_set</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">])</span>
-        <span class="nb">print</span><span class="p">(</span><span class="s2">"TPT flux:"</span><span class="p">,</span> <span class="n">tpt</span><span class="o">.</span><span class="n">total_flux</span><span class="p">)</span>
-    <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">exc</span><span class="p">:</span>
-        <span class="nb">print</span><span class="p">(</span><span class="s2">"PCCA/TPT skipped:"</span><span class="p">,</span> <span class="n">exc</span><span class="p">)</span>
-
-    <span class="nb">print</span><span class="p">(</span><span class="s2">"Tutorial 06 - Expectations &amp; observables"</span><span class="p">)</span>
-    <span class="k">try</span><span class="p">:</span>
-        <span class="n">obs</span> <span class="o">=</span> <span class="n">data</span><span class="p">[</span><span class="mi">0</span><span class="p">][:,</span> <span class="mi">0</span><span class="p">]</span>
-        <span class="nb">print</span><span class="p">(</span><span class="s2">"Observable mean:"</span><span class="p">,</span> <span class="nb">float</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">obs</span><span class="p">)))</span>
-    <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">exc</span><span class="p">:</span>
-        <span class="nb">print</span><span class="p">(</span><span class="s2">"Observables skipped:"</span><span class="p">,</span> <span class="n">exc</span><span class="p">)</span>
-
-    <span class="nb">print</span><span class="p">(</span><span class="s2">"Tutorial 07 - HMM"</span><span class="p">)</span>
-    <span class="k">try</span><span class="p">:</span>
-        <span class="n">hmm</span> <span class="o">=</span> <span class="n">pyemma</span><span class="o">.</span><span class="n">msm</span><span class="o">.</span><span class="n">bayesian_hidden_markov_model</span><span class="p">(</span><span class="n">cluster</span><span class="o">.</span><span class="n">dtrajs</span><span class="p">,</span> <span class="n">nstates</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">lag</span><span class="o">=</span><span class="n">args</span><span class="o">.</span><span class="n">lag</span><span class="p">)</span>
-        <span class="nb">print</span><span class="p">(</span><span class="s2">"HMM timescales:"</span><span class="p">,</span> <span class="n">hmm</span><span class="o">.</span><span class="n">timescales</span><span class="p">()[:</span><span class="mi">3</span><span class="p">])</span>
-    <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">exc</span><span class="p">:</span>
-        <span class="nb">print</span><span class="p">(</span><span class="s2">"HMM skipped:"</span><span class="p">,</span> <span class="n">exc</span><span class="p">)</span>
-
-    <span class="nb">print</span><span class="p">(</span><span class="s2">"Tutorial 08 - Common problems"</span><span class="p">)</span>
-    <span class="nb">print</span><span class="p">(</span><span class="s2">"Active fraction:"</span><span class="p">,</span> <span class="n">msm</span><span class="o">.</span><span class="n">active_state_fraction</span><span class="p">)</span>
-    <span class="nb">print</span><span class="p">(</span><span class="s2">"Connected count fraction:"</span><span class="p">,</span> <span class="n">msm</span><span class="o">.</span><span class="n">active_count_fraction</span><span class="p">)</span>
-
-
-<span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s2">"__main__"</span><span class="p">:</span>
-    <span class="n">main</span><span class="p">()</span>
+<span class="n">u</span> <span class="o">=</span> <span class="n">mda</span><span class="o">.</span><span class="n">Universe</span><span class="p">(</span><span class="n">topo</span><span class="p">,</span> <span class="n">traj</span><span class="p">)</span>
+<span class="n">rmsd</span> <span class="o">=</span> <span class="n">rms</span><span class="o">.</span><span class="n">RMSD</span><span class="p">(</span><span class="n">u</span><span class="p">,</span> <span class="n">select</span><span class="o">=</span><span class="s1">'backbone'</span><span class="p">,</span> <span class="n">ref_frame</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+<span class="n">rmsd</span><span class="o">.</span><span class="n">run</span><span class="p">()</span>
+<span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">rmsd</span><span class="o">.</span><span class="n">results</span><span class="o">.</span><span class="n">rmsd</span><span class="p">,</span> <span class="n">columns</span><span class="o">=</span><span class="p">[</span><span class="s1">'Frame'</span><span class="p">,</span><span class="s1">'Time (ps)'</span><span class="p">,</span><span class="s1">'Backbone'</span><span class="p">])</span><span class="o">.</span><span class="n">iloc</span><span class="p">[:,</span><span class="mi">1</span><span class="p">:]</span>
+<span class="n">fig</span><span class="p">,</span> <span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">()</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">df</span><span class="p">[</span><span class="s1">'Time (ps)'</span><span class="p">],</span> <span class="n">df</span><span class="p">[</span><span class="s1">'Backbone'</span><span class="p">],</span> <span class="n">label</span><span class="o">=</span><span class="s1">'Backbone'</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s1">'Time (ps)'</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="s1">'RMSD (Å)'</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="s1">'RMSD: backbone evolution'</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">grid</span><span class="p">(</span><span class="kc">True</span><span class="p">)</span>
+<span class="n">fig</span><span class="o">.</span><span class="n">tight_layout</span><span class="p">()</span>
+<span class="n">fig</span><span class="o">.</span><span class="n">savefig</span><span class="p">(</span><span class="s1">'rmsd_backbone.png'</span><span class="p">)</span>
+<span class="n">pd</span><span class="o">.</span><span class="n">options</span><span class="o">.</span><span class="n">display</span><span class="o">.</span><span class="n">float_format</span> <span class="o">=</span> <span class="s1">'</span><span class="si">{:,.3f}</span><span class="s1">'</span><span class="o">.</span><span class="n">format</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">df</span><span class="o">.</span><span class="n">head</span><span class="p">())</span>
 </pre></div>
 </div>
 </div>

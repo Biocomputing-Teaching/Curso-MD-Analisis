@@ -20,6 +20,7 @@ permalink: /episodes/03-simulaciones-clasicas/
 - [OpenMM examples (official guide)](#openmm-examples-official-guide)
 - [Alanine dipeptide](#alanine-dipeptide)
 - [Protein-ligand complex](#protein-ligand-complex)
+- [Extended trajectory analysis](#extended-trajectory-analysis)
 <!-- toc:end -->
 
 ## Duration

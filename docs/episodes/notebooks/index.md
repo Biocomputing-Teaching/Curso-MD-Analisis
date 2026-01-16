@@ -18,10 +18,8 @@ The notebooks are rendered as local HTML (in the <a href="{{ site.baseurl }}/epi
 - <a href="{{ site.baseurl }}/episodes/notebooks/rendered/05-muestreo-avanzado.html">Episode 4: Advanced sampling (complex)</a>
 - <a href="{{ site.baseurl }}/episodes/notebooks/rendered/04-analisis-trayectorias_simple.html">Episode 5: Analysis (simple)</a>
 - <a href="{{ site.baseurl }}/episodes/notebooks/rendered/04-analisis-trayectorias.html">Episode 5: Analysis (complex)</a>
-- <a href="{{ site.baseurl }}/episodes/notebooks/rendered/06-pyemma-alanine.html">Episode 6: PyEMMA (alanine)</a>
-- <a href="{{ site.baseurl }}/episodes/notebooks/rendered/06-pyemma-complex.html">Episode 6: PyEMMA (complex)</a>
-- <a href="{{ site.baseurl }}/episodes/notebooks/rendered/07-deeptime-alanine.html">Episode 7: deeptime (alanine)</a>
-- <a href="{{ site.baseurl }}/episodes/notebooks/rendered/07-deeptime-complex.html">Episode 7: deeptime (complex)</a>
+- <a href="{{ site.baseurl }}/episodes/notebooks/rendered/06-pyemma-pentapeptide.html">Episode 6: PyEMMA (pentapeptide)</a>
+- <a href="{{ site.baseurl }}/episodes/notebooks/rendered/07-deeptime-ala2.html">Episode 7: deeptime (Ala2 example)</a>
 
 If you prefer to download the notebooks:
 

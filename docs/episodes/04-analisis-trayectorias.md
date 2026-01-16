@@ -19,6 +19,7 @@ permalink: /episodes/04-analisis-trayectorias/
 - [Content](#content)
 - [Alanine dipeptide](#alanine-dipeptide)
 - [Protein-ligand complex](#protein-ligand-complex)
+- [VMD command-line analysis](#vmd-command-line-analysis)
 <!-- toc:end -->
 
 ## Duration

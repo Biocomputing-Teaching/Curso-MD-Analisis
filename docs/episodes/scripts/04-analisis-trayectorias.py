@@ -5,6 +5,7 @@ from pathlib import Path
 
 import mdtraj as md
 import plotly.graph_objects as go
+COURSE_DIR = Path(os.environ.get("COURSE_DIR", str(Path.home() / "Concepcion26"))).expanduser()
 
 
 def main() -> None:

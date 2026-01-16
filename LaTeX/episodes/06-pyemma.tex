@@ -1,136 +1,249 @@
 \section[PyEMMA]{Episode 6: Markov models with PyEMMA}
 
-\subsection{Preparing trajectories}
+\subsection{Motivation and theoretical background}
 
 \begin{frame}
-\frametitle{Transform data}
+\frametitle{Why Markov State Models?}
 \begin{itemize}
-  \item \href{https://github.com/openmm/openmm/blob/master/examples/python-examples/simulateAmber.py}{simulateAmber.py} and \href{https://github.com/openmm/openmm/blob/master/examples/python-examples/simulateCharmm.py}{simulateCharmm.py} produce DCD trajectories that feed into PyEMMA.
-  \item Align, trim solvent, and save to HDF5 for storage efficiency.
-  \item Energy and RMSD reports serve as checks before discretization.
+  \item Molecular dynamics (MD) simulations generate high-dimensional trajectories
+  $\{\mathbf{X}_t\}_{t=0}^T$.
+  \item Relevant molecular processes occur on timescales much longer than MD timesteps.
+  \item MSMs provide a statistical coarse-graining into discrete states with Markovian dynamics.
+  \item Enable computation of long-timescale kinetics, populations, and pathways.
 \end{itemize}
 \end{frame}
+
+\begin{frame}
+\frametitle{From continuous dynamics to a Markov chain}
+\begin{itemize}
+  \item Consider a stochastic process $\mathbf{X}_t$ in phase space $\Omega$.
+  \item Partition $\Omega$ into disjoint sets $\{S_1,\dots,S_N\}$.
+  \item Define a discrete process $X_t \in \{1,\dots,N\}$:
+  \[
+    X_t = i \quad \text{if } \mathbf{X}_t \in S_i.
+  \]
+  \item Markov assumption at lag time $\tau$:
+  \[
+    P(X_{t+\tau}=j \mid X_t=i, \ldots)
+    \approx
+    P(X_{t+\tau}=j \mid X_t=i).
+  \]
+\end{itemize}
+\end{frame}
+
+%====================================================
+\subsection{Trajectory preparation}
+
+\begin{frame}
+\frametitle{Preparing molecular trajectories}
+\begin{itemize}
+  \item Input trajectories from MD engines (OpenMM, Gromacs, AMBER, \dots).
+  \item Preprocessing:
+  \begin{itemize}
+    \item Remove periodic boundary artifacts.
+    \item Align structures to a reference.
+    \item Remove solvent if not used as features.
+    \item Subsample to a uniform timestep $\Delta t$.
+  \end{itemize}
+  \item Validate trajectories: energy stability, RMSD convergence.
+\end{itemize}
+\end{frame}
+
+%====================================================
+\subsection{Feature representation}
 
 \begin{frame}
 \frametitle{Feature extraction}
 \begin{itemize}
-  \item Distances, dihedrals, and ligand–protein contacts form the vector $\mathbf{x}$.
-  \item The covariance matrix $C=\langle (\mathbf{x}-\bar{\mathbf{x}})(\mathbf{x}-\bar{\mathbf{x}})^T\rangle$ gets projected.
-  \item All guide scripts (simulateGromacs, simulateTinker) share this output to feed PyEMMA.
+  \item Each frame is mapped to a feature vector $\mathbf{x}_t \in \mathbb{R}^d$.
+  \item Typical features:
+  \begin{itemize}
+    \item Interatomic distances or contacts.
+    \item Dihedral angles.
+    \item Ligand--protein distances.
+  \end{itemize}
+  \item Features should resolve slow collective motions.
 \end{itemize}
 \end{frame}
 
 \begin{frame}
-\frametitle{tICA and time-lagged reduction}
+\frametitle{Covariance structure}
 \begin{align*}
-  C_\tau \mathbf{w} &= \lambda C_0 \mathbf{w}.
+  \bar{\mathbf{x}} &= \langle \mathbf{x}_t \rangle, \\
+  C_0 &= \langle (\mathbf{x}_t-\bar{\mathbf{x}})
+          (\mathbf{x}_t-\bar{\mathbf{x}})^T \rangle.
 \end{align*}
 \begin{itemize}
-  \item Choose $\tau$ by comparing plateaus in implicit times $t_i=-\frac{\tau}{\ln\lambda_i}$.
-  \item tICA captures the slow modes relevant for MSM and Deeptime.
+  \item Averages over all frames and trajectories.
+  \item $C_0$ captures instantaneous correlations.
 \end{itemize}
 \end{frame}
 
-\subsection{Discretization and clustering}
+%====================================================
+\subsection{Time-lagged Independent Component Analysis}
 
 \begin{frame}
-\frametitle{Microstate clustering}
+\frametitle{Time-lagged covariance}
+\begin{align*}
+  C_\tau =
+  \langle (\mathbf{x}_t-\bar{\mathbf{x}})
+  (\mathbf{x}_{t+\tau}-\bar{\mathbf{x}})^T \rangle.
+\end{align*}
 \begin{itemize}
-  \item k-means/minibatch create microstates; silhouette helps choose $k$.
-  \item Favor dense states to avoid empty microstates (OpenMM User Guide §3.7).
+  \item Measures correlations persisting over lag time $\tau$.
+  \item Slow processes correspond to large time-lagged correlations.
 \end{itemize}
 \end{frame}
 
 \begin{frame}
-\frametitle{State map}
-\begin{center}
-  \includegraphics[width=0.72\linewidth]{graph.png}
-\end{center}
-{\tiny Transition graph influenced by the REST tutorial results. \cita{img-graph}}
+\frametitle{Generalized eigenvalue problem}
+\begin{align*}
+  C_\tau \mathbf{w}_i = \lambda_i C_0 \mathbf{w}_i.
+\end{align*}
+\begin{itemize}
+  \item Eigenvectors $\mathbf{w}_i$ define tICs.
+  \item Projection:
+  \[
+    y_{i,t} = \mathbf{w}_i^T \mathbf{x}_t.
+  \]
+\end{itemize}
 \end{frame}
 
 \begin{frame}
-\frametitle{Energy landscape and partitions}
-\begin{center}
-  \includegraphics[width=0.7\linewidth]{function_funnel.png}
-\end{center}
-{\tiny Energy funnel to visualize macrostates. \cita{FunctionFunnelUnknown}}
+\frametitle{Implied timescales}
+\begin{align*}
+  t_i = -\frac{\tau}{\ln \lambda_i}.
+\end{align*}
+\begin{itemize}
+  \item Estimates relaxation timescales of slow modes.
+  \item Plateaus vs.\ $\tau$ indicate robust dynamics.
+\end{itemize}
+\end{frame}
+
+%====================================================
+\subsection{Discretization}
+
+\begin{frame}
+\frametitle{Clustering into microstates}
+\begin{itemize}
+  \item Project data onto first $m$ tICs.
+  \item Cluster in reduced space (e.g.\ $k$-means).
+  \item Each frame assigned to a discrete state $i$.
+\end{itemize}
+\end{frame}
+
+\begin{frame}
+\frametitle{Discrete trajectories}
+\begin{itemize}
+  \item Continuous trajectories become symbol sequences:
+  \[
+    X^{(n)} = (x^{(n)}_0, \dots, x^{(n)}_{T_n}).
+  \]
+  \item These sequences define the MSM input.
+\end{itemize}
+\end{frame}
+
+%====================================================
+\subsection{MSM estimation}
+
+\begin{frame}
+\frametitle{Transition counts}
+\begin{align*}
+  C_{ij}(\tau) =
+  \sum_t \mathbb{I}(X_t=i, X_{t+\tau}=j).
+\end{align*}
+\begin{itemize}
+  \item Counts transitions from $i$ to $j$ at lag time $\tau$.
+\end{itemize}
 \end{frame}
 
 \begin{frame}
 \frametitle{Transition matrix}
 \begin{align*}
-  T_{ij}(\tau) &= \frac{C_{ij}(\tau)}{\sum_k C_{ik}(\tau)}.
+  T_{ij}(\tau) =
+  \frac{C_{ij}(\tau)}{\sum_k C_{ik}(\tau)}.
 \end{align*}
 \begin{itemize}
-  \item Rows sum to 1 and the matrix becomes reversible stochastic when detailed balance is enforced.
-  \item Use Bayesian estimators with pseudocounts to avoid zeros.
+  \item Row-stochastic matrix.
+  \item Interpreted as conditional probabilities.
 \end{itemize}
 \end{frame}
 
 \begin{frame}
-\frametitle{Markov property}
+\frametitle{Detailed balance}
 \begin{align*}
-  P(X_{t+\tau}\mid X_t,\dots) &= P(X_{t+\tau}\mid X_t).
+  \pi_i T_{ij} = \pi_j T_{ji}.
 \end{align*}
 \begin{itemize}
-  \item Chapman-Kolmogorov tests and pseudo-time diagnostics (PyEMMA) validate Markovianity.
+  \item Expected for equilibrium simulations.
+  \item Enforcing reversibility reduces statistical noise.
 \end{itemize}
 \end{frame}
 
-\subsection{MSM and validation}
+%====================================================
+\subsection{Spectral analysis and validation}
 
 \begin{frame}
-\frametitle{Stationarity}
+\frametitle{Stationary distribution}
 \begin{align*}
-  \boldsymbol{\pi}^T T &= \boldsymbol{\pi}^T.
+  \boldsymbol{\pi}^T T = \boldsymbol{\pi}^T.
 \end{align*}
 \begin{itemize}
-  \item The stationary distribution \(\pi\) defines relative populations.
-  \item Relate to free energies \(F_i=-\kbt\ln\pi_i\) and compare with alchemical \(\Delta G\).
+  \item $\pi_i$ gives equilibrium populations.
+  \item Free energies:
+  \[
+    F_i = -k_B T \ln \pi_i + \text{const}.
+  \]
 \end{itemize}
 \end{frame}
 
 \begin{frame}
-\frametitle{Implied times}
+\frametitle{Eigenvalues and timescales}
 \begin{align*}
-  t_i &= -\frac{\tau}{\ln\lambda_i}.
+  T \mathbf{r}_i = \lambda_i \mathbf{r}_i,
+  \qquad
+  t_i = -\frac{\tau}{\ln \lambda_i}.
 \end{align*}
 \begin{itemize}
-  \item Eigenvalues near 1 represent slow processes (Markovianity).
-  \item Large gaps between \(t_i\) support scale separation.
+  \item $\lambda_1 = 1$ corresponds to equilibrium.
+  \item Spectral gap indicates timescale separation.
 \end{itemize}
 \end{frame}
 
 \begin{frame}
-\frametitle{Uncertainty and regularization}
+\frametitle{Chapman--Kolmogorov test}
 \begin{itemize}
-  \item Resample discretized trajectories to obtain reliable intervals.
-  \item PyEMMA stores weights and allows reruns with a different seed.
-  \item Enforce reversibility to reduce noise.
-  \item Tune priors using forces detected in \href{https://github.com/openmm/openmm/blob/master/examples/python-examples/simulateAmber.py}{\texttt{simulateAmber.py}}.
+  \item Markovianity check:
+  \[
+    T(n\tau) \approx T(\tau)^n.
+  \]
+  \item Agreement validates chosen lag time.
 \end{itemize}
 \end{frame}
 
-\subsection{Transitions and pathways}
+%====================================================
+\subsection{Transition Path Theory}
 
 \begin{frame}
-\frametitle{TPT, committor, and fluxes}
+\frametitle{Committor function}
 \begin{itemize}
-  \item Flows \(f_{ij}=\pi_i T_{ij} q_i (1-q_j)\) identify reactive pathways.
-  \item The committor \(q_i = P(\text{reaching B before A}\mid X_0=i)\) gauges progress.
-  \item A transition graph colored by flux highlights kinetic bottlenecks.
-  \item \href{https://github.com/openmm/openmm/blob/master/examples/python-examples/simulateGromacs.py}{\texttt{simulateGromacs.py}} provides the reference trajectories.
+  \item Define reactant set $A$ and product set $B$.
+  \item Forward committor:
+  \[
+    q_i = \sum_j T_{ij} q_j,
+    \quad
+    q_i=0 \ (i\in A),\;
+    q_i=1 \ (i\in B).
+  \]
 \end{itemize}
 \end{frame}
 
-\subsection{Summary}
-
 \begin{frame}
-\frametitle{MSM checklist}
+\frametitle{Reactive flux}
+\begin{align*}
+  f_{ij} = \pi_i T_{ij} q_i (1-q_j).
+\end{align*}
 \begin{itemize}
-  \item Informative features.
-  \item Validated \(\tau\) and eigenvalues with a clear gap.
-  \item Error bootstrap and referenced reporting.
+  \item Identifies dominant reactive pathways.
 \end{itemize}
 \end{frame}
