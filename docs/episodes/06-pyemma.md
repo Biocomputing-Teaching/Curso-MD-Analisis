@@ -168,6 +168,7 @@ k-means clustering is applied to the TICA coordinates. A VAMP2 scan over `[5, 10
 Implied timescales are computed with `pyemma.msm.its(cluster.dtrajs, lags=50, nits=10, errors='bayes')` and plotted in ns. The timescales converge above 0.5 ns, which justifies a lag time of 5 steps for `pyemma.msm.bayesian_markov_model(cluster.dtrajs, lag=5, dt_traj='0.1 ns')`. Active-state and active-count fractions are printed, and a Chapman–Kolmogorov test with `mlags=6` over five metastable sets confirms Markovian consistency.
 
 The Chapman–Kolmogorov (CK) test checks whether the transition probabilities propagate consistently across multiples of the lag time. By comparing estimates obtained at `kτ` directly to the k-step propagation of the original lag-τ transition matrix, we verify the Markov assumption: a passing CK test indicates the kinetics remain invariant under coarse-graining, lending confidence to the MSM's lag choice.
+The five curves sit on top of each other across all mlags, so raising the lag-5 matrix to powers faithfully reproduces the directly estimated longer-lag transition matrices; this strong agreement confirms τ=0.5 ns is already outside the memory regime and the implied timescales capture real slow processes rather than being influenced by the discretization.
 
 #### MSM spectral analysis
 

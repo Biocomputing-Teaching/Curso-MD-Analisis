@@ -140,6 +140,34 @@ ax.set_ylabel('IC 2')
 
 # %%
 
+start, final = 1, 3
+A = msm.metastable_sets[start]
+B = msm.metastable_sets[final]
+flux = pyemma.msm.tpt(msm, A, B)
+cg, cgflux = flux.coarse_grain(msm.metastable_sets)
+fig, (ax1, ax2) = plt.subplots(1, 2, figsize=(8, 3.5))
+pyemma.plots.plot_contour(
+    *tica_concatenated[:, :2].T,
+    flux.committor[dtrajs],
+    ax=ax1,
+    mask=True,
+    cmap="brg",
+    cbar_label="committor $\mathcal{S}_2 \to \mathcal{S}_4$")
+ax1.set_xlabel("IC 1")
+ax1.set_ylabel("IC 2")
+pyemma.plots.plot_flux(
+    cgflux,
+    ax=ax2,
+    show_committor=True,
+    max_width=15,
+    max_height=15,
+    minflux=1e-5)
+ax2.set_yticks([])
+ax2.set_xlabel("coarse-grained states")
+fig.tight_layout()
+
+# %%
+
 from itertools import product
 from mdtraj import shrake_rupley, compute_rg
 
