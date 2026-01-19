@@ -49,7 +49,7 @@ def sanitize_fragment(latex_fragment: str) -> str:
 
 def fallback_markdown(latex_fragment: str) -> str:
     text = latex_fragment
-    text = text.replace("\\DIRFigBook", "../figures/talks").replace("\\DIRFig", "../figures/talks")
+    text = text.replace("\\DIRFigBook", "../docs/figures/talks").replace("\\DIRFig", "../docs/figures/talks")
     text = re.sub(r"\\frametitle\\{([^}]*)\\}", r"## \\1", text)
     text = re.sub(r"\\framesubtitle\\{([^}]*)\\}", r"### \\1", text)
     text = re.sub(r"\\subsection\\[(.*?)\\]\\{([^}]*)\\}", r"### \\2", text)
@@ -88,8 +88,8 @@ def sanitize_title(title: str) -> str:
 
 
 def render_markdown(latex_fragment: str) -> str:
-    normalized = latex_fragment.replace("\\DIRFigBook", "../figures/talks").replace(
-        "\\DIRFig", "../figures/talks"
+    normalized = latex_fragment.replace("\\DIRFigBook", "../docs/figures/talks").replace(
+        "\\DIRFig", "../docs/figures/talks"
     )
     normalized = sanitize_fragment(normalized)
     return fallback_markdown(normalized)

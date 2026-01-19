@@ -10,7 +10,7 @@ from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
 LATEX_DIR = ROOT / "LaTeX"
-FIG_SRC = LATEX_DIR / "figures"
+FIG_SRC = ROOT / "docs" / "figures"
 DOCS_FIG_DIR = ROOT / "docs" / "figures" / "talks"
 
 EXTENSIONS = [".png", ".jpg", ".jpeg", ".pdf", ".gif", ".tif", ".tiff", ".eps", ".svg"]

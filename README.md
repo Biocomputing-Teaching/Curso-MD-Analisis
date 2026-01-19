@@ -88,6 +88,14 @@ python scripts/check_links.py
 Validates relative links inside
 <a href="https://github.com/Biocomputing-Teaching/Curso-MD-Analisis/tree/main/docs">docs/</a> and fails if any do not exist.
 
+### Verify figure assets
+
+```bash
+python scripts/check_figures.py
+```
+
+Walks the `docs/` sources for `/figures/` references, confirms the referenced files exist under `docs/figures/`, and flags any missing logos (with suggestions) or unused images. The command exits non-zero when figures are missing so you can detect the problem before deployment.
+
 ### Generate a sample DCD
 
 ```bash
