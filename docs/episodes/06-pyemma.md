@@ -5,7 +5,7 @@ permalink: /episodes/06-pyemma/
 ---
 
 <div class="episode-nav">
-  <a href="{{ site.baseurl }}/episodes/05-muestreo-avanzado/">Previous</a>
+  <a href="{{ site.baseurl }}/episodes/04-muestreo-avanzado/">Previous</a>
   <a href="{{ site.baseurl }}/episodes/">All episodes</a>
   <a href="{{ site.baseurl }}/episodes/07-deeptime/">Next</a>
 </div>
@@ -234,7 +234,7 @@ The goal is to get comfortable with the full simulation‑to‑MSM pipeline and 
 - [^noe_tpt]: Noé, F.; Schütte, C.; Vanden-Eijnden, E.; Reich, L.; Weikl, T. R. (2009). *Constructing the equilibrium ensemble of folding pathways from short off-equilibrium simulations*. Proc. Natl. Acad. Sci. U.S.A., 106, 19011–19016.
 
 <div class="episode-nav">
-  <a href="{{ site.baseurl }}/episodes/05-muestreo-avanzado/">Previous</a>
+  <a href="{{ site.baseurl }}/episodes/04-muestreo-avanzado/">Previous</a>
   <a href="{{ site.baseurl }}/episodes/">All episodes</a>
   <a href="{{ site.baseurl }}/episodes/07-deeptime/">Next</a>
 </div>

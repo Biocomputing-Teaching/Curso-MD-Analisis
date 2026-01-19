@@ -7511,45 +7511,35 @@ a.anchor-link {
 <!-- End of mermaid configuration --></head>
 <body class="jp-Notebook" data-jp-theme-light="true" data-jp-theme-name="JupyterLab Light">
 <main>
-<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=a287b95755774bf9b5c06cf58c173124">
+<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=ef87ebcc">
 <div class="jp-Cell-inputWrapper" tabindex="0">
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
-<h1 id="Episode-4---Advanced-sampling-and-the-OpenMM-ecosystem">Episode 4 - Advanced sampling and the OpenMM ecosystem<a class="anchor-link" href="#Episode-4---Advanced-sampling-and-the-OpenMM-ecosystem">¶</a></h1><h2 id="Complex-track:-solvation-and-barostat">Complex track: solvation and barostat<a class="anchor-link" href="#Complex-track:-solvation-and-barostat">¶</a></h2><p>In this notebook you explore advanced sampling with solvation and a barostat.
-You will simulate the complex in explicit solvent and review stability.</p>
+<h1 id="Simulated-annealing-(Episode-04-%E2%80%93-advanced-sampling)">Simulated annealing (Episode 04 – advanced sampling)<a class="anchor-link" href="#Simulated-annealing-(Episode-04-%E2%80%93-advanced-sampling)">¶</a></h1><p>This notebook brings the simulated annealing loop into the Episode 04 notebook collection so you can control the temperature schedule, inspect the potential, and experiment with different cooling rates without leaving the interactive workflow. The same assets we use elsewhere in the project live under <code>COURSE_DIR/data/</code>, so you can copy results into <code>results/04-annealing/</code> when you want to archive snapshots.</p>
 </div>
 </div>
 </div>
 </div>
-<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=291f9f3fcc864ac18b3165c6b310e395">
+<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=2968f25ff6014e819df1819e68dc8f16">
 <div class="jp-Cell-inputWrapper" tabindex="0">
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
 <h2 id="Table-of-contents">Table of contents<a class="anchor-link" href="#Table-of-contents">¶</a></h2><ul>
-<li><a href="#complex-track-solvation-and-barostat">Complex track: solvation and barostat</a></li>
-<li><a href="#complex-track-solvation-and-barostat">Complex track: solvation and barostat</a></li>
 <li><a href="#step-1">Step 1</a></li>
+<li><a href="#paths-and-data-preparation">Paths and data preparation</a></li>
+<li><a href="#system-setup">System setup</a></li>
+<li><a href="#simulated-annealing-schedule">Simulated annealing schedule</a></li>
+<li><a href="#run-the-annealing-loop">Run the annealing loop</a></li>
 </ul>
 </div>
 </div>
 </div>
 </div>
-<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=857cdc7bfaec4fff8c0dca7cd6143a66">
-<div class="jp-Cell-inputWrapper" tabindex="0">
-<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
-</div>
-<div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
-</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
-<p>This notebook runs the complex advanced-sampling pipeline with solvation, barostat, and detailed energy/force reports.</p>
-</div>
-</div>
-</div>
-</div>
-<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=41526ff77b1742488da81275bb228159">
+<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=ad68f3c3e4af46bca25c8118100e39c3">
 <div class="jp-Cell-inputWrapper" tabindex="0">
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
@@ -7559,161 +7549,203 @@ You will simulate the complex in explicit solvent and review stability.</p>
 </div>
 </div>
 </div>
-</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell jp-mod-noOutputs" id="cell-id=a3913a531dde4f1c83ca33aa3925d46b">
+</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell jp-mod-noOutputs" id="cell-id=22c3bce6">
 <div class="jp-Cell-inputWrapper" tabindex="0">
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
 <div class="jp-InputArea jp-Cell-inputArea">
-<div class="jp-InputPrompt jp-InputArea-prompt">In [ ]:</div>
+<div class="jp-InputPrompt jp-InputArea-prompt">In [1]:</div>
 <div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
 <div class="cm-editor cm-s-jupyter">
-<div class="highlight hl-python"><pre><span></span><span class="ch">#!/usr/bin/env python3</span>
-<span class="kn">import</span><span class="w"> </span><span class="nn">argparse</span>
+<div class="highlight hl-ipython3"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">pathlib</span><span class="w"> </span><span class="kn">import</span> <span class="n">Path</span>
 <span class="kn">import</span><span class="w"> </span><span class="nn">os</span>
-<span class="kn">import</span><span class="w"> </span><span class="nn">sys</span>
-<span class="kn">import</span><span class="w"> </span><span class="nn">time</span>
-<span class="kn">from</span><span class="w"> </span><span class="nn">pathlib</span><span class="w"> </span><span class="kn">import</span> <span class="n">Path</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">openmm</span><span class="w"> </span><span class="kn">import</span> <span class="n">app</span><span class="p">,</span> <span class="n">unit</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">openmm</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">mm</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">openmm.app</span><span class="w"> </span><span class="kn">import</span> <span class="n">Modeller</span><span class="p">,</span> <span class="n">PDBFile</span><span class="p">,</span> <span class="n">ForceField</span><span class="p">,</span> <span class="n">Simulation</span>
 
-<span class="kn">from</span><span class="w"> </span><span class="nn">openff.toolkit</span><span class="w"> </span><span class="kn">import</span> <span class="n">Molecule</span>
-<span class="kn">from</span><span class="w"> </span><span class="nn">openmmforcefields.generators</span><span class="w"> </span><span class="kn">import</span> <span class="n">SystemGenerator</span>
-<span class="kn">import</span><span class="w"> </span><span class="nn">openmm</span>
-<span class="kn">from</span><span class="w"> </span><span class="nn">openmm</span><span class="w"> </span><span class="kn">import</span> <span class="n">app</span><span class="p">,</span> <span class="n">unit</span><span class="p">,</span> <span class="n">LangevinIntegrator</span>
-<span class="kn">from</span><span class="w"> </span><span class="nn">openmm.app</span><span class="w"> </span><span class="kn">import</span> <span class="n">PDBFile</span><span class="p">,</span> <span class="n">Simulation</span><span class="p">,</span> <span class="n">Modeller</span><span class="p">,</span> <span class="n">StateDataReporter</span><span class="p">,</span> <span class="n">DCDReporter</span>
+<span class="n">__all__</span> <span class="o">=</span> <span class="p">[</span><span class="s2">"Path"</span><span class="p">,</span> <span class="s2">"os"</span><span class="p">,</span> <span class="s2">"unit"</span><span class="p">,</span> <span class="s2">"mm"</span><span class="p">,</span> <span class="s2">"Modeller"</span><span class="p">,</span> <span class="s2">"PDBFile"</span><span class="p">,</span> <span class="s2">"ForceField"</span><span class="p">,</span> <span class="s2">"Simulation"</span><span class="p">]</span>
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=f1f8d0d3">
+<div class="jp-Cell-inputWrapper" tabindex="0">
+<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
+</div>
+<div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
+</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
+<h2 id="Paths-and-data-preparation">Paths and data preparation<a class="anchor-link" href="#Paths-and-data-preparation">¶</a></h2><p>We reuse the project layout: <code>COURSE_DIR</code> points to the folder that the sync scripts keep populated with the official datasets, so all <code>data/</code> and <code>results/</code> paths already live under that tree. The notebook requires <code>alanine-dipeptide.pdb</code> in <code>COURSE_DIR/data/</code>; if it is absent, rerun the standard data sync or contact the maintainer to refresh the <code>Course-MD-Data</code> copy.</p>
+</div>
+</div>
+</div>
+</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell" id="cell-id=a7fddab1">
+<div class="jp-Cell-inputWrapper" tabindex="0">
+<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
+</div>
+<div class="jp-InputArea jp-Cell-inputArea">
+<div class="jp-InputPrompt jp-InputArea-prompt">In [2]:</div>
+<div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
+<div class="cm-editor cm-s-jupyter">
+<div class="highlight hl-ipython3"><pre><span></span><span class="n">COURSE_DIR</span> <span class="o">=</span> <span class="n">Path</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">environ</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">"COURSE_DIR"</span><span class="p">,</span> <span class="n">Path</span><span class="o">.</span><span class="n">home</span><span class="p">()</span> <span class="o">/</span> <span class="s2">"Concepcion26"</span><span class="p">))</span><span class="o">.</span><span class="n">expanduser</span><span class="p">()</span>
+<span class="n">DATA_DIR</span> <span class="o">=</span> <span class="n">COURSE_DIR</span> <span class="o">/</span> <span class="s2">"data"</span>
+<span class="n">RESULTS_DIR</span> <span class="o">=</span> <span class="n">COURSE_DIR</span> <span class="o">/</span> <span class="s2">"results"</span> <span class="o">/</span> <span class="s2">"04-annealing"</span>
+<span class="n">RESULTS_DIR</span><span class="o">.</span><span class="n">mkdir</span><span class="p">(</span><span class="n">parents</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">exist_ok</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
 
-<span class="n">COURSE_DIR</span> <span class="o">=</span> <span class="n">Path</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">environ</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">"COURSE_DIR"</span><span class="p">,</span> <span class="nb">str</span><span class="p">(</span><span class="n">Path</span><span class="o">.</span><span class="n">home</span><span class="p">()</span> <span class="o">/</span> <span class="s2">"Concepcion26"</span><span class="p">)))</span><span class="o">.</span><span class="n">expanduser</span><span class="p">()</span>
-<span class="n">DATA_DIR</span> <span class="o">=</span> <span class="n">COURSE_DIR</span> <span class="o">/</span> <span class="s2">"data"</span> <span class="o">/</span> <span class="s2">"complex"</span>
-<span class="n">DEFAULT_PROTEIN</span> <span class="o">=</span> <span class="n">DATA_DIR</span> <span class="o">/</span> <span class="s2">"protein.pdb"</span>
-<span class="n">DEFAULT_LIGAND</span> <span class="o">=</span> <span class="n">DATA_DIR</span> <span class="o">/</span> <span class="s2">"ligand1.mol"</span>
-
-
-<span class="k">def</span><span class="w"> </span><span class="nf">get_platform</span><span class="p">():</span>
-    <span class="n">speed</span> <span class="o">=</span> <span class="mi">0</span>
-    <span class="n">platform</span> <span class="o">=</span> <span class="kc">None</span>
-    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">openmm</span><span class="o">.</span><span class="n">Platform</span><span class="o">.</span><span class="n">getNumPlatforms</span><span class="p">()):</span>
-        <span class="n">candidate</span> <span class="o">=</span> <span class="n">openmm</span><span class="o">.</span><span class="n">Platform</span><span class="o">.</span><span class="n">getPlatform</span><span class="p">(</span><span class="n">i</span><span class="p">)</span>
-        <span class="k">if</span> <span class="n">candidate</span><span class="o">.</span><span class="n">getSpeed</span><span class="p">()</span> <span class="o">&gt;</span> <span class="n">speed</span><span class="p">:</span>
-            <span class="n">platform</span> <span class="o">=</span> <span class="n">candidate</span>
-            <span class="n">speed</span> <span class="o">=</span> <span class="n">candidate</span><span class="o">.</span><span class="n">getSpeed</span><span class="p">()</span>
-    <span class="nb">print</span><span class="p">(</span><span class="s2">"Using platform"</span><span class="p">,</span> <span class="n">platform</span><span class="o">.</span><span class="n">getName</span><span class="p">())</span>
-    <span class="k">if</span> <span class="n">platform</span><span class="o">.</span><span class="n">getName</span><span class="p">()</span> <span class="ow">in</span> <span class="p">{</span><span class="s2">"CUDA"</span><span class="p">,</span> <span class="s2">"OpenCL"</span><span class="p">}:</span>
-        <span class="n">platform</span><span class="o">.</span><span class="n">setPropertyDefaultValue</span><span class="p">(</span><span class="s2">"Precision"</span><span class="p">,</span> <span class="s2">"mixed"</span><span class="p">)</span>
-        <span class="nb">print</span><span class="p">(</span><span class="s2">"Set precision for platform"</span><span class="p">,</span> <span class="n">platform</span><span class="o">.</span><span class="n">getName</span><span class="p">(),</span> <span class="s2">"to mixed"</span><span class="p">)</span>
-    <span class="k">return</span> <span class="n">platform</span>
-
-
-<span class="k">def</span><span class="w"> </span><span class="nf">main</span><span class="p">()</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
-    <span class="n">parser</span> <span class="o">=</span> <span class="n">argparse</span><span class="o">.</span><span class="n">ArgumentParser</span><span class="p">(</span><span class="n">description</span><span class="o">=</span><span class="s2">"Simulate protein-ligand complex with optional solvation"</span><span class="p">)</span>
-    <span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span><span class="s2">"-p"</span><span class="p">,</span> <span class="s2">"--protein"</span><span class="p">,</span> <span class="n">default</span><span class="o">=</span><span class="nb">str</span><span class="p">(</span><span class="n">DEFAULT_PROTEIN</span><span class="p">),</span> <span class="n">help</span><span class="o">=</span><span class="s2">"Protein PDB file"</span><span class="p">)</span>
-    <span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span><span class="s2">"-l"</span><span class="p">,</span> <span class="s2">"--ligand"</span><span class="p">,</span> <span class="n">default</span><span class="o">=</span><span class="nb">str</span><span class="p">(</span><span class="n">DEFAULT_LIGAND</span><span class="p">),</span> <span class="n">help</span><span class="o">=</span><span class="s2">"Ligand MOL file"</span><span class="p">)</span>
-    <span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span><span class="s2">"-o"</span><span class="p">,</span> <span class="s2">"--output"</span><span class="p">,</span> <span class="n">default</span><span class="o">=</span><span class="s2">"solvated"</span><span class="p">,</span> <span class="n">help</span><span class="o">=</span><span class="s2">"Base name for output files"</span><span class="p">)</span>
-    <span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span><span class="s2">"-s"</span><span class="p">,</span> <span class="s2">"--steps"</span><span class="p">,</span> <span class="nb">type</span><span class="o">=</span><span class="nb">int</span><span class="p">,</span> <span class="n">default</span><span class="o">=</span><span class="mi">5000</span><span class="p">,</span> <span class="n">help</span><span class="o">=</span><span class="s2">"Number of steps"</span><span class="p">)</span>
-    <span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span><span class="s2">"-z"</span><span class="p">,</span> <span class="s2">"--step-size"</span><span class="p">,</span> <span class="nb">type</span><span class="o">=</span><span class="nb">float</span><span class="p">,</span> <span class="n">default</span><span class="o">=</span><span class="mf">0.002</span><span class="p">,</span> <span class="n">help</span><span class="o">=</span><span class="s2">"Step size (ps)"</span><span class="p">)</span>
-    <span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span><span class="s2">"-f"</span><span class="p">,</span> <span class="s2">"--friction-coeff"</span><span class="p">,</span> <span class="nb">type</span><span class="o">=</span><span class="nb">float</span><span class="p">,</span> <span class="n">default</span><span class="o">=</span><span class="mf">1.0</span><span class="p">,</span> <span class="n">help</span><span class="o">=</span><span class="s2">"Friction coefficient (ps)"</span><span class="p">)</span>
-    <span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span><span class="s2">"-i"</span><span class="p">,</span> <span class="s2">"--interval"</span><span class="p">,</span> <span class="nb">type</span><span class="o">=</span><span class="nb">int</span><span class="p">,</span> <span class="n">default</span><span class="o">=</span><span class="mi">1000</span><span class="p">,</span> <span class="n">help</span><span class="o">=</span><span class="s2">"Reporting interval"</span><span class="p">)</span>
-    <span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span><span class="s2">"-t"</span><span class="p">,</span> <span class="s2">"--temperature"</span><span class="p">,</span> <span class="nb">type</span><span class="o">=</span><span class="nb">int</span><span class="p">,</span> <span class="n">default</span><span class="o">=</span><span class="mi">300</span><span class="p">,</span> <span class="n">help</span><span class="o">=</span><span class="s2">"Temperature (K)"</span><span class="p">)</span>
-    <span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span><span class="s2">"--solvate"</span><span class="p">,</span> <span class="n">action</span><span class="o">=</span><span class="s2">"store_true"</span><span class="p">,</span> <span class="n">help</span><span class="o">=</span><span class="s2">"Add solvent box"</span><span class="p">)</span>
-    <span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span><span class="s2">"--padding"</span><span class="p">,</span> <span class="nb">type</span><span class="o">=</span><span class="nb">float</span><span class="p">,</span> <span class="n">default</span><span class="o">=</span><span class="mf">10.0</span><span class="p">,</span> <span class="n">help</span><span class="o">=</span><span class="s2">"Padding for solvent box (A)"</span><span class="p">)</span>
-    <span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span><span class="s2">"--water-model"</span><span class="p">,</span> <span class="n">default</span><span class="o">=</span><span class="s2">"tip3p"</span><span class="p">,</span> <span class="n">choices</span><span class="o">=</span><span class="p">[</span><span class="s2">"tip3p"</span><span class="p">,</span> <span class="s2">"spce"</span><span class="p">,</span> <span class="s2">"tip4pew"</span><span class="p">,</span> <span class="s2">"tip5p"</span><span class="p">,</span> <span class="s2">"swm4ndp"</span><span class="p">],</span> <span class="n">help</span><span class="o">=</span><span class="s2">"Water model"</span><span class="p">)</span>
-    <span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span><span class="s2">"--positive-ion"</span><span class="p">,</span> <span class="n">default</span><span class="o">=</span><span class="s2">"Na+"</span><span class="p">,</span> <span class="n">help</span><span class="o">=</span><span class="s2">"Positive ion for solvation"</span><span class="p">)</span>
-    <span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span><span class="s2">"--negative-ion"</span><span class="p">,</span> <span class="n">default</span><span class="o">=</span><span class="s2">"Cl-"</span><span class="p">,</span> <span class="n">help</span><span class="o">=</span><span class="s2">"Negative ion for solvation"</span><span class="p">)</span>
-    <span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span><span class="s2">"--ionic-strength"</span><span class="p">,</span> <span class="nb">type</span><span class="o">=</span><span class="nb">float</span><span class="p">,</span> <span class="n">default</span><span class="o">=</span><span class="mf">0.0</span><span class="p">,</span> <span class="n">help</span><span class="o">=</span><span class="s2">"Ionic strength (M)"</span><span class="p">)</span>
-    <span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span><span class="s2">"--no-neutralize"</span><span class="p">,</span> <span class="n">action</span><span class="o">=</span><span class="s2">"store_true"</span><span class="p">,</span> <span class="n">help</span><span class="o">=</span><span class="s2">"Don't neutralize"</span><span class="p">)</span>
-    <span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span><span class="s2">"-e"</span><span class="p">,</span> <span class="s2">"--equilibration-steps"</span><span class="p">,</span> <span class="nb">type</span><span class="o">=</span><span class="nb">int</span><span class="p">,</span> <span class="n">default</span><span class="o">=</span><span class="mi">200</span><span class="p">,</span> <span class="n">help</span><span class="o">=</span><span class="s2">"Equilibration steps"</span><span class="p">)</span>
-    <span class="n">args</span> <span class="o">=</span> <span class="n">parser</span><span class="o">.</span><span class="n">parse_args</span><span class="p">()</span>
-
-    <span class="n">t0</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span>
-    <span class="n">out_dir</span> <span class="o">=</span> <span class="n">COURSE_DIR</span> <span class="o">/</span> <span class="s2">"results"</span> <span class="o">/</span> <span class="s2">"05-muestreo-avanzado"</span> <span class="o">/</span> <span class="s2">"complex"</span>
-    <span class="n">out_dir</span><span class="o">.</span><span class="n">mkdir</span><span class="p">(</span><span class="n">parents</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">exist_ok</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
-    <span class="n">output_base</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="n">out_dir</span> <span class="o">/</span> <span class="n">args</span><span class="o">.</span><span class="n">output</span><span class="p">)</span>
-    <span class="n">output_complex</span> <span class="o">=</span> <span class="n">output_base</span> <span class="o">+</span> <span class="s2">"_complex.pdb"</span>
-    <span class="n">output_min</span> <span class="o">=</span> <span class="n">output_base</span> <span class="o">+</span> <span class="s2">"_minimised.pdb"</span>
-    <span class="n">output_traj</span> <span class="o">=</span> <span class="n">output_base</span> <span class="o">+</span> <span class="s2">"_traj.dcd"</span>
-
-    <span class="nb">print</span><span class="p">(</span><span class="s2">"Reading ligand"</span><span class="p">)</span>
-    <span class="n">ligand_mol</span> <span class="o">=</span> <span class="n">Molecule</span><span class="o">.</span><span class="n">from_file</span><span class="p">(</span><span class="n">args</span><span class="o">.</span><span class="n">ligand</span><span class="p">)</span>
-
-    <span class="nb">print</span><span class="p">(</span><span class="s2">"Preparing system"</span><span class="p">)</span>
-    <span class="n">forcefield_kwargs</span> <span class="o">=</span> <span class="p">{</span>
-        <span class="s2">"constraints"</span><span class="p">:</span> <span class="n">app</span><span class="o">.</span><span class="n">HBonds</span><span class="p">,</span>
-        <span class="s2">"rigidWater"</span><span class="p">:</span> <span class="kc">True</span><span class="p">,</span>
-        <span class="s2">"removeCMMotion"</span><span class="p">:</span> <span class="kc">False</span><span class="p">,</span>
-        <span class="s2">"hydrogenMass"</span><span class="p">:</span> <span class="mi">4</span> <span class="o">*</span> <span class="n">unit</span><span class="o">.</span><span class="n">amu</span><span class="p">,</span>
-    <span class="p">}</span>
-    <span class="n">system_generator</span> <span class="o">=</span> <span class="n">SystemGenerator</span><span class="p">(</span>
-        <span class="n">forcefields</span><span class="o">=</span><span class="p">[</span><span class="s2">"amber/ff14SB.xml"</span><span class="p">,</span> <span class="s2">"amber/tip3p_standard.xml"</span><span class="p">],</span>
-        <span class="n">small_molecule_forcefield</span><span class="o">=</span><span class="s2">"gaff-2.11"</span><span class="p">,</span>
-        <span class="n">molecules</span><span class="o">=</span><span class="p">[</span><span class="n">ligand_mol</span><span class="p">],</span>
-        <span class="n">forcefield_kwargs</span><span class="o">=</span><span class="n">forcefield_kwargs</span><span class="p">,</span>
+<span class="n">PDB_PATH</span> <span class="o">=</span> <span class="n">DATA_DIR</span> <span class="o">/</span> <span class="s2">"alanine-dipeptide.pdb"</span>
+<span class="k">if</span> <span class="ow">not</span> <span class="n">PDB_PATH</span><span class="o">.</span><span class="n">exists</span><span class="p">():</span>
+    <span class="k">raise</span> <span class="ne">FileNotFoundError</span><span class="p">(</span>
+        <span class="sa">f</span><span class="s2">"Missing alanine-dipeptide.pdb in </span><span class="si">{</span><span class="n">DATA_DIR</span><span class="si">}</span><span class="s2">; rerun the repository's data sync so </span><span class="si">{</span><span class="n">DATA_DIR</span><span class="si">}</span><span class="s2"> mirrors Course-MD-Data before continuing."</span>
     <span class="p">)</span>
 
-    <span class="nb">print</span><span class="p">(</span><span class="s2">"Reading protein"</span><span class="p">)</span>
-    <span class="n">protein_pdb</span> <span class="o">=</span> <span class="n">PDBFile</span><span class="p">(</span><span class="n">args</span><span class="o">.</span><span class="n">protein</span><span class="p">)</span>
-
-    <span class="nb">print</span><span class="p">(</span><span class="s2">"Preparing complex"</span><span class="p">)</span>
-    <span class="n">modeller</span> <span class="o">=</span> <span class="n">Modeller</span><span class="p">(</span><span class="n">protein_pdb</span><span class="o">.</span><span class="n">topology</span><span class="p">,</span> <span class="n">protein_pdb</span><span class="o">.</span><span class="n">positions</span><span class="p">)</span>
-    <span class="n">lig_top</span> <span class="o">=</span> <span class="n">ligand_mol</span><span class="o">.</span><span class="n">to_topology</span><span class="p">()</span>
-    <span class="n">modeller</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">lig_top</span><span class="o">.</span><span class="n">to_openmm</span><span class="p">(),</span> <span class="n">lig_top</span><span class="o">.</span><span class="n">get_positions</span><span class="p">()</span><span class="o">.</span><span class="n">to_openmm</span><span class="p">())</span>
-
-    <span class="k">if</span> <span class="n">args</span><span class="o">.</span><span class="n">solvate</span><span class="p">:</span>
-        <span class="nb">print</span><span class="p">(</span><span class="s2">"Adding solvent"</span><span class="p">)</span>
-        <span class="n">modeller</span><span class="o">.</span><span class="n">addSolvent</span><span class="p">(</span>
-            <span class="n">system_generator</span><span class="o">.</span><span class="n">forcefield</span><span class="p">,</span>
-            <span class="n">model</span><span class="o">=</span><span class="n">args</span><span class="o">.</span><span class="n">water_model</span><span class="p">,</span>
-            <span class="n">padding</span><span class="o">=</span><span class="n">args</span><span class="o">.</span><span class="n">padding</span> <span class="o">*</span> <span class="n">unit</span><span class="o">.</span><span class="n">angstroms</span><span class="p">,</span>
-            <span class="n">positiveIon</span><span class="o">=</span><span class="n">args</span><span class="o">.</span><span class="n">positive_ion</span><span class="p">,</span>
-            <span class="n">negativeIon</span><span class="o">=</span><span class="n">args</span><span class="o">.</span><span class="n">negative_ion</span><span class="p">,</span>
-            <span class="n">ionicStrength</span><span class="o">=</span><span class="n">args</span><span class="o">.</span><span class="n">ionic_strength</span> <span class="o">*</span> <span class="n">unit</span><span class="o">.</span><span class="n">molar</span><span class="p">,</span>
-            <span class="n">neutralize</span><span class="o">=</span><span class="ow">not</span> <span class="n">args</span><span class="o">.</span><span class="n">no_neutralize</span><span class="p">,</span>
-        <span class="p">)</span>
-
-    <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">output_complex</span><span class="p">,</span> <span class="s2">"w"</span><span class="p">)</span> <span class="k">as</span> <span class="n">outfile</span><span class="p">:</span>
-        <span class="n">PDBFile</span><span class="o">.</span><span class="n">writeFile</span><span class="p">(</span><span class="n">modeller</span><span class="o">.</span><span class="n">topology</span><span class="p">,</span> <span class="n">modeller</span><span class="o">.</span><span class="n">positions</span><span class="p">,</span> <span class="n">outfile</span><span class="p">)</span>
-
-    <span class="n">system</span> <span class="o">=</span> <span class="n">system_generator</span><span class="o">.</span><span class="n">create_system</span><span class="p">(</span><span class="n">modeller</span><span class="o">.</span><span class="n">topology</span><span class="p">,</span> <span class="n">molecules</span><span class="o">=</span><span class="n">ligand_mol</span><span class="p">)</span>
-    <span class="n">step_size</span> <span class="o">=</span> <span class="n">args</span><span class="o">.</span><span class="n">step_size</span> <span class="o">*</span> <span class="n">unit</span><span class="o">.</span><span class="n">picoseconds</span>
-    <span class="n">friction</span> <span class="o">=</span> <span class="n">args</span><span class="o">.</span><span class="n">friction_coeff</span> <span class="o">/</span> <span class="n">unit</span><span class="o">.</span><span class="n">picosecond</span>
-    <span class="n">temperature</span> <span class="o">=</span> <span class="n">args</span><span class="o">.</span><span class="n">temperature</span> <span class="o">*</span> <span class="n">unit</span><span class="o">.</span><span class="n">kelvin</span>
-    <span class="n">duration</span> <span class="o">=</span> <span class="p">(</span><span class="n">step_size</span> <span class="o">*</span> <span class="n">args</span><span class="o">.</span><span class="n">steps</span><span class="p">)</span><span class="o">.</span><span class="n">value_in_unit</span><span class="p">(</span><span class="n">unit</span><span class="o">.</span><span class="n">nanoseconds</span><span class="p">)</span>
-
-    <span class="k">if</span> <span class="n">system</span><span class="o">.</span><span class="n">usesPeriodicBoundaryConditions</span><span class="p">():</span>
-        <span class="n">system</span><span class="o">.</span><span class="n">addForce</span><span class="p">(</span><span class="n">openmm</span><span class="o">.</span><span class="n">MonteCarloBarostat</span><span class="p">(</span><span class="mi">1</span> <span class="o">*</span> <span class="n">unit</span><span class="o">.</span><span class="n">atmospheres</span><span class="p">,</span> <span class="n">temperature</span><span class="p">,</span> <span class="mi">25</span><span class="p">))</span>
-
-    <span class="n">integrator</span> <span class="o">=</span> <span class="n">LangevinIntegrator</span><span class="p">(</span><span class="n">temperature</span><span class="p">,</span> <span class="n">friction</span><span class="p">,</span> <span class="n">step_size</span><span class="p">)</span>
-    <span class="n">platform</span> <span class="o">=</span> <span class="n">get_platform</span><span class="p">()</span>
-
-    <span class="n">simulation</span> <span class="o">=</span> <span class="n">Simulation</span><span class="p">(</span><span class="n">modeller</span><span class="o">.</span><span class="n">topology</span><span class="p">,</span> <span class="n">system</span><span class="p">,</span> <span class="n">integrator</span><span class="p">,</span> <span class="n">platform</span><span class="o">=</span><span class="n">platform</span><span class="p">)</span>
-    <span class="n">simulation</span><span class="o">.</span><span class="n">context</span><span class="o">.</span><span class="n">setPositions</span><span class="p">(</span><span class="n">modeller</span><span class="o">.</span><span class="n">positions</span><span class="p">)</span>
-
-    <span class="nb">print</span><span class="p">(</span><span class="s2">"Minimising ..."</span><span class="p">)</span>
-    <span class="n">simulation</span><span class="o">.</span><span class="n">minimizeEnergy</span><span class="p">()</span>
-
-    <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">output_min</span><span class="p">,</span> <span class="s2">"w"</span><span class="p">)</span> <span class="k">as</span> <span class="n">outfile</span><span class="p">:</span>
-        <span class="n">PDBFile</span><span class="o">.</span><span class="n">writeFile</span><span class="p">(</span>
-            <span class="n">modeller</span><span class="o">.</span><span class="n">topology</span><span class="p">,</span>
-            <span class="n">simulation</span><span class="o">.</span><span class="n">context</span><span class="o">.</span><span class="n">getState</span><span class="p">(</span><span class="n">getPositions</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">enforcePeriodicBox</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span><span class="o">.</span><span class="n">getPositions</span><span class="p">(),</span>
-            <span class="n">file</span><span class="o">=</span><span class="n">outfile</span><span class="p">,</span>
-            <span class="n">keepIds</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
-        <span class="p">)</span>
-
-    <span class="n">simulation</span><span class="o">.</span><span class="n">context</span><span class="o">.</span><span class="n">setVelocitiesToTemperature</span><span class="p">(</span><span class="n">temperature</span><span class="p">)</span>
-    <span class="nb">print</span><span class="p">(</span><span class="s2">"Equilibrating ..."</span><span class="p">)</span>
-    <span class="n">simulation</span><span class="o">.</span><span class="n">step</span><span class="p">(</span><span class="n">args</span><span class="o">.</span><span class="n">equilibration_steps</span><span class="p">)</span>
-
-    <span class="n">simulation</span><span class="o">.</span><span class="n">reporters</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">DCDReporter</span><span class="p">(</span><span class="n">output_traj</span><span class="p">,</span> <span class="n">args</span><span class="o">.</span><span class="n">interval</span><span class="p">,</span> <span class="n">enforcePeriodicBox</span><span class="o">=</span><span class="kc">True</span><span class="p">))</span>
-    <span class="n">simulation</span><span class="o">.</span><span class="n">reporters</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">StateDataReporter</span><span class="p">(</span><span class="n">sys</span><span class="o">.</span><span class="n">stdout</span><span class="p">,</span> <span class="n">args</span><span class="o">.</span><span class="n">interval</span> <span class="o">*</span> <span class="mi">5</span><span class="p">,</span> <span class="n">step</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">potentialEnergy</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">temperature</span><span class="o">=</span><span class="kc">True</span><span class="p">))</span>
-
-    <span class="nb">print</span><span class="p">(</span><span class="s2">"Starting simulation with"</span><span class="p">,</span> <span class="n">args</span><span class="o">.</span><span class="n">steps</span><span class="p">,</span> <span class="s2">"steps ..."</span><span class="p">)</span>
-    <span class="n">t1</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span>
-    <span class="n">simulation</span><span class="o">.</span><span class="n">step</span><span class="p">(</span><span class="n">args</span><span class="o">.</span><span class="n">steps</span><span class="p">)</span>
-    <span class="n">t2</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span>
-    <span class="nb">print</span><span class="p">(</span><span class="s2">"Simulation complete in"</span><span class="p">,</span> <span class="nb">round</span><span class="p">((</span><span class="n">t2</span> <span class="o">-</span> <span class="n">t1</span><span class="p">)</span> <span class="o">/</span> <span class="mi">60</span><span class="p">,</span> <span class="mi">3</span><span class="p">),</span> <span class="s2">"mins"</span><span class="p">)</span>
-    <span class="nb">print</span><span class="p">(</span><span class="s2">"Simulation time was"</span><span class="p">,</span> <span class="nb">round</span><span class="p">(</span><span class="n">duration</span><span class="p">,</span> <span class="mi">3</span><span class="p">),</span> <span class="s2">"ns"</span><span class="p">)</span>
-    <span class="nb">print</span><span class="p">(</span><span class="s2">"Total wall clock time was"</span><span class="p">,</span> <span class="nb">round</span><span class="p">((</span><span class="n">t2</span> <span class="o">-</span> <span class="n">t0</span><span class="p">)</span> <span class="o">/</span> <span class="mi">60</span><span class="p">,</span> <span class="mi">3</span><span class="p">),</span> <span class="s2">"mins"</span><span class="p">)</span>
-
-
-<span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s2">"__main__"</span><span class="p">:</span>
-    <span class="n">main</span><span class="p">()</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">"COURSE_DIR:"</span><span class="p">,</span> <span class="n">COURSE_DIR</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">"PDB_path:"</span><span class="p">,</span> <span class="n">PDB_PATH</span><span class="p">)</span>
 </pre></div>
+</div>
+</div>
+</div>
+</div>
+<div class="jp-Cell-outputWrapper">
+<div class="jp-Collapser jp-OutputCollapser jp-Cell-outputCollapser">
+</div>
+<div class="jp-OutputArea jp-Cell-outputArea">
+<div class="jp-OutputArea-child">
+<div class="jp-OutputPrompt jp-OutputArea-prompt"></div>
+<div class="jp-RenderedText jp-OutputArea-output" data-mime-type="text/plain" tabindex="0">
+<pre>COURSE_DIR: /home/jordivilla/Concepcion26
+PDB_path: /home/jordivilla/Concepcion26/data/alanine-dipeptide.pdb
+</pre>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=09d04fb1">
+<div class="jp-Cell-inputWrapper" tabindex="0">
+<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
+</div>
+<div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
+</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
+<h2 id="System-setup">System setup<a class="anchor-link" href="#System-setup">¶</a></h2><p>Load the alanine dipeptide structure, add hydrogens for the selected force field, and build the OpenMM system with the usual no-cutoff/HBonds setup plus a Langevin integrator so the annealing schedule has a well-defined Hamiltonian.</p>
+</div>
+</div>
+</div>
+</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell" id="cell-id=d4f7fed4">
+<div class="jp-Cell-inputWrapper" tabindex="0">
+<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
+</div>
+<div class="jp-InputArea jp-Cell-inputArea">
+<div class="jp-InputPrompt jp-InputArea-prompt">In [3]:</div>
+<div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
+<div class="cm-editor cm-s-jupyter">
+<div class="highlight hl-ipython3"><pre><span></span><span class="n">forcefield</span> <span class="o">=</span> <span class="n">ForceField</span><span class="p">(</span><span class="s2">"amber14-all.xml"</span><span class="p">,</span> <span class="s2">"amber14/tip3pfb.xml"</span><span class="p">)</span>
+<span class="n">pdb</span> <span class="o">=</span> <span class="n">PDBFile</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">PDB_PATH</span><span class="p">))</span>
+<span class="n">modeller</span> <span class="o">=</span> <span class="n">Modeller</span><span class="p">(</span><span class="n">pdb</span><span class="o">.</span><span class="n">topology</span><span class="p">,</span> <span class="n">pdb</span><span class="o">.</span><span class="n">positions</span><span class="p">)</span>
+<span class="n">modeller</span><span class="o">.</span><span class="n">addHydrogens</span><span class="p">(</span><span class="n">forcefield</span><span class="p">)</span>
+<span class="n">system</span> <span class="o">=</span> <span class="n">forcefield</span><span class="o">.</span><span class="n">createSystem</span><span class="p">(</span>
+    <span class="n">modeller</span><span class="o">.</span><span class="n">topology</span><span class="p">,</span>
+    <span class="n">nonbondedMethod</span><span class="o">=</span><span class="n">app</span><span class="o">.</span><span class="n">NoCutoff</span><span class="p">,</span>
+    <span class="n">constraints</span><span class="o">=</span><span class="n">app</span><span class="o">.</span><span class="n">HBonds</span><span class="p">,</span>
+<span class="p">)</span>
+<span class="n">integrator</span> <span class="o">=</span> <span class="n">mm</span><span class="o">.</span><span class="n">LangevinMiddleIntegrator</span><span class="p">(</span><span class="mi">300</span> <span class="o">*</span> <span class="n">unit</span><span class="o">.</span><span class="n">kelvin</span><span class="p">,</span> <span class="mi">1</span> <span class="o">/</span> <span class="n">unit</span><span class="o">.</span><span class="n">picosecond</span><span class="p">,</span> <span class="mf">0.004</span> <span class="o">*</span> <span class="n">unit</span><span class="o">.</span><span class="n">picoseconds</span><span class="p">)</span>
+<span class="n">simulation</span> <span class="o">=</span> <span class="n">Simulation</span><span class="p">(</span><span class="n">modeller</span><span class="o">.</span><span class="n">topology</span><span class="p">,</span> <span class="n">system</span><span class="p">,</span> <span class="n">integrator</span><span class="p">)</span>
+<span class="n">simulation</span><span class="o">.</span><span class="n">context</span><span class="o">.</span><span class="n">setPositions</span><span class="p">(</span><span class="n">modeller</span><span class="o">.</span><span class="n">positions</span><span class="p">)</span>
+<span class="n">simulation</span><span class="o">.</span><span class="n">minimizeEnergy</span><span class="p">()</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">"System initialized for {modeller.topology.getNumAtoms()} atoms."</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+<div class="jp-Cell-outputWrapper">
+<div class="jp-Collapser jp-OutputCollapser jp-Cell-outputCollapser">
+</div>
+<div class="jp-OutputArea jp-Cell-outputArea">
+<div class="jp-OutputArea-child">
+<div class="jp-OutputPrompt jp-OutputArea-prompt"></div>
+<div class="jp-RenderedText jp-OutputArea-output" data-mime-type="text/plain" tabindex="0">
+<pre>System initialized for {modeller.topology.getNumAtoms()} atoms.
+</pre>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=d62c8e33">
+<div class="jp-Cell-inputWrapper" tabindex="0">
+<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
+</div>
+<div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
+</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
+<h2 id="Simulated-annealing-schedule">Simulated annealing schedule<a class="anchor-link" href="#Simulated-annealing-schedule">¶</a></h2><p>This helper drives the Langevin integrator through a discrete cooling loop. The temperature decrements by 3 K at each step and can be controlled with <code>steps_per_temp</code> and <code>increments</code>.</p>
+</div>
+</div>
+</div>
+</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell jp-mod-noOutputs" id="cell-id=864d782e">
+<div class="jp-Cell-inputWrapper" tabindex="0">
+<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
+</div>
+<div class="jp-InputArea jp-Cell-inputArea">
+<div class="jp-InputPrompt jp-InputArea-prompt">In [4]:</div>
+<div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
+<div class="cm-editor cm-s-jupyter">
+<div class="highlight hl-ipython3"><pre><span></span><span class="k">def</span><span class="w"> </span><span class="nf">run_annealing</span><span class="p">(</span><span class="n">simulation</span><span class="p">,</span> <span class="n">steps_per_temp</span><span class="o">=</span><span class="mi">1000</span><span class="p">,</span> <span class="n">increments</span><span class="o">=</span><span class="mi">100</span><span class="p">):</span>
+    <span class="n">integrator</span> <span class="o">=</span> <span class="n">simulation</span><span class="o">.</span><span class="n">integrator</span>
+    <span class="k">for</span> <span class="n">idx</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">increments</span><span class="p">):</span>
+        <span class="n">temperature</span> <span class="o">=</span> <span class="mi">3</span> <span class="o">*</span> <span class="p">(</span><span class="n">increments</span> <span class="o">-</span> <span class="n">idx</span><span class="p">)</span> <span class="o">*</span> <span class="n">unit</span><span class="o">.</span><span class="n">kelvin</span>
+        <span class="n">integrator</span><span class="o">.</span><span class="n">setTemperature</span><span class="p">(</span><span class="n">temperature</span><span class="p">)</span>
+        <span class="n">simulation</span><span class="o">.</span><span class="n">step</span><span class="p">(</span><span class="n">steps_per_temp</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">idx</span> <span class="o">%</span> <span class="nb">max</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="n">increments</span> <span class="o">//</span> <span class="mi">5</span><span class="p">)</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="n">state</span> <span class="o">=</span> <span class="n">simulation</span><span class="o">.</span><span class="n">context</span><span class="o">.</span><span class="n">getState</span><span class="p">(</span><span class="n">getEnergy</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+            <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"Step </span><span class="si">{</span><span class="n">idx</span><span class="si">}</span><span class="s2">: T=</span><span class="si">{</span><span class="n">temperature</span><span class="si">}</span><span class="s2"> E=</span><span class="si">{</span><span class="n">state</span><span class="o">.</span><span class="n">getPotentialEnergy</span><span class="p">()</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span>
+    <span class="n">state</span> <span class="o">=</span> <span class="n">simulation</span><span class="o">.</span><span class="n">context</span><span class="o">.</span><span class="n">getState</span><span class="p">(</span><span class="n">getEnergy</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">getPositions</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">state</span>
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=1f0431e7">
+<div class="jp-Cell-inputWrapper" tabindex="0">
+<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
+</div>
+<div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
+</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
+<h2 id="Run-the-annealing-loop">Run the annealing loop<a class="anchor-link" href="#Run-the-annealing-loop">¶</a></h2><p>Execute the schedule with a light example (few increments) or increase <code>steps_per_temp</code> once you understand the behavior. The last state is retained for later analysis or saving.</p>
+</div>
+</div>
+</div>
+</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell" id="cell-id=5c082a1c">
+<div class="jp-Cell-inputWrapper" tabindex="0">
+<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
+</div>
+<div class="jp-InputArea jp-Cell-inputArea">
+<div class="jp-InputPrompt jp-InputArea-prompt">In [5]:</div>
+<div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
+<div class="cm-editor cm-s-jupyter">
+<div class="highlight hl-ipython3"><pre><span></span><span class="n">result_state</span> <span class="o">=</span> <span class="n">run_annealing</span><span class="p">(</span><span class="n">simulation</span><span class="p">,</span> <span class="n">steps_per_temp</span><span class="o">=</span><span class="mi">200</span><span class="p">,</span> <span class="n">increments</span><span class="o">=</span><span class="mi">5</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">"Annealing complete:"</span><span class="p">,</span> <span class="n">result_state</span><span class="o">.</span><span class="n">getPotentialEnergy</span><span class="p">())</span>
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+<div class="jp-Cell-outputWrapper">
+<div class="jp-Collapser jp-OutputCollapser jp-Cell-outputCollapser">
+</div>
+<div class="jp-OutputArea jp-Cell-outputArea">
+<div class="jp-OutputArea-child">
+<div class="jp-OutputPrompt jp-OutputArea-prompt"></div>
+<div class="jp-RenderedText jp-OutputArea-output" data-mime-type="text/plain" tabindex="0">
+<pre>Step 0: T=15 K E=-89.38961791992188 kJ/mol
+Step 1: T=12 K E=-89.14910888671875 kJ/mol
+Step 2: T=9 K E=-88.937744140625 kJ/mol
+Step 3: T=6 K E=-89.64987182617188 kJ/mol
+Step 4: T=3 K E=-90.04116821289062 kJ/mol
+Annealing complete: -90.04116821289062 kJ/mol
+</pre>
 </div>
 </div>
 </div>

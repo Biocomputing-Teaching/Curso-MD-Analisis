@@ -7,7 +7,7 @@ permalink: /episodes/02-preparacion-sistema/
 <div class="episode-nav">
   <a href="{{ site.baseurl }}/episodes/03-simulaciones-clasicas/">Previous</a>
   <a href="{{ site.baseurl }}/episodes/">All episodes</a>
-  <a href="{{ site.baseurl }}/episodes/05-muestreo-avanzado/">Next</a>
+  <a href="{{ site.baseurl }}/episodes/04-muestreo-avanzado/">Next</a>
 </div>
 
 <!-- toc:start -->
@@ -123,5 +123,5 @@ Course script: <a href="{{ site.baseurl }}/episodes/scripts/openmm_modeller_save
 <div class="episode-nav">
   <a href="{{ site.baseurl }}/episodes/03-simulaciones-clasicas/">Previous</a>
   <a href="{{ site.baseurl }}/episodes/">All episodes</a>
-  <a href="{{ site.baseurl }}/episodes/05-muestreo-avanzado/">Next</a>
+  <a href="{{ site.baseurl }}/episodes/04-muestreo-avanzado/">Next</a>
 </div>
