@@ -177,6 +177,9 @@ The [Umbrella Sampling tutorial](https://openmm.github.io/openmm-cookbook/latest
 
 The notebook <a href="{{ site.baseurl }}/episodes/notebooks/05-umbrella-sampling.ipynb">05-umbrella-sampling.ipynb</a> reproduces those windows inline, gathers the sampled distances, stores the collected points in `$COURSE_DIR/data/umbrella_samples.csv`, and visualizes the emergent profile so you can poke at bin edges and the \(F(x) = -k_B T \ln p(x)\) conversion without leaving the browser. Its cells call the same systems described in the cookbook block, which demonstrates how each window’s bias shifts the sampled coordinate and why the umbrella reconstruction formula holds when you combine overlapping histograms.
 
+<!-- sync-from: docs/episodes/notebooks/05-umbrella-sampling.ipynb -->
+<div class="notebook-embed"><iframe src="{{ site.baseurl }}/episodes/notebooks/rendered/05-umbrella-sampling.html" loading="lazy"></iframe><div class="notebook-links"><a href="{{ site.baseurl }}/episodes/notebooks/05-umbrella-sampling.ipynb" download>Download notebook</a></div></div>
+
 The cookbook’s Bash section explains how to compile and run the [WHAM](https://github.com/choderalab/wham) binary to combine the windowed histograms and recover the free energy via the `<rmin> <rmax> <dx> <temperature> <histogram-files>` interface. Follow those steps locally with commands such as:
 
 ```bash
