@@ -12,33 +12,18 @@ permalink: /episodes/04-muestreo-avanzado/
 
 <!-- toc:start -->
 ## Table of contents
-- [Table of contents](#table-of-contents)
 - [Duration](#duration)
 - [Objectives](#objectives)
 - [Content](#content)
 - [Thermodynamic foundations](#thermodynamic-foundations)
 - [Official OpenMM tutorials](#official-openmm-tutorials)
 - [Simulated annealing](#simulated-annealing)
-  - [Guided demo](#guided-demo)
-  - [Exercise](#exercise)
-  - [Notebooks](#notebooks)
 - [Replica exchange (REMD)](#replica-exchange-remd)
-  - [REMD for alanine dipeptide](#remd-for-alanine-dipeptide)
-  - [Exercise](#exercise-1)
-  - [Notebooks](#notebooks-1)
 - [Gaussian accelerated MD (GaMD) with OpenMM](#gaussian-accelerated-md-gamd-with-openmm)
-  - [Guided demo: GaMD on alanine dipeptide](#guided-demo-gamd-on-alanine-dipeptide)
-  - [Exercise](#exercise-2)
-  - [Notebooks](#notebooks-2)
 - [Martini coarse-graining with OpenMM](#martini-coarse-graining-with-openmm)
-  - [Guided demo: Martini coarse-graining for the complex system](#guided-demo-martini-coarse-graining-for-the-complex-system)
-  - [Exercise](#exercise-3)
-  - [Notebooks](#notebooks-3)
 - [Umbrella sampling](#umbrella-sampling)
 - [SBMOpenMM resources](#sbmopenmm-resources)
 - [Guide scripts (OpenMM Application Layer)](#guide-scripts-openmm-application-layer)
-  - [Alanine dipeptide](#alanine-dipeptide)
-  - [Protein-ligand complex](#protein-ligand-complex)
 - [References](#references)
 <!-- toc:end -->
 
@@ -231,7 +216,7 @@ In each case, the outputs (DCD, CSV, and energy reports) are used in this episod
 Script source: <a href="{{ site.baseurl }}/episodes/scripts/05-muestreo-avanzado_simple.py">05-muestreo-avanzado_simple.py</a>
 
 <!-- sync-from: docs/episodes/notebooks/04-muestreo-avanzado_simple.ipynb -->
-<div class="notebook-embed"><iframe src="{{ site.baseurl }}/episodes/notebooks/rendered/04-muestreo-avanzado_simple.html" loading="lazy"></iframe><div class="notebook-links"><a href="{{ site.baseurl }}/episodes/notebooks/04-muestreo-avanzado_simple.ipynb" download>Download notebook</a> | <a href="{{ site.baseurl }}/episodes/scripts/05-muestreo-avanzado_simple.py" download>Download script (.py)</a></div></div>
+<div class="notebook-embed"><iframe src="{{ site.baseurl }}/episodes/notebooks/rendered/04-muestreo-avanzado_simple.html" loading="lazy"></iframe><div class="notebook-links"><a href="{{ site.baseurl }}/episodes/notebooks/04-muestreo-avanzado_simple.ipynb" download>Download notebook</a></div></div>
 
 - This notebook executes the advanced sampling routine for alanine (restraints, custom forces, reporting energies) and tracks gradient norms. (<a href="{{ site.baseurl }}/episodes/notebooks/04-muestreo-avanzado_simple.ipynb">notebook</a> | <a href="{{ site.baseurl }}/episodes/scripts/05-muestreo-avanzado_simple.py">script</a>)
 
@@ -241,7 +226,7 @@ Script source: <a href="{{ site.baseurl }}/episodes/scripts/05-muestreo-avanzado
 Script source: <a href="{{ site.baseurl }}/episodes/scripts/05-muestreo-avanzado.py">05-muestreo-avanzado.py</a>
 
 <!-- sync-from: docs/episodes/notebooks/04-muestreo-avanzado.ipynb -->
-<div class="notebook-embed"><iframe src="{{ site.baseurl }}/episodes/notebooks/rendered/04-muestreo-avanzado.html" loading="lazy"></iframe><div class="notebook-links"><a href="{{ site.baseurl }}/episodes/notebooks/04-muestreo-avanzado.ipynb" download>Download notebook</a> | <a href="{{ site.baseurl }}/episodes/scripts/05-muestreo-avanzado.py" download>Download script (.py)</a></div></div>
+<div class="notebook-embed"><iframe src="{{ site.baseurl }}/episodes/notebooks/rendered/04-muestreo-avanzado.html" loading="lazy"></iframe><div class="notebook-links"><a href="{{ site.baseurl }}/episodes/notebooks/04-muestreo-avanzado.ipynb" download>Download notebook</a></div></div>
 
 
 - This notebook covers the complex system with solvation options, barostat control, and energy/force logging to validate enhanced sampling workflows. (<a href="{{ site.baseurl }}/episodes/notebooks/04-muestreo-avanzado.ipynb">notebook</a> | <a href="{{ site.baseurl }}/episodes/scripts/05-muestreo-avanzado.py">script</a>)

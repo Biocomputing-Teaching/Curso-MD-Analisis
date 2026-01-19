@@ -92,6 +92,8 @@ Script source: <a href="{{ site.baseurl }}/episodes/scripts/04-analisis-trayecto
 
 Script source: <a href="{{ site.baseurl }}/episodes/scripts/04-analisis-trayectorias_simple.py">04-analisis-trayectorias_simple.py</a>
 
+Script source: <a href="{{ site.baseurl }}/episodes/scripts/04-analisis-trayectorias_simple.py">04-analisis-trayectorias_simple.py</a>
+
 ### Exercise
 
 - Run the simple analysis with <a href="{{ site.baseurl }}/data/">traj.dcd</a>.
@@ -170,6 +172,8 @@ def main() -> None:
 if __name__ == "__main__":
     main()
 ```
+
+Script source: <a href="{{ site.baseurl }}/episodes/scripts/04-analisis-trayectorias.py">04-analisis-trayectorias.py</a>
 
 Script source: <a href="{{ site.baseurl }}/episodes/scripts/04-analisis-trayectorias.py">04-analisis-trayectorias.py</a>
 
